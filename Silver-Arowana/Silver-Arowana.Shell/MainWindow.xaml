@@ -8,6 +8,13 @@
         mc:Ignorable="d"
         Title="Silver-Arowana" TitleForeground="Purple" Icon="logo.png" Height="650" Width="1200" Background="White" WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26.4"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
+        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Source="Pages/DesktopSetting.xaml">
+            
+        </Frame>
     </Grid>
 </blurwindow:BlurWindow>
