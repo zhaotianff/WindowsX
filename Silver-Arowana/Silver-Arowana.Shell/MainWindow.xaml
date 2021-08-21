@@ -13,8 +13,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Source="Pages/DesktopSetting.xaml">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <Button Content="桌面设置"/>
+            </StackPanel>
             
-        </Frame>
+            <Frame Grid.Column="1" NavigationUIVisibility="Hidden" Source="Pages/DesktopSetting.xaml">
+
+            </Frame>
+        </Grid>
     </Grid>
 </blurwindow:BlurWindow>

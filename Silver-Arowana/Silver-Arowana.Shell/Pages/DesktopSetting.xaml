@@ -6,13 +6,57 @@
       xmlns:local="clr-namespace:Silver_Arowana.Shell.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DesktopSetting">
+      Title="DesktopSetting" Background="Transparent">
 
     <TabControl Grid.Row="1">
-        <TabItem Header="桌面设置">
+        <TabItem Header="静态壁纸设置">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
 
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Header="预览"/>
+
+                    <GroupBox Header="选择壁纸" Grid.Row="1">
+                        <WrapPanel>
+                            <Image Source="../logo.png"/>
+                        </WrapPanel>
+                    </GroupBox>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <GroupBox Header="在线壁纸"/>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Button Content="壁纸设置" Width="88" Height="28" HorizontalAlignment="Right"></Button>
+                    <Button Content="应用" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,100,0"></Button>
+                </Grid>
             </Grid>
+        </TabItem>
+
+        <TabItem Header="动态壁纸设置">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="其它设置">
+            
         </TabItem>
     </TabControl>
 </Page>
