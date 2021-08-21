@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Silver_Arowana.Shell"
         xmlns:blurwindow="clr-namespace:TianXiaTech;assembly=BlurWindow"
         mc:Ignorable="d"
-        Title="Silver-Arowana" TitleForeground="Purple" Icon="logo.png" Height="650" Width="1200" Background="White" WindowStartupLocation="CenterScreen">
+        Title="Silver-Arowana" TitleForeground="Purple" Icon="logo.png" Height="650" Width="1200" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="26.4"/>
@@ -20,10 +20,13 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel>
+                <StackPanel.Background>
+                    <SolidColorBrush Color="Silver" Opacity=".5"/>
+                </StackPanel.Background>
                 <Button Content="桌面设置"/>
             </StackPanel>
             
-            <Frame Grid.Column="1" NavigationUIVisibility="Hidden" Source="Pages/DesktopSetting.xaml">
+            <Frame Grid.Column="1" NavigationUIVisibility="Hidden" Source="Pages/DesktopSetting.xaml" BorderBrush="Transparent">
 
             </Frame>
         </Grid>

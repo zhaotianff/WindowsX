@@ -14,7 +14,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="flower.jpg" />
     <None Remove="logo.png" />
+    <None Remove="recycle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="flower.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +29,7 @@
 
   <ItemGroup>
     <Resource Include="logo.png" />
+    <Resource Include="recycle.png" />
   </ItemGroup>
 
 </Project>
