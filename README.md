@@ -22,6 +22,11 @@ Silver-Arowana is a windows toolset software
 </p>
 <h1 align="center">Silver-Arowana :hammer_and_wrench: </h1>
 
+# Development environment
+* .NET5
+* Visual C++ Toolset 142
+* Visual Studio 2019 16.10.4
+
 # Wallpaper setting
 
 # License
