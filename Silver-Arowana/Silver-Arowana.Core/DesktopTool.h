@@ -2,4 +2,5 @@
 
 #include"framework.h"
 
-BOOL SetBackground(LPCTSTR lpImagePath);
+SILVERAROWANACORE_API BOOL SetBackground(LPCTSTR lpImagePath);
+SILVERAROWANACORE_API BOOL GetBackground(LPCTSTR lpImagePath);

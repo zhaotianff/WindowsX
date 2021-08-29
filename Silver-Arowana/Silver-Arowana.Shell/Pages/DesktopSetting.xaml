@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Silver_Arowana.Shell.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DesktopSetting">
+      Title="DesktopSetting" Loaded="Page_Loaded">
 
     <TabControl Grid.Row="1" Background="Transparent">
         <TabItem Header="静态壁纸设置">
@@ -30,7 +30,7 @@
                         <Grid>
                             <Image Source="../recycle.png" Width="30" Height="30" Panel.ZIndex="1" Margin="5" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Label Content="回收站" Foreground="White" Panel.ZIndex="1" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"/>
-                            <Image Source="../flower.jpg" Stretch="UniformToFill"/>
+                            <Image Source="../flower.jpg" Stretch="UniformToFill" Name="img_background"/>
                         </Grid>
                     </GroupBox>
 

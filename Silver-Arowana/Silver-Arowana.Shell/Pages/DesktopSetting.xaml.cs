@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Silver_Arowana.Shell.PInvoke;
+
 namespace Silver_Arowana.Shell.Pages
 {
     /// <summary>
@@ -24,5 +26,16 @@ namespace Silver_Arowana.Shell.Pages
         {
             InitializeComponent();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder(DesktopTool.MAX_PATH);
+            if (DesktopTool.GetBackground(sb))
+            {
+                this.img_background.Source = new BitmapImage(new Uri(sb.ToString(), UriKind.Absolute));
+            }
+        }
     }
+
 }
+
