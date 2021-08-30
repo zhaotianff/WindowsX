@@ -12,7 +12,7 @@ BOOL GetBackground(LPTSTR lpImagePath)
 }
 
 //¼ÆËã»ú\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers
-std::vector<std::wstring> GetRecentBackground()
+std::wstring* GetRecentBackground()
 {
 	HKEY hKey;
 	DWORD length;
@@ -36,5 +36,5 @@ std::vector<std::wstring> GetRecentBackground()
 		RegCloseKey(hKey);
 	}
 
-	return list;
+	return list.data();
 }

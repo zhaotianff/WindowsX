@@ -4,4 +4,4 @@
 
 SILVERAROWANACORE_API BOOL SetBackground(LPTSTR lpImagePath);
 SILVERAROWANACORE_API BOOL GetBackground(LPTSTR lpImagePath);
-SILVERAROWANACORE_API std::vector<std::wstring> GetRecentBackground();
+SILVERAROWANACORE_API std::wstring* GetRecentBackground();
