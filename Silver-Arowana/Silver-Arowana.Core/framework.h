@@ -14,4 +14,7 @@
 // Windows 头文件
 #include <windows.h>
 
+#include<vector>
+#include<string>
+
 
