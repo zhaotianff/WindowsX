@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Silver_Arowana.Shell"
-        xmlns:blurwindow="clr-namespace:TianXiaTech;assembly=BlurWindow"
+        xmlns:controls="clr-namespace:Silver_Arowana.Shell.Controls"
+        xmlns:blurwindow="clr-namespace:TianXiaTech;assembly=BlurWindow" SizeChanged="BlurWindow_SizeChanged"
         mc:Ignorable="d"
         Title="Silver-Arowana" TitleForeground="Purple" Icon="logo.png" Height="650" Width="1200" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="26.4"/>
             <RowDefinition/>
@@ -30,5 +31,24 @@
 
             </Frame>
         </Grid>
+    </Grid>-->
+
+    <Grid>
+        <Grid Width="720" Height="520"  Name="main" Panel.ZIndex="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Silver-Arowana" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Foreground="Silver" FontWeight="Bold"/>
+
+            <WrapPanel Grid.Row="1">
+                <controls:ImageButton Title="桌面设置" Subtitle="静态壁纸、动态壁纸" ImagePath="Icon/desktop.png"/>
+                <controls:ImageButton Title="系统管理" Subtitle="开机启动项、后台服务、网络监控" ImagePath="Icon/system.png"/>
+                <controls:ImageButton Title="系统信息" Subtitle="CPU、内存、显卡" ImagePath="Icon/information.png"/>
+            </WrapPanel>
+        </Grid>
+
+        <Grid Panel.ZIndex="1"/>
     </Grid>
 </blurwindow:BlurWindow>

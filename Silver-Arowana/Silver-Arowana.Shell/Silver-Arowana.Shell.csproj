@@ -15,6 +15,9 @@
 
   <ItemGroup>
     <None Remove="flower.jpg" />
+    <None Remove="Icon\desktop.png" />
+    <None Remove="Icon\information.png" />
+    <None Remove="Icon\system.png" />
     <None Remove="logo.png" />
     <None Remove="recycle.png" />
   </ItemGroup>
@@ -28,6 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icon\desktop.png" />
+    <Resource Include="Icon\information.png" />
+    <Resource Include="Icon\system.png" />
     <Resource Include="logo.png" />
     <Resource Include="recycle.png" />
   </ItemGroup>

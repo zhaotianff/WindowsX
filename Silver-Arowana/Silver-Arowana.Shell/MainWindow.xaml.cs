@@ -24,5 +24,11 @@ namespace Silver_Arowana.Shell
         {
             InitializeComponent();
         }
+
+        private void BlurWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            main.Width = e.NewSize.Width * 0.7;
+            main.Height = e.NewSize.Height * 0.85;
+        }
     }
 }

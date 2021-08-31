@@ -29,5 +29,11 @@ Silver-Arowana is a windows toolset software
 
 # Wallpaper setting
 
+# Screenshot
+<p align="center">
+ <img align="center" alt="start up" src="Screenshots/main.png" />
+</p>
+
+
 # License
 [GPLV3](LICENSE)

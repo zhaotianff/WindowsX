@@ -16,4 +16,44 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type local:ImageButton}">
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="150"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ImageButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Row="0" Source="{Binding ImagePath,RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Center" VerticalAlignment="Center"  Stretch="Uniform"></Image>
+
+                            <Label Grid.Row="1" Foreground="Black" FontSize="13" Content="{Binding Title,RelativeSource={RelativeSource TemplatedParent}}" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" />
+                            <Label Grid.Row="2" Foreground="Silver" FontSize="11" Content="{Binding Subtitle,RelativeSource={RelativeSource TemplatedParent}}" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value=".9"/>
+                            <Setter Property="BorderBrush" Value="Silver"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Trigger>
+                        
+                      
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
