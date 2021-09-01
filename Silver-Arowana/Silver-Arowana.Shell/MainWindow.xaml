@@ -7,32 +7,26 @@
         xmlns:controls="clr-namespace:Silver_Arowana.Shell.Controls"
         xmlns:blurwindow="clr-namespace:TianXiaTech;assembly=BlurWindow" SizeChanged="BlurWindow_SizeChanged"
         mc:Ignorable="d"
-        Title="Silver-Arowana" TitleForeground="Purple" Icon="logo.png" Height="650" Width="1200" WindowStartupLocation="CenterScreen">
-    <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="26.4"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel>
-                <StackPanel.Background>
-                    <SolidColorBrush Color="Silver" Opacity=".5"/>
-                </StackPanel.Background>
-                <Button Content="桌面设置"/>
-            </StackPanel>
-            
-            <Frame Grid.Column="1" NavigationUIVisibility="Hidden" Source="Pages/DesktopSetting.xaml" BorderBrush="Transparent">
-
-            </Frame>
-        </Grid>
-    </Grid>-->
-
+        Height="650" Width="1200" WindowStartupLocation="CenterScreen">
+        <!--Title="Silver-Arowana" TitleForeground="Purple" Icon="logo.png"-->
+    <Window.Resources>
+        <Storyboard x:Key="start">
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="(Grid.Width)"
+                             Duration="0:0:0.4" From="100" To="200"/>
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="(Grid.Height)"
+                             Duration="0:0:0.5" From="100" To="200"/>
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="Opacity"
+                             Duration="0:0:0.2" From="0" To="1"/>
+        </Storyboard>
+        <Storyboard x:Key="end">
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="(Grid.Width)"
+                             Duration="0:0:0.5" To="100"/>
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="(Grid.Height)"
+                             Duration="0:0:0.5" To="100"/>
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="Opacity"
+                             Duration="0:0:0.5" From="1" To="0"/>
+        </Storyboard>
+    </Window.Resources>
     <Grid>
         <Grid Width="720" Height="520"  Name="main" Panel.ZIndex="0">
             <Grid.RowDefinitions>
@@ -43,12 +37,16 @@
             <Label Content="Silver-Arowana" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Foreground="Silver" FontWeight="Bold"/>
 
             <WrapPanel Grid.Row="1">
-                <controls:ImageButton Title="桌面设置" Subtitle="静态壁纸、动态壁纸" ImagePath="Icon/desktop.png"/>
+                <controls:ImageButton Title="桌面设置" Subtitle="静态壁纸、动态壁纸" ImagePath="Icon/desktop.png" Click="btnDesktop_Click"/>
                 <controls:ImageButton Title="系统管理" Subtitle="开机启动项、后台服务、网络监控" ImagePath="Icon/system.png"/>
                 <controls:ImageButton Title="系统信息" Subtitle="CPU、内存、显卡" ImagePath="Icon/information.png"/>
             </WrapPanel>
         </Grid>
 
-        <Grid Panel.ZIndex="1"/>
+        <Grid Panel.ZIndex="1" Name="content" Margin="0,26.4,0,0">
+            <Frame NavigationUIVisibility="Hidden" BorderBrush="Transparent" Name="frame">
+
+            </Frame>
+        </Grid>
     </Grid>
 </blurwindow:BlurWindow>

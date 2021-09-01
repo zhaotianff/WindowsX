@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Silver_Arowana.Shell.PInvoke;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,25 +14,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using Silver_Arowana.Shell.PInvoke;
-
 namespace Silver_Arowana.Shell.Pages
 {
     /// <summary>
-    /// DesktopSetting.xaml 的交互逻辑
+    /// StaticWallpaper.xaml 的交互逻辑
     /// </summary>
-    public partial class DesktopSetting : Page
+    public partial class StaticWallpaper : Page
     {
-        public DesktopSetting()
+        public StaticWallpaper()
         {
             InitializeComponent();
         }
 
-        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            (System.Windows.Application.Current.MainWindow as MainWindow).EndShowMenuAnimation();
+            StringBuilder sb = new StringBuilder(DesktopTool.MAX_PATH);
+            if (DesktopTool.GetBackground(sb))
+            {
+                this.img_background.Source = new BitmapImage(new Uri(sb.ToString(), UriKind.Absolute));
+            }
         }
     }
-
 }
-

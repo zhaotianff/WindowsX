@@ -6,71 +6,34 @@
       xmlns:local="clr-namespace:Silver_Arowana.Shell.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DesktopSetting" Loaded="Page_Loaded">
+      Title="DesktopSetting">
 
-    <TabControl Grid.Row="1" Background="Transparent">
-        <TabItem Header="静态壁纸设置">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
 
-                <Grid  Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
 
-                    <GroupBox Header="预览">
-                        <Grid>
-                            <Image Source="../recycle.png" Width="30" Height="30" Panel.ZIndex="1" Margin="5" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Label Content="回收站" Foreground="White" Panel.ZIndex="1" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"/>
-                            <Image Source="../flower.jpg" Stretch="UniformToFill" Name="img_background"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox Header="选择壁纸" Grid.Row="1">
-                        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                            <WrapPanel>
-                                <Image Source="../logo.png"/>
-                                <Image Source="../logo.png"/>
-                                <Image Source="../logo.png"/>
-                                <Image Source="../logo.png"/>
-                                <Image Source="../logo.png"/>
-                                <Image Source="../logo.png"/>
-                                <Image Source="../logo.png"/>
-                            </WrapPanel>
-                        </ScrollViewer>
-                    </GroupBox>
-                </Grid>
-
-                <Grid Grid.Column="1" Background="White">
-                    <GroupBox Header="在线壁纸"/>
-                </Grid>
-
-                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
-                    <Button Content="壁纸设置" Width="88" Height="28" HorizontalAlignment="Right"></Button>
-                    <Button Content="应用" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,100,0"></Button>
-                </Grid>
+            <Grid Grid.Row="0">
+                <Button Content="返回" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Height="40" Click="btnReturn_Click"/>
             </Grid>
-        </TabItem>
 
-        <TabItem Header="动态壁纸设置">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </TabItem>
+            <StackPanel Grid.Row="1">
+                <Button Content="静态壁纸设置"/>
+                <Button Content="动态壁纸设置"/>
+            </StackPanel>
+        </Grid>
 
-        <TabItem Header="其它设置">
-            
-        </TabItem>
-    </TabControl>
+        <Grid Grid.Column="1">
+            <Frame Source="StaticWallpaper.xaml">
+                
+            </Frame>
+        </Grid>
+    </Grid>
 </Page>
