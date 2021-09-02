@@ -25,8 +25,8 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-                <Button Content="静态壁纸设置"/>
-                <Button Content="动态壁纸设置"/>
+                <ToggleButton Content="静态壁纸设置" Style="{StaticResource FlatButtonStyle}"/>
+                <ToggleButton Content="动态壁纸设置" Style="{StaticResource FlatButtonStyle}"/>
             </StackPanel>
         </Grid>
 
