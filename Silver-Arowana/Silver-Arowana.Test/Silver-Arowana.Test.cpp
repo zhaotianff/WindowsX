@@ -7,6 +7,5 @@
 
 int main()
 {
-	//TestSetBackground();
- 	GetRecentBackground();
+	TestSetBackground();	
 }

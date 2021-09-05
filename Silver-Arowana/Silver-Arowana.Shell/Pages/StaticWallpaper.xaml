@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Silver_Arowana.Shell.Pages"
+      xmlns:controls="clr-namespace:Silver_Arowana.Shell.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800" Loaded="Page_Loaded"
       Title="StaticWallpaper">
@@ -36,14 +37,8 @@
 
             <GroupBox Header="选择壁纸" Grid.Row="1">
                 <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                    <WrapPanel>
-                        <Image Source="../logo.png"/>
-                        <Image Source="../logo.png"/>
-                        <Image Source="../logo.png"/>
-                        <Image Source="../logo.png"/>
-                        <Image Source="../logo.png"/>
-                        <Image Source="../logo.png"/>
-                        <Image Source="../logo.png"/>
+                    <WrapPanel Name="wrap_wallpaper">
+                        
                     </WrapPanel>
                 </ScrollViewer>
             </GroupBox>
