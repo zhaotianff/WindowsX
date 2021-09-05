@@ -28,7 +28,7 @@
                             <Setter Property="BorderThickness" TargetName="border" Value="5,0,0,0"/>
                         </Trigger>
                         <Trigger Property="ToggleButton.IsChecked" Value="true">
-                            <Setter Property="Foreground" Value="Purple"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentBaseColor}"/>
                             <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource AccentBaseColor}"/>
                             <Setter Property="BorderThickness" TargetName="border" Value="5,0,0,0"/>
                         </Trigger>

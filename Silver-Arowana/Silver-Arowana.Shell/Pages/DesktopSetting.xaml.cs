@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -22,6 +23,8 @@ namespace Silver_Arowana.Shell.Pages
     /// </summary>
     public partial class DesktopSetting : Page
     {
+        private ToggleButton toggleButton = null;
+
         public DesktopSetting()
         {
             InitializeComponent();
@@ -30,6 +33,15 @@ namespace Silver_Arowana.Shell.Pages
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
             (System.Windows.Application.Current.MainWindow as MainWindow).EndShowMenuAnimation();
+        }
+
+
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (toggleButton != null)
+                toggleButton.IsChecked = false;
+
+            toggleButton = sender as ToggleButton;
         }
     }
 

@@ -32,7 +32,10 @@ namespace Silver_Arowana.Shell.Controls
 
         protected override void OnClick()
         {
+            if (System.IO.File.Exists(ImagePath) == false) 
+                return;
             //设置壁纸
+            PInvoke.DesktopTool.SetBackground(ImagePath);
         }
     }
 }

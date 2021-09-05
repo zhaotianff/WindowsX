@@ -33,6 +33,9 @@ namespace Silver_Arowana.Shell.Pages
             {
                 this.img_background.Source = new BitmapImage(new Uri(sb.ToString(), UriKind.Absolute));
             }
+
+            sb = new StringBuilder(1024);
+            DesktopTool.GetRecentBackground(sb);
         }
     }
 }

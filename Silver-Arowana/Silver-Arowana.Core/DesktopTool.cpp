@@ -12,7 +12,7 @@ BOOL GetBackground(LPTSTR lpImagePath)
 }
 
 //¼ÆËã»ú\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers
-std::wstring* GetRecentBackground()
+BOOL GetRecentBackground(LPTSTR lpRecentPath)
 {
 	HKEY hKey;
 	DWORD length;
@@ -29,12 +29,13 @@ std::wstring* GetRecentBackground()
 			result = RegQueryValueEx(hKey, path, 0, NULL, (BYTE*)buf, &length);
 			if (ERROR_SUCCESS == result)
 			{
-				list.push_back(buf);
+				lstrcat(lpRecentPath, buf);
+				lstrcat(lpRecentPath, L";");
 			}
 		}
 
 		RegCloseKey(hKey);
 	}
 
-	return list.data();
+	return TRUE;
 }
