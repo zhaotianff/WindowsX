@@ -1,5 +1,5 @@
 # Silver-Arowana
-Silver-Arowana is a windows toolset software
+Silver-Arowana is a windows toolset software.一个没什么用的大杂烩。
 
 <p align="center">
 <a href="https://github.com/zhaotianff/Silver-Arowana" target="_blank">
@@ -27,7 +27,24 @@ Silver-Arowana is a windows toolset software
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 
-# Wallpaper setting
+# Utilities
+* hardware information
+* startup assistant
+* huá shuǐ
+
+# System Tools
+* boot management
+* service management
+* background network management
+* windows settings
+* gpedit & register
+
+# Beautify
+* static wallpaper setting
+* dynamic wallpaper setting
+* quick run
+* transparency taskbar
+* other
 
 # Screenshot
 <p align="center">
