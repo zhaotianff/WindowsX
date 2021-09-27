@@ -25,13 +25,13 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-                <ToggleButton Content="静态壁纸设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked"/>
-                <ToggleButton Content="动态壁纸设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked"/>
+                <ToggleButton Content="静态壁纸设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_StaticWallpaperClick" IsChecked="True"/>
+                <ToggleButton Content="动态壁纸设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_DynamicWallpaperClick"/>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Column="1">
-            <Frame Source="StaticWallpaper.xaml">
+            <Frame Name="frame" Source="StaticWallpaper.xaml">
                 
             </Frame>
         </Grid>

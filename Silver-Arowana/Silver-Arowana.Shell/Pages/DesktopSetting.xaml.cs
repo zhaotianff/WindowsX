@@ -24,6 +24,8 @@ namespace Silver_Arowana.Shell.Pages
     public partial class DesktopSetting : Page
     {
         private ToggleButton toggleButton = null;
+        private static readonly string StaticWallpaperName = "StaticWallpaper.xaml";
+        private static readonly string DynamicWallpaperName = "DynamicWallpaper.xaml";
 
         public DesktopSetting()
         {
@@ -42,6 +44,16 @@ namespace Silver_Arowana.Shell.Pages
                 toggleButton.IsChecked = false;
 
             toggleButton = sender as ToggleButton;
+        }
+
+        private void btn_StaticWallpaperClick(object sender, RoutedEventArgs e)
+        {
+            frame.Source = new Uri(StaticWallpaperName, UriKind.Relative);
+        }
+
+        private void btn_DynamicWallpaperClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

@@ -49,20 +49,29 @@ namespace Silver_Arowana.Shell.Pages
             this.img_background.Source = new BitmapImage(new Uri(path, UriKind.Absolute));
         }
 
-        private void LoadRecentBackground()
+        private async void LoadRecentBackground()
         {
-            wrap_wallpaper.Children.Clear();
-            var sb = new StringBuilder(1024);
-            DesktopTool.GetRecentBackground(sb);
-            recentWallpapers = sb.ToString().Split(";").Take(5);
+            await LoadRecentBackgroundAsync();
+        }
 
-            foreach (var wallpaper in recentWallpapers)
+        private async Task LoadRecentBackgroundAsync()
+        {
+            await Task.Factory.StartNew(() =>
             {
-                ThumbImageControl thumbImageControl = new ThumbImageControl();
-                thumbImageControl.ThumbPath = wallpaper;
-                thumbImageControl.Click += OnChangeBackground;
-                wrap_wallpaper.Children.Add(thumbImageControl);
-            }           
+                wrap_wallpaper.Children.Clear();
+                var sb = new StringBuilder(1024);
+                DesktopTool.GetRecentBackground(sb);
+                recentWallpapers = sb.ToString().Split(";").Take(5);
+
+                foreach (var wallpaper in recentWallpapers)
+                {
+                    ThumbImageControl thumbImageControl = new ThumbImageControl();
+                    thumbImageControl.ThumbPath = wallpaper;
+                    thumbImageControl.Click += OnChangeBackground;
+                    wrap_wallpaper.Children.Add(thumbImageControl);
+                }
+            }, new System.Threading.CancellationToken(), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+
         }
 
         private void OnChangeBackground(object sender,EventArgs args)
