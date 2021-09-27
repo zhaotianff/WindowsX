@@ -17,25 +17,17 @@ namespace Silver_Arowana.Shell.Controls
 {
     public class ThumbImageControl : Button
     {
-        public static readonly DependencyProperty ImagePathProperty = DependencyProperty.Register("ImagePath", typeof(string),typeof(Button));
+        public static readonly DependencyProperty ThumbPathProperty = DependencyProperty.Register("ThumbPath", typeof(string),typeof(Button));
 
         static ThumbImageControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ThumbImageControl), new FrameworkPropertyMetadata(typeof(ThumbImageControl)));            
         }
 
-        public string ImagePath
+        public string ThumbPath
         {
-            get => GetValue(ImagePathProperty).ToString();
-            set => SetValue(ImagePathProperty, value);
-        }
-
-        protected override void OnClick()
-        {
-            if (System.IO.File.Exists(ImagePath) == false) 
-                return;
-            //设置壁纸
-            PInvoke.DesktopTool.SetBackground(ImagePath);
+            get => GetValue(ThumbPathProperty).ToString();
+            set => SetValue(ThumbPathProperty, value);
         }
     }
 }

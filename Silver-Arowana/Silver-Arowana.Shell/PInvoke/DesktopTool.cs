@@ -12,7 +12,7 @@ namespace Silver_Arowana.Shell.PInvoke
         public static extern bool GetBackground([MarshalAs(UnmanagedType.LPWStr)]StringBuilder lpImagePath);
 
         [DllImport("SilverArowanaCore.dll")]
-        public static extern bool SetBackground(string lpImagePath);
+        public static extern bool SetBackground([MarshalAs(UnmanagedType.LPWStr)]StringBuilder lpImagePath);
 
         [DllImport("SilverArowanaCore.dll")]
         public static extern bool GetRecentBackground([MarshalAs(UnmanagedType.LPWStr)] StringBuilder lpRecentPath);
