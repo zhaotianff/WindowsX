@@ -45,7 +45,24 @@
         </Grid>
 
         <Grid Grid.Column="1" Background="White">
-            <GroupBox Header="在线壁纸"/>
+            <GroupBox Header="在线壁纸">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="9*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Width="300" VerticalAlignment="Center">
+                        <Label Content="输入关键词" HorizontalAlignment="Left"/>
+                        <TextBox Width="120" Margin="75,0,0,0" HorizontalAlignment="Left"/>
+                        <Button Content="搜索" Width="88" Height="28" HorizontalAlignment="Left" Margin="210,0,0,0"/>
+                    </Grid>
+
+                    <WrapPanel Name="panel_OnlineImgList">
+                        
+                    </WrapPanel>
+                </Grid>
+            </GroupBox>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
