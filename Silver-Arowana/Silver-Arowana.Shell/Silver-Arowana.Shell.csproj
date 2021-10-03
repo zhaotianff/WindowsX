@@ -31,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Silver-Arowana.Web\Silver-Arowana.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Icon\desktop.png" />
     <Resource Include="Icon\information.png" />
     <Resource Include="Icon\system.png" />

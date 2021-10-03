@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Silver_Arowana.Shell.Controls;
+using Silver_Arowana.Web.Util;
 
 namespace Silver_Arowana.Shell.Pages
 {
@@ -33,6 +34,7 @@ namespace Silver_Arowana.Shell.Pages
         {
             LoadCurrentBackground();
             LoadRecentBackground();
+            LoadDailyWallpaper();
         }
 
         private void LoadCurrentBackground()
@@ -74,6 +76,12 @@ namespace Silver_Arowana.Shell.Pages
 
         }
 
+        private void LoadDailyWallpaper()
+        {
+            this.text_Keyword.Text = "壁纸推荐";
+            btn_SearchClick(null, null);
+        }
+
         private void OnChangeBackground(object sender,EventArgs args)
         {
             var path = (sender as ThumbImageControl)?.ThumbPath;
@@ -102,6 +110,29 @@ namespace Silver_Arowana.Shell.Pages
             StringBuilder sb = new StringBuilder(PInvoke.DesktopTool.MAX_PATH);
             sb.Append(path);
             return PInvoke.DesktopTool.SetBackground(sb);               
+        }
+
+        private async void btn_SearchClick(object sender, RoutedEventArgs e)
+        {
+            var keyword = this.text_Keyword.Text;
+            if (string.IsNullOrEmpty(keyword))
+                return;
+
+            keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
+            var list = await WebUtil.SearchBingImage(keyword,10);
+            this.panel_OnlineImgList.Children.Clear();
+            foreach (var item in list)
+            {
+                Image image = new Image();
+                image.Width = 150;
+                image.Height = 150;
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+                bi.UriSource = new Uri(item.Src);
+                bi.EndInit();
+                image.Source = bi;
+                this.panel_OnlineImgList.Children.Add(image);
+            }
         }
     }
 }
