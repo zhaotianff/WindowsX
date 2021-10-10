@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Silver_Arowana.Shell.Controls;
 using Silver_Arowana.Web.Util;
+using Silver_Arowana.Web.Model;
 
 namespace Silver_Arowana.Shell.Pages
 {
@@ -23,7 +24,8 @@ namespace Silver_Arowana.Shell.Pages
     /// </summary>
     public partial class StaticWallpaper : Page
     {
-        IEnumerable<string> recentWallpapers;
+        private IEnumerable<string> recentWallpapers;
+        private List<TagImg> list = new List<TagImg>();
 
         public StaticWallpaper()
         {
@@ -119,20 +121,34 @@ namespace Silver_Arowana.Shell.Pages
                 return;
 
             keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
-            var list = await WebUtil.SearchBingImage(keyword,10);
+            list.Clear();
+            list = await WebUtil.SearchBingImage(keyword,10);
             this.panel_OnlineImgList.Children.Clear();
             foreach (var item in list)
             {
-                Image image = new Image();
+                ImgFuncButton image = new ImgFuncButton();
                 image.Width = 150;
                 image.Height = 150;
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(item.Src);
-                bi.EndInit();
-                image.Source = bi;
+                image.Margin = new Thickness(5);
+                image.MouseDown += SetNetworkImage;
+                image.DetailUrl = item.Src;
                 this.panel_OnlineImgList.Children.Add(image);
             }
+        }
+
+        private void SetNetworkImage(object sender, MouseButtonEventArgs e)
+        {
+            //TODO 一些图片不显示
+            var index = panel_OnlineImgList.Children.IndexOf(sender as ImgFuncButton);
+            Window imageWindow = new Window();
+            Image image = new Image();
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.UriSource = new Uri(list[index].DetailUrl);
+            bi.EndInit();
+            image.Source = bi;
+            imageWindow.Content = image;
+            imageWindow.Show();
         }
     }
 }
