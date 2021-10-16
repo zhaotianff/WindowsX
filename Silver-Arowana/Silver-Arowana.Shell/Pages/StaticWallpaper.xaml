@@ -54,7 +54,7 @@
 
                     <Grid Grid.Row="0" Width="300" VerticalAlignment="Center">
                         <Label Content="输入关键词" HorizontalAlignment="Left"/>
-                        <TextBox Width="120" Margin="75,0,0,0" HorizontalAlignment="Left" Name="text_Keyword"/>
+                        <TextBox Width="120" Margin="75,0,0,0" HorizontalAlignment="Left" Name="text_Keyword" VerticalContentAlignment="Center"/>
                         <Button Content="搜索" Width="88" Height="28" HorizontalAlignment="Left" Margin="210,0,0,0" Click="btn_SearchClick" IsDefault="True"/>
                     </Grid>
 
