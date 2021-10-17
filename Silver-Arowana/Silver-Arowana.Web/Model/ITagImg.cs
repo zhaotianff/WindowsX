@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Silver_Arowana.Web.Model
 {
-    public class TagImg
+    public interface ITagImg
     {
         public string Src { get; set; }
 
@@ -14,8 +14,5 @@ namespace Silver_Arowana.Web.Model
 
         public string DetailUrl { get; set; }
 
-        public int Width { get; set; }
-
-        public int Height { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Silver_Arowana.Web.Model;
+﻿using Silver_Arowana.Web.CnBing;
+using Silver_Arowana.Web.Model;
 using Silver_Arowana.Web.Util;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace Silver_Arowana.Web.Util
 {
-    public class WebUtil
+    public class WebHelper
     {
-        private const string CNBingImageDetailUrl = "https://cn.bing.com/images/async?q=[keyword]&first=[start]&count=35&relp=35&qft=+filterui%3aphoto-photo&scenario=ImageBasicHover&datsrc=N_I&layout=RowBased&mmasync=1&dgState=x*939_y*907_h*168_c*4_i*211_r*31&IG=765E054519674C8C861E4630A4BF2FC8&SFX=7&iid=images.5601";
+        private const string CNBingImageDetailUrl = "https://cn.bing.com/images/api/custom/search?q=[keyword]&count=25&offset=[start]&skey=x0N3tvnBi4Or09GnYTSGBz-1Y_hczfN8mDl9KUAupCo&safeSearch=Strict&mkt=zh-cn&setLang=zh-cn&IG=095F7668227148A5BE61ABD2FCF8DA04&IID=idpfs&SFX=2";
 
         public static async Task<string> GetHtmlSource(string url, string accept, string userAgent, Encoding encoding = null, CookieContainer cookieContainer = null)
         {
@@ -56,9 +57,9 @@ namespace Silver_Arowana.Web.Util
             }
         }
 
-        public async static Task<List<TagImg>> GetBingImgFromHtmlAsync(string html)
+        public async static Task<List<ITagImg>> GetBingImgFromHtmlAsync(string html)
         {
-            Task<List<TagImg>> task = Task.Run(() => {
+            Task<List<ITagImg>> task = Task.Run(() => {
                 HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
                 doc.LoadHtml(html);
                 var imgList = doc.DocumentNode.SelectNodes("//img");
@@ -66,10 +67,10 @@ namespace Silver_Arowana.Web.Util
                 var h = 0;
                 HtmlAgilityPack.HtmlAttribute tempAttribute = null;
 
-                List<TagImg> list = new List<TagImg>();
+                List<ITagImg> list = new List<ITagImg>();
                 foreach (var item in imgList)
                 {
-                    TagImg tagImg = new TagImg();
+                    BingTagImage tagImg = new BingTagImage();
                     tempAttribute = item.Attributes["alt"];
                     tagImg.Alt = tempAttribute == null ? "" : tempAttribute.Value;
                     tempAttribute = item.Attributes["src"];
@@ -101,9 +102,9 @@ namespace Silver_Arowana.Web.Util
             return await task;
         }
 
-        public async static Task<List<TagImg>> SearchBingImage(string keyword,int pageImageNum, int page = 1)
+        public async static Task<List<ITagImg>> SearchBingImage(string keyword,int pageImageNum, int page = 1)
         {
-            List<TagImg> searchImgList = new List<TagImg>();
+            List<ITagImg> searchImgList = new List<ITagImg>();
             var start = 1;
             if (page > 1)
                 start = page * pageImageNum + 1;
@@ -112,11 +113,11 @@ namespace Silver_Arowana.Web.Util
             return searchImgList;
         }
 
-        public async static Task<List<TagImg>> GetBingImgFromUrlAsync(string url)
+        public async static Task<List<ITagImg>> GetBingImgFromUrlAsync(string url)
         {
             var accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
             var userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36 TheWorld 7";
-            var html = await WebUtil.GetHtmlSource(url, accept, userAgent, Encoding.UTF8);
+            var html = await WebHelper.GetHtmlSource(url, accept, userAgent, Encoding.UTF8);
             return await GetBingImgFromHtmlAsync(html);
         }
     }

@@ -25,7 +25,7 @@ namespace Silver_Arowana.Shell.Pages
     public partial class StaticWallpaper : Page
     {
         private IEnumerable<string> recentWallpapers;
-        private List<TagImg> list = new List<TagImg>();
+        private List<ITagImg> list = new List<ITagImg>();
 
         public StaticWallpaper()
         {
@@ -122,7 +122,7 @@ namespace Silver_Arowana.Shell.Pages
 
             keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
             list.Clear();
-            list = await WebUtil.SearchBingImage(keyword,10);
+            list = await WebHelper.SearchBingImage(keyword,10);
             this.panel_OnlineImgList.Children.Clear();
             foreach (var item in list)
             {
