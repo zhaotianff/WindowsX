@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using Silver_Arowana.Shell.Controls;
 using Silver_Arowana.Web.Util;
 using Silver_Arowana.Web.Model;
+using Silver_Arowana.Web.Interface;
+using Silver_Arowana.Web.CnBing;
 
 namespace Silver_Arowana.Shell.Pages
 {
@@ -26,10 +28,12 @@ namespace Silver_Arowana.Shell.Pages
     {
         private IEnumerable<string> recentWallpapers;
         private List<ITagImg> list = new List<ITagImg>();
+        private IImageSearcher imageSearcher;
 
         public StaticWallpaper()
         {
             InitializeComponent();
+            imageSearcher = new BingImageSearcher();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -122,7 +126,8 @@ namespace Silver_Arowana.Shell.Pages
 
             keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
             list.Clear();
-            list = await WebHelper.SearchBingImage(keyword,10);
+
+            list = await imageSearcher.SearchImageAsync(keyword);
             this.panel_OnlineImgList.Children.Clear();
             foreach (var item in list)
             {
