@@ -39,3 +39,13 @@ BOOL GetRecentBackground(LPTSTR lpRecentPath)
 
 	return TRUE;
 }
+
+VOID SwitchToDesktop()
+{
+	CoInitialize(NULL);
+	IShellDispatch4* pShellDisp = NULL;
+	HRESULT sc = CoCreateInstance(CLSID_Shell, NULL, CLSCTX_SERVER, IID_IDispatch, (LPVOID*)&pShellDisp);
+	sc = pShellDisp->ToggleDesktop();
+	sc = pShellDisp->ToggleDesktop();
+	pShellDisp->Release();
+}

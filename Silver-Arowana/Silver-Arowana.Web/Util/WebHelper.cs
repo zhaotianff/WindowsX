@@ -120,5 +120,18 @@ namespace Silver_Arowana.Web.Util
             var html = await WebHelper.GetHtmlSource(url, accept, userAgent, Encoding.UTF8);
             return await GetBingImgFromHtmlAsync(html);
         }
+
+        public static void SaveFileAsync(string url,string path)
+        {
+            try
+            {
+                System.Net.WebClient client = new WebClient();
+                client.DownloadFileAsync(new Uri(url), path);
+            }
+            catch
+            {
+                //TODO
+            }
+        }
     }
 }

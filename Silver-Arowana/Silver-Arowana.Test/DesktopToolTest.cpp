@@ -34,3 +34,8 @@ void TestSetBackground()
 	delete[] lpImagePath;
 	std::cin.get();
 }
+
+void TestSwitchToDesktop()
+{
+	SwitchToDesktop();
+}

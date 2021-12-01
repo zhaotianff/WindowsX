@@ -18,6 +18,7 @@ using Silver_Arowana.Web.Util;
 using Silver_Arowana.Web.Model;
 using Silver_Arowana.Web.Interface;
 using Silver_Arowana.Web.CnBing;
+using Silver_Arowana.Shell.Windows;
 
 namespace Silver_Arowana.Shell.Pages
 {
@@ -29,6 +30,7 @@ namespace Silver_Arowana.Shell.Pages
         private IEnumerable<string> recentWallpapers;
         private List<ITagImg> list = new List<ITagImg>();
         private IImageSearcher imageSearcher;
+        public string CurrentBackground { get; set; }
 
         public StaticWallpaper()
         {
@@ -48,7 +50,8 @@ namespace Silver_Arowana.Shell.Pages
             var sb = new StringBuilder(DesktopTool.MAX_PATH);
             if (DesktopTool.GetBackground(sb))
             {
-                SetPreviewImage(sb.ToString());
+                CurrentBackground = sb.ToString();
+                SetPreviewImage(CurrentBackground);
             }
         }
 
@@ -127,7 +130,7 @@ namespace Silver_Arowana.Shell.Pages
             keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
             list.Clear();
 
-            //list = await imageSearcher.SearchImageAsync(keyword);
+            list = await imageSearcher.SearchImageAsync(keyword);
             this.panel_OnlineImgList.Children.Clear();
             foreach (var item in list)
             {
@@ -145,14 +148,8 @@ namespace Silver_Arowana.Shell.Pages
         {
             //TODO 一些图片不显示
             var index = panel_OnlineImgList.Children.IndexOf(sender as ImgFuncButton);
-            Window imageWindow = new Window();
-            Image image = new Image();
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(list[index].DetailUrl);
-            bi.EndInit();
-            image.Source = bi;
-            imageWindow.Content = image;
+            ImageWindow imageWindow = new ImageWindow();
+            imageWindow.SetImageUrl(list[index].DetailUrl, CurrentBackground);
             imageWindow.Show();
         }
     }

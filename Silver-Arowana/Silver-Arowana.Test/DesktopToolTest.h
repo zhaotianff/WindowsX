@@ -7,3 +7,5 @@
 
 void TestGetBackground();
 void TestSetBackground();
+void TestSwitchToDesktop();
+
