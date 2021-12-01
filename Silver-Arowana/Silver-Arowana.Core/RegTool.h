@@ -9,3 +9,19 @@
 //User          {59031a47-3f72-44a7-89c5-5595fe6b30ee}
 
 SILVERAROWANACORE_API BOOL SetValue(HKEY hKey, LPCTSTR lpSubKey,LPCTSTR lpValueName,BYTE* value);
+
+//Windows Photo Viewer
+//HKLM\Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations
+//.jpg
+//.png
+//.bmp
+//.jpeg
+
+//Run history
+//HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
+
+//Local Service
+//HKLM\System\ControlSet001\Services\pcw
+
+//Uninstall
+//HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall

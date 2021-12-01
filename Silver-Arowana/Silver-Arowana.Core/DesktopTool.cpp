@@ -1,5 +1,10 @@
 #include "DesktopTool.h"
 
+PBASICWINDOWINFO pwiGlobalInfo;
+int nWindowCount;
+HWND hWorkerW;
+HWND hEmbedWindow;
+
 BOOL SetBackground(LPTSTR lpImagePath)
 {
 	return SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, (PVOID)lpImagePath, SPIF_UPDATEINIFILE);
@@ -37,6 +42,95 @@ BOOL GetRecentBackground(LPTSTR lpRecentPath)
 		RegCloseKey(hKey);
 	}
 
+	return TRUE;
+}
+
+BOOL EmbedHWNDToDesktop(HWND hwnd)
+{
+	pwiGlobalInfo = new tagBASICWINDOWINFO;
+	nWindowCount = 0;
+	hEmbedWindow = hwnd;
+
+	HWND hProgman = FindWindow(L"Progman", L"Program Manager");
+	if (hProgman == NULL)
+		return FALSE;
+
+	SendMessage(hProgman, WM_SPAWN_WORKER, 0, 0);
+	EnumWindows(EnumWindowProc, 0);
+
+	for (int i = 0; i < nWindowCount; i++)
+	{
+		if (lstrcmpW(pwiGlobalInfo->szWindowName, L"WorkerW") == 0)
+		{
+			HWND hSHellDefView = FindWindowEx(pwiGlobalInfo->hwnd, 0, L"SHELLDLL_DefView", NULL);
+			if (hSHellDefView == NULL)
+			{
+				hWorkerW = pwiGlobalInfo->hwnd;
+				ShowWindow(hWorkerW, SW_HIDE);
+				return TRUE;
+			}
+			else
+			{
+				PBASICWINDOWINFO pwiNext = pwiGlobalInfo->next;
+				delete pwiGlobalInfo;
+				pwiGlobalInfo = NULL;
+				pwiGlobalInfo = pwiNext;
+
+				if (pwiGlobalInfo->szWindowName == L"Progman")
+				{
+					HWND hLocalWorkW = FindWindowEx(pwiGlobalInfo->hwnd, 0, L"WorkerW", NULL);
+
+					if (IsWindowVisible(hLocalWorkW) == FALSE)
+					{
+						return TRUE;
+					}
+					else
+					{
+						hWorkerW = hLocalWorkW;
+						ShowWindow(hLocalWorkW, SW_HIDE);
+					}
+				}
+				else
+				{
+					ShowWindow(pwiGlobalInfo->hwnd, SW_HIDE);
+				}
+			}
+		}
+		PBASICWINDOWINFO pwiNext = pwiGlobalInfo->next;
+		delete pwiGlobalInfo;
+		pwiGlobalInfo = NULL;
+		pwiGlobalInfo = pwiNext;
+	}
+	
+	return FALSE;
+}
+
+BOOL RestoreEmbedHwnd(HWND hwnd)
+{
+	if (pwiGlobalInfo)
+		delete pwiGlobalInfo;
+
+	if (hEmbedWindow)
+	{
+		SendMessage(hEmbedWindow, WM_CLOSE, 0, 0);
+	}
+
+	if (hWorkerW)
+	{
+		ShowWindow(hWorkerW, SW_SHOW);
+	}
+	return TRUE;
+}
+
+BOOL EnumWindowProc(HWND hwnd, LPARAM lParam)
+{
+	PBASICWINDOWINFO windowInfo = new tagBASICWINDOWINFO;
+	memset(pwiGlobalInfo->szWindowName, 0, sizeof(pwiGlobalInfo->szWindowName));
+	GetClassName(hwnd, pwiGlobalInfo->szWindowName, sizeof(pwiGlobalInfo->szWindowName) / sizeof(TCHAR));
+	windowInfo->hwnd = hwnd;
+	nWindowCount++;
+	windowInfo->next = pwiGlobalInfo;
+	pwiGlobalInfo = windowInfo;
 	return TRUE;
 }
 

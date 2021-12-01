@@ -9,6 +9,19 @@
       Title="DynamicWallpaper">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+
+        <WrapPanel>
+            <Image Width="150" Height="150" Margin="10" MouseDown="SetDynamicBackground_MouseDown"/>
+        </WrapPanel>
         
+        <StackPanel Grid.Column="1">
+            <Label Content="动态壁纸设置" FontWeight="Bold" FontSize="15"></Label>
+            <CheckBox Content="自动循环" Margin="5"/>
+            <CheckBox Content="允许播放背景声音" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Page>

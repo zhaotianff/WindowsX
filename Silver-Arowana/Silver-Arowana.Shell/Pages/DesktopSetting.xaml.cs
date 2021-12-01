@@ -53,7 +53,7 @@ namespace Silver_Arowana.Shell.Pages
 
         private void btn_DynamicWallpaperClick(object sender, RoutedEventArgs e)
         {
-
+            frame.Source = new Uri(DynamicWallpaperName, UriKind.Relative);
         }
     }
 

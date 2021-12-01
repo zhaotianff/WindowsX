@@ -1,0 +1,37 @@
+﻿<tianxia:BlurWindow x:Class="Silver_Arowana.Shell.Dialog.WaitMessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow"
+        xmlns:local="clr-namespace:Silver_Arowana.Shell.Dialog"
+        mc:Ignorable="d" MaxWidth="640" MinWidth="320"
+        Title="WaitMessageBoxWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27.6"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28"/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Content="标题" Name="lbl_Title"></Label>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <TextBlock TextWrapping="WrapWithOverflow" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" Name="tbk_Content"></TextBlock>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Button Content="确定" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,110,0" Name="btn_Ok" Click="btn_Ok_Click"></Button>
+                <Button Content="取消" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,10,0" Name="btn_Cancel" Click="btn_Cancel_Click"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</tianxia:BlurWindow>

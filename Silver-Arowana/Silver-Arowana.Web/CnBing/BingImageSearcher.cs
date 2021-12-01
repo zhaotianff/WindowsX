@@ -15,13 +15,13 @@ namespace Silver_Arowana.Web.CnBing
         private const int CountPerPage = 25;
 
         public async Task<List<ITagImg>> SearchImageAsync(string keyword, int page = 1)
-        {      
+        {
             var start = 1;
             if (page > 1)
                 start = page * CountPerPage + 1;
             var url = ApiUrl.Replace("[keyword]", keyword).Replace("[start]", start.ToString());
-            var html  = await GetRawSourceAsync(url);
-            return await ExtractImageListAsync(html);  
+            var html = await GetRawSourceAsync(url);
+            return await ExtractImageListAsync(html);
         }
 
         private async Task<string> GetRawSourceAsync(string url)

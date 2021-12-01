@@ -13,26 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Silver_Arowana.Shell.Pages
+namespace Silver_Arowana.DynamicDesktop
 {
     /// <summary>
-    /// DynamicWallpaper.xaml 的交互逻辑
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class DynamicWallpaper : Page
+    public partial class MainWindow : Window
     {
-        public DynamicWallpaper()
+        public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void LoadDynamicWallpaperList()
-        {
-
-        }
-
-        private void SetDynamicBackground_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
         }
     }
 }
