@@ -122,7 +122,7 @@ BOOL RestoreEmbedHwnd(HWND hwnd)
 	return TRUE;
 }
 
-BOOL EnumWindowProc(HWND hwnd, LPARAM lParam)
+BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
 {
 	PBASICWINDOWINFO windowInfo = new tagBASICWINDOWINFO;
 	memset(pwiGlobalInfo->szWindowName, 0, sizeof(pwiGlobalInfo->szWindowName));
@@ -142,4 +142,10 @@ VOID SwitchToDesktop()
 	sc = pShellDisp->ToggleDesktop();
 	sc = pShellDisp->ToggleDesktop();
 	pShellDisp->Release();
+}
+
+VOID SwitchToWindow(HWND hwnd)
+{
+	ShowWindow(hwnd, SW_SHOW);
+	SetForegroundWindow(hwnd);
 }

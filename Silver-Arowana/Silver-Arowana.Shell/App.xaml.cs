@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Silver_Arowana.Config;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,9 @@ namespace Silver_Arowana.Shell
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            GlobalConfig.Instance.LoadAllConfig();
+        }
     }
 }

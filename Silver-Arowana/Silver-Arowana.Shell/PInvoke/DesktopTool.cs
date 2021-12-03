@@ -18,6 +18,9 @@ namespace Silver_Arowana.Shell.PInvoke
         public static extern bool GetRecentBackground([MarshalAs(UnmanagedType.LPWStr)] StringBuilder lpRecentPath);
 
         [DllImport("SilverArowanaCore.dll")]
-        public static extern bool SwitchToDesktop();
+        public static extern bool SwitchToDesktop();//SwitchToWindow
+
+        [DllImport("SilverArowanaCore.dll")]
+        public static extern bool SwitchToWindow(IntPtr intPtr);
     }
 }
