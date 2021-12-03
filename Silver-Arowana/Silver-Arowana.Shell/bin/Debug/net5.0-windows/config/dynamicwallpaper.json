@@ -1,0 +1,11 @@
+﻿{
+  "mute":true, 
+  "repeat":true, 
+  "wallpaperlist": [
+    {
+      "name": "预置",
+      "path": "res\\default\\default.mp4",
+      "thumbnail": "res\\default\\thumb.png"
+    }
+  ]
+}
