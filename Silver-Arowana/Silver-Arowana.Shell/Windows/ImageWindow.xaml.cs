@@ -45,6 +45,7 @@ namespace Silver_Arowana.Shell.Windows
 
             this.previousBackground = previousBackground;
             isInternetImage = true;
+            this.Title = $"预览 {url}";
         }
 
         public void SetLocalImage(string path,string previousBackground)
@@ -63,6 +64,7 @@ namespace Silver_Arowana.Shell.Windows
             this.previousBackground = previousBackground;
             this.currentBackground = path;
             isInternetImage = false;
+            this.Title = $"预览 {path}";
         }
 
         private async void btnPreview_Click(object sender, RoutedEventArgs e)
@@ -71,13 +73,21 @@ namespace Silver_Arowana.Shell.Windows
                 return;
 
             SetWallpaper();
+            SwitchToDesktop();
+            SetAllWindowState(WindowState.Minimized);
             var keepWallpaper = await WaitMessageBox.Show("提示信息","是否保存当前壁纸设置？","保留");
             SetKeepWallpaper(keepWallpaper);
+            SetAllWindowState(WindowState.Normal);
         }
 
         private void btnSet_Click(object sender, RoutedEventArgs e)
         {
             SetWallpaper();
+        }
+
+        private void MenuCopyPath_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.Clipboard.SetText(Title.Replace("预览 ", ""));
         }
 
         private void SetWallpaper()
@@ -92,8 +102,16 @@ namespace Silver_Arowana.Shell.Windows
                 filePath = currentBackground;
             }
             StringBuilder sb = new StringBuilder(filePath);
-            SetBackground(sb);
-            SwitchToDesktop();
+            SetBackground(sb);        
+        }
+
+        private void SetAllWindowState(WindowState windowState)
+        {
+            Application.Current.MainWindow.WindowState = windowState;
+            foreach (var item in Application.Current.MainWindow.OwnedWindows)
+            {
+                (item as Window).WindowState = windowState;
+            }
         }
 
         private void SetKeepWallpaper(bool isKeep)

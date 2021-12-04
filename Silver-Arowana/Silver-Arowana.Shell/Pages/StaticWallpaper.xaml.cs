@@ -127,7 +127,8 @@ namespace Silver_Arowana.Shell.Pages
             if (string.IsNullOrEmpty(keyword))
                 return;
 
-            keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
+            //keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
+            keyword += " " + "电脑壁纸";
             list.Clear();
 
             //TODO cancel task
@@ -148,10 +149,39 @@ namespace Silver_Arowana.Shell.Pages
         private void SetNetworkImage(object sender, MouseButtonEventArgs e)
         {
             //TODO 一些图片不显示
+            CloseOtherImageWindow();
             var index = panel_OnlineImgList.Children.IndexOf(sender as ImgFuncButton);
             ImageWindow imageWindow = new ImageWindow();
+            imageWindow.Owner = Application.Current.MainWindow;
             imageWindow.SetImageUrl(list[index].DetailUrl, CurrentBackground);
             imageWindow.Show();
+        }
+
+        private void CloseOtherImageWindow()
+        {
+            foreach (var item in Application.Current.MainWindow.OwnedWindows)
+            {
+                if (item is ImageWindow)
+                {
+                    (item as ImageWindow).Close();
+                }
+            }
+        }
+
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            openFileDialog.Filter = "图片文件|*.jpg;*.png;*.bmp";
+            
+            if(openFileDialog.ShowDialog() == true)
+            {
+                CloseOtherImageWindow();
+                ImageWindow imageWindow = new ImageWindow();
+                imageWindow.Owner = Application.Current.MainWindow;
+                imageWindow.SetLocalImage(openFileDialog.FileName, CurrentBackground);
+                imageWindow.Show();
+            }
         }
     }
 }

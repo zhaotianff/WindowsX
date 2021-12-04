@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow"
         xmlns:local="clr-namespace:Silver_Arowana.Shell.MessageBoxEx"
-        mc:Ignorable="d" MaxWidth="640" Width="320"  MinWidth="320"
+        mc:Ignorable="d" MaxWidth="640" Width="380"  MinWidth="320"
         xmlns:tian="clr-namespace:TianXiaTech;assembly=BlurWindow"
-        Title="WaitMessageBoxWindow" Closing="BlurWindow_Closing" Height="200" WindowStartupLocation="CenterScreen">
+        Title="WaitMessageBoxWindow" Closing="BlurWindow_Closing" Height="200" WindowStartupLocation="CenterScreen" Topmost="True">
     <Window.Background>
         <SolidColorBrush Color="White" Opacity=".6"/>
     </Window.Background>

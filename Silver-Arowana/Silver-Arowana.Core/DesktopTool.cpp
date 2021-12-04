@@ -21,7 +21,7 @@ BOOL GetRecentBackground(LPTSTR lpRecentPath)
 {
 	HKEY hKey;
 	DWORD length;
-	TCHAR buf[MAX_PATH]{};
+	TCHAR buf[1024]{};
 	TCHAR path[MAX_PATH]{};
 	std::vector<std::wstring> list;
 	auto result = RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Wallpapers", 0, KEY_ALL_ACCESS, &hKey);
@@ -29,7 +29,7 @@ BOOL GetRecentBackground(LPTSTR lpRecentPath)
 	{
 		for (int i = 0;i < 5;i++)
 		{
-			length = MAX_PATH;
+			length = 1024;
 			wsprintf(path, L"BackgroundHistoryPath%d", i);
 			result = RegQueryValueEx(hKey, path, 0, NULL, (BYTE*)buf, &length);
 			if (ERROR_SUCCESS == result)

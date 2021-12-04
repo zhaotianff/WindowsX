@@ -14,7 +14,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="{Binding ThumbPath,RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
+                        <Image Source="{Binding ThumbImageObj,RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
                     </Border>
 
                     <ControlTemplate.Triggers>

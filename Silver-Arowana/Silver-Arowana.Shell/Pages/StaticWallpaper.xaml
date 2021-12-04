@@ -68,8 +68,8 @@
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
-            <Button Content="壁纸设置" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top"></Button>
-            <!--<Button Content="" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,100,0" VerticalAlignment="Top"></Button>-->
+            <Button Content="浏览壁纸" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnBrowse_Click"></Button>
+            <!--<Button Content="壁纸设置" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,100,0" VerticalAlignment="Top"></Button>-->
         </Grid>
     </Grid>
 

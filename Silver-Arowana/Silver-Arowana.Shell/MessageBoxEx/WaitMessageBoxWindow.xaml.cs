@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Silver_Arowana.Shell.PInvoke;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,7 +67,7 @@ namespace Silver_Arowana.Shell.MessageBoxEx
             InitializeComponent();
         }
 
-        public void StartTime(int second)
+        public void StartTimer(int second)
         {
             LeftSecond = second;
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -129,10 +130,9 @@ namespace Silver_Arowana.Shell.MessageBoxEx
             waitMessageBoxWindow.SetMessageBox(title, content);
             waitMessageBoxWindow.ConfirmText = confirmText;
             waitMessageBoxWindow.ConfirmTimeText = $"({second}秒)";
-            waitMessageBoxWindow.Topmost = true;
-            waitMessageBoxWindow.Show();
-            waitMessageBoxWindow.StartTime(second);
-
+            waitMessageBoxWindow.Owner = Application.Current.MainWindow;
+            waitMessageBoxWindow.StartTimer(second);
+            
             Task<bool> task = Task.Run(() => 
             {
                 autoResetEvent.WaitOne(second * 10000);             
@@ -142,6 +142,7 @@ namespace Silver_Arowana.Shell.MessageBoxEx
                 });
                 return dialogResult;
             });
+            waitMessageBoxWindow.ShowDialog();
             return await task;
         }
         #endregion

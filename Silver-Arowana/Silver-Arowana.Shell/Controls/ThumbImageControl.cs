@@ -18,6 +18,7 @@ namespace Silver_Arowana.Shell.Controls
     public class ThumbImageControl : Button
     {
         public static readonly DependencyProperty ThumbPathProperty = DependencyProperty.Register("ThumbPath", typeof(string),typeof(Button));
+        public static readonly DependencyProperty ThumbImageObjProperty = DependencyProperty.Register("ThumbImageObj", typeof(BitmapImage), typeof(Button));
 
         static ThumbImageControl()
         {
@@ -27,7 +28,27 @@ namespace Silver_Arowana.Shell.Controls
         public string ThumbPath
         {
             get => GetValue(ThumbPathProperty).ToString();
-            set => SetValue(ThumbPathProperty, value);
+            set
+            {
+                SetValue(ThumbPathProperty, value);
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    var buffer = System.IO.File.ReadAllBytes(value);
+                    System.IO.MemoryStream ms = new System.IO.MemoryStream(buffer);
+                    bi.StreamSource = ms;
+                    bi.EndInit();
+                    ThumbImageObj = bi;
+                }
+            }
+        }
+
+        public BitmapImage ThumbImageObj
+        {
+            get => (BitmapImage)GetValue(ThumbImageObjProperty);
+            private set => SetValue(ThumbImageObjProperty, value);
         }
     }
 }
