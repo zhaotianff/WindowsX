@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace>Silver_Arowana.Shell</RootNamespace>
+    <RootNamespace>Master_Zhao.Shell</RootNamespace>
     <UseWPF>true</UseWPF>
     <Authors>ZTI</Authors>
     <Company>https://github.com/zhaotianff</Company>

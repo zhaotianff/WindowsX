@@ -31,5 +31,13 @@ namespace Master_Zhao.Shell.Test
             var result = await WaitMessageBox.Show("标题", "内容", "保留");
             MessageBox.Show(result.ToString());
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var exePath = System.IO.Path.GetFullPath("../../../../Master-Zhao.DynamicDesktop/bin/Debug/net5.0-windows/Master-Zhao.DynamicDesktop.exe");
+            var videoPath = System.IO.Path.GetFullPath("../../../../Master-Zhao.Shell/bin/Debug/net5.0-windows/res/dynamic wallpaper/default/default.mp4");
+
+            System.Diagnostics.Process.Start(exePath, "\"" + videoPath + "\"");
+        }
     }
 }

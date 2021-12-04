@@ -23,6 +23,25 @@ namespace Master_Zhao.DynamicDesktop
         public MainWindow()
         {
             InitializeComponent();
+         
+            media.IsMuted = App.Mute;
+            
+            if(App.Repeat)
+            {
+                media.MediaEnded += Media_MediaEnded;
+            }
+
+            if (!string.IsNullOrEmpty(App.VideoPath) && System.IO.File.Exists(App.VideoPath))
+            {
+                media.Source = new Uri(App.VideoPath, UriKind.Absolute);
+                media.Play();
+            }
+        }
+
+        private void Media_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            media.Stop();
+            media.Play();
         }
     }
 }

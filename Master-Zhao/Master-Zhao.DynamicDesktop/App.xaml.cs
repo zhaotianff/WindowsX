@@ -13,5 +13,19 @@ namespace Master_Zhao.DynamicDesktop
     /// </summary>
     public partial class App : Application
     {
+        public static string VideoPath { get; set; } = "";
+
+        public static bool Mute { get; set; } = true;
+
+        public static bool Repeat { get; set; } = true;
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            //parse args
+            if(e.Args.Length > 0)
+            {
+                VideoPath = e.Args[0];
+            }
+        }
     }
 }

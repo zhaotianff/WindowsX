@@ -15,5 +15,6 @@
     </Window.Resources>
     <WrapPanel>
         <Button Content="测试WaitMessageBox" Style="{StaticResource TestButtonStyle}" Click="Button_Click"/>
+        <Button Content="测试视频窗口" Style="{StaticResource TestButtonStyle}" Click="Button_Click_1"/>
     </WrapPanel>
 </Window>
