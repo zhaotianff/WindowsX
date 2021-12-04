@@ -1,0 +1,76 @@
+﻿<Page x:Class="Master_Zhao.Shell.Pages.StaticWallpaper"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Master_Zhao.Shell.Pages"
+      xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Loaded="Page_Loaded"
+      Title="StaticWallpaper">
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="57.4"/>
+        </Grid.RowDefinitions>
+
+        <Grid  Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <GroupBox Header="预览">
+                <Grid>
+                    <Image Source="../recycle.png" Width="30" Height="30" Panel.ZIndex="1" Margin="5" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Content="回收站" Foreground="White" Panel.ZIndex="1" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"/>
+                    <Image Source="../flower.jpg" Stretch="UniformToFill" Name="img_background"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="选择壁纸" Grid.Row="1">
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <WrapPanel Name="wrap_wallpaper">
+                        
+                    </WrapPanel>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="White">
+            <GroupBox Header="在线壁纸">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="9*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Width="300" VerticalAlignment="Center">
+                        <Label Content="输入关键词" HorizontalAlignment="Left"/>
+                        <TextBox Width="120" Margin="75,0,0,0" HorizontalAlignment="Left" Name="text_Keyword" VerticalContentAlignment="Center"/>
+                        <Button Content="搜索" Width="88" Height="28" HorizontalAlignment="Left" Margin="210,0,0,0" Click="btn_SearchClick" IsDefault="True"/>
+                    </Grid>
+
+                    <ScrollViewer Grid.Row="2">
+                        <WrapPanel Name="panel_OnlineImgList" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
+            <Button Content="浏览壁纸" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnBrowse_Click"></Button>
+            <!--<Button Content="壁纸设置" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,100,0" VerticalAlignment="Top"></Button>-->
+        </Grid>
+    </Grid>
+
+</Page>
