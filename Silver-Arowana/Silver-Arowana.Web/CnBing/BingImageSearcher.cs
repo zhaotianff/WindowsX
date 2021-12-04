@@ -27,7 +27,7 @@ namespace Silver_Arowana.Web.CnBing
         private async Task<string> GetRawSourceAsync(string url)
         {
             var accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-            var userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3464.0 Safari/537.36";
+            var userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36 TheWorld 7";
             //TODO 解决404的问题
             var html = await WebHelper.GetHtmlSource(url, accept, userAgent, Encoding.UTF8);
             return html;

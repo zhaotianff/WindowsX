@@ -130,6 +130,7 @@ namespace Silver_Arowana.Shell.Pages
             keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
             list.Clear();
 
+            //TODO cancel task
             list = await imageSearcher.SearchImageAsync(keyword);
             this.panel_OnlineImgList.Children.Clear();
             foreach (var item in list)

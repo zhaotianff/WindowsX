@@ -19,7 +19,7 @@ namespace Silver_Arowana.Shell.MessageBoxEx
     /// <summary>
     /// Interaction logic for WaitMessageBoxWindow.xaml
     /// </summary>
-    public partial class WaitMessageBoxWindow : Window
+    public partial class WaitMessageBoxWindow : TianXiaTech.BlurWindow
     {
         #region static field
         private static AutoResetEvent autoResetEvent = new AutoResetEvent(false);
@@ -115,7 +115,7 @@ namespace Silver_Arowana.Shell.MessageBoxEx
 
         public void SetMessageBox(string title,string content)
         {
-            lbl_Title.Content = title;
+            this.Title = title;
             tbk_Content.Text = content;
         }
 
@@ -129,6 +129,7 @@ namespace Silver_Arowana.Shell.MessageBoxEx
             waitMessageBoxWindow.SetMessageBox(title, content);
             waitMessageBoxWindow.ConfirmText = confirmText;
             waitMessageBoxWindow.ConfirmTimeText = $"({second}秒)";
+            waitMessageBoxWindow.Topmost = true;
             waitMessageBoxWindow.Show();
             waitMessageBoxWindow.StartTime(second);
 

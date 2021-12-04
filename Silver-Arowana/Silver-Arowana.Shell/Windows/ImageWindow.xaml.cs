@@ -28,6 +28,7 @@ namespace Silver_Arowana.Shell.Windows
     {
         private string previousBackground = "";
         private bool isInternetImage = false;
+        private string currentBackground = "";
 
         public ImageWindow()
         {
@@ -60,6 +61,7 @@ namespace Silver_Arowana.Shell.Windows
             image.Source = bi;
 
             this.previousBackground = previousBackground;
+            this.currentBackground = path;
             isInternetImage = false;
         }
 
@@ -80,7 +82,15 @@ namespace Silver_Arowana.Shell.Windows
 
         private void SetWallpaper()
         {
-            var filePath = SaveImageControlAsFile();
+            var filePath = "";
+            if (isInternetImage)
+            {
+                filePath = SaveImageControlAsFile();
+            }
+            else
+            {
+                filePath = currentBackground;
+            }
             StringBuilder sb = new StringBuilder(filePath);
             SetBackground(sb);
             SwitchToDesktop();
