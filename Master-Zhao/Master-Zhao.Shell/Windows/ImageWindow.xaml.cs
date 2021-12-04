@@ -30,9 +30,12 @@ namespace Master_Zhao.Shell.Windows
         private bool isInternetImage = false;
         private string currentBackground = "";
 
-        public ImageWindow()
+        private Action refreshBackgroundListCallBack;
+
+        public ImageWindow(Action action)
         {
             InitializeComponent();
+            refreshBackgroundListCallBack = action;
         }
 
         public void SetImageUrl(string url,string previousBackground)
@@ -83,6 +86,7 @@ namespace Master_Zhao.Shell.Windows
         private void btnSet_Click(object sender, RoutedEventArgs e)
         {
             SetWallpaper();
+            refreshBackgroundListCallBack?.Invoke();
         }
 
         private void MenuCopyPath_Click(object sender, RoutedEventArgs e)
@@ -121,6 +125,10 @@ namespace Master_Zhao.Shell.Windows
                 SwitchToWindow(new WindowInteropHelper(this).Handle);
                 StringBuilder sb = new StringBuilder(previousBackground);
                 SetBackground(sb);         
+            }
+            else
+            {
+                refreshBackgroundListCallBack?.Invoke();
             }
         }
 

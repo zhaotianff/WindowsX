@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Master_Zhao.Shell.Windows"
         mc:Ignorable="d"
         xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow" WindowStartupLocation="CenterScreen"
-        Title="预览" Height="450" Width="800">
+        Title="预览" Height="720" Width="1280">
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="复制图片路径" Click="MenuCopyPath_Click"></MenuItem>

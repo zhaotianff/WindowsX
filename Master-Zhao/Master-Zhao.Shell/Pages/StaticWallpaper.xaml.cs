@@ -31,6 +31,8 @@ namespace Master_Zhao.Shell.Pages
         private List<ITagImg> list = new List<ITagImg>();
         private IImageSearcher imageSearcher;
         public string CurrentBackground { get; set; }
+        private int ImagePage { get; set; } = 1;
+        private string CurrentKeyWord { get; set; }
 
         public StaticWallpaper()
         {
@@ -43,6 +45,12 @@ namespace Master_Zhao.Shell.Pages
             LoadCurrentBackground();
             LoadRecentBackground();
             LoadDailyWallpaper();
+        }
+
+        private void RefreshBackgroundList()
+        {
+            LoadCurrentBackground();
+            LoadRecentBackground();
         }
 
         private void LoadCurrentBackground()
@@ -73,6 +81,7 @@ namespace Master_Zhao.Shell.Pages
                 var sb = new StringBuilder(1024);
                 DesktopTool.GetRecentBackground(sb);
                 recentWallpapers = sb.ToString().Split(";").Take(5);
+                RemoveUnavailableWallpaper(recentWallpapers);
 
                 foreach (var wallpaper in recentWallpapers)
                 {
@@ -82,7 +91,17 @@ namespace Master_Zhao.Shell.Pages
                     wrap_wallpaper.Children.Add(thumbImageControl);
                 }
             }, new System.Threading.CancellationToken(), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+        }
 
+        private void RemoveUnavailableWallpaper(IEnumerable<string> list)
+        {
+            var tempList = new List<string>(list);
+            for (int i = 0; i < list.Count(); i++)
+            {
+                if (System.IO.File.Exists(list.ElementAt(i)) == false)
+                    tempList.RemoveAt(i);
+            }
+            list = tempList;
         }
 
         private void LoadDailyWallpaper()
@@ -121,19 +140,27 @@ namespace Master_Zhao.Shell.Pages
             return PInvoke.DesktopTool.SetBackground(sb);               
         }
 
-        private async void btn_SearchClick(object sender, RoutedEventArgs e)
+        private void btn_SearchClick(object sender, RoutedEventArgs e)
         {
             var keyword = this.text_Keyword.Text;
             if (string.IsNullOrEmpty(keyword))
                 return;
 
+            ImagePage = 1;
             //keyword += " " + SystemParameters.PrimaryScreenWidth + "x" + SystemParameters.PrimaryScreenHeight;
             keyword += " " + "电脑壁纸";
+            CurrentKeyWord = keyword;
+            SearchImageAsync(keyword, ImagePage);
+        }
+
+        private async void SearchImageAsync(string keyword,int page)
+        {
             list.Clear();
 
             //TODO cancel task
-            list = await imageSearcher.SearchImageAsync(keyword);
+            list = await imageSearcher.SearchImageAsync(keyword,page);
             this.panel_OnlineImgList.Children.Clear();
+            this.scroll.ScrollToTop();
             foreach (var item in list)
             {
                 ImgFuncButton image = new ImgFuncButton();
@@ -146,12 +173,31 @@ namespace Master_Zhao.Shell.Pages
             }
         }
 
+        private void btnPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(CurrentKeyWord))
+                return;
+            if (ImagePage > 0)
+            {
+                ImagePage--;
+                SearchImageAsync(CurrentKeyWord, ImagePage);
+            }
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {        
+            if (string.IsNullOrEmpty(CurrentKeyWord))
+                return;
+            ImagePage++;
+            SearchImageAsync(CurrentKeyWord, ImagePage);
+        }
+
         private void SetNetworkImage(object sender, MouseButtonEventArgs e)
         {
             //TODO 一些图片不显示
             CloseOtherImageWindow();
             var index = panel_OnlineImgList.Children.IndexOf(sender as ImgFuncButton);
-            ImageWindow imageWindow = new ImageWindow();
+            ImageWindow imageWindow = new ImageWindow(RefreshBackgroundList);
             imageWindow.Owner = Application.Current.MainWindow;
             imageWindow.SetImageUrl(list[index].DetailUrl, CurrentBackground);
             imageWindow.Show();
@@ -177,7 +223,7 @@ namespace Master_Zhao.Shell.Pages
             if(openFileDialog.ShowDialog() == true)
             {
                 CloseOtherImageWindow();
-                ImageWindow imageWindow = new ImageWindow();
+                ImageWindow imageWindow = new ImageWindow(RefreshBackgroundList);
                 imageWindow.Owner = Application.Current.MainWindow;
                 imageWindow.SetLocalImage(openFileDialog.FileName, CurrentBackground);
                 imageWindow.Show();

@@ -58,11 +58,16 @@
                         <Button Content="搜索" Width="88" Height="28" HorizontalAlignment="Left" Margin="210,0,0,0" Click="btn_SearchClick" IsDefault="True"/>
                     </Grid>
 
-                    <ScrollViewer Grid.Row="2">
-                        <WrapPanel Name="panel_OnlineImgList" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <Grid Grid.Row="2">
+                        <ScrollViewer Name="scroll">
+                            <WrapPanel Name="panel_OnlineImgList" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
 
-                        </WrapPanel>
-                    </ScrollViewer>
+                            </WrapPanel>
+                        </ScrollViewer>
+
+                        <Button Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Content="&lt;" Click="btnPreviousPage_Click"/>
+                        <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Content="&gt;" Click="btnNextPage_Click"/>
+                    </Grid>
                 </Grid>
             </GroupBox>
         </Grid>
