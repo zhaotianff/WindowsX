@@ -34,7 +34,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Label Content="Silver-Arowana" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Foreground="Silver" FontWeight="Bold"/>
+            <Label Content="Master-Zhao" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Foreground="Silver" FontWeight="Bold"/>
 
             <WrapPanel Grid.Row="1">
                 <controls:ImageButton Title="系统美化" Subtitle="静态壁纸、动态壁纸" ImagePath="Icon/desktop.png" Click="btnDesktop_Click"/>
