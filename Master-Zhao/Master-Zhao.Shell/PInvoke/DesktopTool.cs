@@ -22,5 +22,11 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("SilverArowanaCore.dll")]
         public static extern bool SwitchToWindow(IntPtr intPtr);
+
+        [DllImport("SilverArowanaCore.dll")]
+        public static extern bool EmbedWindowToDesktop(string lpWindowName);
+
+        [DllImport("SilverArowanaCore.dll")]
+        public static extern bool RestoreEmbedHwnd();
     }
 }

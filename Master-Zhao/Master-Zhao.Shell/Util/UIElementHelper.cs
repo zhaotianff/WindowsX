@@ -36,5 +36,19 @@ namespace Master_Zhao.Shell.Util
                 encoder.Save(stream);
             }
         }
+
+        public static BitmapImage GetBitmapImageFromLocalFile(string path)
+        {
+            if (File.Exists(path) == false)
+                return null;
+
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            var buffer = System.IO.File.ReadAllBytes(path);
+            var ms = new MemoryStream(buffer);
+            bi.StreamSource = ms;
+            bi.EndInit();
+            return bi;
+        }
     }
 }

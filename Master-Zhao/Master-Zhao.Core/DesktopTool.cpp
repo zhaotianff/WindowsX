@@ -45,8 +45,13 @@ BOOL GetRecentBackground(LPTSTR lpRecentPath)
 	return TRUE;
 }
 
-BOOL EmbedHWNDToDesktop(HWND hwnd)
+BOOL EmbedWindowToDesktop(LPTSTR lpWindowName)
 {
+	HWND hwnd = FindWindow(NULL, lpWindowName);
+
+	if (hwnd == NULL)
+		return FALSE;
+
 	pwiGlobalInfo = new tagBASICWINDOWINFO;
 	nWindowCount = 0;
 	hEmbedWindow = hwnd;
@@ -105,7 +110,7 @@ BOOL EmbedHWNDToDesktop(HWND hwnd)
 	return FALSE;
 }
 
-BOOL RestoreEmbedHwnd(HWND hwnd)
+BOOL RestoreEmbedHwnd()
 {
 	if (pwiGlobalInfo)
 		delete pwiGlobalInfo;

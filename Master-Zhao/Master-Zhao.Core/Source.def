@@ -6,3 +6,5 @@ GetBackground
 GetRecentBackground
 SwitchToDesktop
 SwitchToWindow
+EmbedWindowToDesktop
+RestoreEmbedHwnd
