@@ -1,9 +1,13 @@
 #include "DesktopTool.h"
 
-PBASICWINDOWINFO pwiGlobalInfo;
-int nWindowCount;
-HWND hWorkerW;
-HWND hEmbedWindow;
+struct tagBASICWINDOWINFO
+{
+	HWND hwnd;
+	TCHAR szName[260];
+};
+
+HWND hEmbedHwnd;
+std::vector<tagBASICWINDOWINFO> lstWindows;
 
 BOOL SetBackground(LPTSTR lpImagePath)
 {
@@ -45,98 +49,76 @@ BOOL GetRecentBackground(LPTSTR lpRecentPath)
 	return TRUE;
 }
 
-BOOL EmbedWindowToDesktop(LPTSTR lpWindowName)
+
+BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName)
 {
-	HWND hwnd = FindWindow(NULL, lpWindowName);
-
-	if (hwnd == NULL)
-		return FALSE;
-
-	pwiGlobalInfo = new tagBASICWINDOWINFO;
-	nWindowCount = 0;
-	hEmbedWindow = hwnd;
-
+	MessageBox(NULL, lpWindowName, L"", MB_OK);
 	HWND hProgman = FindWindow(L"Progman", L"Program Manager");
 	if (hProgman == NULL)
+	{
 		return FALSE;
+	}
 
-	SendMessage(hProgman, WM_SPAWN_WORKER, 0, 0);
+	SendMessage(hProgman, WM_SPAWN_WORKER, NULL, NULL);
+
+	lstWindows.clear();
 	EnumWindows(EnumWindowProc, 0);
 
-	for (int i = 0; i < nWindowCount; i++)
+	for (size_t i = lstWindows.size() -1;i >1 ; i--) 
 	{
-		if (lstrcmpW(pwiGlobalInfo->szWindowName, L"WorkerW") == 0)
+		tagBASICWINDOWINFO bwiCurrent = lstWindows[i];
+		tagBASICWINDOWINFO bwiNext = lstWindows[i - 1];
+		if (wcsncmp(lstWindows[i].szName, L"WorkerW", lstrlen(lstWindows[i].szName)) == 0)
 		{
-			HWND hSHellDefView = FindWindowEx(pwiGlobalInfo->hwnd, 0, L"SHELLDLL_DefView", NULL);
-			if (hSHellDefView == NULL)
+			HWND hShellDefView = FindWindowEx(bwiCurrent.hwnd, NULL, L"SHELLDLL_DefView", NULL);
+			if (hShellDefView == NULL) 
 			{
-				hWorkerW = pwiGlobalInfo->hwnd;
-				ShowWindow(hWorkerW, SW_HIDE);
-				return TRUE;
+				SendMessage(bwiCurrent.hwnd, WM_CLOSE, NULL, NULL);
+				break;
 			}
-			else
-			{
-				PBASICWINDOWINFO pwiNext = pwiGlobalInfo->next;
-				delete pwiGlobalInfo;
-				pwiGlobalInfo = NULL;
-				pwiGlobalInfo = pwiNext;
-
-				if (pwiGlobalInfo->szWindowName == L"Progman")
+			else 
+			{	
+				if (bwiNext.szName == L"Progman") 
 				{
-					HWND hLocalWorkW = FindWindowEx(pwiGlobalInfo->hwnd, 0, L"WorkerW", NULL);
-
-					if (IsWindowVisible(hLocalWorkW) == FALSE)
-					{
-						return TRUE;
+					HWND hWorkerW = FindWindowEx(bwiNext.hwnd, NULL, L"WorkerW", NULL);	
+					if (hWorkerW == NULL) 
+					{	
+						break;
 					}
-					else
-					{
-						hWorkerW = hLocalWorkW;
-						ShowWindow(hLocalWorkW, SW_HIDE);
+					else 
+					{	
+						SendMessage(hWorkerW, WM_CLOSE, NULL, NULL);
 					}
 				}
-				else
+				else 
 				{
-					ShowWindow(pwiGlobalInfo->hwnd, SW_HIDE);
+					SendMessage(bwiNext.hwnd, WM_CLOSE, NULL, NULL);
 				}
 			}
-		}
-		PBASICWINDOWINFO pwiNext = pwiGlobalInfo->next;
-		delete pwiGlobalInfo;
-		pwiGlobalInfo = NULL;
-		pwiGlobalInfo = pwiNext;
+		}	
 	}
-	
+
+	hEmbedHwnd = FindWindow(NULL, lpWindowName);
+
+	if (hEmbedHwnd == NULL)
+	{
+		return FALSE;
+	}
+
+	SetParent(hEmbedHwnd, hProgman);
+	ShowWindow(hEmbedHwnd, SW_MAXIMIZE);
+	return true;
+}
+
+BOOL CloseEmbedWindow()
+{
+	if (hEmbedHwnd)
+	{
+		SendMessage(hEmbedHwnd, WM_CLOSE, NULL, NULL);
+		return TRUE;
+	}
+
 	return FALSE;
-}
-
-BOOL RestoreEmbedHwnd()
-{
-	if (pwiGlobalInfo)
-		delete pwiGlobalInfo;
-
-	if (hEmbedWindow)
-	{
-		SendMessage(hEmbedWindow, WM_CLOSE, 0, 0);
-	}
-
-	if (hWorkerW)
-	{
-		ShowWindow(hWorkerW, SW_SHOW);
-	}
-	return TRUE;
-}
-
-BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
-{
-	PBASICWINDOWINFO windowInfo = new tagBASICWINDOWINFO;
-	memset(pwiGlobalInfo->szWindowName, 0, sizeof(pwiGlobalInfo->szWindowName));
-	GetClassName(hwnd, pwiGlobalInfo->szWindowName, sizeof(pwiGlobalInfo->szWindowName) / sizeof(TCHAR));
-	windowInfo->hwnd = hwnd;
-	nWindowCount++;
-	windowInfo->next = pwiGlobalInfo;
-	pwiGlobalInfo = windowInfo;
-	return TRUE;
 }
 
 VOID SwitchToDesktop()
@@ -153,4 +135,14 @@ VOID SwitchToWindow(HWND hwnd)
 {
 	ShowWindow(hwnd, SW_SHOW);
 	SetForegroundWindow(hwnd);
+}
+
+BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
+{
+	tagBASICWINDOWINFO bwi{};
+	memset(bwi.szName, 0, sizeof(bwi.szName));
+	GetClassName(hwnd, bwi.szName, sizeof(bwi.szName) / sizeof(TCHAR));
+	bwi.hwnd = hwnd;
+	lstWindows.push_back(bwi);
+	return TRUE;
 }

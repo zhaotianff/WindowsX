@@ -39,3 +39,8 @@ void TestSwitchToDesktop()
 {
 	SwitchToDesktop();
 }
+
+void TestEmbedWindow()
+{
+	EmbedWindowToDesktop(L"MainWindow");
+}

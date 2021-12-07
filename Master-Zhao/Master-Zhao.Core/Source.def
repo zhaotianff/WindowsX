@@ -7,4 +7,4 @@ GetRecentBackground
 SwitchToDesktop
 SwitchToWindow
 EmbedWindowToDesktop
-RestoreEmbedHwnd
+CloseEmbedWindow

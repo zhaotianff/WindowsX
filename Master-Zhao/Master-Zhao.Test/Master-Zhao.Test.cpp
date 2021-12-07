@@ -2,10 +2,10 @@
 //
 #include"DesktopToolTest.h"
 
-#pragma comment (lib,"../Silver-Arowana.Shell/bin/Debug/net5.0-windows/SilverArowanaCore.lib")
+#pragma comment (lib,"../Master-Zhao.Shell/bin/Debug/net5.0-windows/SilverArowanaCore.lib")
 
 
 int main()
 {
-	TestSwitchToDesktop();
+	TestEmbedWindow();
 }
