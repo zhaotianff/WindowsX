@@ -52,7 +52,7 @@ BOOL GetRecentBackground(LPTSTR lpRecentPath)
 
 BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName)
 {
-	MessageBox(NULL, lpWindowName, L"", MB_OK);
+	Sleep(1000);
 	HWND hProgman = FindWindow(L"Progman", L"Program Manager");
 	if (hProgman == NULL)
 	{

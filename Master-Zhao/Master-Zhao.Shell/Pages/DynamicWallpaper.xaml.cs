@@ -44,7 +44,8 @@ namespace Master_Zhao.Shell.Pages
                     DynamicWallpaperControl dynamicWallpaperControl = new DynamicWallpaperControl();
                     dynamicWallpaperControl.WallpaperName = item.Name;
                     dynamicWallpaperControl.VideoPath = System.IO.Path.GetFullPath(item.Path);
-                    dynamicWallpaperControl.ThumbnailPath = System.IO.Path.GetFullPath(item.Thumbnail);
+                    if(!string.IsNullOrEmpty(item.Thumbnail))
+                        dynamicWallpaperControl.ThumbnailPath = System.IO.Path.GetFullPath(item.Thumbnail);
                     dynamicWallpaperControl.OnPreview += DynamicWallpaperControl_OnPreview;
                     dynamicWallpaperControl.OnSet += DynamicWallpaperControl_OnSet;
                     wrap.Children.Add(dynamicWallpaperControl);
@@ -61,7 +62,7 @@ namespace Master_Zhao.Shell.Pages
         {
             System.Diagnostics.Process.Start(ExePath, "\"" + path + "\"");
             var result = DesktopTool.EmbedWindowToDesktop("MainWindow");
-            MessageBox.Show(result.ToString());
+            //MessageBox.Show(result.ToString());
         }
 
         private void SetDynamicBackground_MouseDown(object sender, MouseButtonEventArgs e)
@@ -71,6 +72,19 @@ namespace Master_Zhao.Shell.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadDynamicWallpaperListAsync();
+        }
+
+        private void btnAddDynamicWallpaper_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "全部文件|*.*";
+
+            if(openFileDialog.ShowDialog() == true)
+            {
+                GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList.Add(new DynamicWallpaperItem() { Name = System.IO.Path.GetFileName(openFileDialog.FileName), Path = openFileDialog.FileName});
+            }
+
             LoadDynamicWallpaperListAsync();
         }
     }

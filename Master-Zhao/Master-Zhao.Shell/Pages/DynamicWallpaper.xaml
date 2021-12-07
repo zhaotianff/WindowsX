@@ -17,11 +17,20 @@
         <WrapPanel Name="wrap">
             
         </WrapPanel>
-        
-        <StackPanel Grid.Column="1">
-            <Label Content="动态壁纸设置" FontWeight="Bold" FontSize="15"></Label>
-            <CheckBox Content="自动循环" Margin="5"/>
-            <CheckBox Content="允许播放背景声音" Margin="5"/>
-        </StackPanel>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="1">
+                <Label Content="动态壁纸设置" FontWeight="Bold" FontSize="15"></Label>
+                <CheckBox Content="自动循环" Margin="5"/>
+                <CheckBox Content="允许播放背景声音" Margin="5"/>
+            </StackPanel>
+
+            <Button Content="添加动态壁纸" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="88" Height="28" Margin="5" Click="btnAddDynamicWallpaper_Click"/>
+        </Grid>
     </Grid>
 </Page>
