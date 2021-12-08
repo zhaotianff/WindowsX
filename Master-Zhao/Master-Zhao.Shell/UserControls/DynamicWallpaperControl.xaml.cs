@@ -53,6 +53,7 @@ namespace Master_Zhao.Shell.UserControls
         public delegate void WallpaperEventHandler(object sender, string path);
         public event WallpaperEventHandler OnPreview;
         public event WallpaperEventHandler OnSet;
+        public event EventHandler OnSelect;
 
         public DynamicWallpaperControl()
         {
@@ -85,6 +86,7 @@ namespace Master_Zhao.Shell.UserControls
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            OnSelect?.Invoke(sender,e);
             SetBorderBrush();
             IsChecked = true;
         }
@@ -94,7 +96,7 @@ namespace Master_Zhao.Shell.UserControls
             BorderBrush = accentBaseColor;
         }
 
-        private void ResetBorderBrush()
+        public void ResetBorderBrush()
         {
             BorderBrush = Brushes.Transparent;
         }

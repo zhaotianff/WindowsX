@@ -48,9 +48,19 @@ namespace Master_Zhao.Shell.Pages
                         dynamicWallpaperControl.ThumbnailPath = System.IO.Path.GetFullPath(item.Thumbnail);
                     dynamicWallpaperControl.OnPreview += DynamicWallpaperControl_OnPreview;
                     dynamicWallpaperControl.OnSet += DynamicWallpaperControl_OnSet;
+                    dynamicWallpaperControl.OnSelect += DynamicWallpaperControl_OnSelect;
                     wrap.Children.Add(dynamicWallpaperControl);
                 }
             },new System.Threading.CancellationToken(),TaskCreationOptions.None,TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void DynamicWallpaperControl_OnSelect(object sender, EventArgs e)
+        {
+            foreach (var item in wrap.Children)
+            {
+                var dynamicWallpaperControl = item as DynamicWallpaperControl;
+                dynamicWallpaperControl?.ResetBorderBrush();
+            }
         }
 
         private void DynamicWallpaperControl_OnSet(object sender, string path)

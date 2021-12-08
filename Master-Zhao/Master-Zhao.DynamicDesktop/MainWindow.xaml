@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None">
     <Grid>
-        <MediaElement x:Name="media" LoadedBehavior="Manual"/>
+        <MediaElement x:Name="media" LoadedBehavior="Manual" Stretch="UniformToFill"/>
     </Grid>
 </Window>

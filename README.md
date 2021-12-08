@@ -51,6 +51,15 @@ Master-Zhao is a windows toolset software.一个没什么用的大杂烩，我�
  <img align="center" alt="start up" src="Screenshots/main.png" />
 </p>
 
+<p align="center">
+ <img align="center" alt="start up" src="Screenshots/static_wallpaper.png" />
+</p>
+<p align="center">static wallpaper</p>
+
+<p align="center">
+ <img align="center" alt="start up" src="Screenshots/dynamic_wallpaper.png" />
+</p>
+<p align="center">static wallpaper</p>
 
 # License
 [GPLV3](LICENSE)
