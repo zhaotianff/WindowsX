@@ -61,5 +61,17 @@ namespace Master_Zhao.Shell
             endHeightAnimation.To = 250;
             end?.Begin();
         }
+
+        private void BlurWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //TODO temp
+            //sendmessage
+            var dynamicDesktopProcess = System.Diagnostics.Process.GetProcessesByName("Master-Zhao.DynamicDesktop");
+
+            if(dynamicDesktopProcess.Length > 0)
+            {
+                dynamicDesktopProcess[0].Kill();
+            }
+        }
     }
 }
