@@ -1,5 +1,7 @@
 # Master-Zhao
-Master-Zhao is a windows toolset software.一个没什么用的大杂烩，我也来弄个属于我自己的大师。
+Master-Zhao is a windows toolset software.  
+07年时，在一个软件盘上，我第一次接触了Windows优化大师，当时的鲁大师还是作为Windows优化大师的一个附带工具安装的。作者鲁锦，是我心中当之无愧的大佬之一。    
+10多年过去了，现在我也掌握了一些编程方面的知识，于是我想实现一下童年的梦想，写一个工具类的软件集合，暂且命名为赵大师，哈哈哈哈。
 
 <p align="center">
 <a href="https://github.com/zhaotianff/Master-Zhao" target="_blank">
@@ -50,16 +52,20 @@ Master-Zhao is a windows toolset software.一个没什么用的大杂烩，我�
 <p align="center">
  <img align="center" alt="start up" src="Screenshots/main.png" />
 </p>
+<p align="center">main</p>
+<br/>
 
 <p align="center">
- <img align="center" alt="start up" src="Screenshots/static_wallpaper.png" />
+ <img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper.png" />
 </p>
 <p align="center">static wallpaper</p>
+<br/>
 
 <p align="center">
- <img align="center" alt="start up" src="Screenshots/dynamic_wallpaper.png" />
+ <img align="center" alt="dynamic wallpaper" src="Screenshots/dynamic_wallpaper.png" />
 </p>
-<p align="center">static wallpaper</p>
+<p align="center">dynamic wallpaper</p>
+<br/>
 
 # License
 [GPLV3](LICENSE)
