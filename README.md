@@ -40,10 +40,13 @@ Master-Zhao is a windows toolset software.
 * background network management
 * windows settings
 * gpedit & register
+* fast search(taskbar win+q)
 
 # Beautify
 * static wallpaper setting
 * dynamic wallpaper setting
+  * 增加B站支持
+  * 增加视频列表切换
 * quick run
 * transparency taskbar
 * other
