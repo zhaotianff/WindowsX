@@ -1,4 +1,5 @@
 ﻿using Master_Zhao.Shell.Pages;
+using Master_Zhao.Shell.PInvoke;
 using System;
 using System.Windows;
 using System.Windows.Media.Animation;
@@ -66,12 +67,7 @@ namespace Master_Zhao.Shell
         {
             //TODO temp
             //sendmessage
-            var dynamicDesktopProcess = System.Diagnostics.Process.GetProcessesByName("Master-Zhao.DynamicDesktop");
-
-            if(dynamicDesktopProcess.Length > 0)
-            {
-                dynamicDesktopProcess[0].Kill();
-            }
+            DesktopTool.CloseEmbedWindow();
         }
     }
 }

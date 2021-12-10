@@ -3,6 +3,8 @@
 #include"framework.h"
 #include <Shldisp.h>
 #include<vector>
+#include<shobjidl_core.h>
+#include<thumbcache.h>
 
 #define WM_SPAWN_WORKER 0x052C
 
@@ -13,5 +15,6 @@ SILVERAROWANACORE_API VOID SwitchToDesktop();
 SILVERAROWANACORE_API VOID SwitchToWindow(HWND hwnd);
 SILVERAROWANACORE_API BOOL CloseEmbedWindow();
 BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam);
+SILVERAROWANACORE_API HBITMAP GetFileThumbnail(PCWSTR path);
 
 SILVERAROWANACORE_API BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName);

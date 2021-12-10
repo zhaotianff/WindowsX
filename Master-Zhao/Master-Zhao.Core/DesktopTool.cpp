@@ -146,3 +146,33 @@ BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
 	lstWindows.push_back(bwi);
 	return TRUE;
 }
+
+HBITMAP GetFileThumbnail(PCWSTR path)
+{
+	HRESULT hr = CoInitialize(nullptr);
+
+	IShellItem* item = nullptr;
+	hr = SHCreateItemFromParsingName(path, nullptr, IID_PPV_ARGS(&item));
+
+	IThumbnailCache* cache = nullptr;
+	hr = CoCreateInstance(
+		CLSID_LocalThumbnailCache,
+		nullptr,
+		CLSCTX_INPROC,
+		IID_PPV_ARGS(&cache));
+
+	ISharedBitmap* shared_bitmap;
+	hr = cache->GetThumbnail(
+		item,
+		48 * 64,
+		WTS_EXTRACT,
+		&shared_bitmap,
+		nullptr,
+		nullptr);
+
+	HBITMAP hbitmap = NULL;
+	hr = shared_bitmap->GetSharedBitmap(&hbitmap);
+	CoUninitialize();
+
+	return hbitmap;
+}
