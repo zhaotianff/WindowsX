@@ -8,3 +8,4 @@ SwitchToDesktop
 SwitchToWindow
 EmbedWindowToDesktop
 CloseEmbedWindow
+GetFileThumbnail

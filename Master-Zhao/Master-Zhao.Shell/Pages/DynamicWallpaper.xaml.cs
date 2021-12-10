@@ -88,11 +88,27 @@ namespace Master_Zhao.Shell.Pages
         private void btnAddDynamicWallpaper_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "全部文件|*.*";
+            openFileDialog.Filter = "视频文件|*.mp4;*.avi;*.mpg;*.mpeg";
 
             if(openFileDialog.ShowDialog() == true)
             {
-                GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList.Add(new DynamicWallpaperItem() { Name = System.IO.Path.GetFileName(openFileDialog.FileName), Path = openFileDialog.FileName});
+                var wallpaperName = System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName);
+                var wallpaperFileName = System.IO.Path.GetFileName(openFileDialog.FileName);
+                var dir = System.IO.Path.Combine(Environment.CurrentDirectory, "res\\dynamic wallpaper\\", wallpaperName);
+                if (System.IO.Directory.Exists(dir) == false)
+                    System.IO.Directory.CreateDirectory(dir);
+
+                var thumbBitmap = DesktopTool.GetFileThumbnail(openFileDialog.FileName);
+                var thumbnailPath = System.IO.Path.Combine(dir, wallpaperName + ".png");
+                System.Drawing.Bitmap.FromHbitmap(thumbBitmap).Save(thumbnailPath);
+                var targetFilePath = System.IO.Path.Combine(dir, wallpaperFileName);
+                System.IO.File.Move(openFileDialog.FileName, targetFilePath);
+                GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList.Add(new DynamicWallpaperItem()
+                {
+                    Name = wallpaperFileName,
+                    Path = targetFilePath,
+                    Thumbnail = thumbnailPath
+                });
             }
 
             LoadDynamicWallpaperListAsync();

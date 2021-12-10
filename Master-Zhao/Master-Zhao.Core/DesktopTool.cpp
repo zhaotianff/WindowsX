@@ -161,10 +161,11 @@ HBITMAP GetFileThumbnail(PCWSTR path)
 		CLSCTX_INPROC,
 		IID_PPV_ARGS(&cache));
 
+	WTS_CACHEFLAGS flags = WTS_LOWQUALITY;
 	ISharedBitmap* shared_bitmap;
 	hr = cache->GetThumbnail(
 		item,
-		48 * 64,
+		12*16,
 		WTS_EXTRACT,
 		&shared_bitmap,
 		nullptr,
