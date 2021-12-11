@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -20,6 +21,11 @@ namespace Master_Zhao.DynamicDesktop
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const int WM_USER = 0x0400;
+        private const int WM_PAUSE = WM_USER + 0x100;
+        private const int WM_PLAY = WM_USER + 0x101;
+        private const int WM_EXIT = WM_USER + 0x102;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,5 +49,19 @@ namespace Master_Zhao.DynamicDesktop
             media.Stop();
             media.Play();
         }
+
+        public override void BeginInit()
+        {
+            HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            hwndSource.AddHook(HwndSourceHook);
+            base.BeginInit();
+        }
+
+        public IntPtr HwndSourceHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            //TODO 
+            return IntPtr.Zero;
+        }
+
     }
 }
