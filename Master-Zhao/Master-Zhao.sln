@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master-Zhao.Shell.Test", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master-Zhao.Config", "Master-Zhao.Config\Master-Zhao.Config.csproj", "{1C336F4B-D691-4B4F-8C37-EF95B3876F63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master-Zhao.IO", "Master-Zhao.IO\Master-Zhao.IO.csproj", "{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,18 @@ Global
 		{1C336F4B-D691-4B4F-8C37-EF95B3876F63}.Release|x64.Build.0 = Release|Any CPU
 		{1C336F4B-D691-4B4F-8C37-EF95B3876F63}.Release|x86.ActiveCfg = Release|Any CPU
 		{1C336F4B-D691-4B4F-8C37-EF95B3876F63}.Release|x86.Build.0 = Release|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Debug|x64.Build.0 = Debug|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Debug|x86.Build.0 = Debug|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|x64.ActiveCfg = Release|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|x64.Build.0 = Release|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|x86.ActiveCfg = Release|Any CPU
+		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

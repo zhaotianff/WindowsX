@@ -27,7 +27,7 @@ namespace Master_Zhao.Shell.Pages
     {
         private static readonly string DynamicDesktopProgramFileName = "Master-Zhao.DynamicDesktop.exe";
         private static readonly string ExePath = System.IO.Path.GetFullPath($"../../../../Master-Zhao.DynamicDesktop/bin/Debug/net5.0-windows/{DynamicDesktopProgramFileName}");
-        private static readonly string DynamicDesktopProgramClassName = "MainWindow";
+        private static readonly string DynamicDesktopProcessName = "Master-Zhao.DynamicDesktop";
 
         private const int WM_USER = 0x0400;
         private const int WM_PAUSE = WM_USER + 0x100;
@@ -79,41 +79,13 @@ namespace Master_Zhao.Shell.Pages
         }
 
 
-        private async void DynamicWallpaperControl_OnPreview(object sender, string path)
+        private void DynamicWallpaperControl_OnPreview(object sender, string path)
         {
-            IntPtr hProgman = User32.FindWindow("Progman", "Program Manager");
-            IntPtr ptr = User32.FindWindowEx(hProgman, IntPtr.Zero, null, DynamicDesktopProgramClassName);
-            if(ptr == IntPtr.Zero)
+            var processes = System.Diagnostics.Process.GetProcesses();
+            if(processes.FirstOrDefault(x=>x.ProcessName == DynamicDesktopProcessName) == null)
             {
                 System.Diagnostics.Process.Start(ExePath, "\"" + path + "\"");
                 var result = DesktopTool.EmbedWindowToDesktop("MainWindow");
-            }
-            else
-            {
-                //IntPtr ptrPath = Marshal.AllocHGlobal(1024);
-                //var buffer = Encoding.UTF8.GetBytes(path);
-                //Marshal.Copy(buffer, 0, ptrPath, buffer.Length);
-                //_ = User32.SendMessage(ptr, (uint)WM_SETVIDEO, (IntPtr)buffer.Length, ptrPath);            
-            }
-
-            await Task.Delay(1000);
-            var isKeep = await MessageBoxEx.WaitMessageBox.Show("提示信息", "是否保存当前壁纸设置？", "保留");
-
-            if(isKeep == false)
-            {
-                if(ptr == IntPtr.Zero)
-                {
-                    DesktopTool.CloseEmbedWindow();
-                }
-                else
-                {
-                    //IntPtr pathPtr = Marshal.AllocHGlobal(1024);
-                    //var result = User32.SendMessage(ptr, WM_GETVIDEO, (IntPtr)1024, pathPtr);
-                    //if(result > 0)
-                    //{
-                    //    User32.SendMessage(ptr, WM_SETVIDEO, IntPtr.Zero, pathPtr);
-                    //}                
-                }
             }
         }
 
