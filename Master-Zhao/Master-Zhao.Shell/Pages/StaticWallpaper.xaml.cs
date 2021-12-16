@@ -158,6 +158,7 @@ namespace Master_Zhao.Shell.Pages
             list.Clear();
 
             //TODO cancel task
+            //TODO 这个接口貌似会封IP
             list = await imageSearcher.SearchImageAsync(keyword,page);
             this.panel_OnlineImgList.Children.Clear();
             this.scroll.ScrollToTop();

@@ -15,6 +15,8 @@ namespace Master_Zhao.Shell
         Storyboard start;
         Storyboard end;
 
+        private string CurrentPage { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +39,7 @@ namespace Master_Zhao.Shell
 
         private void btnDesktop_Click(object sender, RoutedEventArgs e)
         {
-            BeginShowMenuAnimation("");
+            BeginShowMenuAnimation("Wallpaper");
         }
 
         public void BeginShowMenuAnimation(string targetPage)
@@ -50,6 +52,7 @@ namespace Master_Zhao.Shell
             startHeightAnimation.To = this.ActualHeight;
             this.frame.Content = desktopSetting;
             start?.Begin();
+            CurrentPage = targetPage;
         }
 
         public void EndShowMenuAnimation()
@@ -61,6 +64,7 @@ namespace Master_Zhao.Shell
             endHeightAnimation.From = this.ActualHeight;
             endHeightAnimation.To = 250;
             end?.Begin();
+            CurrentPage = "";
         }
 
         private void BlurWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -68,6 +72,16 @@ namespace Master_Zhao.Shell
             //TODO temp
             //sendmessage
             DesktopTool.CloseEmbedWindow();
+        }
+
+        private async void BlurWindow_StateChanged(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrEmpty(CurrentPage))
+            {
+                //TODO Temp
+                await System.Threading.Tasks.Task.Delay(100);
+                BeginShowMenuAnimation("Wallpaper");
+            }
         }
     }
 }

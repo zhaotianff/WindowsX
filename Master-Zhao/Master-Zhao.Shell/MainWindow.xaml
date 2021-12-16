@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
         xmlns:blurwindow="clr-namespace:TianXiaTech;assembly=BlurWindow" SizeChanged="BlurWindow_SizeChanged"
         mc:Ignorable="d"
-        Height="720" Width="1320" WindowStartupLocation="CenterScreen" Closing="BlurWindow_Closing">
+        Height="720" Width="1320" WindowStartupLocation="CenterScreen" Closing="BlurWindow_Closing" StateChanged="BlurWindow_StateChanged">
         <!--Title="Silver-Arowana" TitleForeground="Purple" Icon="logo.png"-->
     <Window.Resources>
         <Storyboard x:Key="start">
