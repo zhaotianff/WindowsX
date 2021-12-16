@@ -71,10 +71,11 @@ Master-Zhao is a windows toolset software.
 <br/>
 
 # Development Plan
-* static wallpaper setting(find a stable image api)
-* dynamic_wallpaper setting(support bilibili url)
-* transparency taskbar
-* huá shuǐ
+- [ ] static wallpaper setting(find a stable image api)
+- [ ] dynamic_wallpaper setting(support bilibili url)
+- [ ] transparency taskbar
+- [ ] huá shuǐ
+
 
 # License
 [GPLV3](LICENSE)
