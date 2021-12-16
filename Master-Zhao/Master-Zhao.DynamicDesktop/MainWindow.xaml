@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Master_Zhao.DynamicDesktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None">
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" SourceInitialized="Window_SourceInitialized">
     <Grid>
         <MediaElement x:Name="media" LoadedBehavior="Manual" Stretch="UniformToFill"/>
     </Grid>

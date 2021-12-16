@@ -18,5 +18,12 @@ namespace Master_Zhao.Shell
         {
             GlobalConfig.Instance.LoadAllConfig();
         }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            //unhandled exception
+            //todo
+            MessageBox.Show(e.Exception.Message);
+        }
     }
 }

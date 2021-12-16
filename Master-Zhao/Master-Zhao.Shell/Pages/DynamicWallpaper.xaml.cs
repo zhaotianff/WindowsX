@@ -5,6 +5,7 @@ using Master_Zhao.Shell.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,7 +27,16 @@ namespace Master_Zhao.Shell.Pages
     {
         private static readonly string DynamicDesktopProgramFileName = "Master-Zhao.DynamicDesktop.exe";
         private static readonly string ExePath = System.IO.Path.GetFullPath($"../../../../Master-Zhao.DynamicDesktop/bin/Debug/net5.0-windows/{DynamicDesktopProgramFileName}");
-       
+        private static readonly string DynamicDesktopProgramClassName = "MainWindow";
+
+        private const int WM_USER = 0x0400;
+        private const int WM_PAUSE = WM_USER + 0x100;
+        private const int WM_PLAY = WM_USER + 0x101;
+        private const int WM_SETVIDEO = WM_USER + 0x103;
+        private const int WM_MUTE = WM_USER + 0x104;
+        private const int WM_REPEAT = WM_USER + 0x105;
+        private const int WM_GETVIDEO = WM_USER + 0x106;
+
         public DynamicWallpaper()
         {
             InitializeComponent();
@@ -68,11 +78,43 @@ namespace Master_Zhao.Shell.Pages
             
         }
 
-        private void DynamicWallpaperControl_OnPreview(object sender, string path)
+
+        private async void DynamicWallpaperControl_OnPreview(object sender, string path)
         {
-            System.Diagnostics.Process.Start(ExePath, "\"" + path + "\"");
-            var result = DesktopTool.EmbedWindowToDesktop("MainWindow");
-            //MessageBox.Show(result.ToString());
+            IntPtr hProgman = User32.FindWindow("Progman", "Program Manager");
+            IntPtr ptr = User32.FindWindowEx(hProgman, IntPtr.Zero, null, DynamicDesktopProgramClassName);
+            if(ptr == IntPtr.Zero)
+            {
+                System.Diagnostics.Process.Start(ExePath, "\"" + path + "\"");
+                var result = DesktopTool.EmbedWindowToDesktop("MainWindow");
+            }
+            else
+            {
+                //IntPtr ptrPath = Marshal.AllocHGlobal(1024);
+                //var buffer = Encoding.UTF8.GetBytes(path);
+                //Marshal.Copy(buffer, 0, ptrPath, buffer.Length);
+                //_ = User32.SendMessage(ptr, (uint)WM_SETVIDEO, (IntPtr)buffer.Length, ptrPath);            
+            }
+
+            await Task.Delay(1000);
+            var isKeep = await MessageBoxEx.WaitMessageBox.Show("提示信息", "是否保存当前壁纸设置？", "保留");
+
+            if(isKeep == false)
+            {
+                if(ptr == IntPtr.Zero)
+                {
+                    DesktopTool.CloseEmbedWindow();
+                }
+                else
+                {
+                    //IntPtr pathPtr = Marshal.AllocHGlobal(1024);
+                    //var result = User32.SendMessage(ptr, WM_GETVIDEO, (IntPtr)1024, pathPtr);
+                    //if(result > 0)
+                    //{
+                    //    User32.SendMessage(ptr, WM_SETVIDEO, IntPtr.Zero, pathPtr);
+                    //}                
+                }
+            }
         }
 
         private void SetDynamicBackground_MouseDown(object sender, MouseButtonEventArgs e)
@@ -102,7 +144,7 @@ namespace Master_Zhao.Shell.Pages
                 var thumbnailPath = System.IO.Path.Combine(dir, wallpaperName + ".png");
                 System.Drawing.Bitmap.FromHbitmap(thumbBitmap).Save(thumbnailPath);
                 var targetFilePath = System.IO.Path.Combine(dir, wallpaperFileName);
-                System.IO.File.Move(openFileDialog.FileName, targetFilePath);
+                System.IO.File.Copy(openFileDialog.FileName, targetFilePath,true);
                 GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList.Add(new DynamicWallpaperItem()
                 {
                     Name = wallpaperFileName,

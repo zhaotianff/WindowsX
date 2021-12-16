@@ -15,9 +15,9 @@ namespace Master_Zhao.DynamicDesktop
     {
         public static string VideoPath { get; set; } = "";
 
-        public static bool Mute { get; set; } = true;
+        public static int Mute { get; set; }
 
-        public static bool Repeat { get; set; } = true;
+        public static int Repeat { get; set; }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
