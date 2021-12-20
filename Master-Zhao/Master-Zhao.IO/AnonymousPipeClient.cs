@@ -16,11 +16,19 @@ namespace Master_Zhao.IO
         private bool receiveFlag = true;
 
 
-        public void StartClient(string handleAsString)
+        public bool StartClient(string handleAsString)
         {
-            pipeClient = new AnonymousPipeClientStream(PipeDirection.In, handleAsString);
-            sr = new StreamReader(pipeClient);
-            new System.Threading.Thread(Receive) { IsBackground = true }.Start();
+            try
+            {
+                pipeClient = new AnonymousPipeClientStream(PipeDirection.In, handleAsString);
+                sr = new StreamReader(pipeClient);
+                new System.Threading.Thread(Receive) { IsBackground = true }.Start();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void CloseClient()

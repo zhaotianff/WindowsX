@@ -1,5 +1,6 @@
 ﻿using Master_Zhao.Config;
 using Master_Zhao.Config.Model;
+using Master_Zhao.IO;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.UserControls;
 using System;
@@ -18,6 +19,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using static Master_Zhao.IO.Commands.DynamicWallpaperCommands;
+
 namespace Master_Zhao.Shell.Pages
 {
     /// <summary>
@@ -26,16 +29,9 @@ namespace Master_Zhao.Shell.Pages
     public partial class DynamicWallpaper : Page
     {
         private static readonly string DynamicDesktopProgramFileName = "Master-Zhao.DynamicDesktop.exe";
-        private static readonly string ExePath = System.IO.Path.GetFullPath($"../../../../Master-Zhao.DynamicDesktop/bin/Debug/net5.0-windows/{DynamicDesktopProgramFileName}");
         private static readonly string DynamicDesktopProcessName = "Master-Zhao.DynamicDesktop";
 
-        private const int WM_USER = 0x0400;
-        private const int WM_PAUSE = WM_USER + 0x100;
-        private const int WM_PLAY = WM_USER + 0x101;
-        private const int WM_SETVIDEO = WM_USER + 0x103;
-        private const int WM_MUTE = WM_USER + 0x104;
-        private const int WM_REPEAT = WM_USER + 0x105;
-        private const int WM_GETVIDEO = WM_USER + 0x106;
+        private AnonymousPipeServer server = new AnonymousPipeServer();
 
         public DynamicWallpaper()
         {
@@ -79,14 +75,46 @@ namespace Master_Zhao.Shell.Pages
         }
 
 
-        private void DynamicWallpaperControl_OnPreview(object sender, string path)
+        private async void DynamicWallpaperControl_OnPreview(object sender, string path)
         {
-            var processes = System.Diagnostics.Process.GetProcesses();
-            if(processes.FirstOrDefault(x=>x.ProcessName == DynamicDesktopProcessName) == null)
+            //TODO 可以优化
+            TerminateDynamicDesktop(server);
+            StartDynamicWallpaperProcess(DynamicDesktopProgramFileName, path);
+            DesktopTool.EmbedWindowToDesktop("MainWindow");
+
+            var result = await MessageBoxEx.WaitMessageBox.Show("提示信息", "是否保存当前壁纸设置？", "保留");
+            if (result == false)
             {
-                System.Diagnostics.Process.Start(ExePath, "\"" + path + "\"");
-                var result = DesktopTool.EmbedWindowToDesktop("MainWindow");
+                SendMessageToDynamicWallpaper(DYWALLPAPER_RECOVERLAST);
             }
+        }
+
+        private void TerminateDynamicDesktop(AnonymousPipeServer server)
+        {
+            if (server != null)
+                return;
+
+            var processes = System.Diagnostics.Process.GetProcesses();
+            var dynamicDesktopProcess = processes.FirstOrDefault(x => x.ProcessName == DynamicDesktopProcessName);
+            dynamicDesktopProcess?.Kill();
+        }
+
+        private void StartDynamicWallpaperProcess(string processPath,string videoPath)
+        {
+            server.StartServer(processPath,"\"" + videoPath + "\"");
+        }
+
+        private void SendMessageToDynamicWallpaper(string message)
+        {
+            if (server == null)
+                return;
+
+            server.SendMessage(message);
+        }
+
+        public void StopDynamicWallpaperProcess()
+        {
+            DesktopTool.CloseEmbedWindow();
         }
 
         private void SetDynamicBackground_MouseDown(object sender, MouseButtonEventArgs e)

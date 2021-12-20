@@ -27,6 +27,9 @@ namespace Master_Zhao.Shell.Pages
         private static readonly string StaticWallpaperName = "StaticWallpaper.xaml";
         private static readonly string DynamicWallpaperName = "DynamicWallpaper.xaml";
 
+        private DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
+        private StaticWallpaper staticWallpaper = new StaticWallpaper();
+
         public DesktopSetting()
         {
             InitializeComponent();
@@ -48,12 +51,20 @@ namespace Master_Zhao.Shell.Pages
 
         private void btn_StaticWallpaperClick(object sender, RoutedEventArgs e)
         {
-            frame.Source = new Uri(StaticWallpaperName, UriKind.Relative);
+            //frame.Source = new Uri(StaticWallpaperName, UriKind.Relative);
+            frame.Content = staticWallpaper;
+            CloseAnonymousPipe();       
         }
 
         private void btn_DynamicWallpaperClick(object sender, RoutedEventArgs e)
         {
-            frame.Source = new Uri(DynamicWallpaperName, UriKind.Relative);
+            //frame.Source = new Uri(DynamicWallpaperName, UriKind.Relative);
+            frame.Content = dynamicWallpaper;
+        }
+
+        public void CloseAnonymousPipe()
+        {
+            dynamicWallpaper.StopDynamicWallpaperProcess();
         }
     }
 

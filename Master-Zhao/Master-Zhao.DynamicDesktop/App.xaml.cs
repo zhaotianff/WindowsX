@@ -13,6 +13,8 @@ namespace Master_Zhao.DynamicDesktop
     /// </summary>
     public partial class App : Application
     {
+        public static string PipeHandleAsString { get; set; } = "";
+
         public static string VideoPath { get; set; } = "";
 
         public static int Mute { get; set; }
@@ -21,10 +23,27 @@ namespace Master_Zhao.DynamicDesktop
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //parse args
-            if(e.Args.Length > 0)
+            ParseArgs(e.Args);
+        }
+
+        private void ParseArgs(string[] args)
+        {
+            if (args.Length > 0)
+                PipeHandleAsString = args[0];
+
+            if (args.Length > 1)
+                VideoPath = args[1];
+
+            if (args.Length > 2)
             {
-                VideoPath = e.Args[0];
+                int.TryParse(args[2], out int tempMute);
+                Mute = tempMute;
+            }
+
+            if(args.Length > 3)
+            {
+                int.TryParse(args[3], out int tempRepeat);
+                Repeat = tempRepeat;
             }
         }
     }

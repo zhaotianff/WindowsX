@@ -70,8 +70,9 @@ namespace Master_Zhao.Shell
         private void BlurWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //TODO temp
-            //sendmessage
-            DesktopTool.CloseEmbedWindow();
+            //config
+            //DesktopTool.CloseEmbedWindow();
+            desktopSetting.CloseAnonymousPipe();
         }
 
         private async void BlurWindow_StateChanged(object sender, EventArgs e)

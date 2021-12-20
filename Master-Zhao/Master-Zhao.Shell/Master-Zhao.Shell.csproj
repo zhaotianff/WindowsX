@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Master-Zhao.Config\Master-Zhao.Config.csproj" />
+    <ProjectReference Include="..\Master-Zhao.IO\Master-Zhao.IO.csproj" />
     <ProjectReference Include="..\Master-Zhao.Video\Master-Zhao.Video.csproj" />
     <ProjectReference Include="..\Master-Zhao.Web\Master-Zhao.Web.csproj" />
   </ItemGroup>

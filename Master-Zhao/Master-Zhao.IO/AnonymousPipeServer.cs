@@ -10,32 +10,48 @@ namespace Master_Zhao.IO
         AnonymousPipeServerStream pipeServer;
         StreamWriter sw;
 
-        public void StartServer(string processPath,string videoPath)
+        public bool StartServer(string processPath,string videoPath)
         {
-            Process pipeClient = new Process();
+            try
+            {
+                Process pipeClient = new Process();
 
-            pipeClient.StartInfo.FileName = processPath;
+                pipeClient.StartInfo.FileName = processPath;
 
-            pipeServer = new AnonymousPipeServerStream(PipeDirection.Out, HandleInheritability.Inheritable);
-            pipeClient.StartInfo.ArgumentList.Add(pipeServer.GetClientHandleAsString());
-            pipeClient.StartInfo.ArgumentList.Add(videoPath);
-            pipeClient.Start();
+                pipeServer = new AnonymousPipeServerStream(PipeDirection.Out, HandleInheritability.Inheritable);
+                pipeClient.StartInfo.Arguments = pipeServer.GetClientHandleAsString() + " " + videoPath;
+                pipeClient.Start();
 
-            pipeServer.DisposeLocalCopyOfClientHandle();
-            sw = new StreamWriter(pipeServer);
-            sw.AutoFlush = true;
+                pipeServer.DisposeLocalCopyOfClientHandle();
+                sw = new StreamWriter(pipeServer);
+                sw.AutoFlush = true;
+                return true;
+            }
+            catch           
+            {
+                return false;
+            }
         }
 
-        public void CloseServer()
+        public bool CloseServer()
         {
-            if (sw != null)
-                sw.Close();
+            try
+            {
+                if (sw != null)
+                    sw.Close();
 
-            if (pipeServer != null)
-                pipeServer.Close();
+                if (pipeServer != null)
+                    pipeServer.Close();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public async void SendMessage(string message)
+        public void SendMessage(string message)
         {
             if (pipeServer == null || pipeServer.IsConnected == false || pipeServer.CanWrite == false)
                 return;
@@ -43,7 +59,7 @@ namespace Master_Zhao.IO
             if (sw == null)
                 return;
 
-            await sw.WriteLineAsync(message);
+            sw.WriteLine(message);
 
             //SYNC mode
             //pipeServer.WaitForPipeDrain(); 

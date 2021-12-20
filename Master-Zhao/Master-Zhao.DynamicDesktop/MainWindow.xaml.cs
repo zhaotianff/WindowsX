@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Master_Zhao.IO;
+
+using static Master_Zhao.IO.Commands.DynamicWallpaperCommands;
 
 namespace Master_Zhao.DynamicDesktop
 {
@@ -22,18 +13,17 @@ namespace Master_Zhao.DynamicDesktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int WM_USER = 0x0400;
-        private const int WM_PAUSE = WM_USER + 0x100;
-        private const int WM_PLAY = WM_USER + 0x101;
-        private const int WM_SETVIDEO = WM_USER + 0x103;
-        private const int WM_MUTE = WM_USER + 0x104;
-        private const int WM_REPEAT = WM_USER + 0x105;
-        private const int WM_GETVIDEO = WM_USER + 0x106;
-
         private const int S_OK = 0;
         private const int S_FALSE = 1;
 
+        private const int WM_CLOSE = 0x0010;
+
+        private string previousVideoPath = "";
         private string currentVideoPath = "";
+
+        private AnonymousPipeClient client = new AnonymousPipeClient();
+
+
 
         public MainWindow()
         {
@@ -42,6 +32,65 @@ namespace Master_Zhao.DynamicDesktop
             SetMute(App.Mute);
             SetRepeat(App.Repeat);
             SetVideo(App.VideoPath);
+
+            InitAnoymousPepeClient(App.PipeHandleAsString);
+        }
+
+        private void InitAnoymousPepeClient(string handleAsString)
+        {
+            client.SetReceiveMessageHandler(DealWithMessage);
+            client.StartClient(handleAsString);
+        }
+
+        private void CloseAnoymousPepeClient()
+        {
+            client?.CloseClient();
+        }
+
+        public void DealWithMessage(string message)
+        {
+            switch(message)
+            {
+                case DYWALLPAPER_EXIT:           
+                    break;
+                case DYWALLPAPER_MUTE:
+                    break;
+                case DYWALLPAPER_PAUSE:
+                    break;
+                case DYWALLPAPER_PLAY:
+                    break;
+                case DYWALLPAPER_RECOVERLAST:
+                    RecoverLast();
+                    break;
+                case DYWALLPAPER_REPEAT:
+                    break;
+                case DYWALLPAPER_SETVIDEO:
+                    break;
+                default:
+                    break;
+            }
+
+            HandleExceptionMessage(message);
+        }
+
+        public void HandleExceptionMessage(string message)
+        {
+            if(string.IsNullOrEmpty(message))
+            {
+                Environment.Exit(0);
+            }
+        }
+
+        private void RecoverLast()
+        {
+            if (string.IsNullOrEmpty(previousVideoPath))
+            {
+                Environment.Exit(0);
+            }
+            else
+            {
+                SetVideo(previousVideoPath);
+            }
         }
 
         private void Media_MediaEnded(object sender, RoutedEventArgs e)
@@ -66,6 +115,11 @@ namespace Master_Zhao.DynamicDesktop
         {
             if (!string.IsNullOrEmpty(path) && System.IO.File.Exists(path))
             {
+                if (!string.IsNullOrEmpty(currentVideoPath))
+                    previousVideoPath = currentVideoPath;
+
+                if (this.Visibility == Visibility.Hidden)
+                    this.Visibility = Visibility.Visible;
                 currentVideoPath = path;
                 media.Source = new Uri(path, UriKind.Absolute);
                 media.Play();
@@ -88,6 +142,23 @@ namespace Master_Zhao.DynamicDesktop
                 //即使没有handler也不会异常
                 media.MediaEnded -= Media_MediaEnded;
             }
+        }
+
+        private void Window_SourceInitialized(object sender, EventArgs e)
+        {
+            HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            hwndSource.AddHook(HwndSourceHook);
+        }
+
+        private IntPtr HwndSourceHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch(msg)
+            {
+                case WM_CLOSE:
+                    CloseAnoymousPepeClient();
+                    break;
+            }
+            return IntPtr.Zero;
         }
     }
 }
