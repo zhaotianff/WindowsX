@@ -15,5 +15,9 @@ namespace Master_Zhao.IO.Commands
         public const string DYWALLPAPER_REPEAT = "10090";
         public const string DYWALLPAPER_RECOVERLAST = "10091";
         public const string DYWALLPAPER_EXIT = "10092";
+
+        public const char COMMANDSPLITCHAR = '_';
+        public const string S_OK = "0";
+        public const string S_FALSE = "1";
     }
 }

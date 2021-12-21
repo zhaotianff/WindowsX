@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Shell.Pages;
+﻿using Master_Zhao.Config;
+using Master_Zhao.Shell.Pages;
 using Master_Zhao.Shell.PInvoke;
 using System;
 using System.Windows;
@@ -69,9 +70,11 @@ namespace Master_Zhao.Shell
 
         private void BlurWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //TODO temp
-            //config
-            //DesktopTool.CloseEmbedWindow();
+            if (GlobalConfig.Instance.DynamicWallpaperConfig.KeepWallpaper == false)
+            {
+                DesktopTool.CloseEmbedWindow();
+            }
+
             desktopSetting.CloseAnonymousPipe();
         }
 

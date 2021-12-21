@@ -19,6 +19,7 @@ namespace Master_Zhao.Config.Model
     {
         public bool Mute { get; set; } = true;
         public bool Repeat { get; set; } = true;
+        public bool KeepWallpaper { get; set; } = false;
         public List<DynamicWallpaperItem> WallpaperList { get; set; } = new List<DynamicWallpaperItem>();
     }
 }

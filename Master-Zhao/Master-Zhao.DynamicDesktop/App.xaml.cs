@@ -17,9 +17,9 @@ namespace Master_Zhao.DynamicDesktop
 
         public static string VideoPath { get; set; } = "";
 
-        public static int Mute { get; set; }
+        public static string Mute { get; set; } = Master_Zhao.IO.Commands.DynamicWallpaperCommands.S_OK;
 
-        public static int Repeat { get; set; }
+        public static string Repeat { get; set; } = Master_Zhao.IO.Commands.DynamicWallpaperCommands.S_OK;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -36,14 +36,12 @@ namespace Master_Zhao.DynamicDesktop
 
             if (args.Length > 2)
             {
-                int.TryParse(args[2], out int tempMute);
-                Mute = tempMute;
+                Mute = args[2];
             }
 
             if(args.Length > 3)
             {
-                int.TryParse(args[3], out int tempRepeat);
-                Repeat = tempRepeat;
+                Repeat = args[3];
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿{
   "mute":true, 
   "repeat":true, 
+  "keepWallpaper":false,
   "wallpaperlist": [
     {
       "name": "预置",

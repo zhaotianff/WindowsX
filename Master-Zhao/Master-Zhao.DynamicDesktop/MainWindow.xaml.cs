@@ -13,17 +13,12 @@ namespace Master_Zhao.DynamicDesktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int S_OK = 0;
-        private const int S_FALSE = 1;
-
         private const int WM_CLOSE = 0x0010;
 
         private string previousVideoPath = "";
         private string currentVideoPath = "";
 
         private AnonymousPipeClient client = new AnonymousPipeClient();
-
-
 
         public MainWindow()
         {
@@ -38,7 +33,7 @@ namespace Master_Zhao.DynamicDesktop
 
         private void InitAnoymousPepeClient(string handleAsString)
         {
-            client.SetReceiveMessageHandler(DealWithMessage);
+            client.SetReceiveMessageHandler(DispatcherHandleMessage);
             client.StartClient(handleAsString);
         }
 
@@ -47,30 +42,59 @@ namespace Master_Zhao.DynamicDesktop
             client?.CloseClient();
         }
 
-        public void DealWithMessage(string message)
+        public void DispatcherHandleMessage(string message)
         {
-            switch(message)
+            this.Dispatcher.Invoke(new Action<string>(HandleMessage), new object[] { message });
+        }
+
+        public void HandleMessage(string message)
+        {
+            HandleExceptionMessage(message);
+
+            (string cmd, string[] values) = ParseMessage(message);
+
+            MessageBox.Show(cmd);
+            MessageBox.Show(values[0]);
+
+            switch(cmd)
             {
                 case DYWALLPAPER_EXIT:           
                     break;
                 case DYWALLPAPER_MUTE:
+                    SetMute(values[0]);
                     break;
                 case DYWALLPAPER_PAUSE:
+                    Pause();
                     break;
                 case DYWALLPAPER_PLAY:
+                    Play();
                     break;
                 case DYWALLPAPER_RECOVERLAST:
                     RecoverLast();
                     break;
                 case DYWALLPAPER_REPEAT:
+                    SetRepeat(values[0]);
                     break;
                 case DYWALLPAPER_SETVIDEO:
+                    SetVideo(values[0]);
                     break;
                 default:
                     break;
-            }
+            }    
+        }
 
-            HandleExceptionMessage(message);
+        public Tuple<string,string[]> ParseMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+                return new Tuple<string, string[]>("", new string[] { });
+
+            var array = message.Split(COMMANDSPLITCHAR);
+            if (array.Length < 1)
+                return new Tuple<string, string[]>("", new string[] { });
+
+            var tempArray = new string[array.Length - 1];
+            Array.Copy(array, 1, tempArray, 0, array.Length - 1);
+            return new Tuple<string, string[]>(array[0], tempArray);
         }
 
         public void HandleExceptionMessage(string message)
@@ -126,12 +150,12 @@ namespace Master_Zhao.DynamicDesktop
             }
         }
 
-        private void SetMute(int isMute)
+        private void SetMute(string isMute)
         {
             media.IsMuted = isMute == S_OK;
         }
 
-        private void SetRepeat(int isRepeat)
+        private void SetRepeat(string isRepeat)
         {
             if (isRepeat == S_OK)
             {

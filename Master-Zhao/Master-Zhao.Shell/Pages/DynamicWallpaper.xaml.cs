@@ -36,6 +36,15 @@ namespace Master_Zhao.Shell.Pages
         public DynamicWallpaper()
         {
             InitializeComponent();
+            InitializeConfig();
+        }
+
+        private void InitializeConfig()
+        {
+            var dynamicWallpaperConfig = GlobalConfig.Instance.DynamicWallpaperConfig;
+            this.cbx_AutoRepeat.IsChecked = dynamicWallpaperConfig.Repeat;
+            this.cbx_Mute.IsChecked = dynamicWallpaperConfig.Mute;
+            this.cbx_KeepWallpaper.IsChecked = dynamicWallpaperConfig.KeepWallpaper;
         }
 
         private async void LoadDynamicWallpaperListAsync()
@@ -47,17 +56,22 @@ namespace Master_Zhao.Shell.Pages
             await Task.Factory.StartNew(()=> {
                 foreach (var item in list)
                 {
-                    DynamicWallpaperControl dynamicWallpaperControl = new DynamicWallpaperControl();
-                    dynamicWallpaperControl.WallpaperName = item.Name;
-                    dynamicWallpaperControl.VideoPath = System.IO.Path.GetFullPath(item.Path);
-                    if(!string.IsNullOrEmpty(item.Thumbnail))
-                        dynamicWallpaperControl.ThumbnailPath = System.IO.Path.GetFullPath(item.Thumbnail);
-                    dynamicWallpaperControl.OnPreview += DynamicWallpaperControl_OnPreview;
-                    dynamicWallpaperControl.OnSet += DynamicWallpaperControl_OnSet;
-                    dynamicWallpaperControl.OnSelect += DynamicWallpaperControl_OnSelect;
-                    wrap.Children.Add(dynamicWallpaperControl);
+                    AppendDynamicWallpaperItem(item);
                 }
             },new System.Threading.CancellationToken(),TaskCreationOptions.None,TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void AppendDynamicWallpaperItem(DynamicWallpaperItem item)
+        {
+            DynamicWallpaperControl dynamicWallpaperControl = new DynamicWallpaperControl();
+            dynamicWallpaperControl.WallpaperName = item.Name;
+            dynamicWallpaperControl.VideoPath = System.IO.Path.GetFullPath(item.Path);
+            if (!string.IsNullOrEmpty(item.Thumbnail))
+                dynamicWallpaperControl.ThumbnailPath = System.IO.Path.GetFullPath(item.Thumbnail);
+            dynamicWallpaperControl.OnPreview += DynamicWallpaperControl_OnPreview;
+            dynamicWallpaperControl.OnSet += DynamicWallpaperControl_OnSet;
+            dynamicWallpaperControl.OnSelect += DynamicWallpaperControl_OnSelect;
+            wrap.Children.Add(dynamicWallpaperControl);
         }
 
         private void DynamicWallpaperControl_OnSelect(object sender, EventArgs e)
@@ -71,36 +85,44 @@ namespace Master_Zhao.Shell.Pages
 
         private void DynamicWallpaperControl_OnSet(object sender, string path)
         {
-            
+            SetDynamicWallpaper(path, false);
         }
 
 
-        private async void DynamicWallpaperControl_OnPreview(object sender, string path)
+        private void DynamicWallpaperControl_OnPreview(object sender, string path)
         {
-            //TODO 可以优化
-            TerminateDynamicDesktop(server);
-            StartDynamicWallpaperProcess(DynamicDesktopProgramFileName, path);
-            DesktopTool.EmbedWindowToDesktop("MainWindow");
+            SetDynamicWallpaper(path, true);
+        }
 
-            var result = await MessageBoxEx.WaitMessageBox.Show("提示信息", "是否保存当前壁纸设置？", "保留");
-            if (result == false)
+        private async void SetDynamicWallpaper(string path,bool isAsk)
+        {           
+            StartDynamicWallpaperProcess(server, DynamicDesktopProgramFileName, path);
+            DesktopTool.EmbedWindowToDesktop("MainWindow");
+            DesktopTool.SwitchToDesktop();
+
+            if (isAsk)
             {
-                SendMessageToDynamicWallpaper(DYWALLPAPER_RECOVERLAST);
+                var result = await MessageBoxEx.WaitMessageBox.Show("提示信息", "是否保存当前壁纸设置？", "保留");
+                if (result == false)
+                {
+                    SendMessageToDynamicWallpaper(DYWALLPAPER_RECOVERLAST);
+                }
             }
         }
 
         private void TerminateDynamicDesktop(AnonymousPipeServer server)
         {
-            if (server != null)
-                return;
-
             var processes = System.Diagnostics.Process.GetProcesses();
             var dynamicDesktopProcess = processes.FirstOrDefault(x => x.ProcessName == DynamicDesktopProcessName);
-            dynamicDesktopProcess?.Kill();
+            if (dynamicDesktopProcess != null)
+            {
+                dynamicDesktopProcess.Kill();
+            }
         }
 
-        private void StartDynamicWallpaperProcess(string processPath,string videoPath)
+        private void StartDynamicWallpaperProcess(AnonymousPipeServer server, string processPath,string videoPath)
         {
+            TerminateDynamicDesktop(server);
             server.StartServer(processPath,"\"" + videoPath + "\"");
         }
 
@@ -115,11 +137,6 @@ namespace Master_Zhao.Shell.Pages
         public void StopDynamicWallpaperProcess()
         {
             DesktopTool.CloseEmbedWindow();
-        }
-
-        private void SetDynamicBackground_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -145,15 +162,51 @@ namespace Master_Zhao.Shell.Pages
                 System.Drawing.Bitmap.FromHbitmap(thumbBitmap).Save(thumbnailPath);
                 var targetFilePath = System.IO.Path.Combine(dir, wallpaperFileName);
                 System.IO.File.Copy(openFileDialog.FileName, targetFilePath,true);
-                GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList.Add(new DynamicWallpaperItem()
+                var dynamicWallpaperItem = new DynamicWallpaperItem()
                 {
                     Name = wallpaperFileName,
                     Path = targetFilePath,
                     Thumbnail = thumbnailPath
-                });
+                };
+                GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList.Add(dynamicWallpaperItem);
+                AppendDynamicWallpaperItem(dynamicWallpaperItem);
             }
-
-            LoadDynamicWallpaperListAsync();
         }
+
+        #region event
+        private void cbx_AutoRepeat_Checked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.Repeat = true;
+            SendMessageToDynamicWallpaper(DYWALLPAPER_REPEAT + COMMANDSPLITCHAR + S_OK);
+        }
+
+        private void cbx_AutoRepeat_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.Repeat = false;
+            SendMessageToDynamicWallpaper(DYWALLPAPER_REPEAT + COMMANDSPLITCHAR + S_FALSE);
+        }
+
+        private void cbx_Mute_Checked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.Mute = true;
+            SendMessageToDynamicWallpaper(DYWALLPAPER_MUTE + COMMANDSPLITCHAR + S_OK);
+        }
+
+        private void cbx_Mute_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.Mute = false;
+            SendMessageToDynamicWallpaper(DYWALLPAPER_MUTE + COMMANDSPLITCHAR + S_FALSE);
+        }
+
+        private void cbx_KeepWallpaper_Checked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.KeepWallpaper = true;
+        }
+
+        private void cbx_KeepWallpaper_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.KeepWallpaper = false;
+        }
+        #endregion
     }
 }
