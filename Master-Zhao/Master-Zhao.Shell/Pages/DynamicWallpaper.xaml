@@ -27,7 +27,7 @@
             <StackPanel Grid.Column="1">
                 <Label Content="动态壁纸设置" FontWeight="Bold" FontSize="15"></Label>
                 <CheckBox Content="自动循环" Margin="5" Name="cbx_AutoRepeat" Checked="cbx_AutoRepeat_Checked" Unchecked="cbx_AutoRepeat_Unchecked"/>
-                <CheckBox Content="允许播放背景声音" Margin="5" Name="cbx_Mute" Checked="cbx_Mute_Checked" Unchecked="cbx_Mute_Unchecked"/>
+                <CheckBox Content="不允许播放背景声音" Margin="5" Name="cbx_Mute" Checked="cbx_Mute_Checked" Unchecked="cbx_Mute_Unchecked"/>
                 <CheckBox Content="保留动态壁纸" Margin="5" ToolTip="软件退出后仍然保留动态壁纸" Name="cbx_KeepWallpaper" Checked="cbx_KeepWallpaper_Checked" Unchecked="cbx_KeepWallpaper_Unchecked"></CheckBox>
             </StackPanel>
 

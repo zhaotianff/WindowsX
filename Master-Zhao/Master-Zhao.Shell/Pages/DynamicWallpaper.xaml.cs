@@ -124,6 +124,12 @@ namespace Master_Zhao.Shell.Pages
         {
             TerminateDynamicDesktop(server);
             server.StartServer(processPath,"\"" + videoPath + "\"");
+
+            //set config
+            var mute = GlobalConfig.Instance.DynamicWallpaperConfig.Mute == true ? S_OK : S_FALSE;
+            var repeat = GlobalConfig.Instance.DynamicWallpaperConfig.Repeat == true ? S_OK : S_FALSE;
+            SendMessageToDynamicWallpaper(DYWALLPAPER_MUTE + COMMANDSPLITCHAR + mute);
+            SendMessageToDynamicWallpaper(DYWALLPAPER_REPEAT + COMMANDSPLITCHAR + repeat);
         }
 
         private void SendMessageToDynamicWallpaper(string message)

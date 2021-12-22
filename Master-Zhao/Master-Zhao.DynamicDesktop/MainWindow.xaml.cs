@@ -53,8 +53,8 @@ namespace Master_Zhao.DynamicDesktop
 
             (string cmd, string[] values) = ParseMessage(message);
 
-            MessageBox.Show(cmd);
-            MessageBox.Show(values[0]);
+            //MessageBox.Show(cmd);
+            //MessageBox.Show(values[0]);
 
             switch(cmd)
             {
