@@ -14,9 +14,19 @@
             <ColumnDefinition Width="250"/>
         </Grid.ColumnDefinitions>
 
-        <WrapPanel Name="wrap">
-            
-        </WrapPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="26.4"/>
+            </Grid.RowDefinitions>
+
+            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <WrapPanel Name="wrap">
+
+                </WrapPanel>
+            </ScrollViewer>
+        </Grid>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

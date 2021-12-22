@@ -76,6 +76,8 @@ namespace Master_Zhao.Shell
             }
 
             desktopSetting.CloseAnonymousPipe();
+
+            GlobalConfig.Instance.SaveAllConfig();
         }
 
         private async void BlurWindow_StateChanged(object sender, EventArgs e)

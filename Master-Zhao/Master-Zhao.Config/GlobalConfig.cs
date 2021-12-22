@@ -42,5 +42,10 @@ namespace Master_Zhao.Config
             DynamicWallpaperConfig = DynamicWallpaperHelper.LoadDynamicWallConfig();
             StaticWallpaperConfig = StaticWallpaperHelper.LoadStaticWallpaperConfig();
         }
+
+        public void SaveAllConfig()
+        {
+            DynamicWallpaperHelper.SaveDynamicWallList(DynamicWallpaperConfig);           
+        }
     }
 }
