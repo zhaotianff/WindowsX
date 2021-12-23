@@ -213,6 +213,13 @@ namespace Master_Zhao.Shell.Pages
         {
             GlobalConfig.Instance.DynamicWallpaperConfig.KeepWallpaper = false;
         }
+
+        private void btnImportBilibili_Click(object sender, RoutedEventArgs e)
+        {
+            Master_Zhao.Shell.Windows.BilibiliDownloader bilibiliDownloader = new Windows.BilibiliDownloader();
+            bilibiliDownloader.Owner = Application.Current.MainWindow;
+            bilibiliDownloader.Show();
+        }
         #endregion
     }
 }

@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:Master_Zhao.Shell.Windows"
         xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow"
         mc:Ignorable="d"
-        Title="BilibiliDownloader" Height="450" Width="800" ShowInTaskbar="False">
+        Title="BilibiliDownloader" Height="450" Width="800" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+    <Window.Background>
+        <SolidColorBrush Color="White" Opacity=".8"/>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="26.4"/>
@@ -28,7 +31,7 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="请输入B站链接" Margin="5"/>
-                <TextBox Margin="5" Grid.Column="1"/>
+                <TextBox Margin="5" Grid.Column="1" VerticalContentAlignment="Center"/>
                 <Button Grid.Column="2" Content="解析" Width="88" Height="28"/>
             </Grid>
 
