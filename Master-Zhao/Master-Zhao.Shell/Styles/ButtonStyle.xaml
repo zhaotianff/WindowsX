@@ -42,4 +42,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+        
+    </Style>
 </ResourceDictionary>

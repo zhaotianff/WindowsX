@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="FontAwesome/FontAwesomeStyle.xaml"/>
                 <ResourceDictionary Source="Themes/Default.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/GroupBoxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

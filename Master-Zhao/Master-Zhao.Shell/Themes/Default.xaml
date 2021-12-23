@@ -2,5 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--Default silver-->
     <SolidColorBrush x:Key="AccentBaseColor" Color="Silver"/>
+    <SolidColorBrush x:Key="AccentBaseColorTran" Color="Silver" Opacity=".2"/>
     <SolidColorBrush x:Key="WhiteColor" Color="White"/>
 </ResourceDictionary>
