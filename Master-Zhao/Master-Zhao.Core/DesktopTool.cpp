@@ -177,3 +177,35 @@ HBITMAP GetFileThumbnail(PCWSTR path)
 
 	return hbitmap;
 }
+
+BOOL CenterStartMenu()
+{
+	//TODO get taskbar height
+
+	POINT point{ 0,1030 };
+
+	keybd_event(VK_LWIN, 0x45, NULL, NULL);
+	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+
+	Sleep(100);
+	HWND hwnd = WindowFromPoint(point);
+
+	if (hwnd)
+	{
+		//TODO set pos
+		for (size_t i = 1; i < 1920/2; i+=10)
+		{
+			SetWindowPos(hwnd, NULL, i, 0, 0, 0, SWP_NOSIZE | SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
+		}
+	}
+
+	Sleep(100);
+	keybd_event(VK_LWIN, 0x45, NULL, NULL);
+	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+	return 0;
+}
+
+BOOL CenterTaskListIcon()
+{
+	return 0;
+}
