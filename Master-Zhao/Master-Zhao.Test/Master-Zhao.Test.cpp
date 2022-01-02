@@ -2,7 +2,7 @@
 //
 #include"DesktopToolTest.h"
 
-#pragma comment (lib,"../Master-Zhao.Shell/bin/Debug/net5.0-windows/SilverArowanaCore.lib")
+#pragma comment (lib,"../Master-Zhao.Shell/bin/Debug/net5.0-windows/MasterZhaoCore.lib")
 
 
 int main()

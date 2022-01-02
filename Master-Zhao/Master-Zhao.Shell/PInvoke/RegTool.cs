@@ -5,7 +5,7 @@ namespace Master_Zhao.Shell.PInvoke
 {
     public class RegTool
     {
-        [DllImport("SilverArowanaCore.dll")]
+        [DllImport("MasterZhaoCore.dll")]
         public static extern bool SetValue(IntPtr hKey, string lpSubKey, string lpValueName, byte[] value);
     }
 }

@@ -43,13 +43,15 @@ Master-Zhao is a windows toolset software.
 * fast search(taskbar win+q)
 
 # Beautify
-* static wallpaper setting
-* dynamic wallpaper setting
+* Static wallpaper setting
+* Dynamic wallpaper setting
   * 增加B站支持
   * 增加视频列表切换
-* quick run
-* transparency taskbar
-* other
+* Quick run(circle mode)
+* Transparency taskbar
+* Center taskbar
+* Customize the start menu
+* Other
 
 # Screenshot
 <p align="center">
