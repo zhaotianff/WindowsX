@@ -31,12 +31,12 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="请输入B站链接" Margin="5"/>
-                <TextBox Margin="5" Grid.Column="1" VerticalContentAlignment="Center"/>
-                <Button Grid.Column="2" Content="解析" Width="88" Height="28" Style="{StaticResource ButtonStyle}"/>
+                <TextBox Margin="5" Grid.Column="1" VerticalContentAlignment="Center" Name="tbox_Url"/>
+                <Button Grid.Column="2" Content="解析" Width="88" Height="28" Style="{StaticResource ButtonStyle}" Click="btnParse_Click"/>
             </Grid>
 
             <GroupBox Grid.Row="1" BorderThickness="0" Header="预览">
-                <Image Margin="5"/>
+                <Image Margin="5" Name="img_album"/>
             </GroupBox>
 
             <WrapPanel Grid.Row="2">
