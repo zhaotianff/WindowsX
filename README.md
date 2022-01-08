@@ -29,29 +29,28 @@ Master-Zhao is a windows toolset software.
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 
-# Utilities
-* hardware information
-* startup assistant
-* huá shuǐ
-
-# System Tools
-* boot management
-* service management
-* background network management
-* windows settings
-* gpedit & register
-* fast search(taskbar win+q)
-
-# Beautify
-* Static wallpaper setting
-* Dynamic wallpaper setting
-  * 增加B站支持
-  * 增加视频列表切换
-* Quick run(circle mode)
-* Transparency taskbar
-* Center taskbar
-* Customize the start menu
-* Other
+# Tool list
+* Utilities
+  * hardware information
+  * startup assistant
+  * huá shuǐ
+* System Tools
+  * boot management
+  * service management
+  * background network management
+  * windows settings
+  * gpedit & register
+  * fast search(taskbar win+q)
+* Beautify
+  * Static wallpaper setting
+  * Dynamic wallpaper setting
+     * 增加B站支持
+     * 增加视频列表切换
+  * Quick run(circle mode)
+  * Transparency taskbar
+  * Center taskbar
+  * Customize the start menu
+  * Other
 
 # Screenshot
 <p align="center">
@@ -62,6 +61,7 @@ Master-Zhao is a windows toolset software.
 
 <p align="center">
  <img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper.png" />
+ <img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper_2.png" />
 </p>
 <p align="center">static wallpaper</p>
 <br/>
