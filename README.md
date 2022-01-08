@@ -53,24 +53,28 @@ Master-Zhao is a windows toolset software.
   * Other
 
 # Screenshot
-<p align="center">
- <img align="center" alt="start up" src="Screenshots/main.png" />
-</p>
-<p align="center">main</p>
-<br/>
+<table align="center">
+ <tr>
+  <td colspan="2">main</td>
+ </tr>
+ <tr>
+  <td colspan="2"> <img align="center" alt="start up" src="Screenshots/main.png" /></td>
+ </tr>
+  <tr>
+  <td colspan="2">static wallpaper</td>
+ </tr>
+ <tr>
+  <td><img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper.png" /></td>
+    <td><img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper_2.png" /></td>
+ </tr>
+ <tr>
+  <td colspan="2">dynamic wallpaper</td>
+ </tr>
+ <tr>
+  <td colspan="2"> <img align="center" alt="dynamic wallpaper" src="Screenshots/dynamic_wallpaper.png" /></td>
+ </tr>
+</table>
 
-<p align="center">
- <img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper.png" />
- <img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper_2.png" />
-</p>
-<p align="center">static wallpaper</p>
-<br/>
-
-<p align="center">
- <img align="center" alt="dynamic wallpaper" src="Screenshots/dynamic_wallpaper.png" />
-</p>
-<p align="center">dynamic wallpaper</p>
-<br/>
 
 # Development Plan
 - [ ] static wallpaper setting(find a stable image api)
