@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <None Remove="flower.jpg" />
+    <None Remove="Icon\about.png" />
     <None Remove="Icon\desktop.png" />
     <None Remove="Icon\information.png" />
     <None Remove="Icon\system.png" />
@@ -38,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icon\about.png" />
     <Resource Include="Icon\desktop.png" />
     <Resource Include="Icon\information.png" />
     <Resource Include="Icon\system.png" />

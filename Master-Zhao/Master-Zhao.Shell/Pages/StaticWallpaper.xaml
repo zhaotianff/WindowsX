@@ -55,7 +55,7 @@
                     <Grid Grid.Row="0" Width="300" VerticalAlignment="Center">
                         <Label Content="输入关键词" HorizontalAlignment="Left"/>
                         <TextBox Width="120" Margin="75,0,0,0" HorizontalAlignment="Left" Name="text_Keyword" VerticalContentAlignment="Center"/>
-                        <Button Content="搜索" Width="88" Height="28" HorizontalAlignment="Left" Margin="210,0,0,0" Click="btn_SearchClick" IsDefault="True"/>
+                        <Button Content="搜索" Width="88" Height="28" HorizontalAlignment="Left" Margin="210,0,0,0" Click="btn_SearchClick" IsDefault="True" Style="{StaticResource ButtonStyle}"/>
                     </Grid>
 
                     <Grid Grid.Row="2">
@@ -65,15 +65,15 @@
                             </WrapPanel>
                         </ScrollViewer>
 
-                        <Button Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Content="&lt;" Click="btnPreviousPage_Click"/>
-                        <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Content="&gt;" Click="btnNextPage_Click"/>
+                        <Button Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Content="&lt;" Click="btnPreviousPage_Click" Style="{StaticResource ButtonStyle}"/>
+                        <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Content="&gt;" Click="btnNextPage_Click" Style="{StaticResource ButtonStyle}"/>
                     </Grid>
                 </Grid>
             </GroupBox>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
-            <Button Content="浏览壁纸" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnBrowse_Click"></Button>
+            <Button Content="浏览壁纸" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnBrowse_Click" Style="{StaticResource ButtonStyle}"></Button>
             <!--<Button Content="壁纸设置" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,100,0" VerticalAlignment="Top"></Button>-->
         </Grid>
     </Grid>
