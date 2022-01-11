@@ -1,4 +1,5 @@
 ﻿using Master_Zhao.Config;
+using Master_Zhao.Shell.Infrastructure.Navigation;
 using Master_Zhao.Shell.Pages;
 using Master_Zhao.Shell.PInvoke;
 using System;
@@ -12,11 +13,14 @@ namespace Master_Zhao.Shell
     /// </summary>
     public partial class MainWindow : TianXiaTech.BlurWindow
     {
-        private DesktopSetting desktopSetting = new Pages.DesktopSetting();
+        private DesktopBeautify desktopBeautify = new DesktopBeautify();
+        private SystemManagement systemManagement = new SystemManagement();
+        private ToolsPage toolsPage = new ToolsPage();
+        private AboutPage aboutPage = new AboutPage();
         Storyboard start;
         Storyboard end;
 
-        private string CurrentPage { get; set; }
+        private NavigationPages CurrentPage { get; set; }
 
         public MainWindow()
         {
@@ -32,18 +36,7 @@ namespace Master_Zhao.Shell
             end.Completed += (sender, e) => { main.Visibility = Visibility.Visible; this.frame.Content = null; };
         }
 
-        private void BlurWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            main.Width = e.NewSize.Width * 0.7;
-            main.Height = e.NewSize.Height * 0.85;
-        }
-
-        private void btnDesktop_Click(object sender, RoutedEventArgs e)
-        {
-            BeginShowMenuAnimation("Wallpaper");
-        }
-
-        public void BeginShowMenuAnimation(string targetPage)
+        public void BeginShowMenuAnimation(NavigationPages targetPage)
         {
             DoubleAnimation startWidthAnimation = start.Children[0] as DoubleAnimation;
             startWidthAnimation.From = this.ActualWidth - 100;
@@ -51,7 +44,7 @@ namespace Master_Zhao.Shell
             DoubleAnimation startHeightAnimation = start.Children[1] as DoubleAnimation;
             startHeightAnimation.From = this.ActualHeight - 50;
             startHeightAnimation.To = this.ActualHeight;
-            this.frame.Content = desktopSetting;
+            this.frame.Content = GetNavigationPage(targetPage);
             start?.Begin();
             CurrentPage = targetPage;
         }
@@ -65,7 +58,37 @@ namespace Master_Zhao.Shell
             endHeightAnimation.From = this.ActualHeight;
             endHeightAnimation.To = 250;
             end?.Begin();
-            CurrentPage = "";
+            CurrentPage = NavigationPages.Main;
+        }
+
+        private System.Windows.Controls.Page GetNavigationPage(NavigationPages page)
+        {
+            switch(page)
+            {
+                case NavigationPages.Main:
+                    return null;
+                case NavigationPages.Beautify:
+                    return desktopBeautify;
+                case NavigationPages.SysManagement:
+                    return systemManagement;
+                case NavigationPages.Tools:
+                    return toolsPage;
+                default:
+                    return null;
+            }
+        }
+
+        #region Event
+
+        private void BlurWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            main.Width = e.NewSize.Width * 0.7;
+            main.Height = e.NewSize.Height * 0.85;
+        }
+
+        private void btnDesktop_Click(object sender, RoutedEventArgs e)
+        {
+            BeginShowMenuAnimation(NavigationPages.Beautify);
         }
 
         private void BlurWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -75,19 +98,19 @@ namespace Master_Zhao.Shell
                 DesktopTool.CloseEmbedWindow();
             }
 
-            desktopSetting.CloseAnonymousPipe();
+            desktopBeautify.CloseAnonymousPipe();
 
             GlobalConfig.Instance.SaveAllConfig();
         }
 
         private async void BlurWindow_StateChanged(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(CurrentPage))
+            if (CurrentPage != NavigationPages.Main)
             {
-                //TODO Temp
                 await System.Threading.Tasks.Task.Delay(100);
-                BeginShowMenuAnimation("Wallpaper");
+                BeginShowMenuAnimation(CurrentPage);
             }
         }
+        #endregion
     }
 }

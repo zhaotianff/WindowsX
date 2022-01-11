@@ -21,7 +21,7 @@ namespace Master_Zhao.Shell.Pages
     /// <summary>
     /// DesktopSetting.xaml 的交互逻辑
     /// </summary>
-    public partial class DesktopSetting : Page
+    public partial class DesktopBeautify : Page
     {
         private ToggleButton toggleButton = null;
         private static readonly string StaticWallpaperName = "StaticWallpaper.xaml";
@@ -30,7 +30,7 @@ namespace Master_Zhao.Shell.Pages
         private DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
         private StaticWallpaper staticWallpaper = new StaticWallpaper();
 
-        public DesktopSetting()
+        public DesktopBeautify()
         {
             InitializeComponent();
         }

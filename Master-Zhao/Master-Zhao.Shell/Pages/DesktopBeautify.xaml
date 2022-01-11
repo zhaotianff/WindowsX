@@ -1,4 +1,4 @@
-﻿<Page x:Class="Master_Zhao.Shell.Pages.DesktopSetting"
+﻿<Page x:Class="Master_Zhao.Shell.Pages.DesktopBeautify"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
