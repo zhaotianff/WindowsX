@@ -21,8 +21,14 @@
             </GroupBox.Header>
 
             <StackPanel>
-                <CheckBox Content="Windows 11风格任务栏"></CheckBox>
-                <Image Height="120"></Image>
+                <CheckBox Content="Windows 11风格任务栏">
+                    <CheckBox.ToolTip>
+                        <ToolTip>Windows 11风格任务栏包含开始菜单图标、开始菜单位置和任务列表位置的改变</ToolTip>
+                    </CheckBox.ToolTip>
+                </CheckBox>
+                <Grid Height="60">
+                    <Image  Source="../Icon/windows10_taskbar.png" Height="40" Stretch="UniformToFill"></Image>
+                </Grid>
             </StackPanel>
         </GroupBox>
 
@@ -42,7 +48,9 @@
                         <ComboBoxItem>ACCENT_NORMAL_GRADIENT</ComboBoxItem>
                     </ComboBox>
                 </WrapPanel>
-                <Image Height="120"></Image>
+                <Grid Height="60">
+                    <Image  Source="../Icon/windows10_blurtaskbar.png" Height="40" Stretch="UniformToFill"></Image>
+                </Grid>
             </StackPanel>
         </GroupBox>
     </Grid>

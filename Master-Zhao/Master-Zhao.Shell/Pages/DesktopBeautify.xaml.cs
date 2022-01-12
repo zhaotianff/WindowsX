@@ -26,9 +26,11 @@ namespace Master_Zhao.Shell.Pages
         private ToggleButton toggleButton = null;
         private static readonly string StaticWallpaperName = "StaticWallpaper.xaml";
         private static readonly string DynamicWallpaperName = "DynamicWallpaper.xaml";
+        private static readonly string TaskbarSettingName = "TaskbarSetting.xaml";
 
         private DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
         private StaticWallpaper staticWallpaper = new StaticWallpaper();
+        private TaskbarSetting taskbarSetting = new TaskbarSetting();
 
         public DesktopBeautify()
         {
@@ -65,6 +67,11 @@ namespace Master_Zhao.Shell.Pages
         public void CloseAnonymousPipe()
         {
             dynamicWallpaper.StopDynamicWallpaperProcess();
+        }
+
+        private void btn_TaskbarSettingClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = taskbarSetting;
         }
     }
 
