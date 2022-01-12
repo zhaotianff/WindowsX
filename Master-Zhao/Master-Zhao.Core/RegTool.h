@@ -25,3 +25,6 @@ SILVERAROWANACORE_API BOOL SetValue(HKEY hKey, LPCTSTR lpSubKey,LPCTSTR lpValueN
 
 //Uninstall
 //HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall
+
+//Start menu color
+//HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent
