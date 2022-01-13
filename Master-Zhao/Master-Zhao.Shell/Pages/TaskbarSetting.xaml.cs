@@ -24,5 +24,10 @@ namespace Master_Zhao.Shell.Pages
         {
             InitializeComponent();
         }
+
+        public void CheckCurrentSystem()
+        {
+
+        }
     }
 }

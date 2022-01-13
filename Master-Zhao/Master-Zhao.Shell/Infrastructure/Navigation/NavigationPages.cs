@@ -11,6 +11,7 @@ namespace Master_Zhao.Shell.Infrastructure.Navigation
         Main = 0,
         Beautify = 1,
         SysManagement = 2,
-        Tools = 3
+        Tools = 3,
+        About
     }
 }

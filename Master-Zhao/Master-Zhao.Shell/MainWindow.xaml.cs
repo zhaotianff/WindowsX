@@ -73,6 +73,8 @@ namespace Master_Zhao.Shell
                     return systemManagement;
                 case NavigationPages.Tools:
                     return toolsPage;
+                case NavigationPages.About:
+                    return aboutPage;
                 default:
                     return null;
             }
@@ -89,6 +91,12 @@ namespace Master_Zhao.Shell
         private void btnDesktop_Click(object sender, RoutedEventArgs e)
         {
             BeginShowMenuAnimation(NavigationPages.Beautify);
+        }
+
+
+        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            BeginShowMenuAnimation(NavigationPages.About);
         }
 
         private void BlurWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

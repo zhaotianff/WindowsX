@@ -40,7 +40,7 @@
                 <controls:ImageButton Title="系统美化" Subtitle="静态壁纸、动态壁纸、任务栏设置" ImagePath="Icon/desktop.png" Click="btnDesktop_Click"/>
                 <controls:ImageButton Title="系统管理" Subtitle="开机启动项、后台服务、网络监控" ImagePath="Icon/system.png" Visibility="Collapsed"/>
                 <controls:ImageButton Title="实用工具" Subtitle="CPU、内存、显卡信息" ImagePath="Icon/information.png" Visibility="Collapsed"/>
-                <controls:ImageButton Title="关于" Subtitle="关于本软件" ImagePath="Icon/about.png"/>
+                <controls:ImageButton Title="关于" Subtitle="关于本软件" ImagePath="Icon/about.png" Click="btnAbout_Click"/>
             </WrapPanel>
         </Grid>
 

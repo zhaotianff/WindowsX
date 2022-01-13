@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -51,6 +52,24 @@
                 <Grid Height="60">
                     <Image  Source="../Icon/windows10_blurtaskbar.png" Height="40" Stretch="UniformToFill"></Image>
                 </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2">
+            <GroupBox.Header>
+                <Label Content="开始菜单" FontSize="14"></Label>
+            </GroupBox.Header>
+
+            <StackPanel>
+                <StackPanel>
+                    <CheckBox Content="使用Windows 11风格开始按钮" Style="{StaticResource CheckBoxStyle}"></CheckBox>
+                    <CheckBox Content="开始菜单透明" Style="{DynamicResource CheckBoxStyle}" Name="cbx_TransparencyStart"></CheckBox>
+                    <DockPanel IsEnabled="{Binding ElementName=cbx_TransparencyStart,Path=IsChecked}">
+                        <Label Content="透明度" DockPanel.Dock="Left" Margin="5"/>
+                        <Slider Value="50" Minimum="0" Maximum="100" DockPanel.Dock="Left" MaxWidth="800" Margin="10,5" Style="{DynamicResource SliderStyle}"/>
+                    </DockPanel>
+                </StackPanel>
+    
             </StackPanel>
         </GroupBox>
     </Grid>

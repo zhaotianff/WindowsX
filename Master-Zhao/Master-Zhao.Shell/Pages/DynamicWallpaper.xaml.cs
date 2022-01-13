@@ -216,9 +216,10 @@ namespace Master_Zhao.Shell.Pages
 
         private void btnImportBilibili_Click(object sender, RoutedEventArgs e)
         {
-            Master_Zhao.Shell.Windows.BilibiliDownloader bilibiliDownloader = new Windows.BilibiliDownloader();
-            bilibiliDownloader.Owner = Application.Current.MainWindow;
-            bilibiliDownloader.Show();
+            MessageBox.Show("敬请期待");
+            //Master_Zhao.Shell.Windows.BilibiliDownloader bilibiliDownloader = new Windows.BilibiliDownloader();
+            //bilibiliDownloader.Owner = Application.Current.MainWindow;
+            //bilibiliDownloader.Show();
         }
         #endregion
     }
