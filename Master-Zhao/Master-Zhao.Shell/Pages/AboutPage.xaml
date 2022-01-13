@@ -43,7 +43,7 @@
         </Grid>
         <StackPanel Margin="40,0,20,0">
             <Label Content="当前开发进度" Foreground="{DynamicResource AccentBaseColor}" FontWeight="Bold" FontSize="20" Margin="0,5"></Label>
-            <Label Content="目前正在开发任务栏设置，动态壁纸里导出B站视频的功能延后了，因为需要抓取B站的视频，分析接口的时间是未知的，所以往后挪一挪。"></Label>
+            <TextBlock Text="目前正在开发任务栏设置，动态壁纸里导入B站视频的功能延后了，因为需要抓取B站的视频，分析接口的时间是未知的，所以往后挪一挪。其它已有的功能还需要优化" Margin="5,0,0,0" TextWrapping="WrapWithOverflow"></TextBlock>
         </StackPanel>
 
         <StackPanel Margin="40,0,20,0">
@@ -53,7 +53,7 @@
 
         <StackPanel Margin="40,0,20,0">
             <Label Content="为什么不直接调用API函数，要再封装一层" Foreground="{DynamicResource AccentBaseColor}" FontWeight="Bold" FontSize="20" Margin="0,5"></Label>
-            <Label Content="因为目前在学习Windows编程的一些技术，所以想写些代码练习练习。其实在C#中，可以直接调用WinAPI函数的。"></Label>
+            <Label Content="因为目前在学习Windows编程的一些技术，所以想写些代码练习练习。其实在C#中，是可以直接调用WinAPI函数的。"></Label>
         </StackPanel>
 
         <StackPanel Margin="40,0,20,0">
