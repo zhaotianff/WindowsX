@@ -29,6 +29,15 @@ Master-Zhao is a windows toolset software.
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 
+# Build
+Set the project to 64 bit
+<p align="center">
+    <img align="center" alt="error dll format" src="Screenshots/error_dll_format.png" />
+</p>
+<p align="center">
+    <img align="center" alt="build x64" src="Screenshots/build_x64.png" />
+</p>
+
 # Tool list
 * Utilities
   * hardware information
