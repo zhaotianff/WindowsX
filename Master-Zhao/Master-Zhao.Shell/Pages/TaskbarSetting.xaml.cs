@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.PInvoke;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,16 @@ namespace Master_Zhao.Shell.Pages
         public void CheckCurrentSystem()
         {
 
+        }
+
+        private void btn_EnableBlurTaskbar_Click(object sender, RoutedEventArgs e)
+        {
+            DesktopTool.ACCENT_POLICY policy = new DesktopTool.ACCENT_POLICY();
+            policy.AcentState = DesktopTool.ACCENT_ENABLE_BLURBEHIND;
+            policy.AccentFlags = 0;
+            policy.AnimationId = 0;
+            policy.GradientColor = 0;
+            DesktopTool.BlurTaskbar(policy);
         }
     }
 }

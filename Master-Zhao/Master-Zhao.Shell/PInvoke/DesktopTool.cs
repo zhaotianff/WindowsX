@@ -8,6 +8,20 @@ namespace Master_Zhao.Shell.PInvoke
     {
         public static readonly int MAX_PATH = 260;
 
+        public static readonly int ACCENT_DISABLED = 0;
+        public static readonly int ACCENT_ENABLE_GRADIENT = 1;
+        public static readonly int ACCENT_ENABLE_TRANSPARENTGRADIENT = 2;
+        public static readonly int ACCENT_ENABLE_BLURBEHIND = 3;
+        public static readonly int ACCENT_ENABLE_ACRYLICBLURBEHIND = 4;
+
+        public struct ACCENT_POLICY
+        {
+            public int AcentState;
+            public int AccentFlags;
+            public int GradientColor;
+            public int AnimationId;
+        };
+
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool GetBackground([MarshalAs(UnmanagedType.LPWStr)]StringBuilder lpImagePath);
 
@@ -31,5 +45,8 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern IntPtr GetFileThumbnail([MarshalAs(UnmanagedType.LPWStr)] string path);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool BlurTaskbar(ACCENT_POLICY accent_policy);
     }
 }

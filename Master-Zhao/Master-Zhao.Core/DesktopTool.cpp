@@ -209,3 +209,27 @@ BOOL CenterTaskListIcon()
 {
 	return 0;
 }
+
+
+BOOL BlurTaskbar(ACCENT_POLICY accent_policy)
+{
+	HMODULE hModule = LoadLibraryA("user32.dll");
+	BOOL bResult = FALSE;
+
+	if (hModule)
+	{
+		PFN_SET_WINDOW_COMPOSITION_ATTRIBUTE SetWindowCompositionAttribute = (PFN_SET_WINDOW_COMPOSITION_ATTRIBUTE)GetProcAddress(hModule, "SetWindowCompositionAttribute");
+		//ACCENT_POLICY policy = {ACCENT_ENABLE_BLURBEHIND,0,RGB(0,0,0),0};
+		WINDOWCOMPOSITIONATTRIBDATA data = { WCA_ACCENT_POLICY,&accent_policy,sizeof(accent_policy) };
+
+		HWND hwnd = FindWindow(L"Shell_TrayWnd", NULL);
+
+		if (hwnd)
+		{
+			bResult = SetWindowCompositionAttribute(hwnd, &data);
+		}
+		FreeLibrary(hModule);
+	}
+	return bResult;
+
+}

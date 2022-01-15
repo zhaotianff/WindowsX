@@ -41,13 +41,14 @@
             <StackPanel>
                 <WrapPanel>
                     <Label Content="模式" Margin="5"></Label>
-                    <ComboBox Width="180" Margin="5" SelectedIndex="0">
+                    <ComboBox Width="180" Margin="5" SelectedIndex="3">
+                        <ComboBoxItem>ACCENT_DISABLED</ComboBoxItem>
                         <ComboBoxItem>ACCENT_ENABLE_GRADIENT</ComboBoxItem>
                         <ComboBoxItem>ACCENT_ENABLE_TRANSPARENTGRADIENT</ComboBoxItem>
                         <ComboBoxItem>ACCENT_ENABLE_BLURBEHIND</ComboBoxItem>
-                        <ComboBoxItem>ACCENT_ENABLE_TINTED</ComboBoxItem>
-                        <ComboBoxItem>ACCENT_NORMAL_GRADIENT</ComboBoxItem>
+                        <ComboBoxItem>ACCENT_ENABLE_ACRYLICBLURBEHIND</ComboBoxItem>
                     </ComboBox>
+                    <Button Content="启用" Name="btn_EnableBlurTaskbar" Width="88" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_EnableBlurTaskbar_Click"/>
                 </WrapPanel>
                 <Grid Height="60">
                     <Image  Source="../Icon/windows10_blurtaskbar.png" Height="40" Stretch="UniformToFill"></Image>

@@ -9,3 +9,4 @@ SwitchToWindow
 EmbedWindowToDesktop
 CloseEmbedWindow
 GetFileThumbnail
+BlurTaskbar
