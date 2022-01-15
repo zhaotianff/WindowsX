@@ -87,7 +87,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>SilverArowanaCore</TargetName>
+    <TargetName>MasterZhaoCore</TargetName>
+    <OutDir>..\Master-Zhao.Shell\bin\Release\net5.0-windows\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

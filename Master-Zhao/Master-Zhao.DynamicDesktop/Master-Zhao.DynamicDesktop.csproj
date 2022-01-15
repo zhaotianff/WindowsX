@@ -12,6 +12,11 @@
     <OutputPath>..\Master-Zhao.Shell\bin\Debug</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>..\Code\github\Master-Zhao.git\Master-Zhao\Master-Zhao.Shell\bin\Release\net5.0-windows\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Master-Zhao.IO\Master-Zhao.IO.csproj" />
   </ItemGroup>
