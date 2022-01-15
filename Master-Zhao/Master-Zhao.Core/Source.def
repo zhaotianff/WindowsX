@@ -10,3 +10,7 @@ EmbedWindowToDesktop
 CloseEmbedWindow
 GetFileThumbnail
 BlurTaskbar
+
+GetUserLoginTime
+IsWindows10
+IsWindows11

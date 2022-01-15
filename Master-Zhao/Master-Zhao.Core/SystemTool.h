@@ -51,3 +51,5 @@ enum AccentState
 typedef long(__stdcall* funNtQuerySystemInformation)(UINT, PVOID, ULONG, PULONG);
 
 SILVERAROWANACORE_API SYSTEMTIME GetUserLoginTime();
+SILVERAROWANACORE_API bool IsWindows10();
+SILVERAROWANACORE_API bool IsWindows11();
