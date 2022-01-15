@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Master_Zhao.Shell.Windows"
         xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow"
         mc:Ignorable="d"
-        Title="BilibiliDownloader" Height="450" Width="800" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        Title="BilibiliDownloader(开发中)" Height="450" Width="800" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Window.Background>
         <SolidColorBrush Color="White" Opacity=".8"/>
     </Window.Background>

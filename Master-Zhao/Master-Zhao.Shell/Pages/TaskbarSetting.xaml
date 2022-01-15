@@ -16,9 +16,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0">
+        <GroupBox Grid.Row="0" IsEnabled="False">
             <GroupBox.Header>
-                <Label Content="任务栏风格" FontSize="14"></Label>
+                <Label Content="任务栏风格(开发中)" FontSize="14"></Label>
             </GroupBox.Header>
 
             <StackPanel>
@@ -55,9 +55,9 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Grid.Row="2">
+        <GroupBox Grid.Row="2" IsEnabled="False">
             <GroupBox.Header>
-                <Label Content="开始菜单" FontSize="14"></Label>
+                <Label Content="开始菜单(开发中)" FontSize="14"></Label>
             </GroupBox.Header>
 
             <StackPanel>

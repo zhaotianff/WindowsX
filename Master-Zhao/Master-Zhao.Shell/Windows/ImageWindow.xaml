@@ -21,8 +21,8 @@
 
         <Image Grid.Row="1" Margin="10" Name="image"/>
 
-        <Label Content="图片放置方式" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,310,0"></Label>
-        <ComboBox Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,205,0" Width="100" SelectedIndex="0">
+        <Label Content="图片放置方式(开发中)" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,310,0"></Label>
+        <ComboBox Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,205,0" Width="100" SelectedIndex="0" IsEnabled="False">
             <ComboBoxItem>填充</ComboBoxItem>
             <ComboBoxItem>适应</ComboBoxItem>
             <ComboBoxItem>拉伸</ComboBoxItem>
