@@ -48,5 +48,11 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool BlurTaskbar(ACCENT_POLICY accent_policy);
+
+        [DllImport("MasterZhaoCore.dl")]
+        public static extern bool CenterStartMenu(bool enable);
+
+        [DllImport("MasterZhaoCore.dl")]
+        public static extern bool CenterTaskListIcon(bool enable);
     }
 }

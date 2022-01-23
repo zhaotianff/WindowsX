@@ -25,12 +25,20 @@ SYSTEMTIME GetUserLoginTime()
 	return SYSTEMTIME();
 }
 
-bool IsWindows10()
+BOOL IsWindows10()
+{
+	OSVERSIONINFOEX info{};
+	DWORDLONG dwlConditionMask = 0;
+	VerifyVersionInfo(&info, VER_MINORVERSION, dwlConditionMask);
+	return info.dwMajorVersion == 10 && info.dwMinorVersion < 22000;
+}
+
+BOOL IsWindows10OrHigher()
 {
 	return IsWindows10OrGreater();
 }
 
-bool IsWindows11()
+BOOL IsWindows11()
 {
 	//no windows 11 SDK
 	OSVERSIONINFOEX info{};

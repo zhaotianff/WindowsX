@@ -8,3 +8,4 @@ void TestGetBackground();
 void TestSetBackground();
 void TestSwitchToDesktop();
 void TestEmbedWindow();
+void TestCenterTaskBar();

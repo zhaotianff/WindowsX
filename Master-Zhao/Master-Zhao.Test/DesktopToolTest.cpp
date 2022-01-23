@@ -44,3 +44,9 @@ void TestEmbedWindow()
 {
 	EmbedWindowToDesktop(L"MainWindow");
 }
+
+void TestCenterTaskBar()
+{
+	CenterStartMenu(FALSE);
+	CenterTaskListIcon(FALSE);
+}

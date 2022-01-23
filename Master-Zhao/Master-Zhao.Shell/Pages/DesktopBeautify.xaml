@@ -28,6 +28,7 @@
                 <ToggleButton Content="静态壁纸设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_StaticWallpaperClick" IsChecked="True"/>
                 <ToggleButton Content="动态壁纸设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_DynamicWallpaperClick"/>
                 <ToggleButton Content="任务栏设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_TaskbarSettingClick"/>
+                <ToggleButton Content="其它设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_OtherSettingClick"/>
             </StackPanel>
         </Grid>
 

@@ -38,28 +38,31 @@ Set the project to 64 bit
     <img align="center" alt="build x64" src="Screenshots/build_x64.png" />
 </p>
 
-# Tool list
-* Utilities
-  * hardware information
-  * startup assistant
-  * huá shuǐ
-* System Tools
+# List of features
+## Beautify
+  * Static wallpaper setting
+  * Dynamic wallpaper setting
+     * 增加B站支持
+     * 增加视频列表切换
+   * Transparency taskbar
+     
+# Features under development
+ ## Beautify
+  * Windows 11 taskbar
+  * customize the start menu
+  * other
+## System Tools
   * boot management
   * service management
   * background network management
   * windows settings
   * gpedit & register
   * fast search(taskbar win+q)
-* Beautify
-  * Static wallpaper setting
-  * Dynamic wallpaper setting
-     * 增加B站支持
-     * 增加视频列表切换
-  * Quick run(circle mode)
-  * Transparency taskbar
-  * Center taskbar
-  * Customize the start menu
-  * Other
+## Utilities
+  * hardware information
+  * startup assistant
+  * fast run
+## huá shuǐ
 
 # Screenshot
 <table align="center">
@@ -84,13 +87,10 @@ Set the project to 64 bit
  </tr>
 </table>
 
-
 # Development Plan
-- [ ] static wallpaper setting(find a stable image api)
-- [ ] dynamic_wallpaper setting(support bilibili url)
 - [ ] transparency taskbar
-- [ ] huá shuǐ
-
+- [ ] Windows 11 taskbar
+- [ ] fast run
 
 # License
 [GPLV3](LICENSE)

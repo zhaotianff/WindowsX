@@ -73,6 +73,8 @@ namespace Master_Zhao.Shell
                     return systemManagement;
                 case NavigationPages.Tools:
                     return toolsPage;
+                case NavigationPages.HuaShui:
+                    return null;
                 case NavigationPages.About:
                     return aboutPage;
                 default:

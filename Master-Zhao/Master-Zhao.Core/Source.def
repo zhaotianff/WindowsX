@@ -1,16 +1,23 @@
 LIBRARY
 EXPORTS
+;regtool.h
 SetValue
+
+;desktoptool.h
 SetBackground
 GetBackground
 GetRecentBackground
 SwitchToDesktop
 SwitchToWindow
-EmbedWindowToDesktop
 CloseEmbedWindow
 GetFileThumbnail
+CenterStartMenu
+CenterTaskListIcon
 BlurTaskbar
+EmbedWindowToDesktop
 
+;systemtool.h
 GetUserLoginTime
 IsWindows10
+IsWindows10OrHigher
 IsWindows11

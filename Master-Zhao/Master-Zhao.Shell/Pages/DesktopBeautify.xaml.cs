@@ -71,7 +71,13 @@ namespace Master_Zhao.Shell.Pages
 
         private void btn_TaskbarSettingClick(object sender, RoutedEventArgs e)
         {
+            taskbarSetting.CheckCurrentSystem();
             frame.Content = taskbarSetting;
+        }
+
+        private void btn_OtherSettingClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

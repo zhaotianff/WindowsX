@@ -178,36 +178,82 @@ HBITMAP GetFileThumbnail(PCWSTR path)
 	return hbitmap;
 }
 
-BOOL CenterStartMenu()
+BOOL CenterStartMenu(BOOL enable)
 {
 	//TODO get taskbar height
-
-	POINT point{ 0,1030 };
-
+	HWND hDesktop = GetDesktopWindow();
+	RECT rectDesktop{}, rectShellTrayWnd{}, rectNotify{}, rectStart{};
+	GetWindowRect(hDesktop, &rectDesktop);
+	HWND hShell_TrayWnd = FindWindow(L"Shell_TrayWnd", NULL);
+	GetWindowRect(hShell_TrayWnd, &rectShellTrayWnd);
+	POINT point{ 0, rectDesktop.bottom - rectShellTrayWnd.bottom + 1};
+	HWND hTrayNotifyWnd = FindWindowEx(hShell_TrayWnd, NULL, L"TrayNotifyWnd", NULL);
+	GetClientRect(hTrayNotifyWnd, &rectNotify);
+	HWND hStart = FindWindowEx(hShell_TrayWnd, NULL, L"Start", NULL);
+	GetClientRect(hStart, &rectStart);
 	keybd_event(VK_LWIN, 0x45, NULL, NULL);
 	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
 
 	Sleep(100);
 	HWND hwnd = WindowFromPoint(point);
 
+	//center 
+	int x = 0;
+
 	if (hwnd)
 	{
-		//TODO set pos
-		for (size_t i = 1; i < 1920/2; i+=10)
+		if (enable)
 		{
-			SetWindowPos(hwnd, NULL, i, 0, 0, 0, SWP_NOSIZE | SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
+			x = (rectDesktop.right - rectNotify.right - rectStart.right) / 2 - rectStart.right;
 		}
+		else
+		{
+			x = 0;
+		}
+
+		SetWindowPos(hStart, NULL, x, 0, 0, 0, SWP_NOSIZE | SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);	
+		SetWindowPos(hwnd, NULL, x, 0, 0, 0, SWP_NOSIZE | SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
+		Sleep(10);	
 	}
 
 	Sleep(100);
 	keybd_event(VK_LWIN, 0x45, NULL, NULL);
 	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
-	return 0;
+	return TRUE;
 }
 
-BOOL CenterTaskListIcon()
+BOOL CenterTaskListIcon(BOOL enable)
 {
-	return 0;
+	HWND hShell_TrayWnd = FindWindow(L"Shell_TrayWnd", NULL);
+	if (hShell_TrayWnd)
+	{
+		HWND hRegBar32 = FindWindowEx(hShell_TrayWnd, NULL, L"ReBarWindow32", NULL);
+		if (hRegBar32)
+		{
+			HWND hMsTask = FindWindowEx(hRegBar32, NULL, L"MSTaskSwWClass", NULL);
+			if (hMsTask)
+			{
+				HWND hStart = FindWindowEx(hShell_TrayWnd, NULL, L"Start", NULL);
+
+				RECT rectStart{},rectTaskSw;
+				GetWindowRect(hStart, &rectStart);
+				GetWindowRect(hMsTask, &rectTaskSw);
+				int x = 0;
+
+				if (enable)
+				{
+					x = (rectTaskSw.right - rectTaskSw.left) / 2 - (rectStart.right - rectStart.left);
+				}
+				else
+				{
+					x = 0;
+				}
+				SetWindowPos(hMsTask, NULL, x, 0, 0, 0, SWP_NOSIZE | SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
+			}
+		}
+	}
+
+	return TRUE;
 }
 
 
