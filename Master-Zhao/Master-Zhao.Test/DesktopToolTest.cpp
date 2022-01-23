@@ -50,3 +50,9 @@ void TestCenterTaskBar()
 	CenterStartMenu(FALSE);
 	CenterTaskListIcon(FALSE);
 }
+
+void TestOsVersion()
+{
+ 	auto result = IsWindows10();
+	result = IsWindows10OrHigher();
+}

@@ -27,26 +27,22 @@ SYSTEMTIME GetUserLoginTime()
 
 BOOL IsWindows10()
 {
-	OSVERSIONINFOEX info{};
-	DWORDLONG dwlConditionMask = 0;
-	VerifyVersionInfo(&info, VER_MINORVERSION, dwlConditionMask);
-	return info.dwMajorVersion == 10 && info.dwMinorVersion < 22000;
+	return TRUE;
 }
 
 BOOL IsWindows10OrHigher()
 {
-	return IsWindows10OrGreater();
+	//https://docs.microsoft.com/en-us/windows/win32/api/versionhelpers/nf-versionhelpers-iswindows10orgreater?redirectedfrom=MSDN
+	//return IsWindows10OrGreater();
+	return TRUE;
 }
 
 BOOL IsWindows11()
 {
 	//no windows 11 SDK
-	OSVERSIONINFOEX info{};
-
-	DWORDLONG dwlConditionMask = 0;
-	VerifyVersionInfo(&info, VER_MINORVERSION, dwlConditionMask);
+	
 
 	//Windows 10 2004 =>	10.0.19041
 	//Windows 11 =>         10.0.22000
-	return info.dwMinorVersion >= 22000;
+	return TRUE;
 }

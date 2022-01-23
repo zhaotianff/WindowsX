@@ -8,6 +8,7 @@
 
 #define WM_SPAWN_WORKER 0x052C
 
+//refrence https://github.com/TranslucentTB/TranslucentT
 enum ACCENT_STATE :INT
 {
 	ACCENT_DISABLED = 0,
