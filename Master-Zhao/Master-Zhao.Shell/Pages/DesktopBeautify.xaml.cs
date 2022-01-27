@@ -24,13 +24,13 @@ namespace Master_Zhao.Shell.Pages
     public partial class DesktopBeautify : Page
     {
         private ToggleButton toggleButton = null;
-        private static readonly string StaticWallpaperName = "StaticWallpaper.xaml";
-        private static readonly string DynamicWallpaperName = "DynamicWallpaper.xaml";
-        private static readonly string TaskbarSettingName = "TaskbarSetting.xaml";
-
+     
         private DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
         private StaticWallpaper staticWallpaper = new StaticWallpaper();
         private TaskbarSetting taskbarSetting = new TaskbarSetting();
+        private ContextMenuManagement menuManagement = new ContextMenuManagement();
+        private BootImageManagement bootImageManagement = new BootImageManagement();
+        private OtherSetting otherSetting = new OtherSetting();
 
         public DesktopBeautify()
         {
@@ -77,7 +77,17 @@ namespace Master_Zhao.Shell.Pages
 
         private void btn_OtherSettingClick(object sender, RoutedEventArgs e)
         {
+            frame.Content = otherSetting;
+        }
 
+        private void btn_ContextMenuSettingClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = menuManagement;
+        }
+
+        private void btn_BootImageSettingClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = bootImageManagement;
         }
     }
 

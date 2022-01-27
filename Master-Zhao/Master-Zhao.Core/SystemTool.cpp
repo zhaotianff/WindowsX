@@ -25,16 +25,33 @@ SYSTEMTIME GetUserLoginTime()
 	return SYSTEMTIME();
 }
 
+void GetVersionNumbers(DWORD* pdwMajor, DWORD* pdwMinor, DWORD* pdwBuildNumber)
+{
+	HINSTANCE hInstance = LoadLibrary(L"ntdll.dll");
+	if (hInstance == NULL)
+		return;
+
+	auto RtlGetNtVersionNumbers = (funRtlGetNtVersionNumbers)GetProcAddress(hInstance, "RtlGetNtVersionNumbers");
+	if (RtlGetNtVersionNumbers)
+	{
+		RtlGetNtVersionNumbers(pdwMajor, pdwMinor, pdwBuildNumber);
+		*pdwBuildNumber &= 0xffff;
+	}
+}
+
 BOOL IsWindows10()
 {
-	return TRUE;
+	//first windows 10 version =>Version 1507 (RTM) (OS build 10240)
+	DWORD dwMajor, dwMinor, dwBuildNumber;
+	GetVersionNumbers(&dwMajor, &dwMinor, &dwBuildNumber);
+	return dwMajor == 10 && dwBuildNumber >= 10240 && dwBuildNumber < 22000;
 }
 
 BOOL IsWindows10OrHigher()
 {
-	//https://docs.microsoft.com/en-us/windows/win32/api/versionhelpers/nf-versionhelpers-iswindows10orgreater?redirectedfrom=MSDN
-	//return IsWindows10OrGreater();
-	return TRUE;
+	DWORD dwMajor, dwMinor, dwBuildNumber;
+	GetVersionNumbers(&dwMajor, &dwMinor, &dwBuildNumber);
+	return dwMajor == 10 && dwBuildNumber >= 10240;
 }
 
 BOOL IsWindows11()
@@ -44,5 +61,7 @@ BOOL IsWindows11()
 
 	//Windows 10 2004 =>	10.0.19041
 	//Windows 11 =>         10.0.22000
-	return TRUE;
+	DWORD dwMajor, dwMinor, dwBuildNumber;
+	GetVersionNumbers(&dwMajor, &dwMinor, &dwBuildNumber);
+	return dwMajor == 10 && dwBuildNumber >= 22000;
 }

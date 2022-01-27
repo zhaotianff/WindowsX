@@ -21,8 +21,10 @@ struct SYSTEM_TIME_INFORMATION
 };
 
 typedef long(__stdcall* funNtQuerySystemInformation)(UINT, PVOID, ULONG, PULONG);
+typedef void(__stdcall* funRtlGetNtVersionNumbers)(DWORD*, DWORD*, DWORD*);
 
 SILVERAROWANACORE_API SYSTEMTIME GetUserLoginTime();
+void GetVersionNumbers(DWORD*, DWORD*, DWORD*);
 SILVERAROWANACORE_API BOOL IsWindows10();
 SILVERAROWANACORE_API BOOL IsWindows10OrHigher();
 SILVERAROWANACORE_API BOOL IsWindows11();

@@ -19,7 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master-Zhao.Shell.Test", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master-Zhao.Config", "Master-Zhao.Config\Master-Zhao.Config.csproj", "{1C336F4B-D691-4B4F-8C37-EF95B3876F63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master-Zhao.IO", "Master-Zhao.IO\Master-Zhao.IO.csproj", "{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master-Zhao.IO", "Master-Zhao.IO\Master-Zhao.IO.csproj", "{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8C98C198-738D-4567-ADEB-FE921FE389BB}"
+	ProjectSection(SolutionItems) = preProject
+		ShellCommandsList.txt = ShellCommandsList.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
