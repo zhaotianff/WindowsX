@@ -4,6 +4,7 @@
     <SolidColorBrush x:Key="AccentBaseColor" Color="Silver"/>
     <SolidColorBrush x:Key="AccentBaseColorTran" Color="Silver" Opacity=".2"/>
     <SolidColorBrush x:Key="WhiteColor" Color="White"/>
+    <SolidColorBrush x:Key="BlackColor" Color="Black"/>
     <SolidColorBrush x:Key="ButtonBorderColor" Color="#FF737373"/>
     <SolidColorBrush x:Key="ButtonDisabledBackgroundColor" Color="#FFF4F4F4"/>
     <SolidColorBrush x:Key="ButtonDisabledBorderColor" Color="#FFADB2B5"/>

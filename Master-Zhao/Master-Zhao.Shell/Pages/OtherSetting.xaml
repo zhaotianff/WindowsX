@@ -12,7 +12,7 @@
         <StackPanel>
             <GroupBox Style="{StaticResource GroupBoxStyle}">
                 <GroupBox.Header>
-                    <Label Content="桌面图标" FontSize="14"></Label>
+                    <Label Content="桌面图标" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                     <!--图标显示-->
                 </GroupBox.Header>
 
@@ -28,7 +28,7 @@
 
             <GroupBox Style="{StaticResource GroupBoxStyle}">
                 <GroupBox.Header>
-                    <Label Content="桌面相关设置" FontSize="14"></Label>
+                    <Label Content="桌面相关设置" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
 
 
 
@@ -53,7 +53,7 @@
                         <WrapPanel>
                             <!--任务栏缩略图窗口大小 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced-->
                             <Label Content="任务栏预览窗口大小" Margin="10"/>
-                            <TextBox Width="120" Margin="10"/>
+                            <TextBox Width="120" Margin="10" VerticalContentAlignment="Center"/>
                             <Button Content="设置" Margin="10" Width="88" Height="28" Style="{StaticResource ButtonStyle}"/>
                         </WrapPanel>
                     </StackPanel>
@@ -62,7 +62,7 @@
 
             <GroupBox Style="{StaticResource GroupBoxStyle}">
                 <GroupBox.Header>
-                    <Label Content="系统文件夹路径修改" FontSize="14"></Label>
+                    <Label Content="系统文件夹路径修改" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                 </GroupBox.Header>
 
                 <StackPanel Margin="0,35,0,0">
@@ -75,7 +75,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Content="系统文件夹" VerticalAlignment="Center"/>
-                        <ComboBox Grid.Column="1">
+                        <ComboBox Grid.Column="1" SelectedIndex="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                             <ComboBoxItem>保存的游戏</ComboBoxItem>
                             <ComboBoxItem>联系人</ComboBoxItem>
                             <ComboBoxItem>链接</ComboBoxItem>
@@ -88,7 +88,7 @@
                             <ComboBoxItem>音乐</ComboBoxItem>
                             <ComboBoxItem>桌面</ComboBoxItem>
                         </ComboBox>
-                        <TextBox Margin="5,0" Grid.Column="2"/>
+                        <TextBox Margin="5,0" Grid.Column="2" VerticalContentAlignment="Center"/>
                         <Button Content="修改" Grid.Column="3" Margin="10,0" Style="{StaticResource ButtonStyle}"/>
                     </Grid>
 
@@ -98,7 +98,7 @@
 
             <GroupBox Style="{StaticResource GroupBoxStyle}">
                 <GroupBox.Header>
-                    <Label Content="我的电脑快速启动项" FontSize="14"></Label>
+                    <Label Content="我的电脑快速启动项" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                 </GroupBox.Header>
 
                 <StackPanel Margin="0,35,0,0">
@@ -124,7 +124,7 @@
 
             <GroupBox Style="{StaticResource GroupBoxStyle}">
                 <GroupBox.Header>
-                    <Label Content="OEM信息设置" FontSize="14"></Label>
+                    <Label Content="OEM信息设置" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                 </GroupBox.Header>
 
                 <Grid Margin="0,35,0,0">
@@ -140,7 +140,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label HorizontalAlignment="Left" Content="OEM图片设置" Margin="10"/>
-                    <TextBox Margin="10" Grid.Column="1"/>
+                    <TextBox Margin="10" Grid.Column="1" VerticalContentAlignment="Center"/>
                     <Button Content="浏览" Grid.Column="2" Margin="10" Width="88" Height="28" Style="{StaticResource ButtonStyle}"/>
 
                     <Button Content="保存" Width="88" Height="28" Style="{StaticResource ButtonStyle}" Grid.Row="1" Grid.Column="2" Margin="10"/>
@@ -148,9 +148,9 @@
             </GroupBox>
 
             <!--硬件信息修改-->
-            <GroupBox Style="{StaticResource GroupBoxStyle}">
+            <GroupBox Style="{StaticResource GroupBoxStyle}" Margin="0,0,0,20">
                 <GroupBox.Header>
-                    <Label Content="硬件信息设置" FontSize="14"></Label>
+                    <Label Content="硬件信息设置" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                 </GroupBox.Header>
 
                 <Grid Margin="0,35,0,0">
@@ -161,7 +161,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label HorizontalAlignment="Left" Content="CPU" Margin="10"/>
-                    <TextBox Margin="10" Grid.Column="1"/>
+                    <TextBox Margin="10" Grid.Column="1" VerticalContentAlignment="Center"/>
                     <Button Content="设置" Grid.Column="2" Margin="10" Width="88" Height="28" Style="{StaticResource ButtonStyle}"/>
                 </Grid>
             </GroupBox>
