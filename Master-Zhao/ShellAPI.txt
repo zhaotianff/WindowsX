@@ -1,0 +1,1 @@
+SHGetSetSettings  Sets or retrieves Shell state settings.

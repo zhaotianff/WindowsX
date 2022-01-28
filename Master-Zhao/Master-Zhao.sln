@@ -23,6 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master-Zhao.IO", "Master-Zh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8C98C198-738D-4567-ADEB-FE921FE389BB}"
 	ProjectSection(SolutionItems) = preProject
+		ShellAPI.txt = ShellAPI.txt
 		ShellCommandsList.txt = ShellCommandsList.txt
 	EndProjectSection
 EndProject

@@ -26,3 +26,12 @@ BOOL SetValue(HKEY hKey,LPCTSTR lpSubKey,LPCTSTR lpValueName, BYTE* value)
 
 	return TRUE;
 }
+
+BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey)
+{
+	HKEY hSubKey = NULL;
+	RegOpenKeyEx(hKey, lpSubKey,0, KEY_READ, &hSubKey);
+	BOOL result = hSubKey == NULL ? FALSE : TRUE;
+	RegCloseKey(hSubKey);
+	return result;
+}

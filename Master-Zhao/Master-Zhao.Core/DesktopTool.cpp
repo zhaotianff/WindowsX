@@ -279,3 +279,27 @@ BOOL BlurTaskbar(ACCENT_POLICY accent_policy)
 	return bResult;
 
 }
+
+VOID SetDesktopIcon(DESKTOPICONS icon, BOOL bEnable)
+{
+
+}
+
+BOOL GetDesktopIconState(DESKTOPICONS icon)
+{
+	switch (icon)
+	{
+	case ICON_COMPUTER:
+		break;
+	case ICON_USER:
+		break;
+	case ICON_RECYCLE:
+		break;
+	case ICON_CONTROL_PANEL:
+		break;
+	case ICON_NETWORK:
+		break;
+	default:
+		break;
+	}
+}
