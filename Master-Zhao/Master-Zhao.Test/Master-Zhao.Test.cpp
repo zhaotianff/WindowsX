@@ -59,7 +59,7 @@ int main(int, char**)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.0f);
     //使用中文字体才能显示中文（当前使用微软雅黑）
-    ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\msyh.ttc", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+    ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\msyh.ttc", 14.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
     IM_ASSERT(font != NULL);
     bool done = false;
     while (!done)
@@ -79,8 +79,10 @@ int main(int, char**)
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        ImVec2 window_size{ 600,300 };
+        ImVec2 window_size{ 800,600 };
         ImGui::SetNextWindowSize(window_size);
+        ImVec2 window_pos{ 0,0 };
+        ImGui::SetNextWindowPos(window_pos);
         bool b_open = true;
         ImGui::Begin("Master-Zhao.Test", &b_open,ImGuiWindowFlags_NoCollapse);
         //test code start
@@ -110,10 +112,10 @@ int main(int, char**)
 
 void MasterZhaoTestCode()
 {
-    ImGui::Text("HelloWorld");
-    ImGui::Text(u8"中文字符");
-    char buf[260]{};
-    ImGui::InputText("test", buf, 260);
+    if (ImGui::Button("test os version"))
+    {
+        TestOsVersion();
+    }
 }
 
 bool CreateDeviceD3D(HWND hWnd)

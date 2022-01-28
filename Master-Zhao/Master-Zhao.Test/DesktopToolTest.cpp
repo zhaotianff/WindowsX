@@ -54,5 +54,7 @@ void TestCenterTaskBar()
 void TestOsVersion()
 {
  	auto result = IsWindows10();
+	MessageBox(NULL, result == true ? L"Is windows 10 = true." : L"Is windows 10 = false.", L"",MB_OK);
 	result = IsWindows10OrHigher();
+	MessageBox(NULL, result == true ? L"Is windows 10 or greater = true." : L"Is windows 10 or greater = false.", L"", MB_OK);
 }
