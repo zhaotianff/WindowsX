@@ -49,6 +49,9 @@
 
                             <!--禁止系统记录使用历史记录-->
                             <CheckBox Content="禁止系统记录使用历史记录" Margin="10"></CheckBox>
+
+                            <!--禁止Windows Update(需要移动到工具类别下)-->
+                            <CheckBox Content="禁止Windows Update" Margin="10"></CheckBox>
                         </WrapPanel>
                         <WrapPanel>
                             <!--任务栏缩略图窗口大小 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced-->
