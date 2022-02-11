@@ -4,6 +4,7 @@
 #include <Shldisp.h>
 #include<vector>
 #include<shobjidl_core.h>
+#include<shlobj.h>
 #include<thumbcache.h>
 
 #define WM_SPAWN_WORKER 0x052C
@@ -71,5 +72,6 @@ SILVERAROWANACORE_API BOOL CenterTaskListIcon(BOOL enable);
 SILVERAROWANACORE_API BOOL BlurTaskbar(ACCENT_POLICY);
 SILVERAROWANACORE_API VOID SetDesktopIcon(DESKTOPICONS, BOOL);
 SILVERAROWANACORE_API BOOL GetDesktopIconState(DESKTOPICONS);
+SILVERAROWANACORE_API VOID RefreshDesktop();
 
 SILVERAROWANACORE_API BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName);

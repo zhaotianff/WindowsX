@@ -289,18 +289,26 @@ BOOL GetDesktopIconState(DESKTOPICONS icon)
 {
 	switch (icon)
 	{
-	case ICON_COMPUTER:
-		break;
-	case ICON_USER:
-		break;
-	case ICON_RECYCLE:
-		break;
-	case ICON_CONTROL_PANEL:
-		break;
-	case ICON_NETWORK:
-		break;
-	default:
-		break;
+		case ICON_COMPUTER:
+			break;
+		case ICON_USER:
+			break;
+		case ICON_RECYCLE:
+			break;
+		case ICON_CONTROL_PANEL:
+			break;
+		case ICON_NETWORK:
+			break;
+		default:
+			break;
 	}
 	return TRUE;
+}
+
+VOID RefreshDesktop()
+{
+	//https://docs.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shchangenotify
+	//Notifies the system of an event that an application has performed. 
+	//An application should use this function if it performs an action that may affect the Shell.
+	SHChangeNotify(0x8000000, 0x1000, NULL,NULL);
 }

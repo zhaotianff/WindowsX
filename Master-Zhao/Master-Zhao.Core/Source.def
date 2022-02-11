@@ -1,7 +1,9 @@
 LIBRARY
 EXPORTS
 ;regtool.h
-SetValue
+SetDWORDValue
+SetSZValue
+ExistSubKey
 
 ;desktoptool.h
 SetBackground
@@ -14,6 +16,10 @@ GetFileThumbnail
 CenterStartMenu
 CenterTaskListIcon
 BlurTaskbar
+SetDesktopIcon
+GetDesktopIconState
+RefreshDesktop
+
 EmbedWindowToDesktop
 
 ;systemtool.h

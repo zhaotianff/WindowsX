@@ -54,7 +54,25 @@ void TestCenterTaskBar()
 void TestOsVersion()
 {
  	auto result = IsWindows10();
-	MessageBox(NULL, result == true ? L"Is windows 10 = true." : L"Is windows 10 = false.", L"",MB_OK);
+	MessageBox(NULL, result == TRUE ? L"Is windows 10 = true." : L"Is windows 10 = false.", L"",MB_OK);
 	result = IsWindows10OrHigher();
-	MessageBox(NULL, result == true ? L"Is windows 10 or greater = true." : L"Is windows 10 or greater = false.", L"", MB_OK);
+	MessageBox(NULL, result == TRUE ? L"Is windows 10 or greater = true." : L"Is windows 10 or greater = false.", L"", MB_OK);
+}
+
+void TestReg()
+{
+	auto result = ExistSubKey(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel");
+
+	DWORD dd = 0x3;
+	SetDWORDValue(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",L"test", dd);
+
+	TCHAR str[260] = L"HelloWorld";
+	SetSZValue(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel", L"test2", str);
+
+	
+}
+
+void TestRefresh()
+{
+	RefreshDesktop();
 }

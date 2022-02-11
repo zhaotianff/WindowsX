@@ -117,6 +117,16 @@ void MasterZhaoTestCode()
         TestOsVersion();
     }
 
+    if (ImGui::Button("test reg"))
+    {
+        TestReg();
+    }
+
+    if (ImGui::Button("simulate F5"))
+    {
+        TestRefresh();
+    }
+
     ImGui::Text(u8"测试中文");
 }
 

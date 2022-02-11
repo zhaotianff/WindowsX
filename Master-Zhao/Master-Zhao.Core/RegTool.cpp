@@ -1,16 +1,43 @@
 #include "RegTool.h"
 
-BOOL SetValue(HKEY hKey,LPCTSTR lpSubKey,LPCTSTR lpValueName, BYTE* value)
+BOOL SetDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD value)
 {
 	HKEY hSubKey = NULL;
 	auto lResult = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_ALL_ACCESS, &hSubKey);
 
-	if(lResult != ERROR_SUCCESS)
+	if (lResult != ERROR_SUCCESS)
 	{
-		return FALSE;		
+		return FALSE;
 	}
 
-	lResult = RegSetValueEx(hSubKey, lpValueName, NULL, REG_DWORD, value, sizeof(value));
+	lResult = RegSetValueEx(hSubKey, lpValueName, 0, REG_DWORD, (const BYTE*)&value, sizeof(value));
+
+	if (lResult != ERROR_SUCCESS)
+	{
+		return FALSE;
+	}
+
+	if (hSubKey)
+	{
+		lResult = RegCloseKey(hSubKey);
+		if (lResult != ERROR_SUCCESS)
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* value)
+{
+	HKEY hSubKey = NULL;
+	auto lResult = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_ALL_ACCESS, &hSubKey);
+
+	if (lResult != ERROR_SUCCESS)
+	{
+		return FALSE;
+	}
+
+	lResult = RegSetValueEx(hSubKey, lpValueName, 0, REG_SZ, (const BYTE*)value, lstrlen(value) * sizeof(TCHAR));
 
 	if (lResult != ERROR_SUCCESS)
 	{
@@ -32,6 +59,7 @@ BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey)
 	HKEY hSubKey = NULL;
 	RegOpenKeyEx(hKey, lpSubKey,0, KEY_READ, &hSubKey);
 	BOOL result = hSubKey == NULL ? FALSE : TRUE;
-	RegCloseKey(hSubKey);
+	if (hSubKey)
+		RegCloseKey(hSubKey);
 	return result;
 }
