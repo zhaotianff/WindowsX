@@ -302,4 +302,5 @@ BOOL GetDesktopIconState(DESKTOPICONS icon)
 	default:
 		break;
 	}
+	return TRUE;
 }
