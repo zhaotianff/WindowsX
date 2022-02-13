@@ -61,15 +61,16 @@ void TestOsVersion()
 
 void TestReg()
 {
-	auto result = ExistSubKey(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel");
+	//auto result = ExistSubKey(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel");
 
-	DWORD dd = 0x3;
-	SetDWORDValue(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",L"test", dd);
+	//DWORD dd = 0x3;
+	//SetDWORDValue(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",L"test", dd);
 
-	TCHAR str[260] = L"HelloWorld";
-	SetSZValue(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel", L"test2", str);
+	//TCHAR str[260] = L"HelloWorld";
+	//SetSZValue(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel", L"test2", str);
 
-	
+	DWORD value = 0;
+	QueryDWORDValue(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel", L"{59031a47-3f72-44a7-89c5-5595fe6b30ee}", &value);
 }
 
 void TestRefresh()

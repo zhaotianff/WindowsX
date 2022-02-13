@@ -63,3 +63,19 @@ BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey)
 		RegCloseKey(hSubKey);
 	return result;
 }
+
+BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value)
+{
+	DWORD length = sizeof(value);
+	auto result = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_READ, &hKey);
+	if (ERROR_SUCCESS == result)
+	{		
+		result = RegQueryValueEx(hKey, lpValueName, 0, NULL, (BYTE*)value, &length);
+		if (ERROR_SUCCESS == result)
+		{
+			RegCloseKey(hKey);
+			return TRUE;
+		}	
+	}
+	return FALSE;
+}

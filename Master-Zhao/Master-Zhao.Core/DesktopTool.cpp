@@ -282,22 +282,43 @@ BOOL BlurTaskbar(ACCENT_POLICY accent_policy)
 
 VOID SetDesktopIcon(DESKTOPICONS icon, BOOL bEnable)
 {
-
+	const wchar_t* szSubKeyPath = L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel";
+	DWORD dwEnable = bEnable == TRUE ? 0 : 1;
+	switch (icon)
+	{
+		case DESKTOPICONS::ICON_COMPUTER:
+			SetDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{20D04FE0-3AEA-1069-A2D8-08002B30309D}", dwEnable);
+			break;
+		case DESKTOPICONS::ICON_USER:
+			SetDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{59031a47-3f72-44a7-89c5-5595fe6b30ee}", dwEnable);
+			break;
+		case DESKTOPICONS::ICON_RECYCLE:
+			SetDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{645FF040-5081-101B-9F08-00AA002F954E}", dwEnable);
+			break;
+		case DESKTOPICONS::ICON_CONTROL_PANEL:
+			SetDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{5399E694-6CE5-4D6C-8FCE-1D8870FDCBA0}", dwEnable);
+			break;
+		case DESKTOPICONS::ICON_NETWORK:
+			SetDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}", dwEnable);
+			break;
+		default:
+			break;
+	}
 }
 
 BOOL GetDesktopIconState(DESKTOPICONS icon)
 {
 	switch (icon)
 	{
-		case ICON_COMPUTER:
+		case DESKTOPICONS::ICON_COMPUTER:
 			break;
-		case ICON_USER:
+		case DESKTOPICONS::ICON_USER:
 			break;
-		case ICON_RECYCLE:
+		case DESKTOPICONS::ICON_RECYCLE:
 			break;
-		case ICON_CONTROL_PANEL:
+		case DESKTOPICONS::ICON_CONTROL_PANEL:
 			break;
-		case ICON_NETWORK:
+		case DESKTOPICONS::ICON_NETWORK:
 			break;
 		default:
 			break;

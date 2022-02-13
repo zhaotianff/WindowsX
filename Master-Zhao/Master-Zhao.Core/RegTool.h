@@ -32,4 +32,5 @@ SILVERAROWANACORE_API BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpVal
 //Start menu color
 //HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent
 
-BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
+SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
+SILVERAROWANACORE_API BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value);

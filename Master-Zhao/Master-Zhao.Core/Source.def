@@ -3,6 +3,7 @@ EXPORTS
 ;regtool.h
 SetDWORDValue
 SetSZValue
+QueryDWORDValue
 ExistSubKey
 
 ;desktoptool.h

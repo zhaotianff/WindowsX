@@ -7,6 +7,8 @@
 #include<shlobj.h>
 #include<thumbcache.h>
 
+#include"RegTool.h"
+
 #define WM_SPAWN_WORKER 0x052C
 
 //refrence https://github.com/TranslucentTB/TranslucentT
@@ -48,7 +50,7 @@ typedef struct tagTASKBARINFO
 	bool bDoubleTaskBar;
 }TASKBARINFO, * PTASKBARINFO;
 
-enum DESKTOPICONS : INT
+enum class DESKTOPICONS : INT
 {
 	ICON_COMPUTER,
 	ICON_USER,
