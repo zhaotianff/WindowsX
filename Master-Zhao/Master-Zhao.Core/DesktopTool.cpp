@@ -308,17 +308,24 @@ VOID SetDesktopIcon(DESKTOPICONS icon, BOOL bEnable)
 
 BOOL GetDesktopIconState(DESKTOPICONS icon)
 {
+	const wchar_t* szSubKeyPath = L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel";
+	DWORD dwState = 0;
 	switch (icon)
 	{
 		case DESKTOPICONS::ICON_COMPUTER:
+			QueryDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{20D04FE0-3AEA-1069-A2D8-08002B30309D}", &dwState);
 			break;
 		case DESKTOPICONS::ICON_USER:
+			QueryDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{59031a47-3f72-44a7-89c5-5595fe6b30ee}", &dwState);
 			break;
 		case DESKTOPICONS::ICON_RECYCLE:
+			QueryDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{645FF040-5081-101B-9F08-00AA002F954E}", &dwState);
 			break;
 		case DESKTOPICONS::ICON_CONTROL_PANEL:
+			QueryDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{5399E694-6CE5-4D6C-8FCE-1D8870FDCBA0}", &dwState);
 			break;
 		case DESKTOPICONS::ICON_NETWORK:
+			QueryDWORDValue(HKEY_CURRENT_USER, szSubKeyPath, L"{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}", &dwState);
 			break;
 		default:
 			break;
@@ -332,4 +339,65 @@ VOID RefreshDesktop()
 	//Notifies the system of an event that an application has performed. 
 	//An application should use this function if it performs an action that may affect the Shell.
 	SHChangeNotify(0x8000000, 0x1000, NULL,NULL);
+}
+
+//from msdn 
+//https://docs.microsoft.com/en-us/windows/win32/shell/links?redirectedfrom=MSDN#creating-a-shortcut-and-a-folder-shortcut-to-a-file
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCTSTR lpszPathLink, LPCTSTR lpszArgs,LPCWSTR lpszDesc)
+{
+	HRESULT hres;
+	IShellLink* psl;
+
+	// Get a pointer to the IShellLink interface. It is assumed that CoInitialize
+	// has already been called.
+	hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
+	if (SUCCEEDED(hres))
+	{
+		IPersistFile* ppf;
+
+		// Set the path to the shortcut target
+		// set arguments
+		// set description
+		psl->SetPath(lpszPathObj);
+		psl->SetArguments(lpszArgs);
+		psl->SetDescription(lpszDesc);
+
+		// Query IShellLink for the IPersistFile interface, used for saving the 
+		// shortcut in persistent storage. 
+		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf);
+
+		if (SUCCEEDED(hres))
+		{
+			// Save the link by calling IPersistFile::Save. 
+			hres = ppf->Save(lpszPathLink, TRUE);
+			ppf->Release();
+		}
+		psl->Release();
+	}
+	return hres;
+}
+
+BOOL GetGodModeShortCutState()
+{
+	WIN32_FIND_DATA ffd;
+	HANDLE hFind = INVALID_HANDLE_VALUE;
+
+	TCHAR szDesktopPath[MAX_PATH]{};
+	SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, SHGFP_TYPE_CURRENT, szDesktopPath);
+	StringCchCat(szDesktopPath, sizeof(szDesktopPath) * sizeof(TCHAR), L"\\god mode.lnk");
+
+	hFind = FindFirstFile(szDesktopPath, &ffd);
+
+	if (INVALID_HANDLE_VALUE == hFind)
+	{
+		return FALSE;
+	}
+
+	FindClose(hFind);
+	return TRUE;
+}
+
+BOOL CreateGodModeShortCut()
+{
+	return 0;
 }

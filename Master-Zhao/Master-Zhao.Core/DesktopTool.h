@@ -6,6 +6,8 @@
 #include<shobjidl_core.h>
 #include<shlobj.h>
 #include<thumbcache.h>
+#include<Shlwapi.h>
+#include <strsafe.h>
 
 #include"RegTool.h"
 
@@ -75,5 +77,8 @@ SILVERAROWANACORE_API BOOL BlurTaskbar(ACCENT_POLICY);
 SILVERAROWANACORE_API VOID SetDesktopIcon(DESKTOPICONS, BOOL);
 SILVERAROWANACORE_API BOOL GetDesktopIconState(DESKTOPICONS);
 SILVERAROWANACORE_API VOID RefreshDesktop();
+SILVERAROWANACORE_API HRESULT CreateLink(LPCWSTR lpszPathObj,LPCTSTR lpszPathLink, LPCTSTR lpszArgs, LPCWSTR lpszDesc);
+SILVERAROWANACORE_API BOOL GetGodModeShortCutState();
+SILVERAROWANACORE_API BOOL CreateGodModeShortCut();
 
 SILVERAROWANACORE_API BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName);
