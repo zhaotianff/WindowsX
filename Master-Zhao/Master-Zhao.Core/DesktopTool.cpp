@@ -390,6 +390,7 @@ BOOL GetGodModeShortCutState()
 
 	if (INVALID_HANDLE_VALUE == hFind)
 	{
+		FindClose(hFind);
 		return FALSE;
 	}
 
@@ -399,5 +400,20 @@ BOOL GetGodModeShortCutState()
 
 BOOL CreateGodModeShortCut()
 {
-	return 0;
+	TCHAR szExplorer[MAX_PATH]{};
+	TCHAR szGodmodLnk[MAX_PATH]{};
+	SHGetFolderPath(NULL, CSIDL_WINDOWS, NULL, SHGFP_TYPE_CURRENT, szExplorer);
+	StringCchCat(szExplorer, sizeof(szExplorer) * sizeof(TCHAR), L"\\explorer.exe");
+	SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, SHGFP_TYPE_CURRENT, szGodmodLnk);
+	StringCchCat(szGodmodLnk, sizeof(szGodmodLnk) * sizeof(TCHAR), L"\\god mode.lnk");
+	auto hr = CreateLink(szExplorer, szGodmodLnk, L"shell:::{ED7BA470-8E54-465E-825C-99712043E01C}", L"god mode");
+	return SUCCEEDED(hr);
+}
+
+BOOL RemoveGodModeShortCut()
+{
+	TCHAR szGodmodLnk[MAX_PATH]{};
+	SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, SHGFP_TYPE_CURRENT, szGodmodLnk);
+	StringCchCat(szGodmodLnk, sizeof(szGodmodLnk) * sizeof(TCHAR), L"\\god mode.lnk");
+	return DeleteFile(szGodmodLnk);
 }

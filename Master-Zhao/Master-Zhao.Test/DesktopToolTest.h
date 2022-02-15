@@ -14,3 +14,4 @@ void TestCenterTaskBar();
 void TestOsVersion();
 void TestReg();
 void TestRefresh();
+void TestCreateGodmode();

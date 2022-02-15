@@ -127,6 +127,11 @@ void MasterZhaoTestCode()
         TestRefresh();
     }
 
+    if (ImGui::Button("create god mode"))
+    {
+        TestCreateGodmode();
+    }
+
     ImGui::Text(u8"测试中文");
 }
 

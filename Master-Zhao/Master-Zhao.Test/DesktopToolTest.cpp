@@ -77,3 +77,13 @@ void TestRefresh()
 {
 	RefreshDesktop();
 }
+
+void TestCreateGodmode()
+{
+	if (GetGodModeShortCutState())
+	{
+		MessageBox(NULL, L"god mode快捷方式已经存在",L"",MB_OK);
+		return;
+	}
+	CreateGodModeShortCut();
+}
