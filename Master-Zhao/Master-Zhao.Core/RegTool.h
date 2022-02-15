@@ -12,13 +12,18 @@
 
 SILVERAROWANACORE_API BOOL SetDWORDValue(HKEY hKey, LPCTSTR lpSubKey,LPCTSTR lpValueName,DWORD value);
 SILVERAROWANACORE_API BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* value);
+SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName);
 
 //Windows Photo Viewer
 //HKLM\Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations
-//.jpg
-//.png
-//.bmp
-//.jpeg
+// support BMP, JPEG, JPEG XR (formerly HD Photo), PNG, ICO, GIF and TIFF 
+//.bmp PhotoViewer.FileAssoc.Tiff
+//.jpeg PhotoViewer.FileAssoc.Tiff
+//.jpg PhotoViewer.FileAssoc.Tiff
+//.png PhotoViewer.FileAssoc.Tiff
+//.ico PhotoViewer.FileAssoc.Tiff
+//.gif PhotoViewer.FileAssoc.Tiff
+//.tiff PhotoViewer.FileAssoc.Tiff
 
 //Run history
 //HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
@@ -31,6 +36,10 @@ SILVERAROWANACORE_API BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpVal
 
 //Start menu color
 //HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent
+
+//Shortcut arrow
+//remove HKCR\lnkfile\IsShortcut
+
 
 SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
 SILVERAROWANACORE_API BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value);

@@ -54,6 +54,33 @@ BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* value)
 	return TRUE;
 }
 
+BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName)
+{
+	HKEY hSubKey = NULL;
+	auto lResult = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_ALL_ACCESS, &hSubKey);
+
+	if (lResult != ERROR_SUCCESS)
+	{
+		return FALSE;
+	}
+
+	lResult = RegDeleteValue(hSubKey, lpValueName);
+
+	if (lResult != ERROR_SUCCESS)
+	{
+		return FALSE;
+	}
+
+	if (hSubKey)
+	{
+		lResult = RegCloseKey(hSubKey);
+		if (lResult != ERROR_SUCCESS)
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
 BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey)
 {
 	HKEY hSubKey = NULL;

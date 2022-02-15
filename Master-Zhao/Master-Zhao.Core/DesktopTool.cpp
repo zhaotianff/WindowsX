@@ -384,7 +384,7 @@ BOOL GetGodModeShortCutState()
 
 	TCHAR szDesktopPath[MAX_PATH]{};
 	SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, SHGFP_TYPE_CURRENT, szDesktopPath);
-	StringCchCat(szDesktopPath, sizeof(szDesktopPath) * sizeof(TCHAR), L"\\god mode.lnk");
+	StringCchCat(szDesktopPath, MAX_PATH, L"\\god mode.lnk");
 
 	hFind = FindFirstFile(szDesktopPath, &ffd);
 
@@ -403,9 +403,9 @@ BOOL CreateGodModeShortCut()
 	TCHAR szExplorer[MAX_PATH]{};
 	TCHAR szGodmodLnk[MAX_PATH]{};
 	SHGetFolderPath(NULL, CSIDL_WINDOWS, NULL, SHGFP_TYPE_CURRENT, szExplorer);
-	StringCchCat(szExplorer, sizeof(szExplorer) * sizeof(TCHAR), L"\\explorer.exe");
+	StringCchCat(szExplorer, MAX_PATH, L"\\explorer.exe");
 	SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, SHGFP_TYPE_CURRENT, szGodmodLnk);
-	StringCchCat(szGodmodLnk, sizeof(szGodmodLnk) * sizeof(TCHAR), L"\\god mode.lnk");
+	StringCchCat(szGodmodLnk, MAX_PATH, L"\\god mode.lnk");
 	auto hr = CreateLink(szExplorer, szGodmodLnk, L"shell:::{ED7BA470-8E54-465E-825C-99712043E01C}", L"god mode");
 	return SUCCEEDED(hr);
 }
@@ -414,6 +414,43 @@ BOOL RemoveGodModeShortCut()
 {
 	TCHAR szGodmodLnk[MAX_PATH]{};
 	SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, SHGFP_TYPE_CURRENT, szGodmodLnk);
-	StringCchCat(szGodmodLnk, sizeof(szGodmodLnk) * sizeof(TCHAR), L"\\god mode.lnk");
+	StringCchCat(szGodmodLnk, MAX_PATH, L"\\god mode.lnk");
 	return DeleteFile(szGodmodLnk);
 }
+
+BOOL RemoveShortcutArrow()
+{
+	auto bResult = RemovRegValue(HKEY_CLASSES_ROOT, L"lnkfile", L"IsShortcut");
+	if (bResult)
+		RefreshDesktop();
+	return bResult;
+}
+
+BOOL RestoreShortcutArrow()
+{
+	auto bResult =  SetSZValue(HKEY_CLASSES_ROOT, L"lnkfile", L"IsShortcut", NULL);
+	if (bResult)
+		RefreshDesktop();
+	return bResult;
+}
+
+BOOL RegisterWindowsPhotoViewerFormat()
+{
+	//HKLM\Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations
+// support BMP, JPEG, JPEG XR (formerly HD Photo), PNG, ICO, GIF and TIFF 
+//.bmp PhotoViewer.FileAssoc.Tiff
+//.jpeg PhotoViewer.FileAssoc.Tiff
+//.jpg PhotoViewer.FileAssoc.Tiff
+//.png PhotoViewer.FileAssoc.Tiff
+//.ico PhotoViewer.FileAssoc.Tiff
+//.gif PhotoViewer.FileAssoc.Tiff
+//.tiff PhotoViewer.FileAssoc.Tiff
+	//SetSZValue(HKEY_LOCAL_MACHINE,LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)",L"", );
+}
+
+BOOL UnregisterWindowsPhotoViewerFormat()
+{
+	return 0;
+}
+
+
