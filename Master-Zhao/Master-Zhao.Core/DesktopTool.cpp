@@ -436,21 +436,33 @@ BOOL RestoreShortcutArrow()
 
 BOOL RegisterWindowsPhotoViewerFormat()
 {
-	//HKLM\Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations
-// support BMP, JPEG, JPEG XR (formerly HD Photo), PNG, ICO, GIF and TIFF 
-//.bmp PhotoViewer.FileAssoc.Tiff
-//.jpeg PhotoViewer.FileAssoc.Tiff
-//.jpg PhotoViewer.FileAssoc.Tiff
-//.png PhotoViewer.FileAssoc.Tiff
-//.ico PhotoViewer.FileAssoc.Tiff
-//.gif PhotoViewer.FileAssoc.Tiff
-//.tiff PhotoViewer.FileAssoc.Tiff
-	//SetSZValue(HKEY_LOCAL_MACHINE,LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)",L"", );
+	LPTSTR szTiff = _tcsdup(L"PhotoViewer.FileAssoc.Tiff");
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)",L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	free(szTiff);
 }
 
 BOOL UnregisterWindowsPhotoViewerFormat()
 {
-	return 0;
+	LPTSTR szTiff = _tcsdup(L"PhotoViewer.FileAssoc.Tiff");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
+	free(szTiff);
 }
-
 

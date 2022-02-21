@@ -8,6 +8,7 @@
 #include<thumbcache.h>
 #include<Shlwapi.h>
 #include <strsafe.h>
+#include<tchar.h>
 
 #include"RegTool.h"
 
@@ -85,6 +86,7 @@ SILVERAROWANACORE_API BOOL RemoveShortcutArrow();
 SILVERAROWANACORE_API BOOL RestoreShortcutArrow();
 SILVERAROWANACORE_API BOOL RegisterWindowsPhotoViewerFormat();
 SILVERAROWANACORE_API BOOL UnregisterWindowsPhotoViewerFormat();
+SILVERAROWANACORE_API BOOL PaintVersionInfo(BOOL enable);
 
 
 SILVERAROWANACORE_API BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName);

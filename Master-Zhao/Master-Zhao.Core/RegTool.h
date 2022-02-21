@@ -27,7 +27,7 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 
 //Run history
 //HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
-
+																		  . . ......
 //Local Service
 //HKLM\System\ControlSet001\Services\pcw
 
@@ -39,6 +39,9 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 
 //Shortcut arrow
 //remove HKCR\lnkfile\IsShortcut
+
+//Paint version info
+//HKEY_CURRENT_USER\Control Panel\Desktop\PaintDesktopVersion(0x1)
 
 
 SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
