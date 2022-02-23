@@ -1,7 +1,6 @@
 # Master-Zhao
-Master-Zhao是Windows的一个工具集软件。 
-07年时，在一个软件盘上，我第一次接触了Windows优化大师，当时的鲁大师还是作为Windows优化大师的一个附带工具安装的。作者鲁锦，是我心中当之无愧的大佬之一。    
-10多年过去了，现在我也掌握了一些编程方面的知识，于是我想实现一下童年的梦想，写一个工具类的软件集合，暂且命名为赵大师，哈哈哈哈。
+Master-Zhao is a windows toolset software.  
+Right here waiting to recall, just at that time already disconsolate.
 
 <p align="center">
 <a href="https://github.com/zhaotianff/Master-Zhao" target="_blank">
@@ -24,13 +23,13 @@ Master-Zhao是Windows的一个工具集软件。
 </p>
 <h1 align="center">Master-Zhao :hammer_and_wrench: </h1>
 
-# 开发环境
+# Development environment
 * .NET5
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 
-# 构建
-需要设置项目为x64
+# Build
+Set the project to 64 bit
 <p align="center">
     <img align="center" alt="error dll format" src="Screenshots/error_dll_format.png" />
 </p>
@@ -38,31 +37,28 @@ Master-Zhao是Windows的一个工具集软件。
     <img align="center" alt="build x64" src="Screenshots/build_x64.png" />
 </p>
 
-# 功能列表
-## 美化
-  * 静态壁纸设置
-  * 动态壁纸设置
-  * 任务栏设置
-  * 右键菜单管理
-  * 开机图像修改
-  * 其它
-## 系统工具
-  * 启动项管理
-  * 服务管理
-  * 后台网络管理
-  * 系统设置
-  * 组策略和注册表管理
-  * 快速搜索（基于任务栏）
-## 实用工具
-  * 硬件信息
-  * 开机助手
-  * 快速启动
-## 划水
+# List of features
+## Beautify
+  * Static wallpaper setting
+  * Dynamic wallpaper setting
+  * Taskbar setting
+  * Context menu setting
+  * Boot image setting
+  * other
+## System Tools
+  * boot management
+  * service management
+  * background network management
+  * windows settings
+  * gpedit & register
+  * fast search(taskbar win+q)
+## Utilities
+  * hardware information
+  * startup assistant
+  * fast run
+## huá shuǐ
 
-# 正在开发的功能
-  * 美化-其它设置
-     
-# 界面截图
+# Screenshot
 <table align="center">
  <tr>
   <td colspan="2">main</td>
@@ -84,6 +80,11 @@ Master-Zhao是Windows的一个工具集软件。
   <td colspan="2"> <img align="center" alt="dynamic wallpaper" src="Screenshots/dynamic_wallpaper.png" /></td>
  </tr>
 </table>
+
+# Development Plan
+- [ ] transparency taskbar
+- [ ] Windows 11 taskbar
+- [ ] fast run
 
 # License
 [GPLV3](LICENSE)
