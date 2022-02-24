@@ -27,7 +27,7 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 
 //Run history
 //HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
-																		  . . ......
+
 //Local Service
 //HKLM\System\ControlSet001\Services\pcw
 
@@ -43,6 +43,14 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 //Paint version info
 //HKEY_CURRENT_USER\Control Panel\Desktop\PaintDesktopVersion(0x1)
 
+//Group policy
+//Enabled
+//Disabled
+//Not Configured
+//HKEY_CURRENT_USER\Software\Policies(preferred location)
+//HKEY_LOCAL_MACHINE\Software\Policies(preferred location)
+//HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies
+//HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies
 
 SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
 SILVERAROWANACORE_API BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value);

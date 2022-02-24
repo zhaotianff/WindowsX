@@ -438,15 +438,12 @@ BOOL RegisterWindowsPhotoViewerFormat()
 {
 	LPTSTR szTiff = _tcsdup(L"PhotoViewer.FileAssoc.Tiff");
 	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)",L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".jpeg", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".jpg", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".png", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".ico", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".gif", szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".tiff", szTiff);
 	free(szTiff);
 }
 
@@ -464,5 +461,18 @@ BOOL UnregisterWindowsPhotoViewerFormat()
 	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
 	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
 	free(szTiff);
+}
+
+BOOL PaintVersionInfo(BOOL enable)
+{
+	//HKEY_CURRENT_USER\Control Panel\Desktop\PaintDesktopVersion(0x1)
+	DWORD dwValue = 1;
+
+	if (enable == FALSE)
+	{
+		dwValue = 0;
+	}
+
+	return SetDWORDValue(HKEY_CURRENT_USER, LR"(Control Panel\Desktop)", L"PaintDesktopVersion", dwValue);
 }
 
