@@ -87,3 +87,8 @@ void TestCreateGodmode()
 	}
 	CreateGodModeShortCut();
 }
+
+void TestSetThumbSize(int size)
+{
+	SetTaskbarThumbnailSize(size,TRUE);
+}

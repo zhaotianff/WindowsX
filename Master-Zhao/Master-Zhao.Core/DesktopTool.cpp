@@ -110,6 +110,18 @@ BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName)
 	return true;
 }
 
+VOID RestartExplorer()
+{
+	DWORD dwPID;
+	HWND hShellTray = ::FindWindow(TEXT("Shell_TrayWnd"), NULL);
+	GetWindowThreadProcessId(hShellTray, &dwPID);
+	HANDLE hExplorer;
+	hExplorer = OpenProcess(PROCESS_TERMINATE, false, dwPID);
+	//restart explorer
+	TerminateProcess(hExplorer, 2);
+	CloseHandle(hExplorer);
+}
+
 BOOL CloseEmbedWindow()
 {
 	if (hEmbedHwnd)
@@ -434,7 +446,7 @@ BOOL RestoreShortcutArrow()
 	return bResult;
 }
 
-BOOL RegisterWindowsPhotoViewerFormat()
+VOID RegisterWindowsPhotoViewerFormat()
 {
 	LPTSTR szTiff = _tcsdup(L"PhotoViewer.FileAssoc.Tiff");
 	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)",L".bmp", szTiff);
@@ -447,7 +459,7 @@ BOOL RegisterWindowsPhotoViewerFormat()
 	free(szTiff);
 }
 
-BOOL UnregisterWindowsPhotoViewerFormat()
+VOID UnregisterWindowsPhotoViewerFormat()
 {
 	LPTSTR szTiff = _tcsdup(L"PhotoViewer.FileAssoc.Tiff");
 	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
@@ -474,5 +486,25 @@ BOOL PaintVersionInfo(BOOL enable)
 	}
 
 	return SetDWORDValue(HKEY_CURRENT_USER, LR"(Control Panel\Desktop)", L"PaintDesktopVersion", dwValue);
+}
+
+BOOL SetTaskbarThumbnailSize(DWORD dwSize,BOOL bRestartExplorer)
+{
+	BOOL bResult = FALSE;
+	if (dwSize == RESET_TASKBARTHUMB)
+	{
+		bResult = RemovRegValue(HKEY_CURRENT_USER, TASKBAR_THUMB_SIZE_REGPATH, TASKBAR_THUMB_SIZE);
+	}
+	else
+	{
+		bResult = SetDWORDValue(HKEY_CURRENT_USER, TASKBAR_THUMB_SIZE_REGPATH, TASKBAR_THUMB_SIZE, dwSize);
+	}
+
+	if (bRestartExplorer)
+	{
+		RestartExplorer();
+	}
+	return bResult;
+	
 }
 

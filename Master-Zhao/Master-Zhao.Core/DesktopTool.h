@@ -14,6 +14,8 @@
 
 #define WM_SPAWN_WORKER 0x052C
 
+#define RESET_TASKBARTHUMB -1
+
 //refrence https://github.com/TranslucentTB/TranslucentT
 enum ACCENT_STATE :INT
 {
@@ -84,9 +86,11 @@ SILVERAROWANACORE_API BOOL CreateGodModeShortCut();
 SILVERAROWANACORE_API BOOL RemoveGodModeShortCut();
 SILVERAROWANACORE_API BOOL RemoveShortcutArrow();
 SILVERAROWANACORE_API BOOL RestoreShortcutArrow();
-SILVERAROWANACORE_API BOOL RegisterWindowsPhotoViewerFormat();
-SILVERAROWANACORE_API BOOL UnregisterWindowsPhotoViewerFormat();
+SILVERAROWANACORE_API VOID RegisterWindowsPhotoViewerFormat();
+SILVERAROWANACORE_API VOID UnregisterWindowsPhotoViewerFormat();
 SILVERAROWANACORE_API BOOL PaintVersionInfo(BOOL enable);
+SILVERAROWANACORE_API BOOL SetTaskbarThumbnailSize(DWORD,BOOL);
 
 
 SILVERAROWANACORE_API BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName);
+VOID RestartExplorer();

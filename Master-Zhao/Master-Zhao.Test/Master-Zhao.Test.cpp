@@ -22,6 +22,8 @@
 
 #pragma comment (lib,"../Master-Zhao.Shell/bin/Debug/net5.0-windows/MasterZhaoCore.lib")
 
+int nTaskBarThumbSize = 0;
+
 static ID3D11Device* g_pd3dDevice = NULL;
 static ID3D11DeviceContext* g_pd3dDeviceContext = NULL;
 static IDXGISwapChain* g_pSwapChain = NULL;
@@ -132,6 +134,12 @@ void MasterZhaoTestCode()
         TestCreateGodmode();
     }
 
+    ImGui::InputInt(u8"任务栏缩略图大小", &nTaskBarThumbSize);
+
+    if (ImGui::Button("taskbar thumbnail size"))
+    {
+        TestSetThumbSize(nTaskBarThumbSize);
+    }
     ImGui::Text(u8"测试中文");
 }
 

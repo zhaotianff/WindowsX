@@ -24,6 +24,10 @@ CreateLink
 GetGodModeShortCutState
 CreateGodModeShortCut
 RemoveGodModeShortCut
+RegisterWindowsPhotoViewerFormat
+UnregisterWindowsPhotoViewerFormat
+PaintVersionInfo
+SetTaskbarThumbnailSize
 
 EmbedWindowToDesktop
 

@@ -42,6 +42,7 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 
 //Paint version info
 //HKEY_CURRENT_USER\Control Panel\Desktop\PaintDesktopVersion(0x1)
+#define PAINT_VERSION_INFO_REGPATH L"Control Panel\\Desktop\\PaintDesktopVersion"
 
 //Group policy
 //Enabled
@@ -51,6 +52,10 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 //HKEY_LOCAL_MACHINE\Software\Policies(preferred location)
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies
 //HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies
+
+//Taskbar thumbnail size
+#define TASKBAR_THUMB_SIZE_REGPATH L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Taskband"
+#define TASKBAR_THUMB_SIZE L"MinThumbSizePx"
 
 SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
 SILVERAROWANACORE_API BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value);

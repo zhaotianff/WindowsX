@@ -8,6 +8,7 @@
       d:DesignHeight="720" d:DesignWidth="1080"
       Title="OtherSetting">
 
+    <!--这个界面的大部分设置目前没有现实，都隐藏了。等后面版本实现了再显示出来吧-->
     <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
         <StackPanel>
             <GroupBox Style="{StaticResource GroupBoxStyle}">
@@ -48,10 +49,10 @@
                             <CheckBox Content="桌面显示Windows版本信息" Margin="10"></CheckBox>
 
                             <!--禁止系统记录使用历史记录-->
-                            <CheckBox Content="禁止系统记录使用历史记录" Margin="10"></CheckBox>
+                            <CheckBox Content="禁止系统记录使用历史记录" Margin="10" Visibility="Collapsed"></CheckBox>
 
                             <!--禁止Windows Update(需要移动到工具类别下)-->
-                            <CheckBox Content="禁止Windows Update" Margin="10"></CheckBox>
+                            <CheckBox Content="禁止Windows Update" Margin="10" Visibility="Collapsed"></CheckBox>
                         </WrapPanel>
                         <WrapPanel>
                             <!--任务栏缩略图窗口大小 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced-->
@@ -63,7 +64,7 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Style="{StaticResource GroupBoxStyle}">
+            <GroupBox Style="{StaticResource GroupBoxStyle}" Visibility="Collapsed">
                 <GroupBox.Header>
                     <Label Content="系统文件夹路径修改" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                 </GroupBox.Header>
@@ -99,7 +100,7 @@
 
             </GroupBox>
 
-            <GroupBox Style="{StaticResource GroupBoxStyle}">
+            <GroupBox Style="{StaticResource GroupBoxStyle}" Visibility="Collapsed">
                 <GroupBox.Header>
                     <Label Content="我的电脑快速启动项" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                 </GroupBox.Header>
@@ -125,7 +126,7 @@
 
             </GroupBox>
 
-            <GroupBox Style="{StaticResource GroupBoxStyle}">
+            <GroupBox Style="{StaticResource GroupBoxStyle}" Visibility="Collapsed">
                 <GroupBox.Header>
                     <Label Content="OEM信息设置" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                 </GroupBox.Header>
@@ -151,7 +152,7 @@
             </GroupBox>
 
             <!--硬件信息修改-->
-            <GroupBox Style="{StaticResource GroupBoxStyle}" Margin="0,0,0,20">
+            <GroupBox Style="{StaticResource GroupBoxStyle}" Margin="0,0,0,20" Visibility="Collapsed">
                 <GroupBox.Header>
                     <Label Content="硬件信息设置" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BlackColor}"></Label>
                 </GroupBox.Header>
