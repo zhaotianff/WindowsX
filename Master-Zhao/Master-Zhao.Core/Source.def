@@ -8,7 +8,9 @@ ExistSubKey
 
 ;desktoptool.h
 SetBackground
+SetBackgroundPosition
 GetBackground
+GetBackgroundPosition
 GetRecentBackground
 SwitchToDesktop
 SwitchToWindow
