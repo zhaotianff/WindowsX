@@ -43,6 +43,7 @@ namespace Master_Zhao.Shell.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadCurrentBackground();
+            LoadCurrentBackgroundPosition();
             LoadRecentBackground();
             LoadDailyWallpaper();
         }
@@ -61,6 +62,19 @@ namespace Master_Zhao.Shell.Pages
                 CurrentBackground = sb.ToString();
                 SetPreviewImage(CurrentBackground);
             }
+        }
+
+        private void LoadCurrentBackgroundPosition()
+        {
+            DesktopTool.DESKTOP_WALLPAPER_POSITION position = DesktopTool.DESKTOP_WALLPAPER_POSITION.DWPOS_STRETCH;
+            DesktopTool.GetBackgroundPosition(ref position);
+            this.cbx_position.SelectedIndex = (int)position;
+            this.cbx_position.SelectionChanged += Cbx_position_SelectionChanged;
+        }
+
+        private void Cbx_position_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DesktopTool.SetBackgroundPosition((DesktopTool.DESKTOP_WALLPAPER_POSITION)cbx_position.SelectedIndex);
         }
 
         private void SetPreviewImage(string path)

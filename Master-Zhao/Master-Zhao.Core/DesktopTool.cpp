@@ -16,7 +16,19 @@ BOOL SetBackground(LPTSTR lpImagePath)
 
 BOOL SetBackgroundPosition(DESKTOP_WALLPAPER_POSITION pos)
 {
-	return 0;
+	CoInitialize(NULL);
+
+	IDesktopWallpaper* pDesktopWallpaper = NULL;
+	HRESULT sc = CoCreateInstance(CLSID_DesktopWallpaper, NULL, CLSCTX_ALL, IID_IDesktopWallpaper, (LPVOID*)&pDesktopWallpaper);
+
+	if (SUCCEEDED(sc))
+	{
+		sc = pDesktopWallpaper->SetPosition(DESKTOP_WALLPAPER_POSITION::DWPOS_TILE);
+		pDesktopWallpaper->Release();
+	}
+
+	CoUninitialize();
+	return SUCCEEDED(sc);
 }
 
 //调用前分配空间
@@ -25,9 +37,21 @@ BOOL GetBackground(LPTSTR lpImagePath)
 	return SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, (PVOID)lpImagePath, 0);
 }
 
-BOOL GetBackgroundPosition(DESKTOP_WALLPAPER_POSITION& pos)
+BOOL GetBackgroundPosition(DESKTOP_WALLPAPER_POSITION* pos)
 {
-	return 0;
+	CoInitialize(NULL);
+
+	IDesktopWallpaper* pDesktopWallpaper = NULL;
+	HRESULT sc = CoCreateInstance(CLSID_DesktopWallpaper, NULL, CLSCTX_ALL, IID_IDesktopWallpaper, (LPVOID*)&pDesktopWallpaper);
+
+	if (SUCCEEDED(sc))
+	{
+		sc = pDesktopWallpaper->GetPosition(pos);
+		pDesktopWallpaper->Release();
+	}
+
+	CoUninitialize();
+	return SUCCEEDED(sc);
 }
 
 //计算机\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers

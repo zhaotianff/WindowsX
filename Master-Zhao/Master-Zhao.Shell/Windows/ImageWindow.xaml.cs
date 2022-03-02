@@ -106,7 +106,7 @@ namespace Master_Zhao.Shell.Windows
                 filePath = currentBackground;
             }
             StringBuilder sb = new StringBuilder(filePath);
-            SetBackground(sb);        
+            SetBackground(sb);         
         }
 
         private void SetAllWindowState(WindowState windowState)

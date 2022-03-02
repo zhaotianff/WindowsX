@@ -73,6 +73,15 @@
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
+            <Label Content="图片放置方式" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,220,0"></Label>
+            <ComboBox Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,120,0" Width="100" SelectedIndex="0" Name="cbx_position">
+                <ComboBoxItem>居中</ComboBoxItem>
+                <ComboBoxItem>平铺</ComboBoxItem>
+                <ComboBoxItem>拉伸</ComboBoxItem>
+                <ComboBoxItem>适应</ComboBoxItem>
+                <ComboBoxItem>填充</ComboBoxItem>
+                <ComboBoxItem>扩展</ComboBoxItem>
+            </ComboBox>
             <Button Content="浏览壁纸" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnBrowse_Click" Style="{StaticResource ButtonStyle}"></Button>
             <!--<Button Content="壁纸设置" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,100,0" VerticalAlignment="Top"></Button>-->
         </Grid>

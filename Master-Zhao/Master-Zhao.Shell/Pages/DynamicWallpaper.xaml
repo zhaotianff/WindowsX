@@ -17,8 +17,8 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="26.4"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="36.4"/>
             </Grid.RowDefinitions>
 
             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -26,6 +26,15 @@
 
                 </WrapPanel>
             </ScrollViewer>
+
+            <Grid Grid.Row="1">
+                <Slider Margin="50,0,100,0" VerticalAlignment="Center"/>
+                <Label Content="30:15/45:12" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Button Content="播放" Width="30" Height="30"/>
+            </Grid>
         </Grid>
 
         <Grid Grid.Column="1">

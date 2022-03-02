@@ -51,6 +51,16 @@ namespace Master_Zhao.Shell.Pages
         {
             var list = GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList;
 
+            DynamicWallpaperItem defaultWallpaper = new DynamicWallpaperItem();
+            defaultWallpaper.Name = "默认桌面";
+            var sb = new StringBuilder(DesktopTool.MAX_PATH);
+            if (DesktopTool.GetBackground(sb))
+            {
+                defaultWallpaper.Path = sb.ToString();
+                defaultWallpaper.Thumbnail = sb.ToString();
+            }
+            list.Insert(0, defaultWallpaper);
+
             wrap.Children.Clear();
 
             await Task.Factory.StartNew(()=> {
