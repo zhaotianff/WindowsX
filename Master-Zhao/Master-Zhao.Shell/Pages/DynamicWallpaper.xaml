@@ -27,12 +27,12 @@
                 </WrapPanel>
             </ScrollViewer>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Visibility="Collapsed">
                 <Slider Margin="50,0,100,0" VerticalAlignment="Center"/>
                 <Label Content="30:15/45:12" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
             </Grid>
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Visibility="Collapsed">
                 <Button Content="播放" Width="30" Height="30"/>
             </Grid>
         </Grid>
@@ -47,7 +47,7 @@
                 <Label Content="动态壁纸设置" FontWeight="Bold" FontSize="15"></Label>
                 <CheckBox Content="自动循环" Margin="5" Name="cbx_AutoRepeat" Checked="cbx_AutoRepeat_Checked" Unchecked="cbx_AutoRepeat_Unchecked"/>
                 <CheckBox Content="不允许播放背景声音" Margin="5" Name="cbx_Mute" Checked="cbx_Mute_Checked" Unchecked="cbx_Mute_Unchecked"/>
-                <CheckBox Content="保留动态壁纸(开发中)" IsEnabled="False" Margin="5" ToolTip="软件退出后仍然保留动态壁纸" Name="cbx_KeepWallpaper" Checked="cbx_KeepWallpaper_Checked" Unchecked="cbx_KeepWallpaper_Unchecked"></CheckBox>
+                <CheckBox Content="保留动态壁纸" IsEnabled="False" Margin="5" ToolTip="软件退出后仍然保留动态壁纸" Name="cbx_KeepWallpaper" Checked="cbx_KeepWallpaper_Checked" Unchecked="cbx_KeepWallpaper_Unchecked"></CheckBox>
                 <CheckBox Content="开机自启动(开发中)" Margin="5" Name="cbx_Startup" IsEnabled="False"></CheckBox>
             </StackPanel>
 
