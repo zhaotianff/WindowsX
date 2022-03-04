@@ -27,6 +27,7 @@ namespace Master_Zhao.Shell.Pages
      
         private DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
         private StaticWallpaper staticWallpaper = new StaticWallpaper();
+        private MouseEffect mouseEffect = new MouseEffect();
         private TaskbarSetting taskbarSetting = new TaskbarSetting();
         private ContextMenuManagement menuManagement = new ContextMenuManagement();
         private BootImageManagement bootImageManagement = new BootImageManagement();
@@ -62,6 +63,11 @@ namespace Master_Zhao.Shell.Pages
         {
             //frame.Source = new Uri(DynamicWallpaperName, UriKind.Relative);
             frame.Content = dynamicWallpaper;
+        }
+
+        private void btn_MouseEffectClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = mouseEffect;
         }
 
         public void CloseAnonymousPipe()
