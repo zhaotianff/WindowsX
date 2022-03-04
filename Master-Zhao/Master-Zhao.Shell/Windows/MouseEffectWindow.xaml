@@ -1,0 +1,17 @@
+﻿<Window x:Class="Master_Zhao.Shell.Windows.MouseEffectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Master_Zhao.Shell.Windows"
+        mc:Ignorable="d"
+        Title="MouseEffectWindow" Height="450" Width="800" 
+        WindowStyle="None" WindowState="Maximized"
+        Topmost="True" AllowsTransparency="True" ShowInTaskbar="False" Loaded="Window_Loaded">
+    <Window.Background>
+        <SolidColorBrush Color="White" Opacity="0.01"/>
+    </Window.Background>
+    <Canvas Name="canvas">
+        <Button></Button>
+    </Canvas>
+</Window>

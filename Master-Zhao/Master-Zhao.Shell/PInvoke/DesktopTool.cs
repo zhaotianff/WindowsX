@@ -22,6 +22,16 @@ namespace Master_Zhao.Shell.PInvoke
             public int AnimationId;
         };
 
+        public enum DESKTOP_WALLPAPER_POSITION : uint
+        {
+            DWPOS_CENTER = 0,
+            DWPOS_TILE = 1,
+            DWPOS_STRETCH = 2,
+            DWPOS_FIT = 3,
+            DWPOS_FILL = 4,
+            DWPOS_SPAN = 5
+        }
+
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool GetBackground([MarshalAs(UnmanagedType.LPWStr)]StringBuilder lpImagePath);
 
@@ -54,5 +64,11 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool CenterTaskListIcon(bool enable);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool SetBackgroundPosition(DESKTOP_WALLPAPER_POSITION pos);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetBackgroundPosition(ref DESKTOP_WALLPAPER_POSITION pos);
     }
 }
