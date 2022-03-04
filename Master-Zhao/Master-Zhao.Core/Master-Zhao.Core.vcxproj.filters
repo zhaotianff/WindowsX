@@ -30,7 +30,10 @@
     <ClInclude Include="DesktopTool.h">
       <Filter>头文件</Filter>
     </ClInclude>
-     <ClInclude Include="SystemTool.h">
+    <ClInclude Include="SystemTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="StartupTool.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +47,10 @@
     <ClCompile Include="DesktopTool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-     <ClCompile Include="SystemTool.cpp">
+    <ClCompile Include="SystemTool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StartupTool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

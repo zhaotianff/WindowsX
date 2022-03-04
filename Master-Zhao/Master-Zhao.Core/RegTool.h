@@ -57,5 +57,35 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 #define TASKBAR_THUMB_SIZE_REGPATH L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Taskband"
 #define TASKBAR_THUMB_SIZE L"MinThumbSizePx"
 
+#define STARTUP_RUN_1 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)"
+#define STARTUP_RUN_2 LR"(HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run)"
+#define STARTUP_RUN_3 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run)"
+#define STARTUP_RUN_4 LR"(HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run)"
+
+//RunOnce 自动执行一次
+#define STARTUP_RUN_5 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce)"
+#define STARTUP_RUN_6 LR"(HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce)"
+
+//RunServicesOnce
+#define STARTUP_RUN_7 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce)"
+#define STARTUP_RUN_8 LR"(HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce)"
+
+//RunServices
+#define STARTUP_RUN_9 LR"(HKEY_CURRENT_USER\ Software\Microsoft\Windows\CurrentVersion\RunServices)"
+#define STARTUP_RUN_10 LR"(HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices)"
+
+//load
+#define STARTUP_RUN_11 LR"(HKEY_CURRENT_USER\Software\Microsoft\WindowsNT\CurrentVersion\Windows)"
+
+//Winlogon)"
+#define STARTUP_RUN_12 LR"(HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon)"
+#define STARTUP_RUN_13 LR"(HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon)"
+
+//other
+#define STARTUP_RUN_14 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System\Shell)"
+#define STARTUP_RUN_15 LR"(HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ShellServiceObjectDelayLoad)"
+#define STARTUP_RUN_16 LR"(HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\System\Scripts)"
+#define STARTUP_RUN_17 LR"(HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System\Scripts)"
+
 SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
 SILVERAROWANACORE_API BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value);

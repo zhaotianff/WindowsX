@@ -2,12 +2,9 @@
 
 #include"framework.h"
 #include <Shldisp.h>
-#include<vector>
 #include<shobjidl_core.h>
-#include<shlobj.h>
 #include<thumbcache.h>
 #include<Shlwapi.h>
-#include <strsafe.h>
 #include<tchar.h>
 
 #include"RegTool.h"

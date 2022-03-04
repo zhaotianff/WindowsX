@@ -14,5 +14,6 @@
       "thumbnail": "res\\dynamic wallpaper\\default_2\\default_2.png"
     }
   ], 
-  "wallpaperindex":0
+  "wallpaperIndex":0, 
+  "autoRunWithStarup":false
 }

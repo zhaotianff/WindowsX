@@ -127,6 +127,17 @@ namespace Master_Zhao.Shell.Pages
                     SendMessageToDynamicWallpaper(DYWALLPAPER_RECOVERLAST);
                 }
             }
+
+            UpdateDynamiicWallpaperIndex(path);
+        }
+
+        private void UpdateDynamiicWallpaperIndex(string path)
+        {
+            //TODO
+            var wallpaperConfig = GlobalConfig.Instance.DynamicWallpaperConfig;
+            var wallpaperList = wallpaperConfig.WallpaperList;
+            var currentWallpaper = wallpaperList.FirstOrDefault(x => x.Path == path);
+            GlobalConfig.Instance.DynamicWallpaperConfig.Wallpaperindex = wallpaperConfig.WallpaperList.IndexOf(currentWallpaper);
         }
 
         private void DefaultWallpaperControl_OnSet(object sender, string path)
@@ -246,5 +257,15 @@ namespace Master_Zhao.Shell.Pages
             //bilibiliDownloader.Show();
         }
         #endregion
+
+        private void cbx_Startup_Checked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.AutoRunWithStarup = true;
+        }
+
+        private void cbx_Startup_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.AutoRunWithStarup = false;
+        }
     }
 }

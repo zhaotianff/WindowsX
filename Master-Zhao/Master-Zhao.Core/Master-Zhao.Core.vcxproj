@@ -163,12 +163,14 @@
     <ClInclude Include="DesktopTool.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="RegTool.h" />
+    <ClInclude Include="StartupTool.h" />
     <ClInclude Include="SystemTool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DesktopTool.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="RegTool.cpp" />
+    <ClCompile Include="StartupTool.cpp" />
     <ClCompile Include="SystemTool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
