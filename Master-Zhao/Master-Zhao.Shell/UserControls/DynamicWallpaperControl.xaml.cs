@@ -100,5 +100,10 @@ namespace Master_Zhao.Shell.UserControls
         {
             BorderBrush = Brushes.Transparent;
         }
+
+        public void HidePreviewButton()
+        {
+            btn_Preview.Visibility = Visibility.Collapsed;
+        }
     }
 }

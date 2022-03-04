@@ -41,6 +41,7 @@ Set the project to 64 bit
 ## Beautify
   * Static wallpaper setting
   * Dynamic wallpaper setting
+  * Mouse effect
   * Taskbar setting
   * Context menu setting
   * Boot image setting

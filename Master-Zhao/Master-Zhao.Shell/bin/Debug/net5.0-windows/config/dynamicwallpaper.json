@@ -13,5 +13,7 @@
       "path": "res\\dynamic wallpaper\\default_2\\default_2.mp4",
       "thumbnail": "res\\dynamic wallpaper\\default_2\\default_2.png"
     }
-  ]
+  ], 
+  "wallpaperIndex":0, 
+  "autoRunWithStarup":false
 }

@@ -48,7 +48,7 @@
 
         <StackPanel Margin="40,0,20,0">
             <Label Content="为什么要写这样一个软件" Foreground="{DynamicResource AccentBaseColor}" FontWeight="Bold" FontSize="20" Margin="0,5"></Label>
-            <Label Content="想起那天夕阳下的奔跑，那是我逝去的青春。哈哈"></Label>
+            <TextBlock Text="想起那天夕阳下的奔跑，那是我逝去的青春。哈哈。因为各种原因，所以现在每天的时间非常零散，导致整个软件目前没有好好规划，都是想到哪做到哪，可能有很多不完善之处，以后的版本再重新调整。" Margin="5,0,0,0" TextWrapping="WrapWithOverflow"></TextBlock>
         </StackPanel>
 
         <StackPanel Margin="40,0,20,0">

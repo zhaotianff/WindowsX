@@ -30,6 +30,7 @@ namespace Master_Zhao.Shell.Pages
     {
         private static readonly string DynamicDesktopProgramFileName = "Master-Zhao.DynamicDesktop.exe";
         private static readonly string DynamicDesktopProcessName = "Master-Zhao.DynamicDesktop";
+        private static readonly string DefaultWallpaperName = "默认桌面";
 
         private AnonymousPipeServer server = new AnonymousPipeServer();
 
@@ -50,18 +51,27 @@ namespace Master_Zhao.Shell.Pages
         private async void LoadDynamicWallpaperListAsync()
         {
             var list = GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList;
+            DynamicWallpaperItem defaultWallpaper = new DynamicWallpaperItem();
+            defaultWallpaper.Name = DefaultWallpaperName;
+            var sb = new StringBuilder(DesktopTool.MAX_PATH);
+            if (DesktopTool.GetBackground(sb))
+            {
+                defaultWallpaper.Path = sb.ToString();
+                defaultWallpaper.Thumbnail = sb.ToString();
+            }
+
+            list.Insert(0, defaultWallpaper);
 
             wrap.Children.Clear();
-
             await Task.Factory.StartNew(()=> {
-                foreach (var item in list)
+                for(int i = 0;i<list.Count;i++)
                 {
-                    AppendDynamicWallpaperItem(item);
+                    AppendDynamicWallpaperItem(list[i], i == 0);
                 }
             },new System.Threading.CancellationToken(),TaskCreationOptions.None,TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void AppendDynamicWallpaperItem(DynamicWallpaperItem item)
+        private void AppendDynamicWallpaperItem(DynamicWallpaperItem item,bool isDefaultDesktop = false)
         {
             DynamicWallpaperControl dynamicWallpaperControl = new DynamicWallpaperControl();
             dynamicWallpaperControl.WallpaperName = item.Name;
@@ -69,7 +79,17 @@ namespace Master_Zhao.Shell.Pages
             if (!string.IsNullOrEmpty(item.Thumbnail))
                 dynamicWallpaperControl.ThumbnailPath = System.IO.Path.GetFullPath(item.Thumbnail);
             dynamicWallpaperControl.OnPreview += DynamicWallpaperControl_OnPreview;
-            dynamicWallpaperControl.OnSet += DynamicWallpaperControl_OnSet;
+
+            if(isDefaultDesktop == true)
+            {
+                dynamicWallpaperControl.HidePreviewButton();
+                dynamicWallpaperControl.OnSet += DefaultWallpaperControl_OnSet;
+            }
+            else
+            {
+                dynamicWallpaperControl.OnSet += DynamicWallpaperControl_OnSet;
+            }
+       
             dynamicWallpaperControl.OnSelect += DynamicWallpaperControl_OnSelect;
             wrap.Children.Add(dynamicWallpaperControl);
         }
@@ -87,7 +107,6 @@ namespace Master_Zhao.Shell.Pages
         {
             SetDynamicWallpaper(path, false);
         }
-
 
         private void DynamicWallpaperControl_OnPreview(object sender, string path)
         {
@@ -108,6 +127,22 @@ namespace Master_Zhao.Shell.Pages
                     SendMessageToDynamicWallpaper(DYWALLPAPER_RECOVERLAST);
                 }
             }
+
+            UpdateDynamiicWallpaperIndex(path);
+        }
+
+        private void UpdateDynamiicWallpaperIndex(string path)
+        {
+            //TODO
+            var wallpaperConfig = GlobalConfig.Instance.DynamicWallpaperConfig;
+            var wallpaperList = wallpaperConfig.WallpaperList;
+            var currentWallpaper = wallpaperList.FirstOrDefault(x => x.Path == path);
+            GlobalConfig.Instance.DynamicWallpaperConfig.Wallpaperindex = wallpaperConfig.WallpaperList.IndexOf(currentWallpaper);
+        }
+
+        private void DefaultWallpaperControl_OnSet(object sender, string path)
+        {
+            StopDynamicWallpaperProcess();
         }
 
         private void TerminateDynamicDesktop(AnonymousPipeServer server)
@@ -222,5 +257,15 @@ namespace Master_Zhao.Shell.Pages
             //bilibiliDownloader.Show();
         }
         #endregion
+
+        private void cbx_Startup_Checked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.AutoRunWithStarup = true;
+        }
+
+        private void cbx_Startup_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Instance.DynamicWallpaperConfig.AutoRunWithStarup = false;
+        }
     }
 }

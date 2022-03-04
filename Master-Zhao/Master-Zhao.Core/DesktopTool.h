@@ -2,12 +2,9 @@
 
 #include"framework.h"
 #include <Shldisp.h>
-#include<vector>
 #include<shobjidl_core.h>
-#include<shlobj.h>
 #include<thumbcache.h>
 #include<Shlwapi.h>
-#include <strsafe.h>
 #include<tchar.h>
 
 #include"RegTool.h"
@@ -69,7 +66,7 @@ typedef BOOL(WINAPI* PFN_SET_WINDOW_COMPOSITION_ATTRIBUTE)(HWND, const WINDOWCOM
 SILVERAROWANACORE_API BOOL SetBackground(LPTSTR lpImagePath);
 SILVERAROWANACORE_API BOOL SetBackgroundPosition(DESKTOP_WALLPAPER_POSITION pos);
 SILVERAROWANACORE_API BOOL GetBackground(LPTSTR lpImagePath);
-SILVERAROWANACORE_API BOOL GetBackgroundPosition(DESKTOP_WALLPAPER_POSITION& pos);
+SILVERAROWANACORE_API BOOL GetBackgroundPosition(DESKTOP_WALLPAPER_POSITION* pos);
 SILVERAROWANACORE_API BOOL GetRecentBackground(LPTSTR lpRecentPath);
 SILVERAROWANACORE_API VOID SwitchToDesktop();
 SILVERAROWANACORE_API VOID SwitchToWindow(HWND hwnd);

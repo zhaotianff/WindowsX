@@ -17,8 +17,8 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="26.4"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="36.4"/>
             </Grid.RowDefinitions>
 
             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -26,6 +26,15 @@
 
                 </WrapPanel>
             </ScrollViewer>
+
+            <Grid Grid.Row="1" Visibility="Collapsed">
+                <Slider Margin="50,0,100,0" VerticalAlignment="Center"/>
+                <Label Content="30:15/45:12" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Visibility="Collapsed">
+                <Button Content="播放" Width="30" Height="30"/>
+            </Grid>
         </Grid>
 
         <Grid Grid.Column="1">
@@ -38,8 +47,8 @@
                 <Label Content="动态壁纸设置" FontWeight="Bold" FontSize="15"></Label>
                 <CheckBox Content="自动循环" Margin="5" Name="cbx_AutoRepeat" Checked="cbx_AutoRepeat_Checked" Unchecked="cbx_AutoRepeat_Unchecked"/>
                 <CheckBox Content="不允许播放背景声音" Margin="5" Name="cbx_Mute" Checked="cbx_Mute_Checked" Unchecked="cbx_Mute_Unchecked"/>
-                <CheckBox Content="保留动态壁纸(开发中)" IsEnabled="False" Margin="5" ToolTip="软件退出后仍然保留动态壁纸" Name="cbx_KeepWallpaper" Checked="cbx_KeepWallpaper_Checked" Unchecked="cbx_KeepWallpaper_Unchecked"></CheckBox>
-                <CheckBox Content="开机自启动(开发中)" Margin="5" Name="cbx_Startup" IsEnabled="False"></CheckBox>
+                <CheckBox Content="保留动态壁纸" IsEnabled="False" Margin="5" ToolTip="软件退出后仍然保留动态壁纸，如果需要退出动态壁纸，再次启动软件取消此选项，然后再退出软件即可。" Name="cbx_KeepWallpaper" Checked="cbx_KeepWallpaper_Checked" Unchecked="cbx_KeepWallpaper_Unchecked"></CheckBox>
+                <CheckBox Content="开机自启动" Margin="5" Name="cbx_Startup" IsEnabled="False" Checked="cbx_Startup_Checked" Unchecked="cbx_Startup_Unchecked"></CheckBox>
             </StackPanel>
 
             <Button Content="添加本地文件" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="88" Height="28" Margin="5,5,15,0" Style="{StaticResource ButtonStyle}" Click="btnAddDynamicWallpaper_Click"/>

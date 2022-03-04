@@ -21,5 +21,7 @@ namespace Master_Zhao.Config.Model
         public bool Repeat { get; set; } = true;
         public bool KeepWallpaper { get; set; } = false;
         public List<DynamicWallpaperItem> WallpaperList { get; set; } = new List<DynamicWallpaperItem>();
+        public int Wallpaperindex { get; set; } = 0;
+        public bool AutoRunWithStarup { get; set; } = false;
     }
 }

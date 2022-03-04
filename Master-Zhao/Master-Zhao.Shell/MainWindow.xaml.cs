@@ -108,8 +108,6 @@ namespace Master_Zhao.Shell
                 DesktopTool.CloseEmbedWindow();
             }
 
-            desktopBeautify.CloseAnonymousPipe();
-
             GlobalConfig.Instance.SaveAllConfig();
         }
 
