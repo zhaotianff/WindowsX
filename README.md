@@ -72,17 +72,23 @@ Master-Zhao是Windows的一个工具集软件。
   <td colspan="2"> <img align="center" alt="start up" src="Screenshots/main.png" /></td>
  </tr>
   <tr>
-  <td colspan="2">static wallpaper</td>
+  <td colspan="2">静态壁纸设置</td>
  </tr>
  <tr>
   <td><img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper.png" /></td>
     <td><img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper_2.png" /></td>
  </tr>
  <tr>
-  <td colspan="2">dynamic wallpaper</td>
+  <td colspan="2">动态壁纸设置</td>
  </tr>
  <tr>
   <td colspan="2"> <img align="center" alt="dynamic wallpaper" src="Screenshots/dynamic_wallpaper.png" /></td>
+ </tr>
+ <tr>
+  <td colspan="2">鼠标特效</td>
+ </tr>
+ <tr>
+  <td colspan="2"> <img align="center" alt="dynamic wallpaper" src="Screenshots/mouse_effect.png" /></td>
  </tr>
 </table>
 

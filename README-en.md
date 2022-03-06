@@ -80,6 +80,12 @@ Set the project to 64 bit
  <tr>
   <td colspan="2"> <img align="center" alt="dynamic wallpaper" src="Screenshots/dynamic_wallpaper.png" /></td>
  </tr>
+ <tr>
+  <td colspan="2">mouse effect</td>
+ </tr>
+ <tr>
+  <td colspan="2"> <img align="center" alt="dynamic wallpaper" src="Screenshots/mouse_effect.png" /></td>
+ </tr>
 </table>
 
 # Development Plan
