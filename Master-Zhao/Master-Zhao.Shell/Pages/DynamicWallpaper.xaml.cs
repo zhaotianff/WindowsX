@@ -50,7 +50,7 @@ namespace Master_Zhao.Shell.Pages
 
         private async void LoadDynamicWallpaperListAsync()
         {
-            var list = GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList;
+            var list = new List<DynamicWallpaperItem>(GlobalConfig.Instance.DynamicWallpaperConfig.WallpaperList);
             DynamicWallpaperItem defaultWallpaper = new DynamicWallpaperItem();
             defaultWallpaper.Name = DefaultWallpaperName;
             var sb = new StringBuilder(DesktopTool.MAX_PATH);
