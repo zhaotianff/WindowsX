@@ -20,6 +20,8 @@ namespace Master_Zhao.Shell.Windows
     /// </summary>
     public partial class MouseEffectWindow : Window
     {
+        private int fixedCount = 50;
+
         public MouseEffectWindow()
         {
             InitializeComponent();
@@ -46,6 +48,12 @@ namespace Master_Zhao.Shell.Windows
                     {
                         var point = new PInvoke.POINT();
                         PInvoke.User32.GetCursorPos(ref point);
+
+                        while(canvas.Children.Count >= fixedCount)
+                        {
+                            canvas.Children.RemoveAt(0);
+                        }
+
                         this.canvas.Children.Add(new MyVisualHost(new Point(point.x, point.y)));
                     });
                 }
@@ -82,8 +90,8 @@ namespace Master_Zhao.Shell.Windows
                 Color color = new Color();
                 color.A = (byte)(50 - (5 * i));
                 color.R = 0;
-                color.G = 0;
-                color.B = 0;
+                color.G = 128;
+                color.B = 255;
                 dc.DrawEllipse(new SolidColorBrush(color), null, point, 1 + i, 1 + i);
             }
             dc.Close();
