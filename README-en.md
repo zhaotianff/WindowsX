@@ -42,6 +42,7 @@ Set the project to 64 bit
   * Static wallpaper setting
   * Dynamic wallpaper setting
   * Mouse effect
+  * Desktop effect
   * Taskbar setting
   * Context menu setting
   * Boot image setting
