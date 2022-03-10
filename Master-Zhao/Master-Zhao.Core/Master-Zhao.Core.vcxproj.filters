@@ -36,6 +36,9 @@
     <ClInclude Include="StartupTool.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CoreUtil.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -51,6 +54,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="StartupTool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreUtil.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

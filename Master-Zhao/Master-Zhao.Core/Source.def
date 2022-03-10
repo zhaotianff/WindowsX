@@ -38,3 +38,8 @@ GetUserLoginTime
 IsWindows10
 IsWindows10OrHigher
 IsWindows11
+
+;coreutil.h
+IsExistStartupRun
+CreateStartupRun
+RemoveStartupRun

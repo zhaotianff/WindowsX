@@ -15,8 +15,17 @@
 #include <windows.h>
 #include<shlobj.h>
 #include <strsafe.h>
+#include<tchar.h>
+#include<Shlwapi.h>
 
 #include<vector>
 #include<string>
 
+#pragma comment(lib,"Shlwapi.lib")
+
+#define SZ_BACKSLASH TEXT("\\")
+
+
+#define CHAR_BACKSLASH TEXT('\\')
+#define CHAR_DOT TEXT('.')
 

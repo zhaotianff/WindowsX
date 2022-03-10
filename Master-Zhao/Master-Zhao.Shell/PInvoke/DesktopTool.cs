@@ -32,6 +32,15 @@ namespace Master_Zhao.Shell.PInvoke
             DWPOS_SPAN = 5
         }
 
+        public enum DESKTOPICONS : int
+        {
+            ICON_COMPUTER,
+            ICON_USER,
+            ICON_RECYCLE,
+            ICON_CONTROL_PANEL,
+            ICON_NETWORK
+        };
+
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool GetBackground([MarshalAs(UnmanagedType.LPWStr)]StringBuilder lpImagePath);
 
@@ -70,5 +79,47 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool GetBackgroundPosition(ref DESKTOP_WALLPAPER_POSITION pos);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void SetDesktopIcon(DESKTOPICONS desktopIcon, bool isEnable);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetDesktopIconState(DESKTOPICONS desktopIcon);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void RefreshDesktop();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool CreateLink([MarshalAs(UnmanagedType.LPWStr)] string lpszPathObj,
+            [MarshalAs(UnmanagedType.LPWStr)] string lpszPathLink,
+            [MarshalAs(UnmanagedType.LPWStr)] string lpszArgs,
+            [MarshalAs(UnmanagedType.LPWStr)] string lpszDesc);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetGodModeShortCutState();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool CreateGodModeShortCut();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool RemoveGodModeShortCut();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool RemoveShortcutArrow();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool RestoreShortcutArrow();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void RegisterWindowsPhotoViewerFormat();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void UnregisterWindowsPhotoViewerFormat();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool PaintVersionInfo(bool enable);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool SetTaskbarThumbnailSize(int dwSize, bool bRestartExplorer);
     }
 }

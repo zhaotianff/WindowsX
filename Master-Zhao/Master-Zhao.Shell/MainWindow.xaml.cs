@@ -3,6 +3,8 @@ using Master_Zhao.Shell.Infrastructure.Navigation;
 using Master_Zhao.Shell.Pages;
 using Master_Zhao.Shell.PInvoke;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 
@@ -26,6 +28,7 @@ namespace Master_Zhao.Shell
         {
             InitializeComponent();
             InitializeAnimation();
+            DoStartupTasksAsync();
         }
 
         private void InitializeAnimation()
@@ -34,6 +37,16 @@ namespace Master_Zhao.Shell
             end = TryFindResource("end") as Storyboard;
             start.Completed += (sender, e) => { main.Visibility = Visibility.Collapsed; };
             end.Completed += (sender, e) => { main.Visibility = Visibility.Visible; this.frame.Content = null; };
+        }
+
+        private async void DoStartupTasksAsync()
+        {
+            List<Task> tasks = new List<Task>();
+            tasks.Add(desktopBeautify.dynamicWallpaper.GetStartupTask());
+            await Task.WhenAll(tasks);
+
+            //TODO notify icon
+            Environment.Exit(0);
         }
 
         public void BeginShowMenuAnimation(NavigationPages targetPage)

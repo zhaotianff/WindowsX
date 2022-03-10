@@ -389,7 +389,7 @@ VOID RefreshDesktop()
 
 //from msdn 
 //https://docs.microsoft.com/en-us/windows/win32/shell/links?redirectedfrom=MSDN#creating-a-shortcut-and-a-folder-shortcut-to-a-file
-HRESULT CreateLink(LPCWSTR lpszPathObj, LPCTSTR lpszPathLink, LPCTSTR lpszArgs,LPCWSTR lpszDesc)
+BOOL CreateLink(LPCWSTR lpszPathObj, LPCTSTR lpszPathLink, LPCTSTR lpszArgs,LPCWSTR lpszDesc)
 {
 	HRESULT hres;
 	IShellLink* psl;
@@ -420,7 +420,7 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCTSTR lpszPathLink, LPCTSTR lpszArgs,L
 		}
 		psl->Release();
 	}
-	return hres;
+	return SUCCEEDED(hres);
 }
 
 BOOL GetGodModeShortCutState()

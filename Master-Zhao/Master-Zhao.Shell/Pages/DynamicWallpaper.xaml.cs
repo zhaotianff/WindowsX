@@ -6,6 +6,7 @@ using Master_Zhao.Shell.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -256,16 +257,33 @@ namespace Master_Zhao.Shell.Pages
             //bilibiliDownloader.Owner = Application.Current.MainWindow;
             //bilibiliDownloader.Show();
         }
-        #endregion
 
         private void cbx_Startup_Checked(object sender, RoutedEventArgs e)
         {
             GlobalConfig.Instance.DynamicWallpaperConfig.AutoRunWithStarup = true;
+            StartupTool.CreateStartupRun(Assembly.GetExecutingAssembly().Location);
         }
 
         private void cbx_Startup_Unchecked(object sender, RoutedEventArgs e)
         {
             GlobalConfig.Instance.DynamicWallpaperConfig.AutoRunWithStarup = false;
+            StartupTool.RemoveStartupRun(Assembly.GetExecutingAssembly().Location);
         }
+        #endregion
+
+        #region static funcs
+        public Task GetStartupTask()
+        {
+            var config = GlobalConfig.Instance.DynamicWallpaperConfig;
+
+            if (config.AutoRunWithStarup == false)
+                return Task.Delay(0);
+
+            return Task.Factory.StartNew(() => {
+                var path = config.WallpaperList[config.Wallpaperindex].Path;
+                SetDynamicWallpaper(path, false);
+            }, new System.Threading.CancellationToken(), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+        #endregion
     }
 }

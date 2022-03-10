@@ -25,7 +25,7 @@ namespace Master_Zhao.Shell.Pages
     {
         private ToggleButton toggleButton = null;
      
-        private DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
+        public DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
         private StaticWallpaper staticWallpaper = new StaticWallpaper();
         private MouseEffect mouseEffect = new MouseEffect();
         private TaskbarSetting taskbarSetting = new TaskbarSetting();

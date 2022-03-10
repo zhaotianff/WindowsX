@@ -1,22 +1,41 @@
 #include"StartupTool.h"
+#include "CoreUtil.h"
+#include "DesktopTool.h"
 
-BOOL CreateStartupRun(LPTSTR lpszPath)
+BOOL IsExistStartupRun(LPTSTR lpszPath, LPTSTR* lpszLnkPath)
 {
+	//TODO check all registry
+
+	if (lpszPath == NULL)
+		return FALSE;
+
+	if (GetFileNameWithoutExtension(&lpszPath) == FALSE)
+		return FALSE;
+
 	LPITEMIDLIST pIdList;
 	SHGetSpecialFolderLocation(NULL, CSIDL_STARTUP, &pIdList);
 	TCHAR szStartupPath[MAX_PATH]{};
 	SHGetPathFromIDList(pIdList, szStartupPath);
-	LPTSTR szSearchPattern = lstrcat(szStartupPath, L"\\*.lnk");
-	WIN32_FIND_DATA data;
-	HANDLE hFind = FindFirstFile(szSearchPattern, &data);
-
-	if (INVALID_HANDLE_VALUE == hFind)
-		return FALSE;
-
-	return FALSE;
+	TCHAR szLnkPath[MAX_PATH]{};
+	wsprintf(szLnkPath, L"%s\\%s.lnk", szStartupPath, lpszPath);
+	*lpszLnkPath = szLnkPath;
+	return PathFileExists(szLnkPath);
 }
 
-BOOL IsExistStartupRun(LPTSTR lpszExeName)
+BOOL CreateStartupRun(LPTSTR lpszPath)
 {
+	LPTSTR szLnkPath = NULL;
+	if (IsExistStartupRun(lpszPath, &szLnkPath) == TRUE)
+		return TRUE;
+
+	return CreateLink(lpszPath, szLnkPath, NULL, NULL);
+}
+
+BOOL RemoveStartupRun(LPTSTR lpszPath)
+{
+	//TODO check all registry
+	LPTSTR szLnkPath = NULL;
+	if (IsExistStartupRun(lpszPath, &szLnkPath))
+		return DeleteFile(szLnkPath);
 	return FALSE;
 }
