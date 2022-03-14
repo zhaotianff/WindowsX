@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
     <Authors>ZTI</Authors>
     <Company>https://github.com/zhaotianff</Company>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -29,6 +30,10 @@
     <None Remove="Icon\windows10_taskbar.png" />
     <None Remove="logo.png" />
     <None Remove="recycle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,6 +62,10 @@
     <Resource Include="Icon\windows10_taskbar.png" />
     <Resource Include="logo.png" />
     <Resource Include="recycle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\ContextMenu\" />
   </ItemGroup>
 
 </Project>
