@@ -13,6 +13,8 @@
                 <ResourceDictionary Source="Styles/GroupBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/CheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/SliderStyle.xaml"/>
+
+                <ResourceDictionary Source="Resources/ContextMenu/NotifyIconContextMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

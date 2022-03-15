@@ -40,7 +40,9 @@ namespace Master_Zhao.Shell.Util
         {
             notifyIcon = new System.Windows.Forms.NotifyIcon();
             notifyIcon.Text = data.Tooltip;
-            notifyIcon.Icon = new System.Drawing.Icon(System.Windows.Application.GetResourceStream(new Uri(data.IconRelativePath,UriKind.Relative)).Stream);
+            var stream = System.Windows.Application.GetResourceStream(new Uri($"pack://application:,,,/{data.IconRelativePath}"));
+            notifyIcon.Icon = new System.Drawing.Icon(stream.Stream);
+            stream.Stream.Close();
             notifyIcon.Visible = false;
             notifyIcon.MouseClick += NotifyIcon_MouseClick;
 

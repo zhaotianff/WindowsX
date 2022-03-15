@@ -47,7 +47,6 @@ namespace Master_Zhao.Shell
             List<Task> tasks = new List<Task>();
             tasks.Add(desktopBeautify.dynamicWallpaper.GetStartupTask());
             await Task.WhenAll(tasks);
-            Environment.Exit(0);
         }
 
         private void CreateNotifyIcon()
@@ -68,7 +67,11 @@ namespace Master_Zhao.Shell
                 return;
 
             MenuItem exitMenu = contextMenu.Items[0] as MenuItem;
-            exitMenu.Click += (a, b) => { Environment.Exit(0); };
+            exitMenu.Click += (a, b) => 
+            {
+                NotifyIconHelper.Instance.SetNotifyIconState(false);
+                Environment.Exit(0); 
+            };
         }
 
 

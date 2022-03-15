@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="logo.ico" />
+    <Resource Include="logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
