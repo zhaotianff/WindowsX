@@ -12,14 +12,14 @@ namespace Master_Zhao.Shell.Util
         public string Tooltip { get; set; }
         public string IconRelativePath { get; set; }
         public System.Windows.Controls.ContextMenu ContextMenu { get; set; }
-        public System.Windows.Forms.MouseEventHandler ClickHandler { get; set; }
+        public Action ClickHandler { get; set; }
     }
 
     public class NotifyIconHelper : SingletonBase<NotifyIconHelper>
     {
         private System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
         private System.Windows.Controls.ContextMenu contextMenu;
-        private System.Windows.Forms.MouseEventHandler clickHander;
+        private Action clickHander;
 
         public void SetNotifyIconState(bool isShow)
         {
@@ -43,6 +43,8 @@ namespace Master_Zhao.Shell.Util
             notifyIcon.Icon = new System.Drawing.Icon(System.Windows.Application.GetResourceStream(new Uri(data.IconRelativePath,UriKind.Relative)).Stream);
             notifyIcon.Visible = false;
             notifyIcon.MouseClick += NotifyIcon_MouseClick;
+
+            clickHander = data.ClickHandler;
 
             contextMenu = data.ContextMenu;
             contextMenu.LostFocus += ContextMenu_LostFocus;  //TODO fix this
@@ -68,7 +70,7 @@ namespace Master_Zhao.Shell.Util
 
             if(e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                clickHander?.Invoke(sender, e);
+                clickHander?.Invoke();
             }
         }
     }

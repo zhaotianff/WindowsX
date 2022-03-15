@@ -2,10 +2,12 @@
 using Master_Zhao.Shell.Infrastructure.Navigation;
 using Master_Zhao.Shell.Pages;
 using Master_Zhao.Shell.PInvoke;
+using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace Master_Zhao.Shell
@@ -29,6 +31,7 @@ namespace Master_Zhao.Shell
             InitializeComponent();
             InitializeAnimation();
             DoStartupTasksAsync();
+            CreateNotifyIcon();
         }
 
         private void InitializeAnimation()
@@ -44,10 +47,30 @@ namespace Master_Zhao.Shell
             List<Task> tasks = new List<Task>();
             tasks.Add(desktopBeautify.dynamicWallpaper.GetStartupTask());
             await Task.WhenAll(tasks);
-
-            //TODO notify icon
             Environment.Exit(0);
         }
+
+        private void CreateNotifyIcon()
+        {
+            NotifyIconCreateData data = new NotifyIconCreateData();
+            data.ClickHandler = ShowOrHiderMainWindow;
+            data.ContextMenu = this.TryFindResource("NotifyIconContextMenu") as ContextMenu;
+            InitContextMenuEvent(data.ContextMenu);
+            data.IconRelativePath = "logo.ico";
+            data.Tooltip = "Master-Zhao";
+            NotifyIconHelper.Instance.CreateNotifyIcon(data);
+            NotifyIconHelper.Instance.SetNotifyIconState(true);
+        }
+
+        private void InitContextMenuEvent(ContextMenu contextMenu)
+        {
+            if (contextMenu == null)
+                return;
+
+            MenuItem exitMenu = contextMenu.Items[0] as MenuItem;
+            exitMenu.Click += (a, b) => { Environment.Exit(0); };
+        }
+
 
         public void BeginShowMenuAnimation(NavigationPages targetPage)
         {
@@ -92,6 +115,20 @@ namespace Master_Zhao.Shell
                     return aboutPage;
                 default:
                     return null;
+            }
+        }
+
+        private void ShowOrHiderMainWindow()
+        {
+            if(this.Visibility == Visibility.Hidden)
+            {
+                this.Visibility = Visibility.Visible;
+                this.ShowInTaskbar = true;
+            }
+            else
+            {
+                this.Visibility = Visibility.Visible;
+                this.ShowInTaskbar = false;
             }
         }
 

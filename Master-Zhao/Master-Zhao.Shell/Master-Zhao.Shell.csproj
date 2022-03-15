@@ -64,8 +64,4 @@
     <Resource Include="recycle.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Resources\ContextMenu\" />
-  </ItemGroup>
-
 </Project>
