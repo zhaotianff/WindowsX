@@ -464,6 +464,11 @@ BOOL RemoveGodModeShortCut()
 	return DeleteFile(szGodmodLnk);
 }
 
+BOOL GetShortcutArrowState()
+{
+	return ExistRegValue(HKEY_CLASSES_ROOT, L"lnkfile", L"IsShortcut");
+}
+
 BOOL RemoveShortcutArrow()
 {
 	auto bResult = RemovRegValue(HKEY_CLASSES_ROOT, L"lnkfile", L"IsShortcut");
@@ -478,6 +483,12 @@ BOOL RestoreShortcutArrow()
 	if (bResult)
 		RefreshDesktop();
 	return bResult;
+}
+
+BOOL GetWindowsPhotoViewerState()
+{
+	//TODO enum value
+	return 0;
 }
 
 VOID RegisterWindowsPhotoViewerFormat()
@@ -507,6 +518,13 @@ VOID UnregisterWindowsPhotoViewerFormat()
 	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
 	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
 	free(szTiff);
+}
+
+BOOL GetPaintVersionState()
+{
+	DWORD dwValue = 0;
+	QueryDWORDValue(HKEY_CURRENT_USER, LR"(Control Panel\Desktop)", L"PaintDesktopVersion", &dwValue);
+	return dwValue == 1;
 }
 
 BOOL PaintVersionInfo(BOOL enable)

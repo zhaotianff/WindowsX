@@ -18,12 +18,12 @@
                 </GroupBox.Header>
 
                 <WrapPanel Margin="0,35,0,0">
-                    <CheckBox Content="计算机" Margin="10"/>
-                    <CheckBox Content="用户的文件" Margin="10"/>
-                    <CheckBox Content="回收站" Margin="10"/>
-                    <CheckBox Content="控制面板" Margin="10"/>
-                    <CheckBox Content="网络" Margin="10"/>
-                    <CheckBox Content="god mode" Margin="10"/>
+                    <CheckBox Content="计算机" Margin="10" Name="cbx_Computer"/>
+                    <CheckBox Content="用户的文件" Margin="10" Name="cbx_User"/>
+                    <CheckBox Content="回收站" Margin="10" Name="cbx_Recycle"/>
+                    <CheckBox Content="控制面板" Margin="10" Name="cbx_ControlPanel"/>
+                    <CheckBox Content="网络" Margin="10" Name="cbx_Network"/>
+                    <CheckBox Content="god mode" Margin="10" Name="cbx_GodMode"/>
                 </WrapPanel>
             </GroupBox>
 
@@ -43,22 +43,22 @@
                 <StackPanel Margin="0,35,0,0">
                     <StackPanel>
                         <WrapPanel>
-                            <CheckBox Content="移除快捷方式箭头" Margin="10"/>
+                            <CheckBox Content="移除快捷方式箭头" Margin="10" Name="cbx_Shortcut" Checked="cbx_Shortcut_Checked" Unchecked="cbx_Shortcut_UnChecked"/>
 
-                            <CheckBox Content="使用Windows Photo Viewer作为默认图片查看器" Margin="10"></CheckBox>
-                            <CheckBox Content="桌面显示Windows版本信息" Margin="10"></CheckBox>
+                            <CheckBox Content="使用Windows Photo Viewer作为默认图片查看器" Margin="10" Name="cbx_PhotoViewer"></CheckBox>
+                            <CheckBox Content="桌面显示Windows版本信息" Margin="10" Name="cbx_Version"></CheckBox>
 
                             <!--禁止系统记录使用历史记录-->
-                            <CheckBox Content="禁止系统记录使用历史记录" Margin="10" Visibility="Collapsed"></CheckBox>
+                            <CheckBox Content="禁止系统记录使用历史记录" Margin="10" Visibility="Collapsed" Name="cbx_DisableHistory"></CheckBox>
 
                             <!--禁止Windows Update(需要移动到工具类别下)-->
-                            <CheckBox Content="禁止Windows Update" Margin="10" Visibility="Collapsed"></CheckBox>
+                            <CheckBox Content="禁止Windows Update" Margin="10" Visibility="Collapsed" Name="cbx_WindowsUpdate"></CheckBox>
                         </WrapPanel>
                         <WrapPanel>
                             <!--任务栏缩略图窗口大小 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced-->
                             <Label Content="任务栏预览窗口大小" Margin="10"/>
-                            <TextBox Width="120" Margin="10" VerticalContentAlignment="Center"/>
-                            <Button Content="设置" Margin="10" Width="88" Height="28" Style="{StaticResource ButtonStyle}"/>
+                            <TextBox Width="120" Margin="10" VerticalContentAlignment="Center" Name="tbox_TaskbarThunbSize"/>
+                            <Button Content="设置" Margin="10" Width="88" Height="28" Style="{StaticResource ButtonStyle}" Click="btnSetTaskbarThumbSize_Click"/>
                         </WrapPanel>
                     </StackPanel>
                 </StackPanel>

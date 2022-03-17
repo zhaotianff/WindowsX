@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.PInvoke;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,58 @@ namespace Master_Zhao.Shell.Pages
         public OtherSetting()
         {
             InitializeComponent();
+            LoadDesktopIconState();
+        }
+
+        private void LoadDesktopIconState()
+        {
+            cbx_Computer.IsChecked =  DesktopTool.GetDesktopIconState(DesktopTool.DESKTOPICONS.ICON_COMPUTER);
+            cbx_User.IsChecked = DesktopTool.GetDesktopIconState(DesktopTool.DESKTOPICONS.ICON_USER);
+            cbx_Recycle.IsChecked = DesktopTool.GetDesktopIconState(DesktopTool.DESKTOPICONS.ICON_RECYCLE);
+            cbx_ControlPanel.IsChecked = DesktopTool.GetDesktopIconState(DesktopTool.DESKTOPICONS.ICON_CONTROL_PANEL);
+            cbx_Network.IsChecked = DesktopTool.GetDesktopIconState(DesktopTool.DESKTOPICONS.ICON_NETWORK);
+            cbx_GodMode.IsChecked = DesktopTool.GetGodModeShortCutState();
+        }
+
+        private void LoadDesktopSettings()
+        {
+            cbx_Shortcut.IsChecked = DesktopTool.GetShortcutArrowState();
+            cbx_PhotoViewer.IsChecked = true;
+            cbx_Version.IsChecked = DesktopTool.GetPaintVersionState();
+            tbox_TaskbarThunbSize.Text = "";
+        }
+
+        private void cbx_Shortcut_UnChecked(object sender, RoutedEventArgs e)
+        {
+            DesktopTool.RestoreShortcutArrow();
+        }
+
+        private void cbx_Shortcut_Checked(object sender, RoutedEventArgs e)
+        {
+            DesktopTool.RemoveShortcutArrow();
+        }
+
+        private void btnSetTaskbarThumbSize_Click(object sender, RoutedEventArgs e)
+        {
+            var sizeStr = tbox_TaskbarThunbSize.Text;
+            var restart = false;
+
+            if (string.IsNullOrEmpty(sizeStr))
+            {
+                MessageBox.Show("请输入大小");
+                return;
+            }
+
+            if(int.TryParse(sizeStr, out int size))
+            {
+                
+                if(MessageBox.Show("是否立即生效","提示信息",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    restart = true;
+                }
+            }
+
+            DesktopTool.SetTaskbarThumbnailSize(size, restart);
         }
     }
 }

@@ -105,6 +105,9 @@ namespace Master_Zhao.Shell.PInvoke
         public static extern bool RemoveGodModeShortCut();
 
         [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetShortcutArrowState();
+
+        [DllImport("MasterZhaoCore.dll")]
         public static extern bool RemoveShortcutArrow();
 
         [DllImport("MasterZhaoCore.dll")]
@@ -115,6 +118,9 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern void UnregisterWindowsPhotoViewerFormat();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetPaintVersionState();
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool PaintVersionInfo(bool enable);
