@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Master_Zhao.Shell.Controls
+{
+ 
+    public class CircleButton : Button
+    {
+        private const string PART_MAINGRID = "grid";
+
+        public static readonly DependencyProperty ImagePathProperty = DependencyProperty.Register("ImagePath", typeof(string), typeof(CircleButton));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(CircleButton));
+        public static readonly DependencyProperty ShadowRadiusProperty = DependencyProperty.Register("ShadowRadius", typeof(float), typeof(CircleButton));
+        public static readonly DependencyProperty AngleProperty = DependencyProperty.Register("Angle", typeof(float), typeof(CircleButton));
+        public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register("Radius", typeof(float), typeof(CircleButton));
+        public static readonly DependencyProperty HostCanvasProperty = DependencyProperty.Register("HostCanvas", typeof(Canvas), typeof(CircleButton));
+        public static readonly DependencyProperty ContentRadiusXProperty = DependencyProperty.Register("ContentRadiusX", typeof(float), typeof(CircleButton));
+        public static readonly DependencyProperty ContentRadiusYProperty = DependencyProperty.Register("ContentRadiusY", typeof(float), typeof(CircleButton));
+        public static readonly DependencyProperty CenterProperty = DependencyProperty.Register("Center", typeof(Point), typeof(CircleButton));
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(CircleButton));
+
+        private UIElementCollection uIElementCollection;
+
+        public string ImagePath
+        {
+            get => GetValue(ImagePathProperty).ToString();
+            set => SetValue(ImagePathProperty, value);
+        }
+
+        public string Title
+        {
+            get => GetValue(TitleProperty).ToString();
+            set => SetValue(TitleProperty, value);
+        }
+
+        public float ShadowRadius
+        {
+            get => float.Parse(GetValue(ShadowRadiusProperty).ToString());
+            set => SetValue(ShadowRadiusProperty, value);
+        }
+
+        public float Angle
+        {
+            get => float.Parse(GetValue(AngleProperty).ToString());
+            set => SetValue(AngleProperty, value);
+        }
+
+        public float Radius
+        {
+            get => float.Parse(GetValue(RadiusProperty).ToString());
+            set => SetValue(RadiusProperty, value);
+        }
+
+        public Canvas HostCanvas
+        {
+            get => GetValue(HostCanvasProperty) as Canvas;
+            set => SetValue(HostCanvasProperty, value);
+        }
+
+        public float ContentRadiusX
+        {
+            get => float.Parse(GetValue(ContentRadiusXProperty).ToString());
+            set => SetValue(ContentRadiusXProperty, value);
+        }
+
+        public float ContentRadiusY
+        {
+            get => float.Parse(GetValue(ContentRadiusYProperty).ToString());
+            set => SetValue(ContentRadiusYProperty, value);
+        }
+
+        public Point Center
+        {
+            get => (Point)(GetValue(CenterProperty));
+            set => SetValue(CenterProperty, value);
+        }
+    
+        public bool IsSelected
+        {
+            get => (bool)(GetValue(IsSelectedProperty));
+            set => SetValue(IsSelectedProperty, value);
+        }
+
+        public UIElementCollection Children
+        {
+            get
+            {
+                if (uIElementCollection == null)
+                    uIElementCollection = CreateUIElementCollection(this);
+                return uIElementCollection;
+            }
+        }
+
+        private UIElementCollection CreateUIElementCollection(FrameworkElement logicalParent)
+        {
+            return new UIElementCollection(this, logicalParent);
+        }
+
+        static CircleButton()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CircleButton), new FrameworkPropertyMetadata(typeof(CircleButton)));
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            InitPos();
+        }
+
+        private void InitPos()
+        {
+            if (HostCanvas == null)
+                return;
+
+            var index = HostCanvas.Children.IndexOf(this);
+            SetPos(index,HostCanvas.Width, HostCanvas.Height);
+        }
+
+        private void SetPos(int index,double width,double height)
+        {
+            switch(index)
+            {
+                case 0:
+                    Canvas.SetLeft(this, (width - this.Width) / 2);
+                    Canvas.SetTop(this,0);
+                    break;
+                case 1:
+                    Canvas.SetRight(this, 0);
+                    Canvas.SetTop(this, (height - this.Height )/2);
+                    break;
+                case 2:
+                    Canvas.SetLeft(this, (width - this.Width) / 2);
+                    Canvas.SetBottom(this, 0);
+                    break;
+                case 3:
+                    Canvas.SetLeft(this, 0);
+                    Canvas.SetTop(this, (height - this.Height) / 2);
+                    break;
+            }
+        }
+    }
+}
