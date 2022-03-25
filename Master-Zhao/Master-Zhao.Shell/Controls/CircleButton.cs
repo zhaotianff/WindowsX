@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -135,20 +136,38 @@ namespace Master_Zhao.Shell.Controls
                 case 0:
                     Canvas.SetLeft(this, (width - this.Width) / 2);
                     Canvas.SetTop(this,0);
+                    //StartAnimation(Center.X, (width - this.Width) / 2, TimeSpan.FromSeconds(1), this, "(Canvas.Left)");
+                    StartAnimation(Center.Y, 0, TimeSpan.FromSeconds(0.2), this, "(Canvas.Top)");
                     break;
                 case 1:
                     Canvas.SetRight(this, 0);
                     Canvas.SetTop(this, (height - this.Height )/2);
+                    StartAnimation(Center.X, 0, TimeSpan.FromSeconds(0.2), this, "(Canvas.Right)");
                     break;
                 case 2:
                     Canvas.SetLeft(this, (width - this.Width) / 2);
                     Canvas.SetBottom(this, 0);
+                    StartAnimation(Center.Y, 0, TimeSpan.FromSeconds(0.2), this, "(Canvas.Bottom)");
                     break;
                 case 3:
                     Canvas.SetLeft(this, 0);
                     Canvas.SetTop(this, (height - this.Height) / 2);
+                    StartAnimation(Center.X, 0, TimeSpan.FromSeconds(0.2), this, "(Canvas.Left)");
                     break;
             }
+        }
+
+        private void StartAnimation(double from, double to, TimeSpan duration, Button target,string propertyPath)
+        {
+            Storyboard storyboard = new Storyboard();
+            DoubleAnimation doubleAnimation = new DoubleAnimation();
+            doubleAnimation.From = from;
+            doubleAnimation.To = to;
+            doubleAnimation.Duration = new Duration(duration); 
+            storyboard.Children.Add(doubleAnimation);
+            Storyboard.SetTarget(storyboard, target);
+            Storyboard.SetTargetProperty(storyboard, new PropertyPath(propertyPath));
+            storyboard.Begin();
         }
     }
 }
