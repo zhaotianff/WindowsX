@@ -4,4 +4,5 @@ del *.ipch /s
 del *.db /s
 del *.ilk /s
 del *.idb /s
+del *.obj /s
 pause
