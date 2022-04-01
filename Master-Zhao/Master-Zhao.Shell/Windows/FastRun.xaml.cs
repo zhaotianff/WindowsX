@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Controls;
+using Master_Zhao.Shell.Model.FastRun;
+using Master_Zhao.Shell.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +25,8 @@ namespace Master_Zhao.Shell.Windows
         public FastRun()
         {
             InitializeComponent();
+
+            LoadFastRunList();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -34,6 +39,70 @@ namespace Master_Zhao.Shell.Windows
             {
 
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Canvas.SetLeft(img_DragArea, (canvas.ActualWidth - img_DragArea.Width) / 2);
+            Canvas.SetTop(img_DragArea, (canvas.ActualHeight - img_DragArea.Height) / 2);
+        }
+
+        private void LoadFastRunList()
+        {
+
+            /*
+             * <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" VerticalContentAlignment="Bottom" Foreground="White" FontSize="20" Content="abc" Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
+            </local:FastRunButton>/*
+            */
+
+            canvas.Children.Clear();
+
+            var list = GetTestList();
+
+            foreach (var item in list)
+            {
+                FastRunButton fastRunButton = new FastRunButton();
+                fastRunButton.FastRunItem = item;
+                fastRunButton.ContentRadiusX = 48;
+                fastRunButton.ContentRadiusY = 48;
+                fastRunButton.Center = new Point(50, 50);
+                fastRunButton.VerticalAlignment = VerticalAlignment.Bottom;
+                fastRunButton.Foreground = Brushes.White;
+                fastRunButton.FontSize = 20;
+                fastRunButton.Content = item.Name;
+                fastRunButton.Width = 100;
+                fastRunButton.Height = 100;
+                fastRunButton.ImagePath = @"C:\Users\Administrator\Desktop\compu.png";
+                fastRunButton.HostCanvas = canvas;
+                fastRunButton.Click += FastRunButton_Click;
+                canvas.Children.Add(fastRunButton);
+            }
+
+            abc.Source = ImageHelper.GetResourceBitmapImage("../Icon/logo.png");
+        }
+
+        private void FastRunButton_Click(object sender, RoutedEventArgs e)
+        {
+            var fastRunButton = sender as FastRunButton;
+
+            if (fastRunButton != null)
+                System.Diagnostics.Process.Start(fastRunButton.FastRunItem.Path);
+        }
+
+        private List<FastRunItem> GetTestList()
+        {
+            var list = new List<FastRunItem>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                FastRunItem fastRunItem = new FastRunItem();
+                fastRunItem.Name = "test" + i;
+                fastRunItem.RunType = FastRunType.Applicataion;
+                fastRunItem.Path = "C:\\windows\\system32\\notepad.exe";
+                list.Add(fastRunItem);
+            }
+
+            return list;
         }
     }
 }

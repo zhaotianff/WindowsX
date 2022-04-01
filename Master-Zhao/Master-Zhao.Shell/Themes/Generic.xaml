@@ -93,7 +93,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:CircleButton}">
+    <Style TargetType="{x:Type local:FastRunButton}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="Silver"/>
         <Setter Property="BorderBrush" Value="Transparent"/>

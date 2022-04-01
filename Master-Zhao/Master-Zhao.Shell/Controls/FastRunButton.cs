@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Model.FastRun;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,20 +18,20 @@ using System.Windows.Shapes;
 namespace Master_Zhao.Shell.Controls
 {
  
-    public class CircleButton : Button
+    public class FastRunButton : Button
     {
         private const string PART_MAINGRID = "grid";
 
-        public static readonly DependencyProperty ImagePathProperty = DependencyProperty.Register("ImagePath", typeof(string), typeof(CircleButton));
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(CircleButton));
-        public static readonly DependencyProperty ShadowRadiusProperty = DependencyProperty.Register("ShadowRadius", typeof(float), typeof(CircleButton));
-        public static readonly DependencyProperty AngleProperty = DependencyProperty.Register("Angle", typeof(float), typeof(CircleButton));
-        public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register("Radius", typeof(float), typeof(CircleButton));
-        public static readonly DependencyProperty HostCanvasProperty = DependencyProperty.Register("HostCanvas", typeof(Canvas), typeof(CircleButton));
-        public static readonly DependencyProperty ContentRadiusXProperty = DependencyProperty.Register("ContentRadiusX", typeof(float), typeof(CircleButton));
-        public static readonly DependencyProperty ContentRadiusYProperty = DependencyProperty.Register("ContentRadiusY", typeof(float), typeof(CircleButton));
-        public static readonly DependencyProperty CenterProperty = DependencyProperty.Register("Center", typeof(Point), typeof(CircleButton));
-        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(CircleButton));
+        public static readonly DependencyProperty ImagePathProperty = DependencyProperty.Register("ImagePath", typeof(string), typeof(FastRunButton));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(FastRunButton));
+        public static readonly DependencyProperty ShadowRadiusProperty = DependencyProperty.Register("ShadowRadius", typeof(float), typeof(FastRunButton));
+        public static readonly DependencyProperty AngleProperty = DependencyProperty.Register("Angle", typeof(float), typeof(FastRunButton));
+        public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register("Radius", typeof(float), typeof(FastRunButton));
+        public static readonly DependencyProperty HostCanvasProperty = DependencyProperty.Register("HostCanvas", typeof(Canvas), typeof(FastRunButton));
+        public static readonly DependencyProperty ContentRadiusXProperty = DependencyProperty.Register("ContentRadiusX", typeof(float), typeof(FastRunButton));
+        public static readonly DependencyProperty ContentRadiusYProperty = DependencyProperty.Register("ContentRadiusY", typeof(float), typeof(FastRunButton));
+        public static readonly DependencyProperty CenterProperty = DependencyProperty.Register("Center", typeof(Point), typeof(FastRunButton));
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(FastRunButton));       
 
         private UIElementCollection uIElementCollection;
 
@@ -94,6 +95,8 @@ namespace Master_Zhao.Shell.Controls
             set => SetValue(IsSelectedProperty, value);
         }
 
+        public FastRunItem FastRunItem { get; set; }
+
         public UIElementCollection Children
         {
             get
@@ -109,9 +112,9 @@ namespace Master_Zhao.Shell.Controls
             return new UIElementCollection(this, logicalParent);
         }
 
-        static CircleButton()
+        static FastRunButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CircleButton), new FrameworkPropertyMetadata(typeof(CircleButton)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(FastRunButton), new FrameworkPropertyMetadata(typeof(FastRunButton)));
         }
 
         public override void OnApplyTemplate()

@@ -25,6 +25,7 @@
     <None Remove="Icon\desktop.png" />
     <None Remove="Icon\huashui.jpg" />
     <None Remove="Icon\information.png" />
+    <None Remove="Icon\move.jpg" />
     <None Remove="Icon\system.png" />
     <None Remove="Icon\windows10_blurtaskbar.png" />
     <None Remove="Icon\windows10_taskbar.png" />
@@ -33,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icon\move.jpg" />
     <Resource Include="logo.ico" />
   </ItemGroup>
 
