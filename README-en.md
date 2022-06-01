@@ -1,5 +1,9 @@
 # Master-Zhao
-Master-Zhao is a windows toolset software.  
+Master-Zhao is a toolset software for Windows. Including beautification, system management, gadgets, paddling and other functions.  
+
+Why write such a software?  
+Willing to go through hardships and never forget the original intention.  
+ remember the joy of outputting "Hello World" on the screen for the first time.  
 Right here waiting to recall, just at that time already disconsolate.
 
 <p align="center">
