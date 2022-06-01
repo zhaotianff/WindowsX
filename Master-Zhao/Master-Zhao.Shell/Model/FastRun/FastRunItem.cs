@@ -14,5 +14,6 @@ namespace Master_Zhao.Shell.Model.FastRun
         public BitmapImage Icon { get; set; }
         public string[] Args { get; set; }
         public FastRunType RunType { get; set; }
+        public System.Windows.Input.Key[] HotKey { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -103,6 +104,25 @@ namespace Master_Zhao.Shell.Windows
             }
 
             return list;
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            hwndSource.AddHook(HwndProc);
+        }
+
+        private IntPtr HwndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch(msg)
+            {
+                //TODO
+                case PInvoke.User32.WM_INPUT:
+                    MessageBox.Show("wm_input");
+                    break;
+            }
+            return IntPtr.Zero;
         }
     }
 }

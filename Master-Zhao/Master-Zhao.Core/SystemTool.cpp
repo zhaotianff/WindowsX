@@ -65,3 +65,15 @@ BOOL IsWindows11()
 	GetVersionNumbers(&dwMajor, &dwMinor, &dwBuildNumber);
 	return dwMajor == 10 && dwBuildNumber >= 22000;
 }
+
+BOOL RegisterFastRunHotKey(HWND hwnd)
+{
+	RAWINPUTDEVICE rawInputDevice{};
+	rawInputDevice.usUsagePage = 0x01;
+	rawInputDevice.usUsage = 0x06;
+	rawInputDevice.dwFlags = RIDEV_INPUTSINK;
+
+	BOOL bRet = RegisterRawInputDevices(&rawInputDevice, 1, sizeof(rawInputDevice));
+
+	return bRet;
+}

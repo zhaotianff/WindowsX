@@ -18,6 +18,8 @@ namespace Master_Zhao.Shell.PInvoke
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int GWL_EXSTYLE = (-20);
 
+        public const int WM_INPUT = 0x00FF;
+
         [DllImport("User32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);
 
