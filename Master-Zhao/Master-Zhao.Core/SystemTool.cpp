@@ -72,6 +72,7 @@ BOOL RegisterFastRunHotKey(HWND hwnd)
 	rawInputDevice.usUsagePage = 0x01;
 	rawInputDevice.usUsage = 0x06;
 	rawInputDevice.dwFlags = RIDEV_INPUTSINK;
+	rawInputDevice.hwndTarget = hwnd;
 
 	BOOL bRet = RegisterRawInputDevices(&rawInputDevice, 1, sizeof(rawInputDevice));
 

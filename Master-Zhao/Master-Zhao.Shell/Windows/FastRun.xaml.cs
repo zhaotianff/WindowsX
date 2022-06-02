@@ -46,6 +46,9 @@ namespace Master_Zhao.Shell.Windows
         {
             Canvas.SetLeft(img_DragArea, (canvas.ActualWidth - img_DragArea.Width) / 2);
             Canvas.SetTop(img_DragArea, (canvas.ActualHeight - img_DragArea.Height) / 2);
+
+            var result = PInvoke.SystemTool.RegisterFastRunHotKey(new WindowInteropHelper(this).Handle);
+            var errorCode = PInvoke.Kernel32.GetLastError();
         }
 
         private void LoadFastRunList()
@@ -119,7 +122,11 @@ namespace Master_Zhao.Shell.Windows
             {
                 //TODO
                 case PInvoke.User32.WM_INPUT:
-                    MessageBox.Show("wm_input");
+                    if(Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.T))
+                    {
+                        //first step success
+                        System.Diagnostics.Process.Start(GetTestList()[0].Path);
+                    }
                     break;
             }
             return IntPtr.Zero;
