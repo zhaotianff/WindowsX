@@ -5,7 +5,7 @@
 
 SYSTEMTIME GetUserLoginTime()
 {
-	SYSTEMTIME stSys;
+	SYSTEMTIME stSys{};
 
 	HINSTANCE hInstance = LoadLibrary(L"ntdll.dll");
 	if (hInstance == NULL)
