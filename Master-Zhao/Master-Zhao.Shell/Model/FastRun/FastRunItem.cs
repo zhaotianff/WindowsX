@@ -11,7 +11,7 @@ namespace Master_Zhao.Shell.Model.FastRun
     {
         public string Name { get; set; }
         public string Path { get; set; }
-        public BitmapImage Icon { get; set; }
+        public byte[] Icon { get; set; }
         public string[] Args { get; set; }
         public FastRunType RunType { get; set; }
         public System.Windows.Input.Key[] HotKey { get; set; }

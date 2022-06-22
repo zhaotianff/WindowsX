@@ -17,6 +17,7 @@
 #include <strsafe.h>
 #include<tchar.h>
 #include<Shlwapi.h>
+#include<shellapi.h>
 
 #include<vector>
 #include<string>

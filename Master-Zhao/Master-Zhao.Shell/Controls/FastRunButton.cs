@@ -22,6 +22,8 @@ namespace Master_Zhao.Shell.Controls
     {
         private const string PART_MAINGRID = "grid";
 
+        //TODO icon image buffer
+
         public static readonly DependencyProperty ImagePathProperty = DependencyProperty.Register("ImagePath", typeof(string), typeof(FastRunButton));
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(FastRunButton));
         public static readonly DependencyProperty ShadowRadiusProperty = DependencyProperty.Register("ShadowRadius", typeof(float), typeof(FastRunButton));
