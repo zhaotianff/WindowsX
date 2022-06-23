@@ -24,6 +24,8 @@ namespace Master_Zhao.Shell.Windows
     /// </summary>
     public partial class FastRun : Window
     {
+        public int SelectedIndex = 0;
+
         public FastRun()
         {
             InitializeComponent();
@@ -50,7 +52,10 @@ namespace Master_Zhao.Shell.Windows
 
             var result = PInvoke.SystemTool.RegisterFastRunHotKey(new WindowInteropHelper(this).Handle);
             var errorCode = PInvoke.Kernel32.GetLastError();
+
+            this.Visibility = Visibility.Hidden;
         }
+
 
         private void LoadFastRunList()
         {
@@ -99,15 +104,30 @@ namespace Master_Zhao.Shell.Windows
         private List<FastRunItem> GetTestList()
         {
             var list = new List<FastRunItem>();
+    
+            FastRunItem fastRunItem1 = new FastRunItem();
+            fastRunItem1.Name = "notepad";
+            fastRunItem1.RunType = FastRunType.Applicataion;
+            fastRunItem1.Path = "C:\\windows\\system32\\notepad.exe";
+            list.Add(fastRunItem1);
 
-            for (int i = 0; i < 4; i++)
-            {
-                FastRunItem fastRunItem = new FastRunItem();
-                fastRunItem.Name = "test" + i;
-                fastRunItem.RunType = FastRunType.Applicataion;
-                fastRunItem.Path = "C:\\windows\\system32\\notepad.exe";
-                list.Add(fastRunItem);
-            }
+            FastRunItem fastRunItem2 = new FastRunItem();
+            fastRunItem2.Name = "cmd";
+            fastRunItem2.RunType = FastRunType.Applicataion;
+            fastRunItem2.Path = "C:\\windows\\system32\\cmd.exe";
+            list.Add(fastRunItem2);
+
+            FastRunItem fastRunItem3 = new FastRunItem();
+            fastRunItem3.Name = "control";
+            fastRunItem3.RunType = FastRunType.Applicataion;
+            fastRunItem3.Path = "C:\\windows\\system32\\control.exe";
+            list.Add(fastRunItem3);
+
+            FastRunItem fastRunItem4 = new FastRunItem();
+            fastRunItem4.Name = "calc";
+            fastRunItem4.RunType = FastRunType.Applicataion;
+            fastRunItem4.Path = "C:\\windows\\system32\\calc.exe";
+            list.Add(fastRunItem4);
 
             return list;
         }
@@ -125,11 +145,33 @@ namespace Master_Zhao.Shell.Windows
             {
                 //TODO
                 case PInvoke.User32.WM_INPUT:
-                    if(Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.T))
+                    if(Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.Q))
                     {
                         //first step success
-                        System.Diagnostics.Process.Start(GetTestList()[0].Path);
+                        //System.Diagnostics.Process.Start(GetTestList()[0].Path);
+                        SelectFastRunItem(SelectedIndex);
+
+                        SelectedIndex++;
+                        SelectedIndex %= canvas.Children.Count;
+
+                        this.Visibility = Visibility.Visible;
+
+                        if (Mouse.RightButton == MouseButtonState.Pressed)
+                        {
+                            //TODO getrawinput
+                            this.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            SelectFastRunItem(SelectedIndex, true);
+                        }
                     }
+
+                    if(Keyboard.IsKeyDown(Key.LeftCtrl) == false && Keyboard.IsKeyDown(Key.LeftAlt) == false)
+                    {
+                        this.Visibility = Visibility.Hidden;
+                    }
+
 
                     //test num code
                     //if(Keyboard.IsKeyDown(Key.Left) && Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.D0))
@@ -138,11 +180,36 @@ namespace Master_Zhao.Shell.Windows
                     //}
                     var test = InputTool.GetRawInput(lParam);
 
-                    if(test != -1)
-                        MessageBox.Show(test.ToString());
+                    if (test != -1)
+                        Console.WriteLine(test);
                     break;
             }
             return IntPtr.Zero;
+        }
+
+        private void SelectFastRunItem(int index, bool isRun = false)
+        {
+           for(int i = 0;i<canvas.Children.Count;i++)
+            {
+                if(index == i)
+                {
+                    var fastRunButton = (canvas.Children[i] as FastRunButton);
+
+                    fastRunButton.IsSelected = true;
+
+                    if (isRun)
+                    {
+                        fastRunButton.Dispatcher.Invoke(() => {
+                            fastRunButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                        });
+
+                    }
+                }
+                else
+                {
+                    (canvas.Children[i] as FastRunButton).IsSelected = false;
+                }
+            }
         }
     }
 }
