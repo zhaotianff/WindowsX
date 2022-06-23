@@ -48,3 +48,6 @@ RegisterFastRunHotKey
 IsExistStartupRun
 CreateStartupRun
 RemoveStartupRun
+
+;inputtool.h
+GetRawInput

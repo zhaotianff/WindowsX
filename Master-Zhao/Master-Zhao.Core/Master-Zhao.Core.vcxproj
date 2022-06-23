@@ -164,6 +164,7 @@
     <ClInclude Include="DesktopTool.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IconTool.h" />
+    <ClInclude Include="InputTool.h" />
     <ClInclude Include="RegTool.h" />
     <ClInclude Include="StartupTool.h" />
     <ClInclude Include="SystemTool.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="DesktopTool.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="IconTool.cpp" />
+    <ClCompile Include="InputTool.cpp" />
     <ClCompile Include="RegTool.cpp" />
     <ClCompile Include="StartupTool.cpp" />
     <ClCompile Include="SystemTool.cpp" />

@@ -1,5 +1,6 @@
 ﻿using Master_Zhao.Shell.Controls;
 using Master_Zhao.Shell.Model.FastRun;
+using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
@@ -82,6 +83,8 @@ namespace Master_Zhao.Shell.Windows
                 canvas.Children.Add(fastRunButton);
             }
 
+            (canvas.Children[0] as FastRunButton).IsSelected = true;
+
             abc.Source = ImageHelper.GetResourceBitmapImage("../Icon/logo.png");
         }
 
@@ -127,6 +130,16 @@ namespace Master_Zhao.Shell.Windows
                         //first step success
                         System.Diagnostics.Process.Start(GetTestList()[0].Path);
                     }
+
+                    //test num code
+                    //if(Keyboard.IsKeyDown(Key.Left) && Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.D0))
+                    //{
+
+                    //}
+                    var test = InputTool.GetRawInput(lParam);
+
+                    if(test != -1)
+                        MessageBox.Show(test.ToString());
                     break;
             }
             return IntPtr.Zero;

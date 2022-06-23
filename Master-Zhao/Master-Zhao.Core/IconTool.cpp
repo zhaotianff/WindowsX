@@ -40,32 +40,12 @@ BOOL ExtractIcon(LPTSTR lpszExtPath, int nIconIndex, byte* buffer, int length)
 {
     //https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-extracticonexa
     
-    LPTSTR lpszExtPath = _tcsdup(L"D:\\QQ\\Bin\\QQScLauncher.exe");
+    //LPTSTR lpszExtPath = _tcsdup(L"D:\\QQ\\Bin\\QQScLauncher.exe");
     HICON icon = (HICON)LoadImage(NULL, lpszExtPath, IMAGE_ICON, GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON), LR_LOADFROMFILE | LR_LOADMAP3DCOLORS);
     if (!icon)
     {
-        //Try something else
-        TCHAR mypath[MAX_PATH];
-        const TCHAR* cleanpath = lpszExtPath;
-        const TCHAR* comma;
-
-        comma = _tcsrchr(lpszExtPath, ',');
-        UINT index = 1;
-
-        if (comma)
-        {
-            lstrcpyn(mypath, lpszExtPath, comma - lpszExtPath); //Can you exploit this buffer overflow ?
-            mypath[comma - lpszExtPath] = TCHAR(0);
-
-            index = _ttoi(comma + 1);
-
-            cleanpath = mypath;
-        }
-
-        ExtractIconEx(cleanpath, 0, &icon, NULL, 1);
+        ExtractIconEx(lpszExtPath, 0, &icon, NULL, 1);
     }
 
-
-        return FALSE;
-    
+    return FALSE;  
 }
