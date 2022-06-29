@@ -45,6 +45,9 @@
     <ClInclude Include="InputTool.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ResTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -69,6 +72,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="InputTool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ResTool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
