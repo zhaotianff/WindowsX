@@ -24,7 +24,8 @@ namespace Master_Zhao.Shell.Windows
     /// </summary>
     public partial class FastRun : Window
     {
-        public int SelectedIndex = 0;
+        public int SelectedIndex { get; set; } = 0;
+        private bool IsFirstRun { get; set; } = true;
 
         public FastRun()
         {
@@ -143,45 +144,26 @@ namespace Master_Zhao.Shell.Windows
         {
             switch(msg)
             {
-                //TODO
                 case PInvoke.User32.WM_INPUT:
-                    if(Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.Q))
+                    if(Keyboard.IsKeyDown(Key.LeftAlt))
                     {
-                        //first step success
-                        //System.Diagnostics.Process.Start(GetTestList()[0].Path);
-                        SelectFastRunItem(SelectedIndex);
-
-                        SelectedIndex++;
-                        SelectedIndex %= canvas.Children.Count;
-
-                        this.Visibility = Visibility.Visible;
-
-                        if (Mouse.RightButton == MouseButtonState.Pressed)
+                        if(this.Visibility == Visibility.Hidden)
                         {
-                            //TODO getrawinput
+                            this.Visibility = Visibility.Visible;
+                            break;
+                        }
+
+                        if (Keyboard.IsKeyDown(Key.D1))
+                        {
+                            SelectFastRunItem(0, true);
                             this.Visibility = Visibility.Hidden;
                         }
-                        else
-                        {
-                            SelectFastRunItem(SelectedIndex, true);
-                        }
                     }
-
-                    if(Keyboard.IsKeyDown(Key.LeftCtrl) == false && Keyboard.IsKeyDown(Key.LeftAlt) == false)
-                    {
-                        this.Visibility = Visibility.Hidden;
+                    
+                    if(Keyboard.IsKeyUp(Key.LeftAlt))
+                    {    
+                        this.Visibility = Visibility.Hidden;   
                     }
-
-
-                    //test num code
-                    //if(Keyboard.IsKeyDown(Key.Left) && Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.D0))
-                    //{
-
-                    //}
-                    var test = InputTool.GetRawInput(lParam);
-
-                    if (test != -1)
-                        Console.WriteLine(test);
                     break;
             }
             return IntPtr.Zero;
