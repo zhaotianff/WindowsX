@@ -62,6 +62,8 @@ Set the project to 64 bit
   * hardware information
   * startup assistant
   * fast run
+      *  one key start
+      *  menu start
 ## huá shuǐ
 
 # Screenshot
