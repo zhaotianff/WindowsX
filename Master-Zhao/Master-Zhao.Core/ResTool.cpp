@@ -17,5 +17,5 @@ BOOL ExtractResourceToFile(int nResId, LPCTSTR lpszType, LPCTSTR lpszFile)
 
     BOOL bWrite = WriteFile(hFile, lpData, dwResSize, &dwWriteSize, NULL);
     CloseHandle(hFile);
-    return bWrite & dwResSize == dwWriteSize;
+    return bWrite && dwResSize == dwWriteSize;
 }
