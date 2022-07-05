@@ -152,21 +152,48 @@ namespace Master_Zhao.Shell.Windows
                             this.Visibility = Visibility.Visible;
                             break;
                         }
-
-                        if (Keyboard.IsKeyDown(Key.D1))
-                        {
-                            SelectFastRunItem(0, true);
-                            this.Visibility = Visibility.Hidden;
-                        }
                     }
                     
                     if(Keyboard.IsKeyUp(Key.LeftAlt))
                     {    
-                        this.Visibility = Visibility.Hidden;   
+                        this.Visibility = Visibility.Hidden;
+                        break;
                     }
+
+                    DealWithKeyPress();
                     break;
             }
             return IntPtr.Zero;
+        }
+
+        private void DealWithKeyPress()
+        {
+            if (this.Visibility == Visibility.Hidden)
+                return;
+
+            if (Keyboard.IsKeyDown(Key.D1))
+            {
+                SelectFastRunItem(0, true);
+                this.Visibility = Visibility.Hidden;
+            }
+
+            if (Keyboard.IsKeyDown(Key.D2))
+            {
+                SelectFastRunItem(1, true);
+                this.Visibility = Visibility.Hidden;
+            }
+
+            if (Keyboard.IsKeyDown(Key.D3))
+            {
+                SelectFastRunItem(2, true);
+                this.Visibility = Visibility.Hidden;
+            }
+
+            if (Keyboard.IsKeyDown(Key.D4))
+            {
+                SelectFastRunItem(3, true);
+                this.Visibility = Visibility.Hidden;
+            }
         }
 
         private void SelectFastRunItem(int index, bool isRun = false)
@@ -183,6 +210,7 @@ namespace Master_Zhao.Shell.Windows
                     {
                         fastRunButton.Dispatcher.Invoke(() => {
                             fastRunButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            this.Visibility = Visibility.Hidden;
                         });
 
                     }
