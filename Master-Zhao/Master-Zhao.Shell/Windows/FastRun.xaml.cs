@@ -90,8 +90,6 @@ namespace Master_Zhao.Shell.Windows
             }
 
             (canvas.Children[0] as FastRunButton).IsSelected = true;
-
-            abc.Source = ImageHelper.GetResourceBitmapImage("../Icon/logo.png");
         }
 
         private void FastRunButton_Click(object sender, RoutedEventArgs e)
