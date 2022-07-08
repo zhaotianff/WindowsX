@@ -19,6 +19,9 @@ namespace Master_Zhao.Shell.PInvoke
         public static extern bool IsWindows10OrHigher();
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern bool RegisterFastRunHotKey(IntPtr hwnd);
+        public static extern bool RegisterFastRunHotKey(IntPtr hwnd); 
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool UnRegisterFastRunHotKey();
     }
 }

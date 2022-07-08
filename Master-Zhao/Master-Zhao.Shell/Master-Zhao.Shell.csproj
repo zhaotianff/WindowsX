@@ -23,6 +23,7 @@
     <None Remove="Icon\about.png" />
     <None Remove="Icon\about_back.jpeg" />
     <None Remove="Icon\desktop.png" />
+    <None Remove="Icon\fastrun.png" />
     <None Remove="Icon\huashui.jpg" />
     <None Remove="Icon\information.png" />
     <None Remove="Icon\move.jpg" />
@@ -34,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icon\fastrun.png" />
     <Resource Include="Icon\move.jpg" />
     <Resource Include="logo.ico" />
   </ItemGroup>

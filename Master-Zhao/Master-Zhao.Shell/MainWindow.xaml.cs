@@ -148,6 +148,10 @@ namespace Master_Zhao.Shell
             BeginShowMenuAnimation(NavigationPages.Beautify);
         }
 
+        private void btnTool_Click(object sender, RoutedEventArgs e)
+        {
+            BeginShowMenuAnimation(NavigationPages.Tools);
+        }
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {

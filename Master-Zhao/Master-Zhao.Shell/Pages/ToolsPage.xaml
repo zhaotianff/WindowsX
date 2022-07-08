@@ -25,12 +25,12 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-                <ToggleButton Content="" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_StaticWallpaperClick" IsChecked="True"/>
+                <ToggleButton Content="快速启动菜单" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_FastRunClick" IsChecked="True"/>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Column="1">
-            <Frame Name="frame" Source="StaticWallpaper.xaml">
+            <Frame Name="frame" Source="FastRunSetting.xaml">
 
             </Frame>
         </Grid>

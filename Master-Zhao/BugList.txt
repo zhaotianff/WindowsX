@@ -1,0 +1,2 @@
+1.Generic.xaml 
+FastRunButton Style => FocusVisualStyle

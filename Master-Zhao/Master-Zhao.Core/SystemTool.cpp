@@ -82,6 +82,19 @@ BOOL RegisterFastRunHotKey(HWND hwnd)
 	return bRet;
 }
 
+BOOL UnRegisterFastRunHotKey()
+{
+	RAWINPUTDEVICE rawInputDevice{};
+	rawInputDevice.usUsagePage = 0x01;
+	rawInputDevice.usUsage = 0x06;
+	rawInputDevice.dwFlags = RIDEV_REMOVE;
+	rawInputDevice.hwndTarget = NULL;
+
+	BOOL bRet = RegisterRawInputDevices(&rawInputDevice, 1, sizeof(rawInputDevice));
+
+	return bRet;
+}
+
 int GetCPUKernelCount()
 {
 	SYSTEM_INFO sinfo{};

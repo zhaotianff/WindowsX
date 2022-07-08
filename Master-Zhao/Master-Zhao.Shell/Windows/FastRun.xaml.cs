@@ -46,14 +46,24 @@ namespace Master_Zhao.Shell.Windows
             }
         }
 
+        public int RegisterHotKey()
+        {
+            var result = PInvoke.SystemTool.RegisterFastRunHotKey(new WindowInteropHelper(this).Handle);
+            var errorCode = PInvoke.Kernel32.GetLastError();
+            return errorCode;
+        }
+
+        public int UnregisterHotKey()
+        {
+            var result = PInvoke.SystemTool.UnRegisterFastRunHotKey();
+            var errorCode = PInvoke.Kernel32.GetLastError();
+            return errorCode;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Canvas.SetLeft(img_DragArea, (canvas.ActualWidth - img_DragArea.Width) / 2);
             Canvas.SetTop(img_DragArea, (canvas.ActualHeight - img_DragArea.Height) / 2);
-
-            var result = PInvoke.SystemTool.RegisterFastRunHotKey(new WindowInteropHelper(this).Handle);
-            var errorCode = PInvoke.Kernel32.GetLastError();
-
             this.Visibility = Visibility.Hidden;
         }
 
