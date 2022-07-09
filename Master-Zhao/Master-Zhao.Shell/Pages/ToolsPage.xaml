@@ -30,7 +30,7 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <Frame Name="frame" Source="FastRunSetting.xaml">
+            <Frame Name="frame">
 
             </Frame>
         </Grid>

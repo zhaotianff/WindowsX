@@ -83,7 +83,9 @@ namespace Master_Zhao.Shell
             DoubleAnimation startHeightAnimation = start.Children[1] as DoubleAnimation;
             startHeightAnimation.From = this.ActualHeight - 50;
             startHeightAnimation.To = this.ActualHeight;
-            this.frame.Content = GetNavigationPage(targetPage);
+            var pageContent = GetNavigationPage(targetPage);
+            (pageContent as IPageAction)?.ShowDefaultPage();//TODO
+            this.frame.Content = pageContent;
             start?.Begin();
             CurrentPage = targetPage;
         }
@@ -166,6 +168,9 @@ namespace Master_Zhao.Shell
             }
 
             GlobalConfig.Instance.SaveAllConfig();
+
+            //TODO 
+            toolsPage.Terminate();
         }
 
         private async void BlurWindow_StateChanged(object sender, EventArgs e)

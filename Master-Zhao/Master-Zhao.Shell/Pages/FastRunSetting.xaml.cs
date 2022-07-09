@@ -21,16 +21,26 @@ namespace Master_Zhao.Shell.Pages
     /// </summary>
     public partial class FastRunSetting : Page
     {
-        FastRun fastRun = new FastRun();
+        FastRun fastRun;
 
         public FastRunSetting()
         {
             InitializeComponent();
+        }
 
-            //TODO
-            fastRun.Visibility = Visibility.Visible;
-            fastRun.Visibility = Visibility.Hidden;
-            fastRun.UnregisterHotKey();
+        public void InitFastRun()
+        {
+            if(fastRun == null)
+            {
+                fastRun = new FastRun();
+                fastRun.Visibility = Visibility.Visible;
+                fastRun.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public void CloseFastRun()
+        {
+            fastRun?.Close();
         }
 
         private void cbxFastrun_Checked(object sender, RoutedEventArgs e)
