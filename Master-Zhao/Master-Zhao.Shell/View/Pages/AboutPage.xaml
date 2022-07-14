@@ -9,7 +9,7 @@
       Title="About">
     <Page.Background>
         <!--<SolidColorBrush Color="White"/>-->
-        <ImageBrush ImageSource="../Icon/about_back.jpeg" Stretch="None" Opacity=".2"/>
+        <ImageBrush ImageSource="../../Icon/about_back.jpeg" Stretch="None" Opacity=".2"/>
     </Page.Background>
 
     <StackPanel>

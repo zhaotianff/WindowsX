@@ -30,12 +30,23 @@ namespace Master_Zhao.Shell.Pages
 
         public void InitFastRun()
         {
-            if(fastRun == null)
+            InitUi();
+            InitConfig();
+        }
+
+        private void InitUi()
+        {
+            if (fastRun == null)
             {
                 fastRun = new FastRun();
                 fastRun.Visibility = Visibility.Visible;
                 fastRun.Visibility = Visibility.Hidden;
             }
+        }
+
+        private void InitConfig()
+        {
+
         }
 
         public void CloseFastRun()
