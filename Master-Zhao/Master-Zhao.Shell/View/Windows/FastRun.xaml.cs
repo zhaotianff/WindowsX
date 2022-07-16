@@ -158,6 +158,10 @@ namespace Master_Zhao.Shell.Windows
                         if(this.Visibility == Visibility.Hidden)
                         {
                             this.Visibility = Visibility.Visible;
+                            var point = new PInvoke.POINT();
+                            PInvoke.User32.GetCursorPos(ref point);
+                            this.Left = point.x - this.Width / 2;
+                            this.Top = point.y - this.Height / 2;
                             break;
                         }
                     }
