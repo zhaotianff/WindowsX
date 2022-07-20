@@ -25,9 +25,10 @@ namespace Master_Zhao.Shell.Controls
             set => SetValue(DetailUrlProperty, value);
         }
 
-        public event ImgFuncButtonHandler PreviewEvent;
-        public event ImgFuncButtonHandler DownloadEvent;
-        public event ImgFuncButtonHandler SetBackgroundEvent;
+        //TODO change to routed event
+        //public event ImgFuncButtonHandler PreviewEvent;
+        //public event ImgFuncButtonHandler DownloadEvent;
+        //public event ImgFuncButtonHandler SetBackgroundEvent;
 
         static ImgFuncButton()
         {

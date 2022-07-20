@@ -1,4 +1,4 @@
-﻿using Master_Zhao.Shell.Model.FastRun;
+﻿using Master_Zhao.Config.Model;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;

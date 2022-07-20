@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
-namespace Master_Zhao.Shell.Model.FastRun
+namespace Master_Zhao.Config.Model
 {
+    public enum FastRunType
+    {
+        Applicataion,
+        ControlPanel,
+        Setting
+    }
+
+    public class FastRunConfig
+    {
+        public List<FastRunItem> FastRunList { get; set; } = new List<FastRunItem>();
+    }
+
     public class FastRunItem
     {
         public string Name { get; set; }
@@ -14,6 +25,6 @@ namespace Master_Zhao.Shell.Model.FastRun
         public byte[] Icon { get; set; }
         public string[] Args { get; set; }
         public FastRunType RunType { get; set; }
-        public System.Windows.Input.Key[] HotKey { get; set; }
+        public int[] HotKey { get; set; }
     }
 }

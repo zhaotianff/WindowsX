@@ -1,5 +1,5 @@
-﻿using Master_Zhao.Shell.Controls;
-using Master_Zhao.Shell.Model.FastRun;
+﻿using Master_Zhao.Config.Model;
+using Master_Zhao.Shell.Controls;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
 using System;
