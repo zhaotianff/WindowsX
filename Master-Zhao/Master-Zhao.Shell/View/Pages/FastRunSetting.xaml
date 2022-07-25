@@ -46,10 +46,10 @@
                 </local:FastRunButton>
             </Grid>
             <!--temp-->
-            <user:FastRunItemConfig VerticalAlignment="Center" x:Name="fastrun_item1"/>
-            <user:FastRunItemConfig VerticalAlignment="Top" Grid.Column="1" Margin="0,0,0,0" x:Name="fastrun_item2"/>
+            <user:FastRunItemConfig VerticalAlignment="Top" Grid.Column="1" Margin="0,0,0,0" x:Name="fastrun_item1"/>
+            <user:FastRunItemConfig VerticalAlignment="Center" Grid.Column="2" x:Name="fastrun_item2"/>
             <user:FastRunItemConfig VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,0" x:Name="fastrun_item3"/>
-            <user:FastRunItemConfig VerticalAlignment="Center" Grid.Column="2" x:Name="fastrun_item4"/>
+            <user:FastRunItemConfig VerticalAlignment="Center" x:Name="fastrun_item4"/>
         </Grid>
     </Grid>
 </Page>

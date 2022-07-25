@@ -68,8 +68,18 @@ namespace Master_Zhao.Shell.Windows
             this.Visibility = Visibility.Hidden;
         }
 
+        public void RefreshFastRunItem(int index)
+        {
+            //TODO 
+            var list = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
 
-        private void LoadFastRunList()
+            if(index < list.Count && index < canvas.Children.Count)
+            {
+                (canvas.Children[index] as FastRunButton).FastRunItem.Path = list[index].Path;
+            }
+        }
+
+        public void LoadFastRunList()
         {
 
             /*
@@ -109,7 +119,12 @@ namespace Master_Zhao.Shell.Windows
             var fastRunButton = sender as FastRunButton;
 
             if (fastRunButton != null)
-                System.Diagnostics.Process.Start(fastRunButton.FastRunItem.Path);
+            {
+                var psInfo = new System.Diagnostics.ProcessStartInfo();
+                psInfo.UseShellExecute = true;
+                psInfo.FileName = fastRunButton.FastRunItem.Path;
+                System.Diagnostics.Process.Start(psInfo);
+            }
         }
 
         #region Test Code
