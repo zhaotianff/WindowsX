@@ -47,8 +47,6 @@ namespace Master_Zhao.Config.Helper
 
         public static void SaveToolsConfig(ToolsConfig config)
         {
-            config.FastRunConfig = new FastRunConfig();
-            config.FastRunConfig.FastRunList.Add(new FastRunItem() { Args = new string[] { "" }, HotKey = new int[] { 1, 2, 3 }, Name = "notepad", Path = "C:\\Windows\\System32\\notepad.exe", RunType = FastRunType.Applicataion });
             JsonUtil.Serialize(config, ListFilePath);
         }
     }

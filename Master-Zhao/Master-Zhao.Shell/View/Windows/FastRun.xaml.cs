@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Config.Model;
+﻿using Master_Zhao.Config;
+using Master_Zhao.Config.Model;
 using Master_Zhao.Shell.Controls;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
@@ -78,7 +79,8 @@ namespace Master_Zhao.Shell.Windows
 
             canvas.Children.Clear();
 
-            var list = GetTestList();
+            //var list = GetTestList();
+            var list = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
 
             foreach (var item in list)
             {
@@ -110,6 +112,7 @@ namespace Master_Zhao.Shell.Windows
                 System.Diagnostics.Process.Start(fastRunButton.FastRunItem.Path);
         }
 
+        #region Test Code
         private List<FastRunItem> GetTestList()
         {
             var list = new List<FastRunItem>();
@@ -140,6 +143,8 @@ namespace Master_Zhao.Shell.Windows
 
             return list;
         }
+
+        #endregion
 
         protected override void OnSourceInitialized(EventArgs e)
         {

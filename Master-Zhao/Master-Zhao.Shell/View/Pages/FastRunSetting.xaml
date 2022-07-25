@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:user="clr-namespace:Master_Zhao.Shell.UserControls"
-      xmlns:local="clr-namespace:Master_Zhao.Shell.Pages"
+      xmlns:local="clr-namespace:Master_Zhao.Shell.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="FastRunSetting">
@@ -27,11 +27,28 @@
             </Grid.ColumnDefinitions>
 
             <!--  basic version-->
-            <Grid Height="300" Background="LightBlue" Grid.Column="1"></Grid>
+            <Grid Height="300" Background="LightBlue" Grid.Column="1">
+                <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                     Foreground="White" FontSize="20" Content="{Binding ElementName=fastrun_item1,Path=FastRunName,UpdateSourceTrigger=PropertyChanged}" 
+                                     Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
+                </local:FastRunButton>
+                <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                     Foreground="White" FontSize="20" Content="{Binding ElementName=fastrun_item2,Path=FastRunName,UpdateSourceTrigger=PropertyChanged}" 
+                                     Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
+                </local:FastRunButton>
+                <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                     Foreground="White" FontSize="20" Content="{Binding ElementName=fastrun_item3,Path=FastRunName,UpdateSourceTrigger=PropertyChanged}" 
+                                     Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
+                </local:FastRunButton>
+                <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                     Foreground="White" FontSize="20" Content="{Binding ElementName=fastrun_item4,Path=FastRunName,UpdateSourceTrigger=PropertyChanged}" 
+                                     Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
+                </local:FastRunButton>
+            </Grid>
             <!--temp-->
             <user:FastRunItemConfig VerticalAlignment="Center" x:Name="fastrun_item1"/>
-            <user:FastRunItemConfig VerticalAlignment="Top" Grid.Column="1" Margin="0,30,0,0" x:Name="fastrun_item2"/>
-            <user:FastRunItemConfig VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,30" x:Name="fastrun_item3"/>
+            <user:FastRunItemConfig VerticalAlignment="Top" Grid.Column="1" Margin="0,0,0,0" x:Name="fastrun_item2"/>
+            <user:FastRunItemConfig VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,0" x:Name="fastrun_item3"/>
             <user:FastRunItemConfig VerticalAlignment="Center" Grid.Column="2" x:Name="fastrun_item4"/>
         </Grid>
     </Grid>

@@ -2,6 +2,7 @@
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,40 @@ namespace Master_Zhao.Shell.UserControls
     /// <summary>
     /// Interaction logic for FastRunItemConfig.xaml
     /// </summary>
-    public partial class FastRunItemConfig : UserControl
+    public partial class FastRunItemConfig : UserControl,INotifyPropertyChanged
     {
-        public Action<FastRunItem> OnSaveFastRunConfigCallBack;
+        private FastRunItem currentItem;
+        private string fastRunName = "";
+
+        public string FastRunName
+        {
+            get
+            {
+                return fastRunName;
+            }
+
+            set
+            {
+                fastRunName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FastRunName"));
+            }
+        }
+
+        public string FastRunPath
+        {
+            get
+            {
+                return tbox_Path.Text;
+            }
+            set
+            {
+                tbox_Path.Text = value;
+                FastRunName =  System.IO.Path.GetFileNameWithoutExtension(tbox_Path.Text);
+            }
+        }
+
+        public Action<FastRunItem> OnFastRunItemConfigChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public FastRunItemConfig()
         {
@@ -38,10 +70,12 @@ namespace Master_Zhao.Shell.UserControls
                 tbox_Path.Text = path;
 
                 var fastRunItem = new FastRunItem();
-                fastRunItem.Name = System.IO.Path.GetFileName(path);
+                fastRunItem.Name = System.IO.Path.GetFileNameWithoutExtension(path);
+                FastRunName = fastRunItem.Name;
                 fastRunItem.Path = path;
                 fastRunItem.RunType = FastRunType.Applicataion;
-                OnSaveFastRunConfigCallBack?.Invoke(fastRunItem);
+                currentItem = fastRunItem;
+                OnFastRunItemConfigChanged?.Invoke(fastRunItem);
             }
         }
     }
