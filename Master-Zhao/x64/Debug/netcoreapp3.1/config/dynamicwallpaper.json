@@ -1,0 +1,19 @@
+﻿{
+  "mute":true, 
+  "repeat":true, 
+  "keepWallpaper":false,
+  "wallpaperlist": [
+    {
+      "name": "预置",
+      "path": "res\\dynamic wallpaper\\default\\default.mp4",
+      "thumbnail": "res\\dynamic wallpaper\\default\\default.png"
+    },
+	{
+      "name": "预置2",
+      "path": "res\\dynamic wallpaper\\default_2\\default_2.mp4",
+      "thumbnail": "res\\dynamic wallpaper\\default_2\\default_2.png"
+    }
+  ], 
+  "wallpaperIndex":0, 
+  "autoRunWithStarup":false
+}
