@@ -13,8 +13,10 @@ namespace Master_Zhao.Config
         private static volatile object obj = new object();
         private static GlobalConfig instance;
 
-        public DynamicWallpaperConfig DynamicWallpaperConfig { get; set; }
-        public StaticWallpaperConfig StaticWallpaperConfig { get; set; }
+        public DynamicWallpaperConfig DynamicWallpaperConfig { get; private set; }
+        public StaticWallpaperConfig StaticWallpaperConfig { get; private set; }
+        public ToolsConfig ToolsConfig { get; private set; }
+
 
         public static GlobalConfig Instance
         {
@@ -34,18 +36,20 @@ namespace Master_Zhao.Config
 
         public GlobalConfig()
         {
-
+            
         }
 
         public void LoadAllConfig()
         {
             DynamicWallpaperConfig = DynamicWallpaperHelper.LoadDynamicWallConfig();
             StaticWallpaperConfig = StaticWallpaperHelper.LoadStaticWallpaperConfig();
+            ToolsConfig = ToolsHelper.LoadToolsConfig();
         }
 
         public void SaveAllConfig()
         {
-            DynamicWallpaperHelper.SaveDynamicWallList(DynamicWallpaperConfig);           
+            DynamicWallpaperHelper.SaveDynamicWallList(DynamicWallpaperConfig);
+            ToolsHelper.SaveToolsConfig(ToolsConfig);
         }
     }
 }

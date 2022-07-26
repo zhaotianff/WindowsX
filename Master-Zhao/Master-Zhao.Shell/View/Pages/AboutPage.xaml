@@ -30,7 +30,7 @@
 
             <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="10" Source="../logo.png" Width="80" HorizontalAlignment="Left"></Image>
             <Label Content="Master-Zhao" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource AccentBaseColor}" FontWeight="Bold" FontSize="20" Grid.Column="0"/>
-            <Label Content="版本 1.0.0.1 beta4" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="版本 1.0.0.1 beta5" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0"/>
             <WrapPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
                 <Label Content="&#169;zhaotianff 2022 " VerticalAlignment="Center" HorizontalAlignment="Left" />
                 <Label>

@@ -25,6 +25,7 @@ namespace Master_Zhao.Shell.Pages
         {
             InitializeComponent();
             LoadDesktopIconState();
+            LoadDesktopSettings();
         }
 
         private void LoadDesktopIconState()

@@ -1,4 +1,6 @@
-﻿using Master_Zhao.Shell.Windows;
+﻿using Master_Zhao.Config;
+using Master_Zhao.Config.Model;
+using Master_Zhao.Shell.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +48,16 @@ namespace Master_Zhao.Shell.Pages
 
         private void InitConfig()
         {
-
+            //TODO use binding
+            var fastRunList = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
+            fastrun_item1.FastRunPath = fastRunList[0].Path;
+            fastrun_item2.FastRunPath = fastRunList[1].Path;
+            fastrun_item3.FastRunPath = fastRunList[2].Path;
+            fastrun_item4.FastRunPath = fastRunList[3].Path;
+            fastrun_item1.OnFastRunItemConfigChanged += OnFastRunItemConfigChanged;
+            fastrun_item2.OnFastRunItemConfigChanged += OnFastRunItemConfigChanged;
+            fastrun_item3.OnFastRunItemConfigChanged += OnFastRunItemConfigChanged;
+            fastrun_item4.OnFastRunItemConfigChanged += OnFastRunItemConfigChanged;
         }
 
         public void CloseFastRun()
@@ -62,6 +73,19 @@ namespace Master_Zhao.Shell.Pages
         private void cbxFastrun_Unchecked(object sender, RoutedEventArgs e)
         {
             fastRun.UnregisterHotKey();
+        }
+
+        private void OnFastRunItemConfigChanged(FastRunItem fastRunItem)
+        {
+            //TODO refresh part
+            var fastRunList = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
+            fastRunList[0].Path = fastrun_item1.FastRunPath;
+            fastRunList[1].Path = fastrun_item2.FastRunPath;
+            fastRunList[2].Path = fastrun_item3.FastRunPath;
+            fastRunList[3].Path = fastrun_item4.FastRunPath;
+
+            //TODO update name
+            fastRun.LoadFastRunList();
         }
     }
 }

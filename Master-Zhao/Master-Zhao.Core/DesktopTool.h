@@ -90,6 +90,7 @@ SILVERAROWANACORE_API VOID RegisterWindowsPhotoViewerFormat();
 SILVERAROWANACORE_API VOID UnregisterWindowsPhotoViewerFormat();
 SILVERAROWANACORE_API BOOL GetPaintVersionState();
 SILVERAROWANACORE_API BOOL PaintVersionInfo(BOOL enable);
+SILVERAROWANACORE_API BOOL GetTaskbarThumbnailSize(DWORD*, DWORD*);
 SILVERAROWANACORE_API BOOL SetTaskbarThumbnailSize(DWORD,BOOL);
 
 
