@@ -83,12 +83,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>MasterZhaoCore</TargetName>
-    <OutDir>..\Master-Zhao.Shell\bin\Debug\net5.0-windows\</OutDir>
+    <OutDir>..\x64\Debug\netcoreapp3.1\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>MasterZhaoCore</TargetName>
-    <OutDir>..\Master-Zhao.Shell\bin\Release\net5.0-windows\</OutDir>
+    <OutDir>..\x64\Release\netcoreapp3.1\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

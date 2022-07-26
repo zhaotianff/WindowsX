@@ -20,7 +20,7 @@
 #include <d3d11.h>
 #include <tchar.h>
 
-#pragma comment (lib,"../Master-Zhao.Shell/bin/Debug/net5.0-windows/MasterZhaoCore.lib")
+#pragma comment (lib,"../x64/Debug/netcoreapp3.1/MasterZhaoCore.lib")
 
 int nTaskBarThumbSize = 0;
 
