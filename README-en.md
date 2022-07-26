@@ -28,7 +28,7 @@ Right here waiting to recall, just at that time already disconsolate.
 <h1 align="center">Master-Zhao :hammer_and_wrench: </h1>
 
 # Development environment
-* .NET5
+* ~~.NET5~~ .NET Core 3.1
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 

@@ -28,7 +28,7 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
 <h1 align="center">Master-Zhao :hammer_and_wrench: </h1>
 
 # 开发环境
-* .NET5
+* ~~.NET5~~ .NET Core 3.1
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 

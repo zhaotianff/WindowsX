@@ -79,6 +79,9 @@ namespace Master_Zhao.Shell.Pages
 
         private void SetPreviewImage(string path)
         {
+            if (!System.IO.File.Exists(path))
+                return;
+
             this.img_background.Source = new BitmapImage(new Uri(path, UriKind.Absolute));
         }
 
