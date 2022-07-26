@@ -41,6 +41,11 @@ Set the project to 64 bit
     <img align="center" alt="build x64" src="Screenshots/build_x64.png" />
 </p>
 
+# Run directly
+If it just runs without compiling. After installing .NET Core 3.1 Runtime and Visual C++ 2019 x64 Redistributable Package, execute Master.Zhao.Shell.exe.
+* [.NET Core 3.1 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-3.1.27-windows-x64-installer)
+* [Visual C++ 2019 Redistributable Package (x64)](https://aka.ms/vs/16/release/VC_redist.x64.exe)
+
 # List of features
 ## Beautify
   * Static wallpaper setting
