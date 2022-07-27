@@ -49,3 +49,22 @@ BOOL ExtractIconFromFile(LPTSTR lpszExtPath, int nIconIndex, byte* buffer, int l
 
     return FALSE;  
 }
+
+BOOL ExtractFirstIconFromFile(LPCTSTR lpszExtPath, BOOL isLargeIcon,HICON& icon)
+{
+    UINT uFlags = SHGFI_ICON;
+
+    if (isLargeIcon)
+        uFlags |= SHGFI_LARGEICON;
+
+    SHFILEINFO sfi{};
+    SHGetFileInfo(lpszExtPath, 0, &sfi, sizeof(sfi), uFlags);
+
+    if (sfi.hIcon)
+    {
+        icon = sfi.hIcon;
+        return TRUE;
+    }
+
+    return FALSE;
+}

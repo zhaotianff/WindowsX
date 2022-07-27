@@ -13,6 +13,7 @@
 //  
 //////////////////////////////////
 #include"DesktopToolTest.h"
+#include"IconToolTest.h"
 
 #include "imgui.h"
 #include "imgui_impl_win32.h"
@@ -141,6 +142,12 @@ void MasterZhaoTestCode()
         TestSetThumbSize(nTaskBarThumbSize);
     }
     ImGui::Text(u8"测试中文");
+
+    ImGui::NewLine();
+    if (ImGui::Button("file icon"))
+    {
+        TestGetFileIcon();
+    }
 }
 
 bool CreateDeviceD3D(HWND hWnd)

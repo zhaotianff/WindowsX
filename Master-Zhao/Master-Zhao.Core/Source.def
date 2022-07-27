@@ -53,3 +53,7 @@ RemoveStartupRun
 
 ;inputtool.h
 GetRawInput
+
+;icontool.h
+ExtractIconFromFile
+ExtractFirstIconFromFile

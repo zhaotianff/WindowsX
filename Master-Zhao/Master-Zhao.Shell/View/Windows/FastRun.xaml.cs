@@ -105,13 +105,34 @@ namespace Master_Zhao.Shell.Windows
                 fastRunButton.Content = item.Name;
                 fastRunButton.Width = 100;
                 fastRunButton.Height = 100;
-                fastRunButton.ImagePath = @"C:\Users\Administrator\Desktop\compu.png";
+                //fastRunButton.ImagePath = @"C:\Users\Administrator\Desktop\compu.png";
+                fastRunButton.ImagePath = GetCachedIconPath(item.Path);
                 fastRunButton.HostCanvas = canvas;
                 fastRunButton.Click += FastRunButton_Click;
                 canvas.Children.Add(fastRunButton);
             }
 
             (canvas.Children[0] as FastRunButton).IsSelected = true;
+        }
+
+        private string GetCachedIconPath(string path)
+        {
+            var temp = System.IO.Path.Combine(System.IO.Path.GetTempPath(),"Master-Zhao");
+            var iconPath = System.IO.Path.Combine(temp, System.IO.Path.GetFileNameWithoutExtension(path) + ".png");
+            if (System.IO.Directory.Exists(temp) == false)
+                System.IO.Directory.CreateDirectory(temp);
+
+            if(System.IO.File.Exists(iconPath) == false)
+            {
+                IntPtr hIcon = IntPtr.Zero;
+                if(IconTool.ExtractFirstIconFromFile(path, true, ref hIcon))
+                {
+                    var bi = ImageHelper.GetBitmapImageFromHIcon(hIcon);
+                    ImageHelper.SaveBitmapImageToFile(bi, iconPath);
+                }          
+            }
+
+            return iconPath;
         }
 
         private void FastRunButton_Click(object sender, RoutedEventArgs e)

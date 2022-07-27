@@ -18,5 +18,20 @@ namespace Master_Zhao.Shell.Util
             bi.EndInit();
             return bi;
         }
+
+        public static BitmapSource GetBitmapImageFromHIcon(IntPtr hIcon)
+        {
+            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        public static void SaveBitmapImageToFile(BitmapSource image, string filePath)
+        {
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(image));
+            using (var fileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+            {
+                encoder.Save(fileStream);
+            }
+        }
     }
 }
