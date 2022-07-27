@@ -540,16 +540,21 @@ BOOL PaintVersionInfo(BOOL enable)
 	return SetDWORDValue(HKEY_CURRENT_USER, LR"(Control Panel\Desktop)", L"PaintDesktopVersion", dwValue);
 }
 
+BOOL GetTaskbarThumbnailSize(DWORD* dwSize)
+{
+	return QueryDWORDValue(HKEY_CURRENT_USER, TASKBAND_REGPATH, TASKBAR_THUMB_SIZE, dwSize);
+}
+
 BOOL SetTaskbarThumbnailSize(DWORD dwSize,BOOL bRestartExplorer)
 {
 	BOOL bResult = FALSE;
 	if (dwSize == RESET_TASKBARTHUMB)
 	{
-		bResult = RemovRegValue(HKEY_CURRENT_USER, TASKBAR_THUMB_SIZE_REGPATH, TASKBAR_THUMB_SIZE);
+		bResult = RemovRegValue(HKEY_CURRENT_USER, TASKBAND_REGPATH, TASKBAR_THUMB_SIZE);
 	}
 	else
 	{
-		bResult = SetDWORDValue(HKEY_CURRENT_USER, TASKBAR_THUMB_SIZE_REGPATH, TASKBAR_THUMB_SIZE, dwSize);
+		bResult = SetDWORDValue(HKEY_CURRENT_USER, TASKBAND_REGPATH, TASKBAR_THUMB_SIZE, dwSize);
 	}
 
 	if (bRestartExplorer)

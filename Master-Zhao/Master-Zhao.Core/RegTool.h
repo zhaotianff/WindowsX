@@ -53,9 +53,18 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies
 //HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies
 
-//Taskbar thumbnail size
-#define TASKBAR_THUMB_SIZE_REGPATH L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Taskband"
-#define TASKBAR_THUMB_SIZE L"MinThumbSizePx"
+//taskband
+#define TASKBAND_REGPATH L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Taskband"
+#define TASKBAR_THUMB_SIZE L"MinThumbSizePx"       //Taskbar min thumbnail size
+#define TASKBAR_THUMB_MAX_SIZE "MaxThumbSizePx"    //Taskbar max thumbnail size
+#define TASKBAR_THUMB_NUM_THUMB "NumThumbnails"    //specifies how many thumbnails to display for an item. 
+#define TASKBAR_THUMB_TEXT_HEIGHT "TextHeightPx"   //specifies the window title text height in the thumbnail view. 
+#define TASKBAR_THUMB_TOP_MARGIN "TopMarginPx"     //specifies the Top margin for stacked windows.
+#define TASKBAR_THUMB_LEFT_MARGIN "LeftMarginPx"
+#define TASKBAR_THUMB_RIGHT_MARGIN "RightMarginPx"
+#define TASKBAR_THUMB_BOTTOM_MARGIN "BottomMarginPx"
+#define TASKBAR_THUMB_THUMB_SPACING_X "ThumbSpacingXPx" //specifies the horizontal spacing between the stacked items
+#define TASKBAR_THUMB_THUMB_SPACING_Y "ThumbSpacingYPx"
 
 #define STARTUP_RUN_1 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)"
 #define STARTUP_RUN_2 LR"(HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run)"

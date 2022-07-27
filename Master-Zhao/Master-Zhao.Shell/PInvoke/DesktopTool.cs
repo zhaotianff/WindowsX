@@ -14,6 +14,8 @@ namespace Master_Zhao.Shell.PInvoke
         public static readonly int ACCENT_ENABLE_BLURBEHIND = 3;
         public static readonly int ACCENT_ENABLE_ACRYLICBLURBEHIND = 4;
 
+        public static readonly int DEFAULT_TASKBAR_THUMBNAIL_SIZE = -1;
+
         public struct ACCENT_POLICY
         {
             public int AcentState;
@@ -124,6 +126,9 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool PaintVersionInfo(bool enable);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetTaskbarThumbnailSize(ref int size);
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool SetTaskbarThumbnailSize(int dwSize, bool bRestartExplorer);

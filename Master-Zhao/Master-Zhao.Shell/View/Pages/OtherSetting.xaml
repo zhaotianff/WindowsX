@@ -59,6 +59,7 @@
                             <Label Content="任务栏预览窗口大小" Margin="10"/>
                             <TextBox Width="120" Margin="10" VerticalContentAlignment="Center" Name="tbox_TaskbarThunbSize"/>
                             <Button Content="设置" Margin="10" Width="88" Height="28" Style="{StaticResource ButtonStyle}" Click="btnSetTaskbarThumbSize_Click"/>
+                            <Button Content="恢复默认" Margin="10" Width="88" Height="28" Style="{StaticResource ButtonStyle}" Click="btnResetTaskbarThumbSize_Click"/>
                         </WrapPanel>
                     </StackPanel>
                 </StackPanel>

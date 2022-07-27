@@ -33,6 +33,7 @@ RegisterWindowsPhotoViewerFormat
 UnregisterWindowsPhotoViewerFormat
 GetPaintVersionState
 PaintVersionInfo
+GetTaskbarThumbnailSize
 SetTaskbarThumbnailSize
 
 EmbedWindowToDesktop

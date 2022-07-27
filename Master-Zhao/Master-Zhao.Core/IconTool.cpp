@@ -36,7 +36,7 @@ void SaveIcon(HICON hIconToSave, LPCTSTR sIconFileName)
     //iconfile.Close();
 }
 
-BOOL ExtractIcon(LPTSTR lpszExtPath, int nIconIndex, byte* buffer, int length)
+BOOL ExtractIconFromFile(LPTSTR lpszExtPath, int nIconIndex, byte* buffer, int length)
 {
     //https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-extracticonexa
     

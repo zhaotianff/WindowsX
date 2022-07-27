@@ -43,7 +43,15 @@ namespace Master_Zhao.Shell.Pages
             cbx_Shortcut.IsChecked = DesktopTool.GetShortcutArrowState();
             cbx_PhotoViewer.IsChecked = true;
             cbx_Version.IsChecked = DesktopTool.GetPaintVersionState();
-            tbox_TaskbarThunbSize.Text = "";
+            var size = 0;
+            if( DesktopTool.GetTaskbarThumbnailSize(ref size))
+            {
+                tbox_TaskbarThunbSize.Text = size.ToString();
+            }
+            else
+            {
+                tbox_TaskbarThunbSize.Text = "系统默认";
+            }
         }
 
         private void cbx_Shortcut_UnChecked(object sender, RoutedEventArgs e)
@@ -77,6 +85,17 @@ namespace Master_Zhao.Shell.Pages
             }
 
             DesktopTool.SetTaskbarThumbnailSize(size, restart);
+        }
+
+        private void btnResetTaskbarThumbSize_Click(object sender, RoutedEventArgs e)
+        {
+            var restart = false;
+            if (MessageBox.Show("是否立即生效", "提示信息", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                restart = true;
+            }
+
+            DesktopTool.SetTaskbarThumbnailSize(DesktopTool.DEFAULT_TASKBAR_THUMBNAIL_SIZE, restart);
         }
     }
 }
