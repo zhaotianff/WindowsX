@@ -14,3 +14,10 @@ SILVERAROWANACORE_API int GetRawInput(LPARAM lParam)
     }
     return -1;
 }
+
+BOOL IsKeyPressed(int vKey)
+{
+    auto state = GetAsyncKeyState(vKey);
+
+    return (USHORT)state >> 15 == 1;
+}
