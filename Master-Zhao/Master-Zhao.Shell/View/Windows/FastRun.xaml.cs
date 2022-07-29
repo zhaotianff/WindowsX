@@ -194,7 +194,8 @@ namespace Master_Zhao.Shell.Windows
             switch(msg)
             {
                 case PInvoke.User32.WM_INPUT:
-                    if(Keyboard.IsKeyDown(Key.LeftAlt))
+                    //if(Keyboard.IsKeyDown(Key.LeftAlt))
+                    if(InputTool.IsKeyPressed(InputTool.VK_MENU))
                     {
                         if(this.Visibility == Visibility.Hidden)
                         {
@@ -205,15 +206,15 @@ namespace Master_Zhao.Shell.Windows
                             this.Top = point.y - this.Height / 2;
                             break;
                         }
+
+                        DealWithKeyPress();
                     }
-                    
-                    if(Keyboard.IsKeyUp(Key.LeftAlt))
+                    else
+                    //if(Keyboard.IsKeyUp(Key.LeftAlt))
                     {    
                         this.Visibility = Visibility.Hidden;
                         break;
                     }
-
-                    DealWithKeyPress();
                     break;
             }
             return IntPtr.Zero;
