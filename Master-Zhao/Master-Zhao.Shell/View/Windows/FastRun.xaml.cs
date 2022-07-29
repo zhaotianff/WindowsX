@@ -26,6 +26,7 @@ namespace Master_Zhao.Shell.Windows
     public partial class FastRun : Window
     {
         private bool isExecuted = false;
+        private bool hasPressedVKMENU = false;
 
         public int SelectedIndex { get; set; } = 0;
         private bool IsFirstRun { get; set; } = true;
@@ -199,7 +200,6 @@ namespace Master_Zhao.Shell.Windows
             switch(msg)
             {
                 case PInvoke.User32.WM_INPUT:
-                    //if(Keyboard.IsKeyDown(Key.LeftAlt))
                     if(InputTool.IsKeyPressed(InputTool.VK_MENU))
                     {
                         if(this.Visibility == Visibility.Hidden && isExecuted == false)
@@ -209,16 +209,20 @@ namespace Master_Zhao.Shell.Windows
                             PInvoke.User32.GetCursorPos(ref point);
                             this.Left = point.x - this.Width / 2;
                             this.Top = point.y - this.Height / 2;
+                            hasPressedVKMENU = true;
                             break;
                         }
 
                         DealWithKeyPress();
                     }
                     else
-                    //if(Keyboard.IsKeyUp(Key.LeftAlt))
-                    {    
-                        this.Visibility = Visibility.Hidden;
-                        isExecuted = false;
+                    {
+                        if (hasPressedVKMENU == true)
+                        {
+                            this.Visibility = Visibility.Hidden;
+                            isExecuted = false;
+                            hasPressedVKMENU = false;
+                        }
                         break;
                     }
                     break;
