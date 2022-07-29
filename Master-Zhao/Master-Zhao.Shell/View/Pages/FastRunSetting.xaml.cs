@@ -78,13 +78,16 @@ namespace Master_Zhao.Shell.Pages
         private void OnFastRunItemConfigChanged(FastRunItem fastRunItem)
         {
             //TODO refresh part
+            //TODO dynamice refresh
             var fastRunList = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
             fastRunList[0].Path = fastrun_item1.FastRunPath;
             fastRunList[1].Path = fastrun_item2.FastRunPath;
             fastRunList[2].Path = fastrun_item3.FastRunPath;
             fastRunList[3].Path = fastrun_item4.FastRunPath;
-
-            //TODO update name
+            fastRunList[0].Name = fastrun_item1.FastRunName;
+            fastRunList[1].Name = fastrun_item2.FastRunName;
+            fastRunList[2].Name = fastrun_item3.FastRunName;
+            fastRunList[3].Name = fastrun_item4.FastRunName;
             fastRun.LoadFastRunList();
         }
     }

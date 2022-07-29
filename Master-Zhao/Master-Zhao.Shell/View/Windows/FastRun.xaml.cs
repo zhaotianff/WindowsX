@@ -287,11 +287,11 @@ namespace Master_Zhao.Shell.Windows
 
         public void ShowWindowWithAnimation()
         {   
-            for (int i = 0; i < canvas.Children.Count; i++)
-            {
-                var fastRunButton = canvas.Children[i] as FastRunButton;
-                fastRunButton?.OnApplyTemplate();
-            }
+            //for (int i = 0; i < canvas.Children.Count; i++)
+            //{
+            //    var fastRunButton = canvas.Children[i] as FastRunButton;
+            //    fastRunButton?.OnApplyTemplate();
+            //}
 
             this.Visibility = Visibility.Visible;
 
