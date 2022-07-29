@@ -102,7 +102,7 @@
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect BlurRadius="10" Color="Silver"/>
@@ -118,8 +118,15 @@
                                 <SolidColorBrush Color="LightBlue" 
                                                  Opacity="{Binding IsSelected,RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource opacityConverter}}"></SolidColorBrush>
                             </Grid.Background>
-                            <Image Stretch="UniformToFill" Source="{Binding ImagePath,RelativeSource={RelativeSource TemplatedParent}}"/>
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" Height="56">
+                                <Image Grid.Row="0" Stretch="UniformToFill" Source="{Binding ImagePath,RelativeSource={RelativeSource TemplatedParent}}" Width="48" Height="48"/>
+                            </Grid>
+                            <ContentPresenter Grid.Row="1" x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
 
                         <Border.Clip>

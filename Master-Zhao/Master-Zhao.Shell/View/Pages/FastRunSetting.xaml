@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <CheckBox Content="启用快速启动菜单(按住Alt显示菜单  Alt+1/2/3/4运行)" VerticalAlignment="Center" Name="cbx_FastRun" Checked="cbxFastrun_Checked" Unchecked="cbxFastrun_Unchecked" Focusable="False"/>
+            <CheckBox Content="启用快速启动菜单(按住Alt显示菜单  Alt+1/2/3/4运行或鼠标单击运行 ESC取消)" VerticalAlignment="Center" Name="cbx_FastRun" Checked="cbxFastrun_Checked" Unchecked="cbxFastrun_Unchecked" Focusable="False"/>
         </Grid>
 
         <Grid Grid.Row="1" IsEnabled="{Binding ElementName=cbx_FastRun,Path=IsChecked}">

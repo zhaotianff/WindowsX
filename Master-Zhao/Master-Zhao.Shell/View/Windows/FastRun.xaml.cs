@@ -25,6 +25,8 @@ namespace Master_Zhao.Shell.Windows
     /// </summary>
     public partial class FastRun : Window
     {
+        private bool isExecuted = false;
+
         public int SelectedIndex { get; set; } = 0;
         private bool IsFirstRun { get; set; } = true;
 
@@ -145,6 +147,8 @@ namespace Master_Zhao.Shell.Windows
                 psInfo.UseShellExecute = true;
                 psInfo.FileName = fastRunButton.FastRunItem.Path;
                 System.Diagnostics.Process.Start(psInfo);
+                this.Visibility = Visibility.Hidden;
+                isExecuted = true;
             }
         }
 
@@ -191,15 +195,16 @@ namespace Master_Zhao.Shell.Windows
 
         private IntPtr HwndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            //bug : first run
             switch(msg)
             {
                 case PInvoke.User32.WM_INPUT:
                     //if(Keyboard.IsKeyDown(Key.LeftAlt))
                     if(InputTool.IsKeyPressed(InputTool.VK_MENU))
                     {
-                        if(this.Visibility == Visibility.Hidden)
+                        if(this.Visibility == Visibility.Hidden && isExecuted == false)
                         {
-                            this.Visibility = Visibility.Visible;
+                            ShowWindowWithAnimation();
                             var point = new PInvoke.POINT();
                             PInvoke.User32.GetCursorPos(ref point);
                             this.Left = point.x - this.Width / 2;
@@ -213,6 +218,7 @@ namespace Master_Zhao.Shell.Windows
                     //if(Keyboard.IsKeyUp(Key.LeftAlt))
                     {    
                         this.Visibility = Visibility.Hidden;
+                        isExecuted = false;
                         break;
                     }
                     break;
@@ -256,7 +262,7 @@ namespace Master_Zhao.Shell.Windows
             {
                 if(index == i)
                 {
-                    var fastRunButton = (canvas.Children[i] as FastRunButton);
+                    var fastRunButton = canvas.Children[i] as FastRunButton;
 
                     fastRunButton.IsSelected = true;
 
@@ -264,7 +270,6 @@ namespace Master_Zhao.Shell.Windows
                     {
                         fastRunButton.Dispatcher.Invoke(() => {
                             fastRunButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                            this.Visibility = Visibility.Hidden;
                         });
 
                     }
@@ -274,6 +279,19 @@ namespace Master_Zhao.Shell.Windows
                     (canvas.Children[i] as FastRunButton).IsSelected = false;
                 }
             }
+        }
+
+        public void ShowWindowWithAnimation()
+        {   
+            for (int i = 0; i < canvas.Children.Count; i++)
+            {
+                var fastRunButton = canvas.Children[i] as FastRunButton;
+                fastRunButton?.OnApplyTemplate();
+            }
+
+            this.Visibility = Visibility.Visible;
+
+            //TODO reset animation position
         }
     }
 }
