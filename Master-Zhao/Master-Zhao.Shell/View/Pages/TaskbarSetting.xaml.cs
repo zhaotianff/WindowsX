@@ -21,9 +21,35 @@ namespace Master_Zhao.Shell.Pages
     /// </summary>
     public partial class TaskbarSetting : Page
     {
+        private System.Windows.Threading.DispatcherTimer blurTaskbarTimer = new System.Windows.Threading.DispatcherTimer();
+        DesktopTool.ACCENT_POLICY policy = new DesktopTool.ACCENT_POLICY();
+
+        private const int DEFAULT_BLUR_INTERVAL = 5;
+
         public TaskbarSetting()
         {
             InitializeComponent();
+            InitBlurTaskbarTimer();
+            InitDefaultPolicy();
+        }
+
+        private void InitBlurTaskbarTimer()
+        {
+            blurTaskbarTimer.Interval = TimeSpan.FromMilliseconds(DEFAULT_BLUR_INTERVAL);
+            blurTaskbarTimer.Tick += BlurTaskbarTimer_Tick;
+        }
+
+        private void InitDefaultPolicy()
+        {
+            policy.AcentState = DesktopTool.ACCENT_ENABLE_BLURBEHIND;
+            policy.AccentFlags = 0;
+            policy.AnimationId = 0;
+            policy.GradientColor = 0;
+        }
+
+        private void BlurTaskbarTimer_Tick(object sender, EventArgs e)
+        {
+            DesktopTool.BlurTaskbar(policy);
         }
 
         public void CheckCurrentSystem()
@@ -54,19 +80,8 @@ namespace Master_Zhao.Shell.Pages
 
         private void BlurTaskbar(bool isEnable)
         {
-            DesktopTool.ACCENT_POLICY policy = new DesktopTool.ACCENT_POLICY();
-            if (isEnable)
-            {
-                policy.AcentState = DesktopTool.ACCENT_ENABLE_BLURBEHIND;
-            }
-            else
-            {
-                policy.AcentState = DesktopTool.ACCENT_DISABLED;
-            }
-            policy.AccentFlags = 0;
-            policy.AnimationId = 0;
-            policy.GradientColor = 0;
-            DesktopTool.BlurTaskbar(policy);
+            blurTaskbarTimer.IsEnabled = isEnable;
+            RefreshTaskbar();
         }
 
         private void cbx_Windows11Taskbar_Checked(object sender, RoutedEventArgs e)
@@ -83,6 +98,22 @@ namespace Master_Zhao.Shell.Pages
         {
             DesktopTool.CenterStartMenu(isEnable);
             DesktopTool.CenterTaskListIcon(isEnable);
+        }
+
+        private void blur_Checked(object sender, RoutedEventArgs e)
+        {
+            policy.AcentState = DesktopTool.ACCENT_ENABLE_BLURBEHIND;
+        }
+
+        private void transparent_Checked(object sender, RoutedEventArgs e)
+        {
+            policy.AcentState = DesktopTool.ACCENT_ENABLE_ACRYLICBLURBEHIND;
+        }
+
+        private async void RefreshTaskbar()
+        {
+            await Task.Delay(DEFAULT_BLUR_INTERVAL);
+            PInvoke.DesktopTool.ActivateTaskBar();
         }
     }
 }

@@ -132,5 +132,8 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool SetTaskbarThumbnailSize(int dwSize, bool bRestartExplorer);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void ActivateTaskBar();
     }
 }

@@ -35,6 +35,7 @@ GetPaintVersionState
 PaintVersionInfo
 GetTaskbarThumbnailSize
 SetTaskbarThumbnailSize
+ActivateTaskBar
 
 EmbedWindowToDesktop
 

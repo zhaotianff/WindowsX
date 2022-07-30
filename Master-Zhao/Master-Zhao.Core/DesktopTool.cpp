@@ -565,3 +565,12 @@ BOOL SetTaskbarThumbnailSize(DWORD dwSize,BOOL bRestartExplorer)
 	
 }
 
+VOID ActivateTaskBar()
+{
+	keybd_event(VK_LWIN, 0x45, NULL, NULL);
+	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+	Sleep(70);
+	keybd_event(VK_LWIN, 0x45, NULL, NULL);
+	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+}
+

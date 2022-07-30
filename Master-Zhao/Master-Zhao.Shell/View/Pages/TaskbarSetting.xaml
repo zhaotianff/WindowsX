@@ -3,11 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:converter="clr-namespace:Master_Zhao.Shell.Infrastructure.Converter"
       xmlns:local="clr-namespace:Master_Zhao.Shell.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TaskbarSetting">
-
+    <Page.Resources>
+        <converter:VisibilityConverter x:Key="visibilityConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -28,7 +31,7 @@
                     </CheckBox.ToolTip>
                 </CheckBox>
                 <Grid Height="60">
-                    <Image  Source="../Icon/windows10_taskbar.png" Height="40" Stretch="UniformToFill"></Image>
+                    <!--<Image  Source="../../Icon/windows10_taskbar.png" Height="40" Stretch="UniformToFill"></Image>-->
                 </Grid>
             </StackPanel>
         </GroupBox>
@@ -51,8 +54,17 @@
                     <CheckBox Content="启用任务栏透明效果" Name="cbx_BlurTaskbar" Checked="btn_EnableBlurTaskbar_Click" Unchecked="btn_DisableBlurTaskbar_Click"></CheckBox>
                 </WrapPanel>
 
-                <Grid Height="60" IsEnabled="{Binding ElementName=cbx_BlurTaskbar,Path=IsChecked}">
-                    <Image  Source="../Icon/windows10_blurtaskbar.png" Height="40" Stretch="UniformToFill"></Image>
+                <Grid Height="80" IsEnabled="{Binding ElementName=cbx_BlurTaskbar,Path=IsChecked}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <RadioButton Content="毛玻璃效果" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" GroupName="blur" IsChecked="True" Checked="blur_Checked" Name="radio_blur"/>
+                    <RadioButton Content="全透明效果" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="100,0,0,0" GroupName="blur" Checked="transparent_Checked" Name="radio_transparent"/>
+
+                    <Image Grid.Row="1"  Source="../../Icon/windows10_blur_taskbar.png" Stretch="Uniform" Margin="5" Visibility="{Binding ElementName=radio_blur,Path=IsChecked,Converter={StaticResource visibilityConverter}}"></Image>
+                    <Image Grid.Row="1"  Source="../../Icon/windows10_transparent_taskbar.png" Stretch="Uniform" Margin="5" Visibility="{Binding ElementName=radio_transparent,Path=IsChecked,Converter={StaticResource visibilityConverter}}"></Image>
                 </Grid>
             </StackPanel>
         </GroupBox>
