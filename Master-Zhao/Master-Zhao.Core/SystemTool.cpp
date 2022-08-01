@@ -2,6 +2,11 @@
 #include<VersionHelpers.h>
 #include<functional>
 #include<Winternl.h>
+#include<powrprof.h>
+#include<wtsapi32.h>
+
+#pragma comment(lib,"PowrProf.lib")
+#pragma comment(lib,"wtsapi32.lib")
 
 SYSTEMTIME GetUserLoginTime()
 {
@@ -178,6 +183,36 @@ BOOL ForceDeleteFile(LPTSTR lpszFilePah)
 	}
 
 	return bResult;
+}
+
+VOID Shutdown()
+{
+	ExitWindowsEx(EWX_POWEROFF, SHTDN_REASON_MINOR_PROCESSOR);
+}
+
+VOID SwitchUser()
+{
+	WTSDisconnectSession(WTS_CURRENT_SERVER_HANDLE, WTS_CURRENT_SESSION, FALSE);
+}
+
+VOID Logoff()
+{
+	ExitWindows();
+}
+
+VOID Lock()
+{
+	LockWorkStation();
+}
+
+VOID Restart()
+{
+	ExitWindowsEx(EWX_REBOOT, SHTDN_REASON_MINOR_PROCESSOR);
+}
+
+VOID Sleep()
+{
+	SetSuspendState(FALSE, FALSE, TRUE);
 }
 
 
