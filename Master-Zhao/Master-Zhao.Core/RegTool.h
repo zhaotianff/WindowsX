@@ -99,3 +99,13 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
 SILVERAROWANACORE_API BOOL ExistRegValue(HKEY hKey, LPCTSTR lpSubKey,LPCTSTR lpValueName);
 SILVERAROWANACORE_API BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value);
+
+//recent file
+//HKEY_CLASS_ROOT\LocalSettings\Software\Microsoft\Windows\Shell\MuiCache
+//HKEY_CURRENT_USER\SOFTWARE\Classes\LocalSettings\Software\Microsoft\Windows\Shell\MuiCache
+
+//BIOS
+//HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\BIOS
+
+//Taskbar
+//HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize

@@ -72,4 +72,8 @@
     <Resource Include="recycle.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StartMenu\Win98\Icon\" />
+  </ItemGroup>
+
 </Project>
