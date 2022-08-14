@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading.Tasks;
+using Master_Zhao.Shell.Util;
 
 namespace Master_Zhao.Shell.StartMenu.Win98
 {
@@ -26,21 +29,26 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             InitializeComponent();
         }
 
-        private void StartMenuWindowBase_Loaded(object sender, RoutedEventArgs e)
+        public override Task LoadStartMenuItemAsync()
         {
-            LoadStartMenuItem();
-        }
-
-        private void LoadStartMenuItem()
-        {
-            for(int i = 0;i<10;i++)
+            var task = Task.Factory.StartNew(() =>
             {
-                MenuItem item = new MenuItem();
-                item.Header = "Windows Update";
-                item.Height = 37;
-                item.Width = this.menu.Width;
-                this.menu.Items.Add(item);
-            }
+                for (int i = 0; i < 10; i++)
+                {
+                    MenuItem item = new MenuItem();
+                    item.Header = "Windows Update";
+                    item.Height = 37;
+                    //TODO
+                    item.Icon = ImageHelper.GetResourceBitmapImage("/Icon/windows_update.png");
+                    item.Width = this.menu.Width;
+                    item.HorizontalAlignment = HorizontalAlignment.Center;
+                    this.menu.Items.Add(item);
+                }
+            }, new System.Threading.CancellationToken(), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+
+            //wait ui refresh
+            Task.Delay(100).Wait();
+            return task;
         }
 
         public  override void SetStartMenuSize()

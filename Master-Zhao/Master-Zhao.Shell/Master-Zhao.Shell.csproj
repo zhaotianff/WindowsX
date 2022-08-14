@@ -71,7 +71,7 @@
     <Resource Include="Icon\windows10_taskbar.png" />
     <Resource Include="logo.png" />
     <Resource Include="recycle.png" />
-    <Resource Include="StartMenu\Win98\Icon\windows_update.png" />
+    <EmbeddedResource Include="StartMenu\Win98\Icon\windows_update.png" />
   </ItemGroup>
 
 </Project>

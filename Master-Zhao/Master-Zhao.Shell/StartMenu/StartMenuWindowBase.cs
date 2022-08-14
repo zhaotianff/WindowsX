@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Master_Zhao.Shell.PInvoke;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Master_Zhao.Shell.StartMenu
@@ -15,7 +17,6 @@ namespace Master_Zhao.Shell.StartMenu
 
         public virtual void SetStartMenuSize() 
         { 
-
         }
 
         public virtual void SetStartMenuPos()
@@ -24,15 +25,23 @@ namespace Master_Zhao.Shell.StartMenu
             this.Top = SystemParameters.WorkArea.Height - this.Height;
         }
 
+        public virtual Task LoadStartMenuItemAsync()
+        {
+            return Task.Delay(0);
+        }
+
         private void InitAllEvent()
         {
             this.Loaded += StartMenuWindowBase_Loaded;
         }
 
-        private void StartMenuWindowBase_Loaded(object sender, RoutedEventArgs e)
+        private async void StartMenuWindowBase_Loaded(object sender, RoutedEventArgs e)
         {
-            SetStartMenuPos();
             SetStartMenuSize();
+            await LoadStartMenuItemAsync();
+            //TODO wait ui refresh
+            await Task.Delay(100);
+            SetStartMenuPos();
         }
 
         private void InitWindows()
@@ -43,36 +52,34 @@ namespace Master_Zhao.Shell.StartMenu
             this.WindowStartupLocation = WindowStartupLocation.Manual;
         }
 
-        
-
         public void Shutdown(object sender,RoutedEventArgs e)
         {
-
+            PowerTool.Shutdown();
         }
 
         public void SwitchUser(object sender,RoutedEventArgs e)
         {
-
+            PowerTool.SwitchUser();
         }
 
         public void Logoff(object sender, RoutedEventArgs e)
         {
-
+            PowerTool.Logoff();
         }
 
         public void Lock(object sender, RoutedEventArgs e)
         {
-
+            PowerTool.Lock();
         }
 
         public void Restart(object sender, RoutedEventArgs e)
         {
-
+            PowerTool.Restart();
         }
 
         public void Sleep(object sender, RoutedEventArgs e)
         {
-
+            PowerTool.Sleep();
         }
     }
 }
