@@ -9,12 +9,21 @@ namespace Master_Zhao.Shell.Util
 {
     public class ImageHelper
     {
-        public static BitmapImage GetResourceBitmapImage(string path)
+        public static BitmapImage GetBitmapImageFromLocalFile(string path)
+        {
+            return InternalGetBitmapImage(path, UriKind.Absolute);
+        }
+
+        public static BitmapImage GetBitmapImageFromResource(string path)
+        {
+            return InternalGetBitmapImage(path, UriKind.Relative);
+        }
+
+        private static BitmapImage InternalGetBitmapImage(string path,UriKind uriKind)
         {
             BitmapImage bi = new BitmapImage();
-
             bi.BeginInit();
-            bi.UriSource = new Uri(path, UriKind.Relative);
+            bi.UriSource = new Uri(path, uriKind);
             bi.EndInit();
             return bi;
         }

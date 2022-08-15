@@ -38,16 +38,16 @@ namespace Master_Zhao.Shell.StartMenu.Win98
                     MenuItem item = new MenuItem();
                     item.Header = "Windows Update";
                     item.Height = 37;
-                    //TODO
-                    item.Icon = ImageHelper.GetResourceBitmapImage("/Icon/windows_update.png");
+                    var iconImage = new Image();
+                    iconImage.Stretch = Stretch.UniformToFill;
+                    iconImage.Source = ImageHelper.GetBitmapImageFromResource("./Icon/windows_update.png");
+                    item.Icon = iconImage;
                     item.Width = this.menu.Width;
                     item.HorizontalAlignment = HorizontalAlignment.Center;
+                    item.VerticalAlignment = VerticalAlignment.Center;
                     this.menu.Items.Add(item);
                 }
             }, new System.Threading.CancellationToken(), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
-
-            //wait ui refresh
-            Task.Delay(100).Wait();
             return task;
         }
 
