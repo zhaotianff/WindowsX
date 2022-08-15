@@ -10,7 +10,10 @@ namespace Master_Zhao.Shell.StartMenu.Data
         public string Name { get; set; }
         public string Path { get; set; }
         public string[] Args { get; set; }
-        public BitmapSource Icon { get; set; }
+        public BitmapSource ImageSourceIcon { get; set; }
+        public string FilePathIcon { get; set; }
         public string Exec { get; set; }
+        public List<StartMenuItemBase> Child { get; set; }
+        public bool IsSeperator => Name == "/";
     }
 }

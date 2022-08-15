@@ -17,6 +17,8 @@
         <SolidColorBrush x:Key="MenuSelect" Color="#000080"/>
         <!--application background 128 128 128-->
         <SolidColorBrush x:Key="ApplicationBackground" Color="#808080"/>
+        <!--start menu seperator background-->
+        <SolidColorBrush Color="White" x:Key="SeperatorBackground"/>
 
         <Geometry x:Key="Checkmark">F1 M 10.0,1.2 L 4.7,9.1 L 4.5,9.1 L 0,5.2 L 1.3,3.5 L 4.3,6.1L 8.3,0 L 10.0,1.2 Z</Geometry>
         <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#FF212121"/>
