@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8C98C198-7
 		ShellCommandsList.txt = ShellCommandsList.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master-Zhao.StartMenu.Test", "Master-Zhao.StartMenu.Test\Master-Zhao.StartMenu.Test.csproj", "{2348F117-B3F1-4538-AF16-B31BB56EB96D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +144,18 @@ Global
 		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|x64.Build.0 = Release|Any CPU
 		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|x86.ActiveCfg = Release|Any CPU
 		{592E8A4A-38A7-42DD-AD9B-A51E55B07D98}.Release|x86.Build.0 = Release|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Debug|x64.Build.0 = Debug|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Debug|x86.Build.0 = Debug|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|x64.ActiveCfg = Release|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|x64.Build.0 = Release|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|x86.ActiveCfg = Release|Any CPU
+		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

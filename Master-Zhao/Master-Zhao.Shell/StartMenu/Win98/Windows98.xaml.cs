@@ -62,6 +62,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             Win98StartMenuItem programsItem = new Win98StartMenuItem();
             programsItem.Name = "程序";
             programsItem.FilePathIcon = "./Icon/programs.png";
+            programsItem.Child = GetPrograms();
             list.Add(programsItem);
 
             //Favorites

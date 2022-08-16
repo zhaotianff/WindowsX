@@ -26,6 +26,14 @@ namespace Master_Zhao.Shell.StartMenu
             this.Top = SystemParameters.WorkArea.Height - this.Height;
         }
 
+        public virtual List<StartMenuItemBase> GetPrograms()
+        {
+            var programPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
+
+            //TODO
+            return new List<StartMenuItemBase>();
+        }
+
         public virtual Task LoadStartMenuItemAsync()
         {
             return Task.Delay(0);
