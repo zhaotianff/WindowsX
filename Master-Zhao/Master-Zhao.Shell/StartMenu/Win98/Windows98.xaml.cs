@@ -61,43 +61,43 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             //Programs
             Win98StartMenuItem programsItem = new Win98StartMenuItem();
             programsItem.Name = "程序";
-            programsItem.FilePathIcon = "./Icon/windows_update.png";
+            programsItem.FilePathIcon = "./Icon/programs.png";
             list.Add(programsItem);
 
             //Favorites
             Win98StartMenuItem favoritesItem = new Win98StartMenuItem();
             favoritesItem.Name = "收藏";
-            favoritesItem.FilePathIcon = "./Icon/windows_update.png";
+            favoritesItem.FilePathIcon = "./Icon/favorites.png";
             list.Add(favoritesItem);
 
             //Documents
             Win98StartMenuItem documentsItem = new Win98StartMenuItem();
             documentsItem.Name = "文档";
-            documentsItem.FilePathIcon = "./Icon/windows_update.png";
+            documentsItem.FilePathIcon = "./Icon/document.png";
             list.Add(documentsItem);
 
             //Settings
             Win98StartMenuItem settingsItem = new Win98StartMenuItem();
             settingsItem.Name = "设置";
-            settingsItem.FilePathIcon = "./Icon/windows_update.png";
+            settingsItem.FilePathIcon = "./Icon/settings.png";
             list.Add(settingsItem);
 
             //Find
             Win98StartMenuItem findItem = new Win98StartMenuItem();
             findItem.Name = "查找";
-            findItem.FilePathIcon = "./Icon/windows_update.png";
+            findItem.FilePathIcon = "./Icon/find.png";
             list.Add(findItem);
 
             //Help
             Win98StartMenuItem helpItem = new Win98StartMenuItem();
             helpItem.Name = "帮助";
-            helpItem.FilePathIcon = "./Icon/windows_update.png";
+            helpItem.FilePathIcon = "./Icon/help.png";
             list.Add(helpItem);
 
             //Run
             Win98StartMenuItem runItem = new Win98StartMenuItem();
             runItem.Name = "运行";
-            runItem.FilePathIcon = "./Icon/windows_update.png";
+            runItem.FilePathIcon = "./Icon/run.png";
             list.Add(runItem);
 
             list.Add(Win98StartMenuItem.Seperator);
@@ -105,13 +105,13 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             //Logoff
             Win98StartMenuItem logoffItem = new Win98StartMenuItem();
             logoffItem.Name = "注销";
-            logoffItem.FilePathIcon = "./Icon/windows_update.png";
+            logoffItem.FilePathIcon = "./Icon/logoff.png";
             list.Add(logoffItem);
 
             //Shutdown
             Win98StartMenuItem shutdownItem = new Win98StartMenuItem();
             shutdownItem.Name = "关机";
-            shutdownItem.FilePathIcon = "./Icon/windows_update.png";
+            shutdownItem.FilePathIcon = "./Icon/shutdown.png";
             list.Add(shutdownItem);
 
             return list;
@@ -135,7 +135,10 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             item.Height = 37;
             var iconImage = new Image();
             iconImage.Stretch = Stretch.UniformToFill;
-            iconImage.Source = ImageHelper.GetBitmapImageFromResource(data.FilePathIcon);
+            if (data.ImageSourceIcon == null)
+                iconImage.Source = ImageHelper.GetBitmapImageFromResource(data.FilePathIcon);
+            else
+                iconImage.Source = data.ImageSourceIcon;
             item.Icon = iconImage;
             item.Width = this.menu.Width;
             item.HorizontalAlignment = HorizontalAlignment.Center;

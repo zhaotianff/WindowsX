@@ -35,6 +35,15 @@
     <None Remove="Icon\windows10_transparent_taskbar.png" />
     <None Remove="logo.png" />
     <None Remove="recycle.png" />
+    <None Remove="StartMenu\Win98\Icon\document.png" />
+    <None Remove="StartMenu\Win98\Icon\favorites.png" />
+    <None Remove="StartMenu\Win98\Icon\find.png" />
+    <None Remove="StartMenu\Win98\Icon\help.png" />
+    <None Remove="StartMenu\Win98\Icon\logoff.png" />
+    <None Remove="StartMenu\Win98\Icon\programs.png" />
+    <None Remove="StartMenu\Win98\Icon\run.png" />
+    <None Remove="StartMenu\Win98\Icon\settings.png" />
+    <None Remove="StartMenu\Win98\Icon\shutdown.png" />
     <None Remove="StartMenu\Win98\Icon\windows_update.png" />
   </ItemGroup>
 
@@ -71,6 +80,15 @@
     <Resource Include="Icon\windows10_taskbar.png" />
     <Resource Include="logo.png" />
     <Resource Include="recycle.png" />
+    <Resource Include="StartMenu\Win98\Icon\document.png" />
+    <Resource Include="StartMenu\Win98\Icon\favorites.png" />
+    <Resource Include="StartMenu\Win98\Icon\find.png" />
+    <Resource Include="StartMenu\Win98\Icon\help.png" />
+    <Resource Include="StartMenu\Win98\Icon\logoff.png" />
+    <Resource Include="StartMenu\Win98\Icon\programs.png" />
+    <Resource Include="StartMenu\Win98\Icon\run.png" />
+    <Resource Include="StartMenu\Win98\Icon\settings.png" />
+    <Resource Include="StartMenu\Win98\Icon\shutdown.png" />
     <Resource Include="StartMenu\Win98\Icon\windows_update.png" />
   </ItemGroup>
 
