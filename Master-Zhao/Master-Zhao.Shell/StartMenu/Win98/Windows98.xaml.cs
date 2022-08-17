@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading.Tasks;
 using Master_Zhao.Shell.Util;
+using System.Linq;
+using Master_Zhao.Shell.StartMenu.Data;
 
 namespace Master_Zhao.Shell.StartMenu.Win98
 {
@@ -33,19 +35,15 @@ namespace Master_Zhao.Shell.StartMenu.Win98
         {
             var task = Task.Factory.StartNew(() =>
             {
-                var menuList = GetWin98StartMenuItem();
-                foreach(var menuItem in menuList)
-                {
-                    //TODO
-                    AppendMenuItem(menuItem);
-                }
+                var menuList = GetWin98StartMenuItem(); 
+                AppendMenuItem(menuList);          
             }, new System.Threading.CancellationToken(), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
             return task;
         }
 
-        private List<Win98StartMenuItem> GetWin98StartMenuItem()
+        private List<StartMenuItemBase> GetWin98StartMenuItem()
         {
-            var list = new List<Win98StartMenuItem>();
+            var list = new List<StartMenuItemBase>();
 
             //TODO add user config
 
@@ -62,7 +60,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             Win98StartMenuItem programsItem = new Win98StartMenuItem();
             programsItem.Name = "程序";
             programsItem.FilePathIcon = "./Icon/programs.png";
-            programsItem.Child = GetPrograms();
+            programsItem.Child = GetPrograms(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms));
             list.Add(programsItem);
 
             //Favorites
@@ -118,37 +116,66 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             return list;
         }
 
-        private void AppendMenuItem(Win98StartMenuItem data, MenuItem parentItem = null)
+        private void AppendMenuItem(List<StartMenuItemBase> menuItemList,MenuItem subMenu = null)
         {
-            if(data.IsSeperator)
+            foreach (var menuItem in menuItemList)
             {
-                Separator separator = new Separator();
-                separator.Height = 1;
-                separator.BorderBrush = FindResource("ActiveBorder") as SolidColorBrush;
-                separator.Background = FindResource("SeperatorBackground") as SolidColorBrush;
-                separator.Width = this.menu.Width;
-                this.menu.Items.Add(separator);
-                return;
-            }
+                if(menuItem.Child.Count == 0)
+                {
+                    if (menuItem.IsSeperator)
+                    {
+                        Separator separator = new Separator();
+                        separator.Height = 1;
+                        separator.BorderBrush = FindResource("ActiveBorder") as SolidColorBrush;
+                        separator.Background = FindResource("SeperatorBackground") as SolidColorBrush;
+                        separator.Width = this.menu.Width;
 
+                        if (subMenu == null)
+                            this.menu.Items.Add(separator);
+                        else
+                            subMenu.Items.Add(separator);
+                        continue;
+                    }
+
+                    var item = GetMenuItem(menuItem);
+
+                    if (subMenu == null)
+                        this.menu.Items.Add(item);
+                    else
+                        subMenu.Items.Add(item);
+                }
+                else
+                {
+                    var item = GetMenuItem(menuItem);
+
+                    if (subMenu == null)
+                        this.menu.Items.Add(item);
+                    else
+                        subMenu.Items.Add(item);
+
+                    //TODO
+                    AppendMenuItem(menuItem.Child, item);
+                }
+            }
+        }
+
+        private MenuItem GetMenuItem(StartMenuItemBase menuItem)
+        {
             MenuItem item = new MenuItem();
-            item.Header = data;
+            item.Header = menuItem;
             item.Height = 37;
             var iconImage = new Image();
             iconImage.Stretch = Stretch.UniformToFill;
-            if (data.ImageSourceIcon == null)
-                iconImage.Source = ImageHelper.GetBitmapImageFromResource(data.FilePathIcon);
+            if (menuItem.ImageSourceIcon == null)
+                iconImage.Source = ImageHelper.GetBitmapImageFromResource(menuItem.FilePathIcon);
             else
-                iconImage.Source = data.ImageSourceIcon;
+                iconImage.Source = menuItem.ImageSourceIcon;
             item.Icon = iconImage;
             item.Width = this.menu.Width;
             item.HorizontalAlignment = HorizontalAlignment.Center;
             item.VerticalAlignment = VerticalAlignment.Center;
 
-            if (parentItem == null)
-                this.menu.Items.Add(item);
-            else
-                parentItem.Items.Add(item);
+            return item;
         }
 
         public  override void SetStartMenuSize()

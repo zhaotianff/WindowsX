@@ -13,7 +13,7 @@ namespace Master_Zhao.Shell.StartMenu.Data
         public BitmapSource ImageSourceIcon { get; set; }
         public string FilePathIcon { get; set; }
         public string Exec { get; set; }
-        public List<StartMenuItemBase> Child { get; set; }
+        public List<StartMenuItemBase> Child { get; set; } = new List<StartMenuItemBase>();
         public bool IsSeperator => Name == "/";
     }
 }

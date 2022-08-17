@@ -2,6 +2,7 @@
 using Master_Zhao.Shell.StartMenu.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,12 +27,43 @@ namespace Master_Zhao.Shell.StartMenu
             this.Top = SystemParameters.WorkArea.Height - this.Height;
         }
 
-        public virtual List<StartMenuItemBase> GetPrograms()
+        public virtual List<StartMenuItemBase> GetPrograms(string programPath)
         {
-            var programPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
+            var list = new List<StartMenuItemBase>();
+            RecursiveGetPrograms(programPath, ref list);
+            return list;
+        }
 
-            //TODO
-            return new List<StartMenuItemBase>();
+        private void RecursiveGetPrograms(string path,ref List<StartMenuItemBase> menuList)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+            var fileEntry = dir.GetFileSystemInfos();
+            foreach (var file in fileEntry)
+            {
+                var fileinfo = file as FileInfo;
+
+                if (fileinfo != null)
+                {
+                    StartMenuItemBase startMenuItem = new StartMenuItemBase();
+                    startMenuItem.Name = fileinfo.Name;
+                    startMenuItem.Exec = fileinfo.FullName;
+                    //TODO get icon
+                    startMenuItem.FilePathIcon = "./Icon/programs.png";
+                    menuList.Add(startMenuItem);
+                }
+                else
+                {
+                    var dirInfo = file as DirectoryInfo;
+                    StartMenuItemBase startMenuItem = new StartMenuItemBase();
+                    startMenuItem.Name = dirInfo.Name;
+                    startMenuItem.Exec = dirInfo.FullName;
+                    startMenuItem.FilePathIcon = "./Icon/programs.png";
+                    var list = new List<StartMenuItemBase>();
+                    RecursiveGetPrograms(dirInfo.FullName, ref list);
+                    startMenuItem.Child = list;
+                    menuList.Add(startMenuItem);
+                }
+            }
         }
 
         public virtual Task LoadStartMenuItemAsync()
