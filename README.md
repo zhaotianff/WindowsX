@@ -73,7 +73,11 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
 ## 划水
 
 # 正在开发的功能
-  * 实用工具-快速启动
+  * 美化->其它->Windows98开始菜单
+  <p align="center">
+    <img align="center" alt="error dll format" src="Screenshots/win98_startmenu.png" />
+</p>
+  
      
 # 界面截图
 <table align="center">
