@@ -42,7 +42,7 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
 </p>
 
 # 直接运行
-如果只是运行，而不需要编译。安装.NET Core 3.1 Runtime 和Visual C++ 2019 x64 Redistributable Package后执行Master.Zhao.Shell.exe即可。
+如果不想编译代码直接运行 。安装.NET Core 3.1 Runtime 和Visual C++ 2019 x64 Redistributable Package后执行Master.Zhao.Shell.exe即可。
 * [.NET Core 3.1 Runtime](https://dotnet.microsoft.com/zh-cn/download/dotnet/thank-you/runtime-desktop-3.1.27-windows-x64-installer)
 * [Visual C++ 2019 Redistributable Package (x64)](https://aka.ms/vs/16/release/VC_redist.x64.exe)
 
