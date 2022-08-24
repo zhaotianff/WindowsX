@@ -13,8 +13,41 @@
             <Setter Property="Margin" Value="5"/>
         </Style>
     </Window.Resources>
-    <WrapPanel>
-        <Button Content="测试WaitMessageBox" Style="{StaticResource TestButtonStyle}" Click="Button_Click"/>
-        <Button Content="测试视频窗口" Style="{StaticResource TestButtonStyle}" Click="Button_Click_1"/>
-    </WrapPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel>
+            <Button Content="测试WaitMessageBox" Style="{StaticResource TestButtonStyle}" Click="Button_Click"/>
+            <Button Content="测试视频窗口" Style="{StaticResource TestButtonStyle}" Click="Button_Click_1"/>
+        </WrapPanel>
+
+        <Grid Grid.Row="1">
+           
+                <MenuItem Header="Root" Width="150">
+                    <MenuItem.Icon>
+                        <Image Source="./Icon/windows_update.png"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Items>
+                        <MenuItem Header="Child1"/>
+                    <MenuItem Header="hello world(S)" Height="37">
+                        <MenuItem.Icon>
+                            <Image Source="./Icon/windows_update.png" Stretch="Uniform" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Child1"/>
+                        <MenuItem Header="Child1"/>
+                        <MenuItem Header="Child1">
+                            <MenuItem.Items>
+                                <MenuItem Header="Child2"/>
+                            </MenuItem.Items>
+                        </MenuItem>
+                    </MenuItem.Items>
+                </MenuItem>
+          
+        </Grid>
+    </Grid>
 </Window>

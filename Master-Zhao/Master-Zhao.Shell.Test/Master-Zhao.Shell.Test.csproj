@@ -18,7 +18,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icon\windows_update.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Master-Zhao.Shell\Master-Zhao.Shell.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icon\windows_update.png" />
   </ItemGroup>
 
 </Project>
