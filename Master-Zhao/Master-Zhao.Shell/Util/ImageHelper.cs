@@ -21,6 +21,9 @@ namespace Master_Zhao.Shell.Util
 
         private static BitmapImage InternalGetBitmapImage(string path,UriKind uriKind)
         {
+            if (string.IsNullOrEmpty(path))
+                return null;
+
             BitmapImage bi = new BitmapImage();
             bi.BeginInit();
             bi.UriSource = new Uri(path, uriKind);
