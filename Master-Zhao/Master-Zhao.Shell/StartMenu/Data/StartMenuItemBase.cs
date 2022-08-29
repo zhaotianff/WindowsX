@@ -15,5 +15,10 @@ namespace Master_Zhao.Shell.StartMenu.Data
         public string Exec { get; set; }
         public List<StartMenuItemBase> Child { get; set; } = new List<StartMenuItemBase>();
         public bool IsSeperator => Name == "/";
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

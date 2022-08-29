@@ -26,14 +26,14 @@
                     <Border  x:Name="border" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Opacity="1">
                         <Grid  VerticalAlignment="Center" Margin="{TemplateBinding Margin}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="MenuTextColumnGroup"/>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup"/>
-                                <ColumnDefinition Width="16" x:Name="arrow_col" SharedSizeGroup="MenumItemArrow"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="16" x:Name="arrow_col" />
                             </Grid.ColumnDefinitions>
                             <ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Margin="5" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
 
-                            <ContentPresenter Grid.Column="1" x:Name="txtHeader" Margin="3,1,5,1" MinWidth="90"
+                            <ContentPresenter Grid.Column="1" x:Name="txtHeader" Margin="3,1,5,1"
                                           RecognizesAccessKey="True" VerticalAlignment="Center" ContentSource="Header"/>
 
                             <TextBlock Grid.Column="2" Margin="3,1,3,1" x:Name="IGTHost" Text="{TemplateBinding InputGestureText}" 
