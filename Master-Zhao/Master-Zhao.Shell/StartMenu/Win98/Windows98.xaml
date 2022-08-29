@@ -24,44 +24,108 @@
         <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#FF212121"/>
 
         <Style TargetType="{x:Type MenuItem}">
+            <Setter Property="BorderBrush" Value="{DynamicResource ActiveBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="{DynamicResource ActiveBorder}"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="MinWidth" Value="80"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type MenuItem}">
-                        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
-                            <Grid VerticalAlignment="Center">
+                        <Border  x:Name="border" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Opacity="1">
+                            <Grid  VerticalAlignment="Center" Margin="{TemplateBinding Margin}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition />
+                                    <!--<ColumnDefinition Width="Auto"  MinWidth="80"/>-->
+                                    <ColumnDefinition Width="16" x:Name="arrow_col" />
                                 </Grid.ColumnDefinitions>
                                 <ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Margin="5" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                                <Path x:Name="GlyphPanel" Data="{StaticResource Checkmark}" FlowDirection="LeftToRight" Fill="{StaticResource Menu.Static.Foreground}" Margin="3" VerticalAlignment="Center" Visibility="Collapsed"/>
-                                <ContentPresenter ContentSource="Header" Grid.Column="1" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+
+                                <ContentPresenter Grid.Column="1" x:Name="txtHeader" Margin="3,1,5,1"
+                                          RecognizesAccessKey="True" VerticalAlignment="Center" ContentSource="Header"/>
+
+                                <!--<TextBlock Grid.Column="2" Margin="3,1,3,1" x:Name="IGTHost" Text="{TemplateBinding InputGestureText}" 
+                                       FontSize="{TemplateBinding FontSize}"
+                                       VerticalAlignment="Center" Visibility="Visible" Foreground="{TemplateBinding Foreground}" />-->
+
+                                <TextBlock x:Name="PART_Arrow" Grid.Column="2" Text="➧" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" 
+                                       FontSize="12" />
+
+                                <Popup x:Name="SubMenuPopup" AllowsTransparency="true" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" 
+                                        Placement="Right"  Focusable="false" VerticalOffset="0" HorizontalOffset="0"
+                                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" PlacementTarget="{Binding ElementName=border}">
+                                    <Border Background="{TemplateBinding Background}"  CornerRadius="0" Margin="0"
+                                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <Grid x:Name="SubMenu" Grid.IsSharedSizeScope="True">
+                                            <StackPanel Margin="0" IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                        </Grid>
+                                    </Border>
+                                </Popup>
                             </Grid>
                         </Border>
+
                         <ControlTemplate.Triggers>
-                            <Trigger Property="Icon" Value="{x:Null}">
-                                <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+
+                            <Trigger Property="Role" Value="TopLevelHeader">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="PART_Arrow"/>
+                                <!--<Setter Property="Visibility" Value="Collapsed" TargetName="IGTHost"/>-->
+                                <!--<Setter Property="Margin" Value="5,1,1,1" TargetName="PART_Icon"/>-->
+                                <Setter Property="Margin" Value="1,1,6,1" TargetName="txtHeader"/>
+                                <Setter Property="MinWidth" Value="10" TargetName="txtHeader"/>
+                                <Setter Property="Width" Value="0" TargetName="arrow_col"/>
                             </Trigger>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
-                                <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+
+                            <Trigger Property="Role" Value="TopLevelItem">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="PART_Arrow"/>
+                                <!--<Setter Property="Visibility" Value="Collapsed" TargetName="IGTHost"/>-->
+                                <!--<Setter Property="Margin" Value="5,1,1,1" TargetName="PART_Icon"/>-->
+                                <Setter Property="Margin" Value="1,1,6,1" TargetName="txtHeader"/>
+                                <Setter Property="MinWidth" Value="10" TargetName="txtHeader"/>
+                                <Setter Property="Width" Value="0" TargetName="arrow_col"/>
                             </Trigger>
+
+                            <Trigger Property="Role" Value="SubmenuHeader">
+                                <Setter Property="Visibility" Value="Visible" TargetName="PART_Arrow"/>
+                                <Setter Property="Placement" Value="Right" TargetName="SubMenuPopup"/>
+                            </Trigger>
+
+                            <Trigger Property="Role" Value="SubMenuItem">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="PART_Arrow"/>
+                            </Trigger>
+
+                            <Trigger Property="IsChecked" Value="True">
+                                <!--<Setter TargetName="PART_Icon" Value="&#xe62a;" Property="Text"></Setter>
+                            <Setter TargetName="PART_Icon" Value="18" Property="FontSize"></Setter>-->
+
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+
+                            </Trigger>
+
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter Property="Foreground" Value="{DynamicResource SeperatorBackground}"></Setter>
+                                <!--<Setter Property="BorderBrush" Value="#3db39e"/>-->
+                                <Setter Property="Background" TargetName="border" Value="{DynamicResource MenuSelect}"/>
+                                <Setter TargetName="Icon" Property="Opacity" Value=".8"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+
+                            </Trigger>
+
+                            <Trigger Property="IsSubmenuOpen" Value="true" >
+
+                            </Trigger>
+
+
                             <Trigger Property="IsHighlighted" Value="True">
-                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MenuSelect}"/>
-                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ApplicationBackground}"/>
+                                <Setter Property="IsSubmenuOpen" Value="True"/>
                             </Trigger>
-                            <!--<Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{StaticResource Menu.Disabled.Foreground}"/>
-                                <Setter Property="Fill" TargetName="GlyphPanel" Value="{StaticResource Menu.Disabled.Foreground}"/>
-                            </Trigger>-->
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsHighlighted" Value="True"/>
-                                    <Condition Property="IsEnabled" Value="False"/>
-                                </MultiTrigger.Conditions>
-                                <!--<Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Disabled.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Disabled.Border}"/>-->
-                            </MultiTrigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="IsSubmenuOpen" Value="False"/>
+                            </Trigger>
+
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -93,8 +157,8 @@
         </Grid>
 
         <Grid Grid.Column="1" Name="grid_menu">
-            <Menu Name="menu" Background="{DynamicResource ActiveBorder}">
-            </Menu>
+            <StackPanel Name="menu" Background="{DynamicResource ActiveBorder}">
+            </StackPanel>
         </Grid>
     </Grid>
 </start:StartMenuWindowBase>

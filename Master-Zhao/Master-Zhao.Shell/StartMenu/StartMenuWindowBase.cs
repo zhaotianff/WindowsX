@@ -1,5 +1,6 @@
 ﻿using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.StartMenu.Data;
+using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,11 +45,19 @@ namespace Master_Zhao.Shell.StartMenu
 
                 if (fileinfo != null)
                 {
+                    if((fileinfo.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden)
+                    {
+                        continue;
+                    }
                     StartMenuItemBase startMenuItem = new StartMenuItemBase();
-                    startMenuItem.Name = fileinfo.Name;
+                    startMenuItem.Name = Path.GetFileNameWithoutExtension(fileinfo.Name);
                     startMenuItem.Exec = fileinfo.FullName;
-                    //TODO get icon
-                    startMenuItem.FilePathIcon = "./Icon/programs.png";
+                    IntPtr hIcon = IntPtr.Zero;
+                    if (IconTool.ExtractFirstIconFromFile(fileinfo.FullName, true, ref hIcon))
+                    {
+                        startMenuItem.ImageSourceIcon = ImageHelper.GetBitmapImageFromHIcon(hIcon);
+                    }
+                   
                     menuList.Add(startMenuItem);
                 }
                 else

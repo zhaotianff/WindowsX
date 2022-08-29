@@ -10,7 +10,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Threading.Tasks;
 using Master_Zhao.Shell.Util;
 using System.Linq;
 using Master_Zhao.Shell.StartMenu.Data;
@@ -131,25 +130,25 @@ namespace Master_Zhao.Shell.StartMenu.Win98
                         separator.Width = this.menu.Width;
 
                         if (subMenu == null)
-                            this.menu.Items.Add(separator);
+                            this.menu.Children.Add(separator);
                         else
                             subMenu.Items.Add(separator);
                         continue;
                     }
 
-                    var item = GetMenuItem(menuItem);
+                    var item = GetMenuItem(menuItem,subMenu);
 
                     if (subMenu == null)
-                        this.menu.Items.Add(item);
+                        this.menu.Children.Add(item);
                     else
                         subMenu.Items.Add(item);
                 }
                 else
                 {
-                    var item = GetMenuItem(menuItem);
+                    var item = GetMenuItem(menuItem,subMenu);
 
                     if (subMenu == null)
-                        this.menu.Items.Add(item);
+                        this.menu.Children.Add(item);
                     else
                         subMenu.Items.Add(item);
 
@@ -159,7 +158,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             }
         }
 
-        private MenuItem GetMenuItem(StartMenuItemBase menuItem)
+        private MenuItem GetMenuItem(StartMenuItemBase menuItem,MenuItem subMenu)
         {
             MenuItem item = new MenuItem();
             item.Header = menuItem;
@@ -171,8 +170,17 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             else
                 iconImage.Source = menuItem.ImageSourceIcon;
             item.Icon = iconImage;
-            item.Width = this.menu.Width;
-            item.HorizontalAlignment = HorizontalAlignment.Center;
+
+            if(subMenu == null)
+            {
+                item.Width = this.Width - this.Width * 0.19f;  //TODO
+            }
+            else
+            {
+                item.Width = 300; //TODO
+            }
+            
+            item.HorizontalAlignment = HorizontalAlignment.Left;
             item.VerticalAlignment = VerticalAlignment.Center;
 
             return item;
