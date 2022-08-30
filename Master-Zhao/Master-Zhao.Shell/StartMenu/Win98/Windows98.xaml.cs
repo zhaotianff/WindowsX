@@ -65,36 +65,45 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             //Favorites
             Win98StartMenuItem favoritesItem = new Win98StartMenuItem();
             favoritesItem.Name = "收藏";
+            favoritesItem.Exec = Environment.GetFolderPath(Environment.SpecialFolder.Favorites);
             favoritesItem.FilePathIcon = "./Icon/favorites.png";
             list.Add(favoritesItem);
 
             //Documents
             Win98StartMenuItem documentsItem = new Win98StartMenuItem();
             documentsItem.Name = "文档";
+            documentsItem.Exec = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             documentsItem.FilePathIcon = "./Icon/document.png";
             list.Add(documentsItem);
 
             //Settings
             Win98StartMenuItem settingsItem = new Win98StartMenuItem();
             settingsItem.Name = "设置";
+            settingsItem.Exec = "ms-settings:main";
             settingsItem.FilePathIcon = "./Icon/settings.png";
             list.Add(settingsItem);
 
             //Find
             Win98StartMenuItem findItem = new Win98StartMenuItem();
             findItem.Name = "查找";
+            //TODO win+q
+            findItem.Exec = "";
             findItem.FilePathIcon = "./Icon/find.png";
             list.Add(findItem);
 
             //Help
             Win98StartMenuItem helpItem = new Win98StartMenuItem();
             helpItem.Name = "帮助";
+            //TODO f1
+            helpItem.Exec = "";
             helpItem.FilePathIcon = "./Icon/help.png";
             list.Add(helpItem);
 
             //Run
             Win98StartMenuItem runItem = new Win98StartMenuItem();
             runItem.Name = "运行";
+            //TODO win+r
+            runItem.Exec = "";
             runItem.FilePathIcon = "./Icon/run.png";
             list.Add(runItem);
 
@@ -182,8 +191,25 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             
             item.HorizontalAlignment = HorizontalAlignment.Left;
             item.VerticalAlignment = VerticalAlignment.Center;
+            item.Click += menuItem_Click;
 
             return item;
+        }
+
+        private void menuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = sender as MenuItem;
+
+            if(item != null)
+            {
+                var startMenuItem = item.Header as StartMenuItemBase;
+
+                if (startMenuItem.Child.Count == 0)
+                {
+                    this.Visibility = Visibility.Hidden;
+                    ProcessHelper.Execute(startMenuItem?.Exec);
+                }
+            }
         }
 
         public  override void SetStartMenuSize()
@@ -192,6 +218,9 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             this.grid_title.Width = this.Width * TitleWidthRatio;
             this.grid_menu.Width = this.Width - this.grid_title.Width;
             this.menu.Width = this.grid_menu.Width;
+
+
+            //TODO hook start menu button or hook key
         }
     }
 }
