@@ -51,6 +51,7 @@ If it just runs without compiling. After installing .NET Core 3.1 Runtime and Vi
   * Static wallpaper setting
   * Dynamic wallpaper setting
   * Mouse effect
+  * Custom start menu
   * Desktop effect
   * Taskbar setting
   * Context menu setting

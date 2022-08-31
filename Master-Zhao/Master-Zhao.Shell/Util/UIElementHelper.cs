@@ -26,29 +26,5 @@ namespace Master_Zhao.Shell.Util
                 encoder.Save(fs);
             }
         }
-
-        public static void SaveImageSourceAsFile(BitmapSource imageSource,string fileName)
-        {
-            BitmapEncoder encoder = new JpegBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(imageSource));
-            using (Stream stream = File.Create(fileName))
-            {
-                encoder.Save(stream);
-            }
-        }
-
-        public static BitmapImage GetBitmapImageFromLocalFile(string path)
-        {
-            if (File.Exists(path) == false)
-                return null;
-
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            var buffer = System.IO.File.ReadAllBytes(path);
-            var ms = new MemoryStream(buffer);
-            bi.StreamSource = ms;
-            bi.EndInit();
-            return bi;
-        }
     }
 }

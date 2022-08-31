@@ -36,7 +36,7 @@ namespace Master_Zhao.Shell.UserControls
             set
             {
                 thumbnailPath = value;
-                image.Source = UIElementHelper.GetBitmapImageFromLocalFile(thumbnailPath);
+                image.Source = ImageHelper.GetBitmapImageFromLocalFile(thumbnailPath);
             }
         }
 

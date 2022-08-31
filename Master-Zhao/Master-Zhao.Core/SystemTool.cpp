@@ -8,6 +8,13 @@
 #pragma comment(lib,"PowrProf.lib")
 #pragma comment(lib,"wtsapi32.lib")
 
+extern HMODULE g_hDllModule;
+
+#pragma data_seg("mydata")
+HHOOK g_hHook = NULL;
+#pragma data_seg()
+#pragma comment(linker, "/SECTION:mydata,RWS")
+
 SYSTEMTIME GetUserLoginTime()
 {
 	SYSTEMTIME stSys{};
@@ -214,6 +221,67 @@ VOID Sleep()
 {
 	SetSuspendState(FALSE, FALSE, TRUE);
 }
+
+LRESULT GetMsgProc(int code, WPARAM wParam, LPARAM lParam)
+{
+	PKBDLLHOOKSTRUCT pKb = NULL;
+	PMSLLHOOKSTRUCT pMs = NULL;
+	TCHAR buf[MAX_PATH]{};
+
+	if (code == HC_ACTION)
+	{
+		switch (wParam)
+		{
+			case WM_KEYDOWN:
+			{
+				MessageBox(NULL, L"1", L"", MB_OK);
+			}
+			case WM_SYSKEYDOWN:
+			case WM_KEYUP:
+			case WM_SYSKEYUP:
+				pKb = (PKBDLLHOOKSTRUCT)lParam;
+				if ((pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN))
+				{
+					MessageBox(NULL, L"abc", L"", MB_OK);
+				}
+				break;
+			case WM_LBUTTONDOWN:
+			{
+				pMs = (PMSLLHOOKSTRUCT)lParam;
+				HWND hwnd = WindowFromPoint(pMs->pt);
+				GetClassName(hwnd, buf, MAX_PATH);
+				if (_tcscmp(buf, L"Start") == 0)
+				{
+					MessageBox(NULL, L"abc", L"", MB_OK);
+				}
+			}
+				break;
+			default:
+				break;
+		}
+	}
+
+	return CallNextHookEx(g_hHook, code, wParam, lParam);
+}
+
+BOOL HookStart(FUNC func)
+{
+	g_hHook = SetWindowsHookEx(WH_GETMESSAGE, (HOOKPROC)GetMsgProc, g_hDllModule, 0);
+	if (g_hHook)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+BOOL UnHookStart()
+{
+	if (g_hHook)
+		return UnhookWindowsHookEx(g_hHook);
+
+	return FALSE;
+}
+
+
 
 
 

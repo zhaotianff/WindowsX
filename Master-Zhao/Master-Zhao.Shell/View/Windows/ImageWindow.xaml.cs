@@ -136,7 +136,7 @@ namespace Master_Zhao.Shell.Windows
         {
             var filePath = System.IO.Path.Combine(GlobalConfig.Instance.StaticWallpaperConfig.DownloadPath,
                $"{Guid.NewGuid()}.jpg");
-            UIElementHelper.SaveImageSourceAsFile((BitmapSource)image.Source, filePath);
+            ImageHelper.SaveImageSourceAsFile((BitmapSource)image.Source, filePath);
             return filePath;
         }
     }

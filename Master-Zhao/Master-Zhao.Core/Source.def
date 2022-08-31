@@ -46,6 +46,8 @@ IsWindows10OrHigher
 IsWindows11
 RegisterFastRunHotKey
 UnRegisterFastRunHotKey
+HookStart
+UnHookStart
 
 ;startuptool.h
 IsExistStartupRun

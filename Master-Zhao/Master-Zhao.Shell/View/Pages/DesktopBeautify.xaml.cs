@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Master_Zhao.Shell.PInvoke;
+using Master_Zhao.Shell.View.Pages;
 
 namespace Master_Zhao.Shell.Pages
 {
@@ -28,6 +29,7 @@ namespace Master_Zhao.Shell.Pages
         public DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
         private StaticWallpaper staticWallpaper = new StaticWallpaper();
         private MouseEffect mouseEffect = new MouseEffect();
+        private StartMenuSetting startMenuSetting = new StartMenuSetting();
         private TaskbarSetting taskbarSetting = new TaskbarSetting();
         private ContextMenuManagement menuManagement = new ContextMenuManagement();
         private BootImageManagement bootImageManagement = new BootImageManagement();
@@ -94,6 +96,11 @@ namespace Master_Zhao.Shell.Pages
         private void btn_BootImageSettingClick(object sender, RoutedEventArgs e)
         {
             frame.Content = bootImageManagement;
+        }
+
+        private void btn_StartMenuSettingClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = startMenuSetting;
         }
     }
 

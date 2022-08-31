@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace Master_Zhao.Shell.Util
 {
     public class ImageHelper
     {
-        public static BitmapImage GetBitmapImageFromLocalFile(string path)
+        public static BitmapImage GetBitmapImageFromLocalFile(string path,bool useStream = false)
         {
-            return InternalGetBitmapImage(path, UriKind.Absolute);
+            return InternalGetBitmapImage(path, UriKind.Absolute,useStream);
         }
 
         public static BitmapImage GetBitmapImageFromResource(string path)
@@ -19,14 +20,23 @@ namespace Master_Zhao.Shell.Util
             return InternalGetBitmapImage(path, UriKind.Relative);
         }
 
-        private static BitmapImage InternalGetBitmapImage(string path,UriKind uriKind)
+        private static BitmapImage InternalGetBitmapImage(string path,UriKind uriKind,bool useStream = false)
         {
             if (string.IsNullOrEmpty(path))
                 return null;
 
             BitmapImage bi = new BitmapImage();
             bi.BeginInit();
-            bi.UriSource = new Uri(path, uriKind);
+            if(useStream)
+            {
+                var buffer = System.IO.File.ReadAllBytes(path);
+                var ms = new MemoryStream(buffer);
+                bi.StreamSource = ms;
+            }
+            else
+            {
+                bi.UriSource = new Uri(path, uriKind);
+            }
             bi.EndInit();
             return bi;
         }
@@ -43,6 +53,16 @@ namespace Master_Zhao.Shell.Util
             using (var fileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
             {
                 encoder.Save(fileStream);
+            }
+        }
+
+        public static void SaveImageSourceAsFile(BitmapSource imageSource, string fileName)
+        {
+            BitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(imageSource));
+            using (Stream stream = File.Create(fileName))
+            {
+                encoder.Save(stream);
             }
         }
     }
