@@ -36,7 +36,7 @@ namespace Master_Zhao.Shell.View.UserControls
 
         public void TT()
         {
-            MessageBox.Show("TT");
+           
         }
     }
 }

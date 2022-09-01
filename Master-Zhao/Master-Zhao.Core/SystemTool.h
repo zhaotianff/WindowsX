@@ -46,6 +46,6 @@ SILVERAROWANACORE_API VOID Sleep();
 
 typedef void(*FUNC)();
 
-LRESULT GetMsgProc(int code, WPARAM wParam, LPARAM lParam);
+LRESULT KbLLProc(int code, WPARAM wParam, LPARAM lParam);
 SILVERAROWANACORE_API BOOL HookStart(FUNC func);
 SILVERAROWANACORE_API BOOL UnHookStart();

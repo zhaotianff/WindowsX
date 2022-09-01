@@ -11,9 +11,11 @@
 extern HMODULE g_hDllModule;
 
 #pragma data_seg("mydata")
-HHOOK g_hHook = NULL;
+HHOOK g_hHookKb = NULL;
 #pragma data_seg()
 #pragma comment(linker, "/SECTION:mydata,RWS")
+
+FUNC hookFunc = NULL;
 
 SYSTEMTIME GetUserLoginTime()
 {
@@ -222,52 +224,40 @@ VOID Sleep()
 	SetSuspendState(FALSE, FALSE, TRUE);
 }
 
-LRESULT GetMsgProc(int code, WPARAM wParam, LPARAM lParam)
+LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 {
 	PKBDLLHOOKSTRUCT pKb = NULL;
-	PMSLLHOOKSTRUCT pMs = NULL;
-	TCHAR buf[MAX_PATH]{};
+	BOOL bWinKeyStroke = FALSE;
 
 	if (code == HC_ACTION)
 	{
+		pKb = (PKBDLLHOOKSTRUCT)lParam;
+
 		switch (wParam)
 		{
 			case WM_KEYDOWN:
-			{
-				MessageBox(NULL, L"1", L"", MB_OK);
-			}
 			case WM_SYSKEYDOWN:
 			case WM_KEYUP:
 			case WM_SYSKEYUP:
-				pKb = (PKBDLLHOOKSTRUCT)lParam;
-				if ((pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN))
-				{
-					MessageBox(NULL, L"abc", L"", MB_OK);
-				}
-				break;
-			case WM_LBUTTONDOWN:
 			{
-				pMs = (PMSLLHOOKSTRUCT)lParam;
-				HWND hwnd = WindowFromPoint(pMs->pt);
-				GetClassName(hwnd, buf, MAX_PATH);
-				if (_tcscmp(buf, L"Start") == 0)
-				{
-					MessageBox(NULL, L"abc", L"", MB_OK);
-				}
-			}
+				bWinKeyStroke = (pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN);
+				
+				
 				break;
+			}
 			default:
 				break;
 		}
 	}
 
-	return CallNextHookEx(g_hHook, code, wParam, lParam);
+	return bWinKeyStroke ? TRUE : CallNextHookEx(g_hHookKb, code, wParam, lParam);
 }
 
 BOOL HookStart(FUNC func)
 {
-	g_hHook = SetWindowsHookEx(WH_GETMESSAGE, (HOOKPROC)GetMsgProc, g_hDllModule, 0);
-	if (g_hHook)
+	hookFunc = func;
+	g_hHookKb = SetWindowsHookEx(WH_KEYBOARD_LL, KbLLProc, g_hDllModule, 0);
+	if (g_hHookKb)
 		return TRUE;
 	else
 		return FALSE;
@@ -275,8 +265,9 @@ BOOL HookStart(FUNC func)
 
 BOOL UnHookStart()
 {
-	if (g_hHook)
-		return UnhookWindowsHookEx(g_hHook);
+	hookFunc = NULL;
+	if (g_hHookKb)
+		return UnhookWindowsHookEx(g_hHookKb);
 
 	return FALSE;
 }
