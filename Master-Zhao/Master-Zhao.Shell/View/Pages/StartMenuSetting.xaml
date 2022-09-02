@@ -11,7 +11,7 @@
 
     <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
         <WrapPanel Name="wrap">
-            <user:StartMenuControl Width="200" Height="300"/>
+            <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../Icon/about_back.jpeg"/>
         </WrapPanel>
     </ScrollViewer>
 </Page>

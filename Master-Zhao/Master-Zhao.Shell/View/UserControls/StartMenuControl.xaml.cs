@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,23 +21,102 @@ namespace Master_Zhao.Shell.View.UserControls
     /// </summary>
     public partial class StartMenuControl : UserControl
     {
-        public delegate void MyDel();
+        private SolidColorBrush AccentBaseColor { get; set; }
+        public bool IsChecked { get; set; } = false;
+        public delegate void StartMenuChangeEventHandler(object sender, string menuName);
+        public event StartMenuChangeEventHandler OnSet;
+        public event EventHandler OnSelect;
+
+        public static readonly DependencyProperty MenuThumbnailProperty = 
+            DependencyProperty.Register("MenuThumbnail", 
+                typeof(string), 
+                typeof(StartMenuControl), 
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, OnMenuThumbnailChanged, null), null);
+
+        public string MenuThumbnail
+        {
+            get => GetValue(MenuThumbnailProperty).ToString();
+            set
+            {
+                SetValue(MenuThumbnailProperty, value);
+                this.image.Source = ImageHelper.GetBitmapImageFromResource(value);
+            }
+        }
+
+        private static void OnMenuThumbnailChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            StartMenuControl startMenuControl = (StartMenuControl)d;
+            startMenuControl.MenuThumbnail = e.NewValue.ToString();
+        }
+
+        public static readonly DependencyProperty MenuNameProperty =
+           DependencyProperty.Register("MenuName",
+               typeof(string),
+               typeof(StartMenuControl),
+               new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, OnMenuNameChanged, null), null);
+
+        private static void OnMenuNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            StartMenuControl startMenuControl = (StartMenuControl)d;
+            startMenuControl.MenuName = e.NewValue.ToString();
+        }
+
+        public string MenuName
+        {
+            get => GetValue(MenuThumbnailProperty).ToString();
+            set
+            {
+                SetValue(MenuThumbnailProperty, value);
+                this.title.Content = value;
+            }
+        }
 
         public StartMenuControl()
         {
-            InitializeComponent();        
+            InitializeComponent();
+            AccentBaseColor = this.TryFindResource("AccentBaseColor") as SolidColorBrush;
         }
+
 
         private void set_Click(object sender, RoutedEventArgs e)
         {
-            //Test code
-            MyDel dd = TT; 
-            var result = Master_Zhao.Shell.PInvoke.SystemTool.HookStart(Marshal.GetFunctionPointerForDelegate(dd));
+            OnSet?.Invoke(sender, MenuName);
         }
 
-        public void TT()
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-           
+            SetBorderBrush();
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (IsChecked == false)
+            {
+                ResetBorderBrush();
+            }
+        }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Focus();
+            OnSelect?.Invoke(sender, e);
+            SetBorderBrush();
+            IsChecked = true;
+        }
+
+        private void SetBorderBrush()
+        {
+            BorderBrush = AccentBaseColor;
+        }
+
+        public void ResetBorderBrush()
+        {
+            BorderBrush = Brushes.Transparent;
+        }
+
+        private void UserControl_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ResetBorderBrush();
         }
     }
 }

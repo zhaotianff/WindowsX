@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Master_Zhao.Shell.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300">
+             d:DesignHeight="450" d:DesignWidth="300" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseDown="UserControl_MouseDown" LostFocus="UserControl_LostFocus" Background="Transparent">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -21,7 +21,7 @@
             <Label Name="title" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
         </Grid>
         <Grid Grid.Row="1">
-            <Button Content="设置" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Click="set_Click"/>
+            <Button Content="设置" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20"/>
         </Grid>
     </Grid>
 </UserControl>
