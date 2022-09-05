@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Shell.StartMenu.Win98;
+﻿using Master_Zhao.Shell.StartMenu;
+using Master_Zhao.Shell.StartMenu.Win98;
 using Master_Zhao.Shell.Util;
 using Master_Zhao.Shell.View.UserControls;
 using System;
@@ -42,11 +43,7 @@ namespace Master_Zhao.Shell.View.Pages
 
         private void LaunchStartMenu(string menuName)
         {
-            var startMenuHandle = ProcessHelper.FindProcessWindow(menuName);
-            if (startMenuHandle == IntPtr.Zero)
-            {
-                Windows98 windows98 = new Windows98();
-            }
+            StartMenuManager.LaunchStartMenu(menuName);
         }
 
         private void OnSelectStartMenu(object sender, EventArgs e)

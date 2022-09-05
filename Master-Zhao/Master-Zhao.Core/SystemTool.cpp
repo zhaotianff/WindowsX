@@ -12,10 +12,13 @@ extern HMODULE g_hDllModule;
 
 #pragma data_seg("mydata")
 HHOOK g_hHookKb = NULL;
+HHOOK g_hHookMs = NULL;
 #pragma data_seg()
 #pragma comment(linker, "/SECTION:mydata,RWS")
 
-FUNC hookFunc = NULL;
+HWND hStartMenuWindow = NULL;
+BOOL bStartMenuDisplay = FALSE;
+TCHAR szStartMenu[MAX_PATH];
 
 SYSTEMTIME GetUserLoginTime()
 {
@@ -241,8 +244,6 @@ LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 			case WM_SYSKEYUP:
 			{
 				bWinKeyStroke = (pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN);
-				
-				
 				break;
 			}
 			default:
@@ -250,14 +251,55 @@ LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 		}
 	}
 
+	if (bWinKeyStroke && hStartMenuWindow)
+	{
+		bStartMenuDisplay = !bStartMenuDisplay;
+		ShowWindow(hStartMenuWindow, bStartMenuDisplay ? SW_SHOW : SW_HIDE);
+	}
+
 	return bWinKeyStroke ? TRUE : CallNextHookEx(g_hHookKb, code, wParam, lParam);
 }
 
-BOOL HookStart(FUNC func)
+LRESULT WINAPI MsLLProc(int code, WPARAM wParam, LPARAM lParam)
 {
-	hookFunc = func;
+	BOOL bStartMenuClick = FALSE;
+	PMSLLHOOKSTRUCT p = NULL;
+
+	if (code == HC_ACTION)
+	{
+		p = (PMSLLHOOKSTRUCT)lParam;
+		switch (wParam)
+		{
+		case  WM_LBUTTONDOWN:
+		{
+			HWND hwnd = WindowFromPoint(p->pt);
+			GetClassName(hwnd, szStartMenu, MAX_PATH);
+			if (lstrcmpW(szStartMenu, L"Start") == 0)
+				bStartMenuClick = TRUE;
+		}
+		break;
+		default:
+			break;
+		}
+	}
+
+	if (bStartMenuClick && hStartMenuWindow)
+	{
+		bStartMenuDisplay = !bStartMenuDisplay;
+		ShowWindow(hStartMenuWindow, bStartMenuDisplay ? SW_SHOW : SW_HIDE);
+	}
+
+	return (bStartMenuClick ? TRUE : CallNextHookEx(g_hHookMs, code, wParam, lParam));
+}
+
+BOOL HookStart(HWND hwnd)
+{
+	hStartMenuWindow = hwnd;
+
 	g_hHookKb = SetWindowsHookEx(WH_KEYBOARD_LL, KbLLProc, g_hDllModule, 0);
-	if (g_hHookKb)
+	g_hHookMs = SetWindowsHookEx(WH_MOUSE_LL, MsLLProc, g_hDllModule, 0);
+
+	if (g_hHookKb && g_hHookMs)
 		return TRUE;
 	else
 		return FALSE;
@@ -265,11 +307,16 @@ BOOL HookStart(FUNC func)
 
 BOOL UnHookStart()
 {
-	hookFunc = NULL;
-	if (g_hHookKb)
-		return UnhookWindowsHookEx(g_hHookKb);
+	BOOL bResult = FALSE;
+	hStartMenuWindow = NULL;
 
-	return FALSE;
+	if (g_hHookKb)
+		bResult = UnhookWindowsHookEx(g_hHookKb);
+
+	if(g_hHookMs)
+		bResult &= UnhookWindowsHookEx(g_hHookMs);
+
+	return bResult;
 }
 
 

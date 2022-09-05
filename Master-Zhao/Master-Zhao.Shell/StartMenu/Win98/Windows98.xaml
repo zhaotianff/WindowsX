@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:start="clr-namespace:Master_Zhao.Shell.StartMenu"
         mc:Ignorable="d"
-        Title="Win98" Width="260" SizeToContent="Height" MaxWidth="185" BorderThickness="3" BorderBrush="{DynamicResource ActiveBorder}">
+        Title="Win98" Width="260" SizeToContent="Height" MaxWidth="185" BorderThickness="3" BorderBrush="{DynamicResource ActiveBorder}" LostFocus="StartMenuWindowBase_LostFocus">
     <start:StartMenuWindowBase.Resources>
         <!--semi blue :16 132 208-->
         <SolidColorBrush x:Key="SemiBlue" Color="#1084d0"/>

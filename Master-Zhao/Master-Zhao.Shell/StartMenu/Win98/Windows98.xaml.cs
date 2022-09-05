@@ -222,5 +222,10 @@ namespace Master_Zhao.Shell.StartMenu.Win98
 
             //TODO hook start menu button or hook key
         }
+
+        private void StartMenuWindowBase_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Hidden;
+        }
     }
 }
