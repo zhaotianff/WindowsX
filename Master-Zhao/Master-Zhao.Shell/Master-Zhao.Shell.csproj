@@ -29,6 +29,7 @@
     <None Remove="Icon\huashui.jpg" />
     <None Remove="Icon\information.png" />
     <None Remove="Icon\move.jpg" />
+    <None Remove="Icon\StartMenu\startmenu_98.png" />
     <None Remove="Icon\system.png" />
     <None Remove="Icon\windows10_blur_taskbar.png" />
     <None Remove="Icon\windows10_taskbar.png" />
@@ -50,6 +51,7 @@
   <ItemGroup>
     <Resource Include="Icon\fastrun.png" />
     <Resource Include="Icon\move.jpg" />
+    <Resource Include="Icon\StartMenu\startmenu_98.png" />
     <Resource Include="Icon\windows10_blur_taskbar.png" />
     <Resource Include="Icon\windows10_transparent_taskbar.png" />
     <Resource Include="logo.ico" />

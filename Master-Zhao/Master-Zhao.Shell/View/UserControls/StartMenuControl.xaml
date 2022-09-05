@@ -5,7 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Master_Zhao.Shell.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseDown="UserControl_MouseDown" LostFocus="UserControl_LostFocus" Background="Transparent">
+             d:DesignHeight="450" d:DesignWidth="300" BorderThickness="2" 
+             MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave" 
+             MouseDown="UserControl_MouseDown" 
+             LostFocus="UserControl_LostFocus">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition/>

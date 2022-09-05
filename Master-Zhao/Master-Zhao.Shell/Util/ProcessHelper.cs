@@ -25,5 +25,21 @@ namespace Master_Zhao.Shell.Util
             psInfo.FileName = path;
             Process.Start(psInfo);
         }
+
+        public static void KillProcess(string processName)
+        {
+            var process = Process.GetProcesses().FirstOrDefault(x => x.ProcessName == processName);
+            process?.Kill();
+        }
+
+        public static IntPtr FindProcessWindow(string processName)
+        {
+             var process = Process.GetProcesses().FirstOrDefault(x => x.ProcessName == processName);
+
+            if (process != null)
+                return process.MainWindowHandle;
+
+            return IntPtr.Zero;
+        }
     }
 }

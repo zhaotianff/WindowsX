@@ -63,10 +63,10 @@ namespace Master_Zhao.Shell.View.UserControls
 
         public string MenuName
         {
-            get => GetValue(MenuThumbnailProperty).ToString();
+            get => GetValue(MenuNameProperty).ToString();
             set
             {
-                SetValue(MenuThumbnailProperty, value);
+                SetValue(MenuNameProperty, value);
                 this.title.Content = value;
             }
         }

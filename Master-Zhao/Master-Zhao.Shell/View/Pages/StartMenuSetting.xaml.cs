@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Master_Zhao.Shell.StartMenu.Win98;
+using Master_Zhao.Shell.Util;
+using Master_Zhao.Shell.View.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,9 +21,41 @@ namespace Master_Zhao.Shell.View.Pages
     /// </summary>
     public partial class StartMenuSetting : Page
     {
+        private static readonly string SYS_MENU_NAME = "系统默认";
+
         public StartMenuSetting()
         {
             InitializeComponent();
+        }
+
+        private void OnSetStartMenu(object sender, string menuName)
+        {
+            if (menuName == SYS_MENU_NAME)
+            {
+                PInvoke.SystemTool.UnHookStart();
+                ProcessHelper.KillProcess(menuName);
+                return;
+            }
+
+            LaunchStartMenu(menuName);
+        }
+
+        private void LaunchStartMenu(string menuName)
+        {
+            var startMenuHandle = ProcessHelper.FindProcessWindow(menuName);
+            if (startMenuHandle == IntPtr.Zero)
+            {
+                Windows98 windows98 = new Windows98();
+            }
+        }
+
+        private void OnSelectStartMenu(object sender, EventArgs e)
+        {
+            foreach (var item in wrap.Children)
+            {
+                var startMenuControl = item as StartMenuControl;
+                startMenuControl?.ResetBorderBrush();
+            }
         }
     }
 }
