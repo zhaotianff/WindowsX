@@ -7,12 +7,20 @@ namespace Master_Zhao.Shell.StartMenu
 {
     public class StartMenuManager
     {
+        private static readonly string SYS_MENU_NAME = "系统默认";
+
         private static string previousStartMenuName = "";
 
         public static void LaunchStartMenu(string menuName)
         {
             if (menuName == previousStartMenuName)
                 return;
+
+            if (menuName == SYS_MENU_NAME)
+            {
+                SetDefaultStartMenu();
+                return;
+            }
 
             if (!string.IsNullOrEmpty(previousStartMenuName))
                 StopStartMenu(menuName);

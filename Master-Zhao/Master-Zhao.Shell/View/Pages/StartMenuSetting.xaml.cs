@@ -22,8 +22,6 @@ namespace Master_Zhao.Shell.View.Pages
     /// </summary>
     public partial class StartMenuSetting : Page
     {
-        private static readonly string SYS_MENU_NAME = "系统默认";
-
         public StartMenuSetting()
         {
             InitializeComponent();
@@ -31,13 +29,6 @@ namespace Master_Zhao.Shell.View.Pages
 
         private void OnSetStartMenu(object sender, string menuName)
         {
-            if (menuName == SYS_MENU_NAME)
-            {
-                PInvoke.SystemTool.UnHookStart();
-                ProcessHelper.KillProcess(menuName);
-                return;
-            }
-
             LaunchStartMenu(menuName);
         }
 
