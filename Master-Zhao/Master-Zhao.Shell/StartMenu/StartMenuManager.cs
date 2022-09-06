@@ -8,8 +8,8 @@ namespace Master_Zhao.Shell.StartMenu
     public class StartMenuManager
     {
         private static readonly string SYS_MENU_NAME = "系统默认";
-
         private static string previousStartMenuName = "";
+        private static bool hookFlag = false;
 
         public static void LaunchStartMenu(string menuName)
         {
@@ -29,7 +29,9 @@ namespace Master_Zhao.Shell.StartMenu
             if (startMenuHandle == IntPtr.Zero)
             {
                 Windows98 windows98 = new Windows98();
-                PInvoke.SystemTool.HookStart(new WindowInteropHelper(windows98).Handle);
+                windows98.Show();
+                hookFlag = PInvoke.SystemTool.HookStart(new WindowInteropHelper(windows98).Handle);
+                HideStartMenu();
             }
 
             previousStartMenuName = menuName;
@@ -44,9 +46,29 @@ namespace Master_Zhao.Shell.StartMenu
         {
             if(!string.IsNullOrEmpty(previousStartMenuName))
             {
+                UnHookStart();
+            }
+        }
+
+        public static void UnHookStart()
+        {
+            if(hookFlag)
+            {
                 ProcessHelper.KillProcess(previousStartMenuName);
                 PInvoke.SystemTool.UnHookStart();
             }
+
+            hookFlag = false;
+        }
+
+        public static void ShowStartMenu()
+        {
+            PInvoke.SystemTool.ShowCustomStart();
+        }
+
+        public static void HideStartMenu()
+        {
+            PInvoke.SystemTool.HideCustomStart();
         }
     }
 }

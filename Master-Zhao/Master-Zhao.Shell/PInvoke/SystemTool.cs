@@ -23,11 +23,17 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool UnRegisterFastRunHotKey();
-        [DllImport("MasterZhaoCore.dll")]
 
-        public static extern bool HookStart(IntPtr action);
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool HookStart(IntPtr hwnd);
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool UnHookStart();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool ShowCustomStart();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool HideCustomStart();
     }
 }

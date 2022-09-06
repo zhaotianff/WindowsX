@@ -206,7 +206,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
 
                 if (startMenuItem.Child.Count == 0)
                 {
-                    this.Visibility = Visibility.Hidden;
+                    StartMenuManager.HideStartMenu();
                     ProcessHelper.Execute(startMenuItem?.Exec);
                 }
             }
@@ -225,7 +225,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
 
         private void StartMenuWindowBase_LostFocus(object sender, RoutedEventArgs e)
         {
-            this.Visibility = Visibility.Hidden;
+            //StartMenuManager.HideStartMenu();
         }
     }
 }

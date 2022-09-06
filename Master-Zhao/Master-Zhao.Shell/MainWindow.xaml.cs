@@ -2,6 +2,7 @@
 using Master_Zhao.Shell.Infrastructure.Navigation;
 using Master_Zhao.Shell.Pages;
 using Master_Zhao.Shell.PInvoke;
+using Master_Zhao.Shell.StartMenu;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
@@ -171,6 +172,7 @@ namespace Master_Zhao.Shell
 
             //TODO 
             toolsPage.Terminate();
+            StartMenuManager.UnHookStart();
         }
 
         private async void BlurWindow_StateChanged(object sender, EventArgs e)

@@ -48,6 +48,8 @@ RegisterFastRunHotKey
 UnRegisterFastRunHotKey
 HookStart
 UnHookStart
+ShowCustomStart
+HideCustomStart
 
 ;startuptool.h
 IsExistStartupRun

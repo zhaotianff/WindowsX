@@ -238,12 +238,10 @@ LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 
 		switch (wParam)
 		{
-			case WM_KEYDOWN:
-			case WM_SYSKEYDOWN:
 			case WM_KEYUP:
-			case WM_SYSKEYUP:
 			{
-				bWinKeyStroke = (pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN);
+				bWinKeyStroke = (pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN) ||
+					((pKb->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0));
 				break;
 			}
 			default:
@@ -317,6 +315,26 @@ BOOL UnHookStart()
 		bResult &= UnhookWindowsHookEx(g_hHookMs);
 
 	return bResult;
+}
+
+BOOL ShowCustomStart()
+{
+	if (hStartMenuWindow)
+	{
+		return ShowWindow(hStartMenuWindow,SW_SHOW);
+	}
+
+	return FALSE;
+}
+
+BOOL HideCustomStart()
+{
+	if (hStartMenuWindow)
+	{
+		return ShowWindow(hStartMenuWindow, SW_HIDE);
+	}
+
+	return FALSE;
 }
 
 
