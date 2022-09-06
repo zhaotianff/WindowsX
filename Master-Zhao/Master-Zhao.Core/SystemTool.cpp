@@ -309,7 +309,10 @@ BOOL UnHookStart()
 	hStartMenuWindow = NULL;
 
 	if (g_hHookKb)
+	{
 		bResult = UnhookWindowsHookEx(g_hHookKb);
+		keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+	}
 
 	if(g_hHookMs)
 		bResult &= UnhookWindowsHookEx(g_hHookMs);
