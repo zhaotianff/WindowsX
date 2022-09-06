@@ -295,12 +295,17 @@ BOOL HookStart(HWND hwnd)
 	hStartMenuWindow = hwnd;
 
 	g_hHookKb = SetWindowsHookEx(WH_KEYBOARD_LL, KbLLProc, g_hDllModule, 0);
-	g_hHookMs = SetWindowsHookEx(WH_MOUSE_LL, MsLLProc, g_hDllModule, 0);
 
-	if (g_hHookKb && g_hHookMs)
-		return TRUE;
-	else
-		return FALSE;
+	//RetroBar Taskbar
+	HWND hRetroBar = FindWindow(NULL, L"RetroBar Taskbar");
+
+	if (NULL == hRetroBar)
+	{
+		g_hHookMs = SetWindowsHookEx(WH_MOUSE_LL, MsLLProc, g_hDllModule, 0);
+		return (g_hHookKb && g_hHookMs);
+	}
+
+	return NULL != g_hHookKb;
 }
 
 BOOL UnHookStart()
