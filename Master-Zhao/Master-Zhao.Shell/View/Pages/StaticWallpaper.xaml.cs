@@ -98,7 +98,7 @@ namespace Master_Zhao.Shell.Pages
                 var sb = new StringBuilder(1024);
                 DesktopTool.GetRecentBackground(sb);
                 recentWallpapers = sb.ToString().Split(";").Take(5);
-                RemoveUnavailableWallpaper(recentWallpapers);
+                recentWallpapers = RemoveUnavailableWallpaper(recentWallpapers);
 
                 foreach (var wallpaper in recentWallpapers)
                 {
@@ -110,15 +110,15 @@ namespace Master_Zhao.Shell.Pages
             }, new System.Threading.CancellationToken(), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void RemoveUnavailableWallpaper(IEnumerable<string> list)
+        private List<string> RemoveUnavailableWallpaper(IEnumerable<string> list)
         {
             var tempList = new List<string>(list);
-            for (int i = 0; i < list.Count(); i++)
+            for (int i = list.Count() -1; i >= 0; i--)
             {
                 if (System.IO.File.Exists(list.ElementAt(i)) == false)
                     tempList.RemoveAt(i);
             }
-            list = tempList;
+            return tempList;
         }
 
         private void LoadDailyWallpaper()
