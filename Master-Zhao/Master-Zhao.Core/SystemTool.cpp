@@ -327,6 +327,7 @@ BOOL UnHookStart()
 
 BOOL ShowCustomStart()
 {
+	bStartMenuDisplay = TRUE;
 	if (hStartMenuWindow)
 	{
 		return ShowWindow(hStartMenuWindow,SW_SHOW);
@@ -337,6 +338,7 @@ BOOL ShowCustomStart()
 
 BOOL HideCustomStart()
 {
+	bStartMenuDisplay = FALSE;
 	if (hStartMenuWindow)
 	{
 		return ShowWindow(hStartMenuWindow, SW_HIDE);
