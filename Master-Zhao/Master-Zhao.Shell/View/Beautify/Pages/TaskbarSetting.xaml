@@ -63,8 +63,8 @@
                     <RadioButton Content="毛玻璃效果" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" GroupName="blur" IsChecked="True" Checked="blur_Checked" Name="radio_blur"/>
                     <RadioButton Content="全透明效果" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="100,0,0,0" GroupName="blur" Checked="transparent_Checked" Name="radio_transparent"/>
 
-                    <Image Grid.Row="1"  Source="../../Icon/windows10_blur_taskbar.png" Stretch="Uniform" Margin="5" Visibility="{Binding ElementName=radio_blur,Path=IsChecked,Converter={StaticResource visibilityConverter}}"></Image>
-                    <Image Grid.Row="1"  Source="../../Icon/windows10_transparent_taskbar.png" Stretch="Uniform" Margin="5" Visibility="{Binding ElementName=radio_transparent,Path=IsChecked,Converter={StaticResource visibilityConverter}}"></Image>
+                    <Image Grid.Row="1"  Source="../../../Icon/windows10_blur_taskbar.png" Stretch="Uniform" Margin="5" Visibility="{Binding ElementName=radio_blur,Path=IsChecked,Converter={StaticResource visibilityConverter}}"></Image>
+                    <Image Grid.Row="1"  Source="../../../Icon/windows10_transparent_taskbar.png" Stretch="Uniform" Margin="5" Visibility="{Binding ElementName=radio_transparent,Path=IsChecked,Converter={StaticResource visibilityConverter}}"></Image>
                 </Grid>
             </StackPanel>
         </GroupBox>

@@ -11,8 +11,8 @@
 
     <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
         <WrapPanel Name="wrap">
-            <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../Icon/about_back.jpeg" Margin="10" x:Name="menu_default" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="系统默认"/>
-            <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../Icon/StartMenu/startmenu_98.png" Margin="10" x:Name="menu_98" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="Windows 98"/>
+            <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../../Icon/about_back.jpeg" Margin="10" x:Name="menu_default" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="系统默认"/>
+            <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../../Icon/StartMenu/startmenu_98.png" Margin="10" x:Name="menu_98" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="Windows 98"/>
         </WrapPanel>
     </ScrollViewer>
 </Page>
