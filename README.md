@@ -65,6 +65,7 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
   * 组策略和注册表管理
   * 快速搜索（基于任务栏）
 ## 实用工具
+  * 老板键
   * 一键优化系统设置
   * 硬件信息
   * 开机助手
@@ -74,11 +75,7 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
 ## 划水
 
 # 正在开发的功能
-  * 美化->其它->Windows98开始菜单
-  <p align="center">
-    <img align="center" alt="error dll format" src="Screenshots/win98_startmenu.png" />
-</p>
-  
+  * 实用工具 ->老板键
      
 # 界面截图
 <table align="center">
@@ -106,6 +103,14 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
  </tr>
  <tr>
   <td colspan="2"> <img align="center" alt="dynamic wallpaper" src="Screenshots/mouse_effect.png" /></td>
+ </tr>
+  <tr>
+  <td colspan="2">Windows 98开始菜单</td>
+ </tr>
+ <tr>
+  <td colspan="2">   
+    <img align="center" alt="error dll format" src="Screenshots/win98_startmenu.png" />
+  </td>
  </tr>
 </table>
 
