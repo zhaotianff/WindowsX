@@ -37,7 +37,7 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <Frame Name="frame" Source="StaticWallpaper.xaml">
+            <Frame Name="frame" Source="./Pages/StaticWallpaper.xaml">
                 
             </Frame>
         </Grid>
