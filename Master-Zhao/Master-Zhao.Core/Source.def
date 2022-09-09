@@ -36,6 +36,8 @@ PaintVersionInfo
 GetTaskbarThumbnailSize
 SetTaskbarThumbnailSize
 ActivateTaskBar
+CanAddToTaskBar
+GetProcessNameFomrHwnd
 
 EmbedWindowToDesktop
 

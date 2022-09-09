@@ -135,5 +135,17 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern void ActivateTaskBar();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool CanAddToTaskBar(IntPtr hwnd);
+
+        /// <summary>
+        /// get process name
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        /// <remarks>why not return string ? https://stackoverflow.com/questions/370079/pinvoke-for-c-function-that-returns-char</remarks>
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern IntPtr GetProcessNameFomrHwnd(IntPtr hWnd);
     }
 }

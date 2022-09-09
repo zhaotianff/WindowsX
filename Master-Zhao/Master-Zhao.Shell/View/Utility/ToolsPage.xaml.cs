@@ -1,4 +1,5 @@
 ﻿using Master_Zhao.Shell.Infrastructure.Navigation;
+using Master_Zhao.Shell.View.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace Master_Zhao.Shell.Pages
     {
         private ToggleButton toggleButton = null;
         private FastRunSetting fastRunSetting = new FastRunSetting();
+        private BossKey bossKey = new BossKey();
         private Page defaultPage = null;
 
         public ToolsPage()
@@ -49,6 +51,12 @@ namespace Master_Zhao.Shell.Pages
             frame.Content = fastRunSetting;
             fastRunSetting.InitFastRun();
             defaultPage = fastRunSetting;
+        }
+
+        private void btn_BossKeyClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = bossKey;
+            defaultPage = bossKey;
         }
 
         public void Terminate()

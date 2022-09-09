@@ -25,7 +25,7 @@
             </GroupBox.Header>
 
             <StackPanel>
-                <CheckBox Content="Windows 11风格任务栏" Name="cbx_Windows11Taskbar" IsEnabled="False" Checked="cbx_Windows11Taskbar_Checked" Unchecked="cbx_Windows11Taskbar_Unchecked">
+                <CheckBox Content="Windows 11风格任务栏" Name="cbx_Windows11Taskbar" IsEnabled="False" Checked="cbx_Windows11Taskbar_Checked" Unchecked="cbx_Windows11Taskbar_Unchecked" Style="{StaticResource CheckBoxStyle}">
                     <CheckBox.ToolTip>
                         <ToolTip>Windows 11风格任务栏包含开始菜单图标、开始菜单位置和任务列表位置的改变</ToolTip>
                     </CheckBox.ToolTip>
@@ -51,7 +51,7 @@
                         <ComboBoxItem>ACCENT_ENABLE_BLURBEHIND</ComboBoxItem>
                         <ComboBoxItem>ACCENT_ENABLE_ACRYLICBLURBEHIND</ComboBoxItem>
                     </ComboBox>
-                    <CheckBox Content="启用任务栏透明效果" Name="cbx_BlurTaskbar" Checked="btn_EnableBlurTaskbar_Click" Unchecked="btn_DisableBlurTaskbar_Click"></CheckBox>
+                    <CheckBox Content="启用任务栏透明效果" Name="cbx_BlurTaskbar" Checked="btn_EnableBlurTaskbar_Click" Unchecked="btn_DisableBlurTaskbar_Click" Style="{StaticResource CheckBoxStyle}"></CheckBox>
                 </WrapPanel>
 
                 <Grid Height="80" IsEnabled="{Binding ElementName=cbx_BlurTaskbar,Path=IsChecked}">

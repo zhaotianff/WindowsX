@@ -574,3 +574,71 @@ VOID ActivateTaskBar()
 	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
 }
 
+//from https://github.com/cairoshell/ManagedShell  
+//src/ManagedShell.WindowsTasks/ApplicationWindow.cs
+BOOL CanAddToTaskBar(HWND hwnd)
+{
+	if (NULL == hwnd)
+		return FALSE;
+
+	int extendedWindowStyles = GetWindowLong(hwnd, GWL_EXSTYLE);
+	bool isWindow = IsWindow(hwnd);
+	bool isVisible = IsWindowVisible(hwnd);
+	bool isToolWindow = (extendedWindowStyles & WS_EX_TOOLWINDOW) != 0;
+	bool isAppWindow = (extendedWindowStyles & WS_EX_APPWINDOW) != 0;
+	bool isNoActivate = (extendedWindowStyles & WS_EX_NOACTIVATE) != 0;
+	HWND ownerWin = GetWindow(hwnd, GW_OWNER);
+
+	return isWindow && isVisible && (ownerWin == NULL || isAppWindow) && (!isNoActivate || isAppWindow) && !isToolWindow;
+}
+
+LPTSTR GetProcessNameFomrHwnd(HWND hWnd)
+{
+	TCHAR* buf = new TCHAR[512];
+
+	DWORD dwLen = 512;
+	DWORD procId;
+	GetWindowThreadProcessId(hWnd, &procId);
+	if (procId != 0)
+	{
+		HANDLE hProc = OpenProcess(0x00001000, false, (int)procId);
+		QueryFullProcessImageName(hProc, 0, buf, &dwLen);
+
+		//uwp
+		TCHAR* lowerBuf = new TCHAR[260];
+		lstrcpy(lowerBuf, buf);
+	    lowerBuf = CharLower(lowerBuf);
+		if (NULL != StrStr(lowerBuf, L"applicationframehost.exe"))
+		{
+			delete[] lowerBuf;
+			lowerBuf = NULL;
+			return NULL;
+		}
+
+		//fix this
+		if (NULL != StrStr(lowerBuf, L"windowsapps"))
+		{
+			delete[] lowerBuf;
+			lowerBuf = NULL;
+			return NULL;
+		}
+
+		if (NULL != StrStr(lowerBuf, L"systemapps"))
+		{
+			delete[] lowerBuf;
+			lowerBuf = NULL;
+			return NULL;
+		}
+	}
+
+	TCHAR* szText = new TCHAR[128];
+	GetWindowText(hWnd, szText, 128);
+	buf = lstrcat(buf, L";");
+	buf = lstrcat(buf, szText);
+
+	delete[] szText;
+	szText = NULL;
+
+	return buf;
+}
+

@@ -9,6 +9,34 @@
       Title="BossKey">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Label Content="老板键" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <CheckBox Content="启用老板键" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <CheckBox Content="切换到当前执行的程序" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}" Name="cbx_Running" Checked="cbx_Running_Checked"/>
+
+            <GroupBox Header="当前执行的程序" Grid.Row="1" Margin="0,10,0,0" IsEnabled="{Binding ElementName=cbx_Running,Path=IsChecked}">
+                <ListBox BorderThickness="0" Style="{StaticResource ListBoxStyle}" Name="list_Tasks">
+                    
+                </ListBox>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Page>
