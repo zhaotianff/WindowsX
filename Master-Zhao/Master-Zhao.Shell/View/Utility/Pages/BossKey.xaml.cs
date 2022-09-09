@@ -26,7 +26,7 @@ namespace Master_Zhao.Shell.View.Pages
             InitializeComponent();
         }
 
-        private void LoadProcessList()
+        private void LoadProcessList(ListBox listBox)
         {
             var processes = Process.GetProcesses();
 
@@ -52,7 +52,7 @@ namespace Master_Zhao.Shell.View.Pages
                             {
                                 processName = System.IO.Path.GetFileNameWithoutExtension(strArray[0]);
                             }
-                            this.list_Tasks.Items.Add(processName);
+                            listBox.Items.Add(processName);
                         }
                     }
                 }
@@ -61,7 +61,12 @@ namespace Master_Zhao.Shell.View.Pages
 
         private void cbx_Running_Checked(object sender, RoutedEventArgs e)
         {
-            LoadProcessList();
+            LoadProcessList(list_TasksRunning);
+        }
+
+        private void cbx_Kill_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadProcessList(list_TasksKill);
         }
     }
 }
