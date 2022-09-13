@@ -30,6 +30,8 @@ namespace Master_Zhao.Shell.View.Pages
         {
             var processes = Process.GetProcesses();
 
+            listBox.Items.Clear();
+
             foreach (var process in processes)
             {
                 if (PInvoke.DesktopTool.CanAddToTaskBar(process.MainWindowHandle))
@@ -67,6 +69,16 @@ namespace Master_Zhao.Shell.View.Pages
         private void cbx_Kill_Checked(object sender, RoutedEventArgs e)
         {
             LoadProcessList(list_TasksKill);
+        }
+
+        private void cbx_SwitchToDesktop_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbx_Execute_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
