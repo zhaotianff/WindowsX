@@ -26,6 +26,30 @@ namespace Master_Zhao.Shell.View.Pages
             InitializeComponent();
         }
 
+        private void cbx_Running_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadProcessList(list_TasksRunning);
+        }
+
+        private void cbx_Kill_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadProcessList(list_TasksKill);
+        }
+
+        private void cbx_SwitchToDesktop_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbx_Execute_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbx_EnableBossKey_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void LoadProcessList(ListBox listBox)
         {
             var processes = Process.GetProcesses();
@@ -50,7 +74,7 @@ namespace Master_Zhao.Shell.View.Pages
                         {
                             var processName = strArray[1];
 
-                            if(string.IsNullOrEmpty(processName))
+                            if (string.IsNullOrEmpty(processName))
                             {
                                 processName = System.IO.Path.GetFileNameWithoutExtension(strArray[0]);
                             }
@@ -59,26 +83,6 @@ namespace Master_Zhao.Shell.View.Pages
                     }
                 }
             }
-        }
-
-        private void cbx_Running_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadProcessList(list_TasksRunning);
-        }
-
-        private void cbx_Kill_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadProcessList(list_TasksKill);
-        }
-
-        private void cbx_SwitchToDesktop_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void cbx_Execute_Checked(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

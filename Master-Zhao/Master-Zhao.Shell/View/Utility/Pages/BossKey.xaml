@@ -15,8 +15,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -24,29 +23,29 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <CheckBox Content="启用老板键" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}" Name="cbx_EnableBossKey"/>
+            <CheckBox Content="启用老板键" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}" Name="cbx_EnableBossKey" Checked="cbx_EnableBossKey_Checked"/>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="0,0,20,10" IsEnabled="{Binding ElementName=cbx_EnableBossKey,Path=IsChecked}">
+        <Grid Grid.Row="2" Margin="5,0,20,10" IsEnabled="{Binding ElementName=cbx_EnableBossKey,Path=IsChecked}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border CornerRadius="5" Grid.RowSpan="2" BorderBrush="{DynamicResource BlackColor}" BorderThickness="1"></Border>
-            <RadioButton Content="切换到任务" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Running" Checked="cbx_Running_Checked"/>
+            <RadioButton Content="切换到任务" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Running" Checked="cbx_Running_Checked" Style="{StaticResource RadioButtonStyle}" />
             <GroupBox Header="当前执行的程序" Grid.Row="1" Margin="0,5,0,10" IsEnabled="{Binding ElementName=cbx_Running,Path=IsChecked}" BorderThickness="0">
                 <ListBox BorderThickness="0" Style="{StaticResource ListBoxStyle}" Name="list_TasksRunning">
 
                 </ListBox>
             </GroupBox>
         </Grid>
-        <Grid Grid.Row="3" Margin="0,0,20,10" IsEnabled="{Binding ElementName=cbx_EnableBossKey,Path=IsChecked}">
+        <Grid Grid.Row="3" Margin="5,0,20,10" IsEnabled="{Binding ElementName=cbx_EnableBossKey,Path=IsChecked}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border CornerRadius="5" Grid.RowSpan="2" BorderBrush="{DynamicResource BlackColor}" BorderThickness="1"></Border>
-            <RadioButton Content="结束任务" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Kill" Checked="cbx_Kill_Checked"/>
+            <RadioButton Content="结束任务" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Kill" Checked="cbx_Kill_Checked" Style="{StaticResource RadioButtonStyle}"/>
             <GroupBox Header="当前执行的程序" Grid.Row="1" Margin="0,5,0,10" IsEnabled="{Binding ElementName=cbx_Kill,Path=IsChecked}" BorderThickness="0">
                 <ListBox BorderThickness="0" Style="{StaticResource ListBoxStyle}" Name="list_TasksKill">
                     <ListBox.ItemTemplate>
@@ -60,13 +59,13 @@
                 </ListBox>
             </GroupBox>
         </Grid>
-        <Grid Grid.Row="4" Margin="0,0,20,10" IsEnabled="{Binding ElementName=cbx_EnableBossKey,Path=IsChecked}">
+        <Grid Grid.Row="4" Margin="6,0,20,10" IsEnabled="{Binding ElementName=cbx_EnableBossKey,Path=IsChecked}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border CornerRadius="5" Grid.RowSpan="2" BorderBrush="{DynamicResource BlackColor}" BorderThickness="1"></Border>
-            <RadioButton Content="打开指定的程序、文件、或网址" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Execute" Checked="cbx_Execute_Checked"/>
+            <RadioButton Content="打开指定的程序、文件、或网址" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Execute" Checked="cbx_Execute_Checked" Style="{StaticResource RadioButtonStyle}" />
             <GroupBox Header="指定程序" Grid.Row="1" Margin="0,5,0,10" IsEnabled="{Binding ElementName=cbx_Execute,Path=IsChecked}" BorderThickness="0">
                 <Grid>
                     <TextBox  Margin="10,5,90,5" Height="28" VerticalContentAlignment="Center" Text="https://www.baidu.com"/>
@@ -74,12 +73,12 @@
                 </Grid>
             </GroupBox>
         </Grid>
-        <Grid Grid.Row="5" Margin="0,0,20,10" IsEnabled="{Binding ElementName=cbx_EnableBossKey,Path=IsChecked}">
+        <Grid Grid.Row="5" Margin="7,0,20,10" IsEnabled="{Binding ElementName=cbx_EnableBossKey,Path=IsChecked}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <Border CornerRadius="5" Grid.RowSpan="2" BorderBrush="{DynamicResource BlackColor}" BorderThickness="1"></Border>
-            <RadioButton Content="切换到桌面" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" IsChecked="True" Name="cbx_SwitchToDesktop" Checked="cbx_SwitchToDesktop_Checked"/>
+            <RadioButton Content="切换到桌面" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" IsChecked="True" Name="cbx_SwitchToDesktop" Checked="cbx_SwitchToDesktop_Checked" Style="{StaticResource RadioButtonStyle}"/>
         </Grid>
     </Grid>
 </Page>

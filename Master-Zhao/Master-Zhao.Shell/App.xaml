@@ -22,6 +22,7 @@
                 <ResourceDictionary Source="Styles/CheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/SliderStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ListBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/RadioButtonStyle.xaml"/>
 
                 <ResourceDictionary Source="Resources/ContextMenu/NotifyIconContextMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
