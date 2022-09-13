@@ -5,6 +5,7 @@ namespace Master_Zhao.Shell.PInvoke
 {
     public class InputTool
     {
+        public static readonly int VK_CONTROL = 0x11;
         public static readonly int VK_MENU = 0x12;
 
         [DllImport("MasterZhaoCore.dll")]

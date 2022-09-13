@@ -7,7 +7,7 @@ namespace Master_Zhao.Shell.Model.BossKey
     public enum BossKeyType
     {
         SwitchToTask,
-        TillTask,
+        KillTask,
         Exec,
         SwitchToDesktop
     }

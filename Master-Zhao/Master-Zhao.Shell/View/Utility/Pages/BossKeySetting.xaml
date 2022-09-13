@@ -68,7 +68,7 @@
             <RadioButton Content="打开指定的程序、文件、或网址" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Execute" Checked="cbx_Execute_Checked" Style="{StaticResource RadioButtonStyle}" />
             <GroupBox Header="指定程序" Grid.Row="1" Margin="0,5,0,10" IsEnabled="{Binding ElementName=cbx_Execute,Path=IsChecked}" BorderThickness="0">
                 <Grid>
-                    <TextBox  Margin="10,5,90,5" Height="28" VerticalContentAlignment="Center" Text="https://www.baidu.com"/>
+                    <TextBox  Margin="10,5,90,5" Height="28" VerticalContentAlignment="Center" Text="https://www.baidu.com" TextChanged="TextBox_TextChanged" Name="tbox_ExecPath"/>
                     <Button Content="浏览" HorizontalAlignment="Right" Width="68" Height="22" Margin="0,0,10,0" Style="{StaticResource ButtonStyle}"/>
                 </Grid>
             </GroupBox>
