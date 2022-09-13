@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Shell.Util;
+﻿using Master_Zhao.Shell.Model.BossKey;
+using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,12 +20,17 @@ namespace Master_Zhao.Shell.View.Pages
     /// <summary>
     /// BossKey.xaml 的交互逻辑
     /// </summary>
-    public partial class BossKey : Page
+    public partial class BossKeySetting : Page
     {
-        public BossKey()
+        private BossKeyType bossKeyType = BossKeyType.SwitchToDesktop;
+        private bool isEnableBossKey = false;
+
+        public BossKeySetting()
         {
             InitializeComponent();
         }
+
+        
 
         private void cbx_Running_Checked(object sender, RoutedEventArgs e)
         {
@@ -48,8 +54,10 @@ namespace Master_Zhao.Shell.View.Pages
 
         private void cbx_EnableBossKey_Checked(object sender, RoutedEventArgs e)
         {
+            isEnableBossKey = !isEnableBossKey;
 
         }
+
         private void LoadProcessList(ListBox listBox)
         {
             var processes = Process.GetProcesses();
@@ -83,6 +91,16 @@ namespace Master_Zhao.Shell.View.Pages
                     }
                 }
             }
+        }
+
+        private void StartBossKey()
+        {
+            
+        }
+
+        private void StopBossKey()
+        {
+
         }
     }
 }

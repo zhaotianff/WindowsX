@@ -1,4 +1,4 @@
-﻿<Page x:Class="Master_Zhao.Shell.View.Pages.BossKey"
+﻿<Page x:Class="Master_Zhao.Shell.View.Pages.BossKeySetting"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Label Content="老板键" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22"/>
+            <Label Content="老板键(Ctrl + I 或 Alt + Q)" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" ToolTip="临时快捷键"/>
         </Grid>
 
         <Grid Grid.Row="1">

@@ -25,7 +25,7 @@ namespace Master_Zhao.Shell.Pages
     {
         private ToggleButton toggleButton = null;
         private FastRunSetting fastRunSetting = new FastRunSetting();
-        private BossKey bossKey = new BossKey();
+        private BossKeySetting bossKey = new BossKeySetting();
         private Page defaultPage = null;
 
         public ToolsPage()
