@@ -93,6 +93,7 @@ namespace Master_Zhao.Shell.View.Utility.Windows
 
         public void StartBossKey()
         {
+            //Use RegisterHotKey instead
             this.Show();
             var hwnd = new WindowInteropHelper(this).Handle;
             SystemTool.RegisterFastRunHotKey(hwnd);
