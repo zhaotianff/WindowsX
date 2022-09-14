@@ -24,11 +24,7 @@ namespace Master_Zhao.Shell.View.Pages
     /// </summary>
     public partial class BossKeySetting : Page
     {
-        private BossKeyType bossKeyType = BossKeyType.SwitchToDesktop;
-        private bool isEnableBossKey = false;
         private BossKey bossKey;
-        private List<ProcessInfo> runningProcessList = new List<ProcessInfo>();
-        private List<ProcessInfo> killProcessList = new List<ProcessInfo>();
 
         public BossKeySetting()
         {
@@ -38,26 +34,59 @@ namespace Master_Zhao.Shell.View.Pages
         private void cbx_Running_Checked(object sender, RoutedEventArgs e)
         {
             LoadProcessList(list_TasksRunning);
-            bossKeyType = BossKeyType.SwitchToTask;
+            if (bossKey != null)
+            {
+                bossKey.BossKeyType = BossKeyType.SwitchToTask;
+            }
         }
 
         private void cbx_Kill_Checked(object sender, RoutedEventArgs e)
         {
             LoadProcessList(list_TasksKill);
-            bossKeyType = BossKeyType.KillTask;
+            if (bossKey != null)
+            {
+                bossKey.BossKeyType = BossKeyType.KillTask;
+            }
+        }
+
+        private void list_TasksKill_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(bossKey != null && list_TasksKill.SelectedIndex > -1)
+            {
+                bossKey.KillProcess = list_TasksKill.SelectedItem as ProcessInfo;
+            }
+        }
+
+        private void list_TasksRunning_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (bossKey != null && list_TasksRunning.SelectedIndex > -1)
+            {
+                bossKey.SwitchProcess = list_TasksRunning.SelectedItem as ProcessInfo;
+            }
         }
 
         private void cbx_SwitchToDesktop_Checked(object sender, RoutedEventArgs e)
         {
-            bossKeyType = BossKeyType.SwitchToDesktop;
+            if (bossKey != null)
+            {
+                bossKey.BossKeyType = BossKeyType.SwitchToDesktop;
+            }
         }
 
         private void cbx_Execute_Checked(object sender, RoutedEventArgs e)
         {
-            bossKeyType = BossKeyType.Exec;
-            bossKey.ExecPath = this.tbox_ExecPath.Text.Trim();
+            if (bossKey != null)
+            {
+                bossKey.BossKeyType = BossKeyType.Exec;
+                bossKey.ExecPath = this.tbox_ExecPath.Text.Trim();
+            }
         }
 
+        private void tbox_ExecPath_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(bossKey != null)
+                bossKey.ExecPath = this.tbox_ExecPath.Text.Trim();
+        }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (bossKey != null)
@@ -66,27 +95,48 @@ namespace Master_Zhao.Shell.View.Pages
             }
         }
 
+        private void browseProgram_Click(object sender, RoutedEventArgs e)
+        {
+            bossKey.ExecPath = DialogHelper.BrowserSingleFile();
+            tbox_ExecPath.Text = bossKey.ExecPath;
+        }
+
+        private void cbx_AutoCoding_Checked(object sender, RoutedEventArgs e)
+        {
+            if (bossKey != null)
+            {
+                bossKey.BossKeyType = BossKeyType.AutoCoding;
+                TextRange tr = new TextRange(rtbox.Document.ContentStart, rtbox.Document.ContentEnd);
+                bossKey.AutoCodingContent = tr.Text;
+            }
+        }
+
+        private void rtbox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextRange tr = new TextRange(rtbox.Document.ContentStart, rtbox.Document.ContentEnd);
+            bossKey.AutoCodingContent = tr.Text;
+        }
+
         private void cbx_EnableBossKey_Checked(object sender, RoutedEventArgs e)
         {
-            isEnableBossKey = !isEnableBossKey;
-            if(isEnableBossKey)
-            {
-                if (bossKey == null)
-                    bossKey = new BossKey();
+            if (bossKey == null)
+                bossKey = new BossKey();
 
-                bossKey.StartBossKey();
-            }
-            else
-            {
-                bossKey.StopBosKey();
-            }
+            bossKey.StartBossKey();
+            bossKey.BossKeyType = BossKeyType.SwitchToDesktop; //default
+        }
+
+        private void cbx_EnableBossKey_Unchecked(object sender, RoutedEventArgs e)
+        {
+            bossKey.StopBosKey();
+            bossKey.Close();
+            bossKey = null;
         }
 
         private void LoadProcessList(ListBox listBox)
         {
             var processes = Process.GetProcesses();
-
-            listBox.Items.Clear();            
+            listBox.Items.Clear();
 
             foreach (var process in processes)
             {
@@ -109,7 +159,14 @@ namespace Master_Zhao.Shell.View.Pages
                             {
                                 processName = System.IO.Path.GetFileNameWithoutExtension(strArray[0]);
                             }
-                            var processInfo = new ProcessInfo() { Name = processName, Path = strArray[0] };
+                            var processInfo = new ProcessInfo()
+                            {
+                                Name = processName,
+                                Path = strArray[0],
+                                MainWindowHwnd = process.MainWindowHandle,
+                                MainWindowText = process.MainWindowTitle,
+                                Pid = process.Id
+                            };
                             listBox.Items.Add(processInfo);
                         }
                     }

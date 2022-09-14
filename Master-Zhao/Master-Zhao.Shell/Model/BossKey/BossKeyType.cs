@@ -9,6 +9,7 @@ namespace Master_Zhao.Shell.Model.BossKey
         SwitchToTask,
         KillTask,
         Exec,
-        SwitchToDesktop
+        SwitchToDesktop,
+        AutoCoding
     }
 }

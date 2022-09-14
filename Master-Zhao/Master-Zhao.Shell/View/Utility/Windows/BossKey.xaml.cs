@@ -1,18 +1,11 @@
 ﻿using Master_Zhao.Shell.Model.BossKey;
 using Master_Zhao.Shell.Model.Process;
 using Master_Zhao.Shell.PInvoke;
+using Master_Zhao.Shell.Util;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Master_Zhao.Shell.View.Utility.Windows
 {
@@ -21,13 +14,11 @@ namespace Master_Zhao.Shell.View.Utility.Windows
     /// </summary>
     public partial class BossKey : Window
     {
-        private bool isExecuted = false;
-        private BossKeyType bossKeyType;
-        
+        public BossKeyType BossKeyType { get; set; }    
         public string ExecPath { get; set; }
-        public List<ProcessInfo> SwitchProcessList { get; set; } = new List<ProcessInfo>();
-        public int SwitchProcessIndex { get; set; }
-        public List<Tuple<string, string>> KillProcessList { get; set; } = new List<Tuple<string, string>>();
+        public string AutoCodingContent { get; set; }
+        public ProcessInfo SwitchProcess { get; set; }
+        public ProcessInfo KillProcess{ get; set; }
 
 
         public BossKey()
@@ -35,40 +26,89 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             InitializeComponent();
         }
 
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
-            hwndSource.AddHook(HwndProc);
-        }
-
         private IntPtr HwndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            //bug : first run
             switch (msg)
             {
                 case PInvoke.User32.WM_INPUT:
-                    if (InputTool.IsKeyPressed(InputTool.VK_MENU))
+                    if (InputTool.IsKeyPressed(InputTool.VK_CONTROL) && Keyboard.IsKeyDown(Key.I))
                     {
-                        if (isExecuted == false)
-                        {
-                            
-                            break;
-                        }
+                        ExecuteBossKey();
                     }
                     break;
             }
             return IntPtr.Zero;
         }
 
-        public void StartBossKey()
+        private void ExecuteBossKey()
+        {
+            switch(BossKeyType)
+            {
+                case BossKeyType.SwitchToDesktop:
+                    SwitchToDesktop();
+                    break;
+                case BossKeyType.SwitchToTask:
+                    SwitchToTask();
+                    break;
+                case BossKeyType.KillTask:
+                    KillTask();
+                    break;
+                case BossKeyType.Exec:
+                    Exec();
+                    break;
+                case BossKeyType.AutoCoding:
+                    AutoCoding();
+                    break;
+            }
+        }
+
+        private void SwitchToDesktop()
+        {
+            PInvoke.DesktopTool.SwitchToDesktop();
+        }
+
+        private void SwitchToTask()
+        {
+            if(SwitchProcess != null)
+                PInvoke.DesktopTool.SwitchToWindow(SwitchProcess.MainWindowHwnd);
+        }
+
+        private void KillTask()
         {
 
         }
 
-        public void StopBosKey()
+        private void Exec()
+        {
+            if (!string.IsNullOrEmpty(ExecPath))
+            {
+                ProcessHelper.Execute(ExecPath);
+            }
+        }
+
+        private void AutoCoding()
         {
 
+        }
+
+        public void StartBossKey()
+        {
+            this.Show();
+            var hwnd = new WindowInteropHelper(this).Handle;
+            SystemTool.RegisterFastRunHotKey(hwnd);
+            HwndSource hwndSource = HwndSource.FromHwnd(hwnd);
+            hwndSource.AddHook(HwndProc);
+            this.Hide();
+        }
+
+        public void StopBosKey()
+        {
+            this.Show();
+            var hwnd = new WindowInteropHelper(this).Handle;
+            SystemTool.UnRegisterFastRunHotKey();
+            HwndSource hwndSource = HwndSource.FromHwnd(hwnd);
+            hwndSource.RemoveHook(HwndProc);
+            this.Hide();
         }
     }
 }
