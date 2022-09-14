@@ -26,7 +26,7 @@ namespace Master_Zhao.Shell.View.Pages
     {
         private BossKeyType bossKeyType = BossKeyType.SwitchToDesktop;
         private bool isEnableBossKey = false;
-        private BossKey bossKey = new BossKey();
+        private BossKey bossKey;
         private List<ProcessInfo> runningProcessList = new List<ProcessInfo>();
         private List<ProcessInfo> killProcessList = new List<ProcessInfo>();
 
@@ -55,11 +55,15 @@ namespace Master_Zhao.Shell.View.Pages
         private void cbx_Execute_Checked(object sender, RoutedEventArgs e)
         {
             bossKeyType = BossKeyType.Exec;
+            bossKey.ExecPath = this.tbox_ExecPath.Text.Trim();
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            bossKey.ExecPath = this.tbox_ExecPath.Text.Trim();
+            if (bossKey != null)
+            {
+                bossKey.ExecPath = this.tbox_ExecPath.Text.Trim();
+            }
         }
 
         private void cbx_EnableBossKey_Checked(object sender, RoutedEventArgs e)
@@ -67,6 +71,9 @@ namespace Master_Zhao.Shell.View.Pages
             isEnableBossKey = !isEnableBossKey;
             if(isEnableBossKey)
             {
+                if (bossKey == null)
+                    bossKey = new BossKey();
+
                 bossKey.StartBossKey();
             }
             else
@@ -108,6 +115,11 @@ namespace Master_Zhao.Shell.View.Pages
                     }
                 }
             }
+        }
+
+        public void CloseBossKey()
+        {
+            bossKey?.Close();
         }
     }
 }
