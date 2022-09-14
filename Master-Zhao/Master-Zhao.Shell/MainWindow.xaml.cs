@@ -126,16 +126,32 @@ namespace Master_Zhao.Shell
 
         private void ShowOrHiderMainWindow()
         {
-            if(this.Visibility == Visibility.Hidden)
+            if(this.Visibility == Visibility.Visible)
             {
-                this.Visibility = Visibility.Visible;
-                this.ShowInTaskbar = true;
+                HideMainWindow();
             }
             else
             {
-                this.Visibility = Visibility.Visible;
-                this.ShowInTaskbar = false;
+                ShowMainWindow();
             }
+        }
+
+        private async void ShowMainWindow()
+        {
+            this.Visibility = Visibility.Visible;
+            this.ShowInTaskbar = true;
+
+            if (WindowState == WindowState.Minimized)
+            {
+                await Task.Delay(100);
+                WindowState = WindowState.Normal;
+            }
+        }
+
+        private void HideMainWindow()
+        {
+            this.Visibility = Visibility.Hidden;
+            this.ShowInTaskbar = false;
         }
 
         #region Event
@@ -181,6 +197,12 @@ namespace Master_Zhao.Shell
             {
                 await System.Threading.Tasks.Task.Delay(100);
                 BeginShowMenuAnimation(CurrentPage);
+            }
+
+            if(WindowState == WindowState.Minimized)
+            {
+                await Task.Delay(100);
+                HideMainWindow();
             }
         }
         #endregion
