@@ -23,8 +23,6 @@ struct SYSTEM_TIME_INFORMATION
 typedef long(__stdcall* funNtQuerySystemInformation)(UINT, PVOID, ULONG, PULONG);
 typedef void(__stdcall* funRtlGetNtVersionNumbers)(DWORD*, DWORD*, DWORD*);
 
-#define HOTKEY_BOSSKEY 1
-
 SILVERAROWANACORE_API SYSTEMTIME GetUserLoginTime();
 void GetVersionNumbers(DWORD*, DWORD*, DWORD*);
 SILVERAROWANACORE_API BOOL IsWindows10();
@@ -55,6 +53,6 @@ SILVERAROWANACORE_API BOOL UnHookStart();
 SILVERAROWANACORE_API BOOL ShowCustomStart();
 SILVERAROWANACORE_API BOOL HideCustomStart();
 
-SILVERAROWANACORE_API BOOL RegisterBossKeyHotKey(HWND hwnd, DWORD key);
-SILVERAROWANACORE_API BOOL UnRegisterBossKeyHotKey(HWND hwnd);
+SILVERAROWANACORE_API BOOL RegisterBossKeyHotKey(HWND hwnd, UINT modifier, UINT vkCode, UINT nHotKeyId);
+SILVERAROWANACORE_API BOOL UnRegisterBossKeyHotKey(HWND hwnd, UINT nHotKeyId);
 

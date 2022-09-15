@@ -179,6 +179,16 @@ VOID SwitchToDesktop()
 
 VOID SwitchToWindow(HWND hwnd)
 {
+	WINDOWPLACEMENT winPlackment{};
+	winPlackment.length = sizeof(WINDOWPLACEMENT);
+	GetWindowPlacement(hwnd, &winPlackment);
+
+	if (winPlackment.showCmd == SW_SHOWMINIMIZED)
+	{
+		winPlackment.showCmd |= SW_SHOWNORMAL;
+		SetWindowPlacement(hwnd,&winPlackment);
+	}
+
 	ShowWindow(hwnd, SW_SHOW);
 	SetForegroundWindow(hwnd);
 }

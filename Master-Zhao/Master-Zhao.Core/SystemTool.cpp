@@ -347,14 +347,14 @@ BOOL HideCustomStart()
 	return FALSE;
 }
 
-BOOL RegisterBossKeyHotKey(HWND hwnd, UINT modifier,UINT vkCode)
+BOOL RegisterBossKeyHotKey(HWND hwnd, UINT modifier,UINT vkCode,UINT nHotKeyId)
 {
-	return RegisterHotKey(hwnd, HOTKEY_BOSSKEY, modifier, vkCode);
+	return RegisterHotKey(hwnd, nHotKeyId, modifier, vkCode);
 }
 
-BOOL UnRegisterBossKeyHotKey(HWND hwnd)
+BOOL UnRegisterBossKeyHotKey(HWND hwnd,UINT nHotKeyId)
 {
-	return UnregisterHotKey(hwnd, HOTKEY_BOSSKEY);
+	return UnregisterHotKey(hwnd, nHotKeyId);
 }
 
 

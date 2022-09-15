@@ -36,6 +36,10 @@ namespace Master_Zhao.Shell.View.Utility.Windows
                         ExecuteBossKey();
                     }
                     break;
+                case PInvoke.User32.WM_HOTKEY:
+                    //wParam is hot key id
+                    ExecuteBossKey();
+                    break;
             }
             return IntPtr.Zero;
         }
@@ -70,7 +74,7 @@ namespace Master_Zhao.Shell.View.Utility.Windows
         private void SwitchToTask()
         {
             if(SwitchProcess != null)
-                PInvoke.DesktopTool.SwitchToWindow(SwitchProcess.MainWindowHwnd);
+                PInvoke.DesktopTool.SwitchToWindow(SwitchProcess.MainWindowHwnd);  //TODO: minimize state 
         }
 
         private void KillTask()
@@ -96,7 +100,9 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             //Use RegisterHotKey instead
             this.Show();
             var hwnd = new WindowInteropHelper(this).Handle;
-            SystemTool.RegisterFastRunHotKey(hwnd);
+            //SystemTool.RegisterFastRunHotKey(hwnd);
+            SystemTool.RegisterBossKeyHotKey(hwnd,SystemTool.MOD_CONTROL,'I',1);
+            SystemTool.RegisterBossKeyHotKey(hwnd, SystemTool.MOD_ALT, 'Q',2);
             HwndSource hwndSource = HwndSource.FromHwnd(hwnd);
             hwndSource.AddHook(HwndProc);
             this.Hide();
@@ -106,7 +112,9 @@ namespace Master_Zhao.Shell.View.Utility.Windows
         {
             this.Show();
             var hwnd = new WindowInteropHelper(this).Handle;
-            SystemTool.UnRegisterFastRunHotKey();
+            //SystemTool.UnRegisterFastRunHotKey();
+            SystemTool.UnRegisterBossKeyHotKey(hwnd,1);
+            SystemTool.UnRegisterBossKeyHotKey(hwnd, 2);
             HwndSource hwndSource = HwndSource.FromHwnd(hwnd);
             hwndSource.RemoveHook(HwndProc);
             this.Hide();
