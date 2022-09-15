@@ -347,6 +347,16 @@ BOOL HideCustomStart()
 	return FALSE;
 }
 
+BOOL RegisterBossKeyHotKey(HWND hwnd, UINT modifier,UINT vkCode)
+{
+	return RegisterHotKey(hwnd, HOTKEY_BOSSKEY, modifier, vkCode);
+}
+
+BOOL UnRegisterBossKeyHotKey(HWND hwnd)
+{
+	return UnregisterHotKey(hwnd, HOTKEY_BOSSKEY);
+}
+
 
 
 

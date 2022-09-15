@@ -9,6 +9,9 @@ namespace Master_Zhao.Shell.PInvoke
 {
     public class SystemTool
     {
+        public static readonly uint MOD_ALT = 0x0001;
+        public static readonly uint MOD_CONTROL =0x0002;
+
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool IsWindows10();
 
