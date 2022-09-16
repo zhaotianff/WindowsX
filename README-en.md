@@ -52,10 +52,18 @@ If it just runs without compiling. After installing .NET Core 3.1 Runtime and Vi
   * Dynamic wallpaper setting
   * Mouse effect
   * Custom start menu
-  * Desktop effect
   * Taskbar setting
-  * Context menu setting
-  * Boot image setting
+## Utilities
+  * boss key
+  * fast run
+      *  menu start
+## huá shuǐ
+
+# Todo list
+## Beautify
+  * desktop effect
+  * context menu setting
+  * boot image setting
   * other
 ## System Tools
   * boot management
@@ -65,12 +73,10 @@ If it just runs without compiling. After installing .NET Core 3.1 Runtime and Vi
   * gpedit & register
   * fast search(taskbar win+q)
 ## Utilities
-  * boss key
   * hardware information
   * startup assistant
   * fast run
       *  one key start
-      *  menu start
 ## huá shuǐ
 
 # Screenshot
