@@ -1,5 +1,4 @@
 ﻿using Master_Zhao.Shell.Model.BossKey;
-using Master_Zhao.Shell.Model.Process;
 using Master_Zhao.Shell.Util;
 using Master_Zhao.Shell.View.Utility.Windows;
 using System;
@@ -40,6 +39,11 @@ namespace Master_Zhao.Shell.View.Pages
             }
         }
 
+        private void cbx_Running_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.list_TasksRunning.Items.Clear();
+        }   
+
         private void cbx_Kill_Checked(object sender, RoutedEventArgs e)
         {
             LoadProcessList(list_TasksKill);
@@ -48,12 +52,16 @@ namespace Master_Zhao.Shell.View.Pages
                 bossKey.BossKeyType = BossKeyType.KillTask;
             }
         }
+        private void cbx_Kill_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.list_TasksKill.Items.Clear();
+        }
 
         private void list_TasksKill_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(bossKey != null && list_TasksKill.SelectedIndex > -1)
             {
-                bossKey.KillProcess = list_TasksKill.SelectedItem as ProcessInfo;
+                bossKey.KillProcess = list_TasksKill.SelectedItem as Process;
             }
         }
 
@@ -61,7 +69,7 @@ namespace Master_Zhao.Shell.View.Pages
         {
             if (bossKey != null && list_TasksRunning.SelectedIndex > -1)
             {
-                bossKey.SwitchProcess = list_TasksRunning.SelectedItem as ProcessInfo;
+                bossKey.SwitchProcess = list_TasksRunning.SelectedItem as Process;
             }
         }
 
@@ -147,29 +155,10 @@ namespace Master_Zhao.Shell.View.Pages
                     if (ptr == IntPtr.Zero)
                         continue;
 
-                    var str = Marshal.PtrToStringAuto(ptr);
+                    if (string.IsNullOrEmpty(process.MainWindowTitle))
+                        continue;
 
-                    if (!string.IsNullOrEmpty(str))
-                    {
-                        var strArray = str.Split(";");
-                        if (strArray.Length > 1)
-                        {
-                            var processName = strArray[1];
-                            if (string.IsNullOrEmpty(processName))
-                            {
-                                processName = System.IO.Path.GetFileNameWithoutExtension(strArray[0]);
-                            }
-                            var processInfo = new ProcessInfo()
-                            {
-                                Name = processName,
-                                Path = strArray[0],
-                                MainWindowHwnd = process.MainWindowHandle,
-                                MainWindowText = process.MainWindowTitle,
-                                Pid = process.Id
-                            };
-                            listBox.Items.Add(processInfo);
-                        }
-                    }
+                    listBox.Items.Add(process);  
                 }
             }
         }

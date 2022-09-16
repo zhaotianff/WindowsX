@@ -1,8 +1,8 @@
 ﻿using Master_Zhao.Shell.Model.BossKey;
-using Master_Zhao.Shell.Model.Process;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -17,8 +17,8 @@ namespace Master_Zhao.Shell.View.Utility.Windows
         public BossKeyType BossKeyType { get; set; }    
         public string ExecPath { get; set; }
         public string AutoCodingContent { get; set; }
-        public ProcessInfo SwitchProcess { get; set; }
-        public ProcessInfo KillProcess{ get; set; }
+        public Process SwitchProcess { get; set; }
+        public Process KillProcess { get; set; }
 
 
         public BossKey()
@@ -74,19 +74,27 @@ namespace Master_Zhao.Shell.View.Utility.Windows
         private void SwitchToTask()
         {
             if(SwitchProcess != null)
-                PInvoke.DesktopTool.SwitchToWindow(SwitchProcess.MainWindowHwnd);  //TODO: minimize state 
+                PInvoke.DesktopTool.SwitchToWindow(SwitchProcess.MainWindowHandle);  //TODO: minimize state 
         }
 
         private void KillTask()
         {
-
+            if (KillProcess != null)
+                KillProcess.Kill();
         }
 
         private void Exec()
         {
             if (!string.IsNullOrEmpty(ExecPath))
             {
-                ProcessHelper.Execute(ExecPath);
+                try
+                {
+                    ProcessHelper.Execute(ExecPath);
+                }
+                catch(Exception ex)
+                {
+
+                }
             }
         }
 

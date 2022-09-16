@@ -21,3 +21,9 @@ BOOL IsKeyPressed(int vKey)
 
     return (USHORT)state >> 15 == 1;
 }
+
+VOID AutoCode(TCHAR code)
+{
+    keybd_event(code, 0x45, NULL, NULL);
+    keybd_event(code, 0x45, KEYEVENTF_KEYUP, NULL);
+}
