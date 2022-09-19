@@ -3,6 +3,7 @@ using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -38,13 +39,13 @@ namespace Master_Zhao.Shell.View.Utility.Windows
                     break;
                 case PInvoke.User32.WM_HOTKEY:
                     //wParam is hot key id
-                    ExecuteBossKey();
+                    ExecuteBossKey(wParam);
                     break;
             }
             return IntPtr.Zero;
         }
 
-        private void ExecuteBossKey()
+        private void ExecuteBossKey(IntPtr wParam = default(IntPtr))
         {
             switch(BossKeyType)
             {
@@ -61,7 +62,10 @@ namespace Master_Zhao.Shell.View.Utility.Windows
                     Exec();
                     break;
                 case BossKeyType.AutoCoding:
-                    AutoCoding();
+                    if ((int)wParam == 1)
+                    {
+                        AutoCoding();
+                    }
                     break;
             }
         }
@@ -100,7 +104,7 @@ namespace Master_Zhao.Shell.View.Utility.Windows
 
         private void AutoCoding()
         {
-
+            PInvoke.InputTool.AutoCode(AutoCodingContent);
         }
 
         public void StartBossKey()

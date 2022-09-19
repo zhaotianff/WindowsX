@@ -35,6 +35,7 @@
                 </Grid.RowDefinitions>
                 <Border CornerRadius="5" Grid.RowSpan="2" BorderBrush="{DynamicResource BlackColor}" BorderThickness="1"></Border>
                 <RadioButton Content="切换到任务" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Running" Checked="cbx_Running_Checked" Unchecked="cbx_Running_Unchecked" Style="{StaticResource RadioButtonStyle}" />
+                <Button Content="刷新列表" HorizontalAlignment="Left" VerticalAlignment="Center" Width="88" Height="22" Margin="100,0,0,0" Click="btn_RefreshRunning_Click" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding ElementName=cbx_Running,Path=IsChecked}"/>
                 <GroupBox Header="当前执行的程序" Grid.Row="1" Margin="0,5,0,10" IsEnabled="{Binding ElementName=cbx_Running,Path=IsChecked}" BorderThickness="0">
                     <ListBox BorderThickness="0" Style="{StaticResource ListBoxStyle}" Name="list_TasksRunning" SelectionChanged="list_TasksRunning_SelectionChanged" MaxHeight="210">
                         <ListBox.ItemTemplate>
@@ -54,6 +55,7 @@
                 </Grid.RowDefinitions>
                 <Border CornerRadius="5" Grid.RowSpan="2" BorderBrush="{DynamicResource BlackColor}" BorderThickness="1"></Border>
                 <RadioButton Content="结束任务" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_Kill" Checked="cbx_Kill_Checked" Unchecked="cbx_Kill_Unchecked" Style="{StaticResource RadioButtonStyle}"/>
+                <Button Content="刷新列表" HorizontalAlignment="Left" VerticalAlignment="Center" Width="88" Height="22" Margin="100,0,0,0" Click="btn_RefreshKill_Click" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding ElementName=cbx_Kill,Path=IsChecked}"/>
                 <GroupBox Header="当前执行的程序" Grid.Row="1" Margin="0,5,0,10" IsEnabled="{Binding ElementName=cbx_Kill,Path=IsChecked}" BorderThickness="0">
                     <ListBox BorderThickness="0" Style="{StaticResource ListBoxStyle}" Name="list_TasksKill" SelectionChanged="list_TasksKill_SelectionChanged" MaxHeight="210">
                         <ListBox.ItemTemplate>
@@ -94,10 +96,10 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Border CornerRadius="5" Grid.RowSpan="2" BorderBrush="{DynamicResource BlackColor}" BorderThickness="1"></Border>
-                <RadioButton Content="帮我写代码" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_AutoCoding" Checked="cbx_AutoCoding_Checked" Style="{StaticResource RadioButtonStyle}" />
+                <RadioButton Content="帮我写代码(该选项仅支持Ctrl + I)" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_AutoCoding" Checked="cbx_AutoCoding_Checked" Style="{StaticResource RadioButtonStyle}" />
                 <GroupBox Header="指定源码" Grid.Row="1" Margin="0,5,0,20" IsEnabled="{Binding ElementName=cbx_AutoCoding,Path=IsChecked}" BorderThickness="0">
                     <Grid>
-                        <RichTextBox  Name="rtbox" Background="Transparent" MinHeight="80" LostFocus="rtbox_LostFocus"/>
+                        <RichTextBox  Name="rtbox" Background="Transparent" MinHeight="80" LostFocus="rtbox_LostFocus" KeyUp="rtbox_KeyUp"/>
                     </Grid>
                 </GroupBox>
             </Grid>

@@ -13,5 +13,14 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool IsKeyPressed(int vKey);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void  AutoCode([MarshalAs(UnmanagedType.LPWStr)]string code);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool SendUnicodeInput([MarshalAs(UnmanagedType.LPWStr)]char c);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool SendAsciiInput([MarshalAs(UnmanagedType.LPWStr)]char c);
     }
 }

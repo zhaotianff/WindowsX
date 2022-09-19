@@ -63,6 +63,9 @@ RemoveStartupRun
 ;inputtool.h
 GetRawInput
 IsKeyPressed
+SendUnicodeInput
+SendAsciiInput
+AutoCode
 
 ;icontool.h
 ExtractIconFromFile

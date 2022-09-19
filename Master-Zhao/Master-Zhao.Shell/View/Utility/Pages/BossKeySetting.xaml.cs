@@ -42,7 +42,12 @@ namespace Master_Zhao.Shell.View.Pages
         private void cbx_Running_Unchecked(object sender, RoutedEventArgs e)
         {
             this.list_TasksRunning.Items.Clear();
-        }   
+        }
+
+        private void btn_RefreshRunning_Click(object sender, RoutedEventArgs e)
+        {
+            LoadProcessList(list_TasksRunning);
+        }
 
         private void cbx_Kill_Checked(object sender, RoutedEventArgs e)
         {
@@ -55,6 +60,11 @@ namespace Master_Zhao.Shell.View.Pages
         private void cbx_Kill_Unchecked(object sender, RoutedEventArgs e)
         {
             this.list_TasksKill.Items.Clear();
+        }
+
+        private void btn_RefreshKill_Click(object sender, RoutedEventArgs e)
+        {
+            LoadProcessList(list_TasksKill);
         }
 
         private void list_TasksKill_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -120,6 +130,12 @@ namespace Master_Zhao.Shell.View.Pages
         }
 
         private void rtbox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextRange tr = new TextRange(rtbox.Document.ContentStart, rtbox.Document.ContentEnd);
+            bossKey.AutoCodingContent = tr.Text;
+        }
+
+        private void rtbox_KeyUp(object sender, KeyEventArgs e)
         {
             TextRange tr = new TextRange(rtbox.Document.ContentStart, rtbox.Document.ContentEnd);
             bossKey.AutoCodingContent = tr.Text;
