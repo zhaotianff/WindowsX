@@ -4,9 +4,11 @@
 #include <Shldisp.h>
 #include<shobjidl_core.h>
 #include<thumbcache.h>
-
+#include<VersionHelpers.h>
 
 #include"RegTool.h"
+
+#pragma comment(lib,"Dwmapi.lib")
 
 #define WM_SPAWN_WORKER 0x052C
 
@@ -94,6 +96,7 @@ SILVERAROWANACORE_API BOOL PaintVersionInfo(BOOL enable);
 SILVERAROWANACORE_API BOOL GetTaskbarThumbnailSize(DWORD*);
 SILVERAROWANACORE_API BOOL SetTaskbarThumbnailSize(DWORD,BOOL);
 SILVERAROWANACORE_API VOID ActivateTaskBar();
+BOOL GetShowInTaskbar(HWND hwnd, int extendedWindowStyles);
 SILVERAROWANACORE_API BOOL CanAddToTaskBar(HWND hwnd);
 SILVERAROWANACORE_API LPTSTR GetProcessNameFomrHwnd(HWND hWnd);
 

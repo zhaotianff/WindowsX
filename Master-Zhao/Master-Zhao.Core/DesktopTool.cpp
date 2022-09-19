@@ -1,4 +1,5 @@
 #include "DesktopTool.h"
+#include <dwmapi.h>
 
 struct tagBASICWINDOWINFO
 {
@@ -584,6 +585,43 @@ VOID ActivateTaskBar()
 	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
 }
 
+////from https://github.com/cairoshell/ManagedShell  
+//src/ManagedShell.WindowsTasks/ApplicationWindow.cs
+BOOL GetShowInTaskbar(HWND hwnd,int extendedWindowStyles)
+{
+	// EnumWindows and ShellHook return UWP app windows that are 'cloaked', which should not be visible in the taskbar.
+	if (IsWindows8OrGreater())
+	{
+		UINT cloaked;
+		DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, &cloaked, sizeof(UINT));
+
+		if (cloaked > 0)
+		{
+			return FALSE;
+		}
+
+		// UWP shell windows that are not cloaked should be hidden from the taskbar, too.
+		LPTSTR cName = new TCHAR[256];
+		GetClassName(hwnd, cName, 256);
+		if (StrCmp(L"ApplicationFrameWindow",cName ) == 0 || StrCmp(L"Windows.UI.Core.CoreWindow",cName) == 0)
+		{
+			if ((extendedWindowStyles & (int)WS_EX_WINDOWEDGE) == 0)
+			{
+				delete[] cName;
+				return false;
+			}
+		}
+		else if (!IsWindows10OrGreater && (StrCmp(L"ImmersiveBackgroundWindow", cName) == 0 || StrCmp(L"SearchPane",cName) == 0 || StrCmp(L"NativeHWNDHost",cName) == 0 || StrCmp(L"Shell_CharmWindow",cName) == 0 || StrCmp(L"ImmersiveLauncher",cName)))
+		{
+			delete[] cName;
+			return FALSE;
+		}
+	}
+
+	return TRUE;
+}
+
+
 //from https://github.com/cairoshell/ManagedShell  
 //src/ManagedShell.WindowsTasks/ApplicationWindow.cs
 BOOL CanAddToTaskBar(HWND hwnd)
@@ -599,7 +637,7 @@ BOOL CanAddToTaskBar(HWND hwnd)
 	bool isNoActivate = (extendedWindowStyles & WS_EX_NOACTIVATE) != 0;
 	HWND ownerWin = GetWindow(hwnd, GW_OWNER);
 
-	return isWindow && isVisible && (ownerWin == NULL || isAppWindow) && (!isNoActivate || isAppWindow) && !isToolWindow;
+	return isWindow && isVisible && (ownerWin == NULL || isAppWindow) && (!isNoActivate || isAppWindow) && !isToolWindow && GetShowInTaskbar(hwnd, extendedWindowStyles);
 }
 
 LPTSTR GetProcessNameFomrHwnd(HWND hWnd)
@@ -626,14 +664,21 @@ LPTSTR GetProcessNameFomrHwnd(HWND hWnd)
 		}
 
 		//fix this
-		if (NULL != StrStr(lowerBuf, L"windowsapps"))
+		/*if (NULL != StrStr(lowerBuf, L"windowsapps"))
 		{
 			delete[] lowerBuf;
 			lowerBuf = NULL;
 			return NULL;
-		}
+		}*/
 
-		if (NULL != StrStr(lowerBuf, L"systemapps"))
+		/*if (NULL != StrStr(lowerBuf, L"systemapps"))
+		{
+			delete[] lowerBuf;
+			lowerBuf = NULL;
+			return NULL;
+		}*/
+
+		if (NULL != StrStr(lowerBuf, L"explorer.exe"))
 		{
 			delete[] lowerBuf;
 			lowerBuf = NULL;
