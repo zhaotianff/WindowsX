@@ -83,6 +83,7 @@ namespace Master_Zhao.Shell.Pages
                 return;
 
             this.img_background.Source = new BitmapImage(new Uri(path, UriKind.Absolute));
+            //this.img_background.ImagePath = path;
         }
 
         private async void LoadRecentBackground()
