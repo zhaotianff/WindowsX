@@ -100,7 +100,7 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
 ![center_taskbar](Screenshots/center_taskbar.png)  
 **任务栏设置**  
 目前已经支持任务栏透明、Windows 11风格任务栏等设置，其它设置还在逐步完善中。    
-**注意：如果任务栏或桌面显示异常，可以重启资源管理器进程。在任务管理器中找到explorer.exe重启即可**  
+**小提示：如果任务栏或桌面显示异常，可以重启资源管理器进程。在任务管理器中找到explorer.exe重启即可**  
 
 ![win98_startmenu](Screenshots/win98_startmenu.png)  
 **自定义开始菜单**  
