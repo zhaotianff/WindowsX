@@ -83,38 +83,38 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
 ## 划水
      
 # 功能介绍
-![main](Screenshots/main.png)
+![main](Screenshots/main.png)  
 **主界面**    
 
-![static_wallpaper](Screenshots/static_wallpaper.png)
+![static_wallpaper](Screenshots/static_wallpaper.png)  
 **静态壁纸设置**   
 
-![dynamic_wallpaper](Screenshots/dynamic_wallpaper.png)
+![dynamic_wallpaper](Screenshots/dynamic_wallpaper.png)  
 **动态壁纸设置**  
 目前仅支持将本地视频设置为桌面背景，其它类型的动态壁纸后续再加入。  
 
-![mouse_effect](Screenshots/mouse_effect.png)
+![mouse_effect](Screenshots/mouse_effect.png)  
 **鼠标特效**  
 暂时只做了简单的版本，绘制了一些跟随的点。后面可以增加炫酷的效果  
 
-![center_taskbar](Screenshots/center_taskbar.png)
+![center_taskbar](Screenshots/center_taskbar.png)  
 **任务栏设置**  
 目前已经支持任务栏透明、Windows 11风格任务栏等设置，其它设置还在逐步完善中。    
 **注意：如果任务栏或桌面显示异常，可以重启资源管理器进程。在任务管理器中找到explorer.exe重启即可**  
 
-![win98_startmenu](Screenshots/win98_startmenu.png)
-**自定义开始菜单**
+![win98_startmenu](Screenshots/win98_startmenu.png)  
+**自定义开始菜单**  
 目前就做了一个简易版的Windows 98开始菜单，屏蔽了Win键和开始菜单按钮，其它方式打开开始菜单(如Ctrl + ESC)，还是会显示系统开始菜单。    
 Windows 98开始菜单的一些功能还在完善中。    
 
-![fast_run](Screenshots/fast_run.png)
-**快速启动菜单**
-这是一个支持快速启动的菜单，本来是想做成类似《古墓丽影 暗影》里武器切换的那种菜单效果。  
-但是时间有限，也还存在一些技术难题，所以做了个简单的快速启动菜单。  
+![fast_run](Screenshots/fast_run.png)  
+**快速启动菜单**  
+这是一个支持快速启动的菜单，本来是想做成类似《古墓丽影 暗影》里武器切换的那种菜单效果。    
+但是时间有限，也还存在一些技术难题，所以做了个简单的快速启动菜单。   
 使用方法：在界面配置快速启动项后，按住Alt键，会在鼠标处显示菜单，此时，再按1/2/3/4数字键，即可运行相应的菜单项，也可以通过鼠标点击运行。    
 
-![boss_key](Screenshots/boss_key.png)
-**老板键**
+![boss_key](Screenshots/boss_key.png)  
+**老板键**  
 这是一个方便划水的功能，启动老板键功能后，可以选择5种响应方式  
 分别是：切换到任务、结束任务、打开指定的程序、切换到桌面、帮我写代码。  
 目前设置的按键是Alt + Q(方便左手单手使用),Ctrl + I(方便双手一起使用)。  
@@ -122,7 +122,7 @@ Windows 98开始菜单的一些功能还在完善中。
 * 结束任务:当老板键按下时，会结束指定的进程
 * 打开指定的程序:可以支持网址、本地程序、控制面板项等，完整的支持项可以查看 https://github.com/zhaotianff/Windows-run-tool
 * 切换到桌面:该功能和Win + D一样
-* 帮我写代码：这个功能很魔幻，复制一段代码到代码框，然后打开开发环境，按下老板键，软件会自动帮你把刚才复制的代码重写一遍，假装自己在写代码。
+* 帮我写代码：这个功能很魔幻，复制一段代码到代码框，然后打开开发环境，按下老板键，软件会自动帮你把刚才复制的代码重写一遍，假装自己在写代码。  
 **小提示：目前软件支持最小化到任务栏，老板键功能可以全天使用，愉快的划水**  
 # License
 [GPLV3](LICENSE)
