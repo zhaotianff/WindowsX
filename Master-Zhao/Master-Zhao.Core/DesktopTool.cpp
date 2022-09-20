@@ -243,7 +243,17 @@ BOOL CenterStartMenu(BOOL enable)
 	GetWindowRect(hDesktop, &rectDesktop);
 	HWND hShell_TrayWnd = FindWindow(L"Shell_TrayWnd", NULL);
 	GetWindowRect(hShell_TrayWnd, &rectShellTrayWnd);
-	POINT point{ 0, rectDesktop.bottom - rectShellTrayWnd.bottom + 1};
+
+	int pX = 0;
+	if (enable)
+	{
+		pX = 0;
+	}
+	else
+	{
+		pX = (rectDesktop.right - rectNotify.right - rectStart.right) / 2 - rectStart.right;
+	}
+	POINT point{ pX, rectShellTrayWnd.top - 10 };
 	HWND hTrayNotifyWnd = FindWindowEx(hShell_TrayWnd, NULL, L"TrayNotifyWnd", NULL);
 	GetClientRect(hTrayNotifyWnd, &rectNotify);
 	HWND hStart = FindWindowEx(hShell_TrayWnd, NULL, L"Start", NULL);
@@ -253,6 +263,17 @@ BOOL CenterStartMenu(BOOL enable)
 
 	Sleep(100);
 	HWND hwnd = WindowFromPoint(point);
+
+	TCHAR szStartClass[260]{};
+	GetClassName(hwnd, szStartClass, 260);
+
+	if (lstrcmp(szStartClass, L"Windows.UI.Core.CoreWindow") != 0)
+	{
+		Sleep(100);
+		keybd_event(VK_LWIN, 0x45, NULL, NULL);
+		keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+		return FALSE;
+	}
 
 	//center 
 	int x = 0;

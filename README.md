@@ -83,19 +83,42 @@ Windows优化大师在2013年停止更新，鲁大师还在一直更新中。
 ## 划水
      
 # 功能介绍
-<table align="center">
- <tr>
+<img align="center" alt="start up" src="Screenshots/main.png" />
+<p align="center">
+主界面
+</p>
+
+<img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper.png" />
+<p align="center">
+静态壁纸设置
+</p>
+
+<img align="center" alt="static wallpaper" src="Screenshots/dynamic_wallpaper.png" />
+<p align="center">
+动态壁纸设置，支持将视频设置为桌面背景
+</p>
+
+<img align="center" alt="static wallpaper" src="Screenshots/dynamic_wallpaper.png" />
+<p align="center">
+鼠标特效，暂时只做了简单的版本，绘制了一些跟随的点。后面可以增加炫酷的效果
+</p>
+
+<img align="center" alt="static wallpaper" src="Screenshots/dynamic_wallpaper.png" />
+<p align="center">
+任务栏设置，目前已经支持任务栏透明设置，其它设置还在逐步完善中
+</p>
+<tr>
   <td colspan="2">main</td>
  </tr>
  <tr>
-  <td colspan="2"> <img align="center" alt="start up" src="Screenshots/main.png" /></td>
+  <td colspan="2"> </td>
  </tr>
   <tr>
   <td colspan="2">静态壁纸设置</td>
  </tr>
  <tr>
   <td><img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper.png" /></td>
-    <td><img align="center" alt="static wallpaper" src="Screenshots/static_wallpaper_2.png" /></td>
+    <td></td>
  </tr>
  <tr>
   <td colspan="2">动态壁纸设置</td>
