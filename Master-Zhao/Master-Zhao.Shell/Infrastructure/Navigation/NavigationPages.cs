@@ -13,6 +13,7 @@ namespace Master_Zhao.Shell.Infrastructure.Navigation
         SysManagement = 2,
         Tools = 3,
         HuaShui = 4,
+        Setting = 5,
         About
     }
 }

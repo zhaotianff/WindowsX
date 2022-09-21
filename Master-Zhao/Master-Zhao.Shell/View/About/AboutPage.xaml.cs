@@ -36,7 +36,8 @@ namespace Master_Zhao.Shell.Pages
                 new ReferenceProjectInfo(){ProjectName = "TranslucentTB",ProjectUrl = "https://github.com/TranslucentTB/TranslucentTB",ProjectDescription = "A lightweight (uses a few MB of RAM and almost no CPU) utility that makes the Windows taskbar translucent/transparent on Windows 10." },
                 new ReferenceProjectInfo(){ProjectName = "TaskbarX",ProjectUrl = "https://github.com/ChrisAnd1998/TaskbarX",ProjectDescription = "TaskbarX gives you control over the position of your taskbar icons. TaskbarX will give you an original Windows dock like feel." },
                 new ReferenceProjectInfo(){ProjectName = "TaskbarTool",ProjectUrl = "https://github.com/Elestriel/TaskbarTools",ProjectDescription = "Grants the ability to set the Windows Taskbars to any opacity and colour desired. This will affect the Taskbars on every monitor/desktop, not only the primary." },
-                new ReferenceProjectInfo(){ProjectName = "BlurWindow",ProjectUrl = "https://github.com/TianXiaTech/BlurWindow",ProjectDescription = "WPF Aero Glass Lib." }
+                new ReferenceProjectInfo(){ProjectName = "BlurWindow",ProjectUrl = "https://github.com/TianXiaTech/BlurWindow",ProjectDescription = "WPF Aero Glass Lib." },
+                new ReferenceProjectInfo(){ProjectName = "ManagedShell",ProjectUrl = "https://github.com/cairoshell/ManagedShell",ProjectDescription = "A library for creating Windows shell replacements using .NET, written in C#." }
             };
 
             this.list_ProjectReference.ItemsSource = list;

@@ -4,6 +4,7 @@ using Master_Zhao.Shell.Pages;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.StartMenu;
 using Master_Zhao.Shell.Util;
+using Master_Zhao.Shell.View.Setting;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace Master_Zhao.Shell
         private DesktopBeautify desktopBeautify = new DesktopBeautify();
         private SystemManagement systemManagement = new SystemManagement();
         private ToolsPage toolsPage = new ToolsPage();
+        private SettingPage settingPage = new SettingPage();
         private AboutPage aboutPage = new AboutPage();
         Storyboard start;
         Storyboard end;
@@ -117,6 +119,8 @@ namespace Master_Zhao.Shell
                     return toolsPage;
                 case NavigationPages.HuaShui:
                     return null;
+                case NavigationPages.Setting:
+                    return settingPage;
                 case NavigationPages.About:
                     return aboutPage;
                 default:
@@ -175,6 +179,11 @@ namespace Master_Zhao.Shell
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {
             BeginShowMenuAnimation(NavigationPages.About);
+        }
+
+        private void btnSetting_Click(object sender, RoutedEventArgs e)
+        {
+            BeginShowMenuAnimation(NavigationPages.Setting);
         }
 
         private void BlurWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
