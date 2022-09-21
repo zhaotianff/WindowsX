@@ -9,7 +9,30 @@
       Title="SettingPage">
 
     <Grid>
-        <Label Content="Setting Page" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15"></Label>
-        <Button Content="返回" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="28" Click="btnReturn_Click" Style="{StaticResource ButtonStyle}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Button Content="返回" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="28" Click="btnReturn_Click" Style="{StaticResource ButtonStyle}"/>
+            </Grid>
+
+            <StackPanel Grid.Row="1">
+                <ToggleButton Content="软件背景设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_BackgroundSettingClick" IsChecked="True"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Frame Name="frame">
+
+            </Frame>
+        </Grid>
     </Grid>
 </Page>
