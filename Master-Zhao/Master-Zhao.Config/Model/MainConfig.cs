@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Master_Zhao.Config.Model
+{
+    public class BackgroundSetting
+    {
+        public int Index { get; set; }
+
+        public List<string> Colors { get; set; }
+
+        public List<string> ResourceImages { get; set; }
+
+        public List<string> LocalImages { get; set; }
+    }
+
+    public class MainConfig
+    {
+        public BackgroundSetting BackgroundSetting { get; set; }
+    }
+}

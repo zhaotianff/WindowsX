@@ -16,6 +16,7 @@ namespace Master_Zhao.Config
         public DynamicWallpaperConfig DynamicWallpaperConfig { get; private set; }
         public StaticWallpaperConfig StaticWallpaperConfig { get; private set; }
         public ToolsConfig ToolsConfig { get; private set; }
+        public MainConfig MainConfig { get; private set; }
 
 
         public static GlobalConfig Instance
@@ -41,15 +42,17 @@ namespace Master_Zhao.Config
 
         public void LoadAllConfig()
         {
-            DynamicWallpaperConfig = DynamicWallpaperHelper.LoadDynamicWallConfig();
-            StaticWallpaperConfig = StaticWallpaperHelper.LoadStaticWallpaperConfig();
-            ToolsConfig = ToolsHelper.LoadToolsConfig();
+            DynamicWallpaperConfig = ConfigHelper.LoadDynamicWallConfig();
+            StaticWallpaperConfig = ConfigHelper.LoadStaticWallpaperConfig();
+            ToolsConfig = ConfigHelper.LoadToolsConfig();
+            MainConfig = ConfigHelper.LoadMainConfig();
         }
 
         public void SaveAllConfig()
         {
-            DynamicWallpaperHelper.SaveDynamicWallList(DynamicWallpaperConfig);
-            ToolsHelper.SaveToolsConfig(ToolsConfig);
+            ConfigHelper.SaveDynamicWallConfig(DynamicWallpaperConfig);
+            ConfigHelper.SaveToolsConfig(ToolsConfig);
+            ConfigHelper.SaveMainConfig(MainConfig);
         }
     }
 }
