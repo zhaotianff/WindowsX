@@ -1,0 +1,9 @@
+﻿{
+   "BackgroundSetting":
+   {
+	   "Index":0,
+	   "Colors":["Transparent","White","Silver"],
+	   "ResourceImages":["../../../Icon/about_back.jpeg"],
+	   "LocalImages":["res/1.jpg"]
+   }
+}
