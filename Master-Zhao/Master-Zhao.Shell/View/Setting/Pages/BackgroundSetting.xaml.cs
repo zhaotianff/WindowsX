@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -25,7 +26,17 @@ namespace Master_Zhao.Shell.View.Setting.Pages
 
         private void Setbackground_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Application.Current.MainWindow.Background = (sender as Rectangle).Fill;
+            var mainWindow = Application.Current.MainWindow;
+            mainWindow.Background = (sender as Rectangle).Fill;
+            DoubleAnimation doubleAnimation = new DoubleAnimation();
+            doubleAnimation.Duration = TimeSpan.FromSeconds(2);
+            doubleAnimation.From = 0;
+            doubleAnimation.To = 1;
+
+            if(mainWindow.Background is ImageBrush)
+            {
+                mainWindow.Background.BeginAnimation(Brush.OpacityProperty, doubleAnimation);
+            }
         }
     }
 }

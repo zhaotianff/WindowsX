@@ -1,9 +1,3 @@
 ﻿{
-  "wallpaperlist": [
-    {
-      "name": "预置",
-      "path": "default\\default.mp4",
-      "thumbnail": "default\\thumb.png"
-    }
-  ]
+  "DownloadPath":"res\\static wallpaper\\download"
 }

@@ -134,6 +134,10 @@ namespace Master_Zhao.Shell.Windows
 
         private string SaveImageControlAsFile()
         {
+            var downloadPath = GlobalConfig.Instance.StaticWallpaperConfig.DownloadPath;
+            if (System.IO.Directory.Exists(downloadPath) == false)
+                System.IO.Directory.CreateDirectory(downloadPath);
+
             var filePath = System.IO.Path.Combine(GlobalConfig.Instance.StaticWallpaperConfig.DownloadPath,
                $"{Guid.NewGuid()}.jpg");
             ImageHelper.SaveImageSourceAsFile((BitmapSource)image.Source, filePath);
