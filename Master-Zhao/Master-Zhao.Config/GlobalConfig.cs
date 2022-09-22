@@ -35,11 +35,6 @@ namespace Master_Zhao.Config
             }
         }
 
-        public GlobalConfig()
-        {
-            
-        }
-
         public void LoadAllConfig()
         {
             DynamicWallpaperConfig = ConfigHelper.LoadDynamicWallConfig();

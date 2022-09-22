@@ -28,15 +28,8 @@
             <Label Content="软件背景设置" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" ToolTip="临时快捷键"/>
         </Grid>
 
-        <WrapPanel Grid.Row="1">
-            <Rectangle Fill="Transparent" MouseDown="Setbackground_MouseDown"/>
-            <Rectangle Fill="White" MouseDown="Setbackground_MouseDown"/>
-            <Rectangle Fill="LightSkyBlue" MouseDown="Setbackground_MouseDown"/>
-            <Rectangle MouseDown="Setbackground_MouseDown">
-                <Rectangle.Fill>
-                    <ImageBrush ImageSource="../../../Icon/about_back.jpeg" Stretch="UniformToFill"/>
-                </Rectangle.Fill>
-            </Rectangle>
+        <WrapPanel Grid.Row="1" Name="wrap">
+            
         </WrapPanel>
     </Grid>
 </Page>

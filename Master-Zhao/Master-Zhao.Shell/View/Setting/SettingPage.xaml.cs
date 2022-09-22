@@ -46,6 +46,7 @@ namespace Master_Zhao.Shell.View.Setting
         private void btn_BackgroundSettingClick(object sender, RoutedEventArgs e)
         {
             this.frame.Content = backgroundSetting;
+            backgroundSetting.LoadBackground();
         }
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)

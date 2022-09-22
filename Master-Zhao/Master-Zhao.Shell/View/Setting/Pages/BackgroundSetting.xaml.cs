@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Config;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -19,9 +20,49 @@ namespace Master_Zhao.Shell.View.Setting.Pages
     /// </summary>
     public partial class BackgroundSetting : Page
     {
+        private bool isBackgroundLoaded = false;
+
         public BackgroundSetting()
         {
             InitializeComponent();
+        }
+
+        public void LoadBackground()
+        {
+            if (isBackgroundLoaded == true)
+                return;
+
+            var backgroundConfig = GlobalConfig.Instance.MainConfig.BackgroundSetting;
+            for(int i = 0;i<backgroundConfig.Colors.Count;i++)
+            {
+                AppendBackgroundItem(new SolidColorBrush((Color)ColorConverter.ConvertFromString(backgroundConfig.Colors[i])));
+            }
+            for(int i = 0;i<backgroundConfig.ResourceImages.Count;i++)
+            {
+                //DrawingBrush DrawingImage
+                //AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri(backgroundConfig.ResourceImages[i], UriKind.Relative)) });
+            }
+            for (int i = 0; i < backgroundConfig.LocalImages.Count; i++)
+            {
+                //DrawingBrush DrawingImage
+                var imagePath = backgroundConfig.LocalImages[i];
+
+                if (System.IO.File.Exists(imagePath) == false)
+                    continue;
+
+                AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri(backgroundConfig.LocalImages[i], UriKind.Absolute)),Stretch = Stretch.UniformToFill });
+            }
+
+            isBackgroundLoaded = true;
+        }
+
+        private void AppendBackgroundItem(Brush brush)
+        {
+            Rectangle rectangle = new Rectangle();
+            rectangle.Margin = new Thickness(10);
+            rectangle.Fill = brush;
+            rectangle.MouseDown += Setbackground_MouseDown;
+            this.wrap.Children.Add(rectangle);
         }
 
         private void Setbackground_MouseDown(object sender, MouseButtonEventArgs e)

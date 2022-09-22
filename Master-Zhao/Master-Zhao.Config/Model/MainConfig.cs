@@ -8,11 +8,11 @@ namespace Master_Zhao.Config.Model
     {
         public int Index { get; set; }
 
-        public List<string> Colors { get; set; }
+        public List<string> Colors { get; set; } = new List<string>();
 
-        public List<string> ResourceImages { get; set; }
+        public List<string> ResourceImages { get; set; } = new List<string>();
 
-        public List<string> LocalImages { get; set; }
+        public List<string> LocalImages { get; set; } = new List<string>();
     }
 
     public class MainConfig
