@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Master_Zhao.Shell
@@ -33,6 +34,7 @@ namespace Master_Zhao.Shell
         {
             InitializeComponent();
             InitializeAnimation();
+            InitializeBackground();
             DoStartupTasksAsync();
             CreateNotifyIcon();
         }
@@ -43,6 +45,37 @@ namespace Master_Zhao.Shell
             end = TryFindResource("end") as Storyboard;
             start.Completed += (sender, e) => { main.Visibility = Visibility.Collapsed; };
             end.Completed += (sender, e) => { main.Visibility = Visibility.Visible; this.frame.Content = null; };
+        }
+
+        private void InitializeBackground()
+        {
+            var wallpaperConfig = GlobalConfig.Instance.MainConfig.BackgroundSetting;
+            var index = wallpaperConfig.Index;
+            var tempIndex = index;
+            var colorsLength = wallpaperConfig.Colors.Count;
+            var resourcesLength = wallpaperConfig.ResourceImages.Count;
+
+            try
+            {
+                if (index < colorsLength)
+                {
+                    this.Background = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString(wallpaperConfig.Colors[index]));
+                }
+                else if (index >= colorsLength && index < colorsLength + resourcesLength)
+                {
+                    tempIndex = index - colorsLength;
+                    this.Background = new ImageBrush() { ImageSource = new System.Windows.Media.Imaging.BitmapImage(new Uri($"pack://application:,,,/{wallpaperConfig.ResourceImages[tempIndex]}")), Stretch = Stretch.UniformToFill };
+                }
+                else
+                {
+                    tempIndex = index - colorsLength - resourcesLength;
+                    this.Background = new ImageBrush() { ImageSource = new System.Windows.Media.Imaging.BitmapImage(new Uri(wallpaperConfig.LocalImages[tempIndex], UriKind.Absolute)), Stretch = Stretch.UniformToFill };
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         private async void DoStartupTasksAsync()

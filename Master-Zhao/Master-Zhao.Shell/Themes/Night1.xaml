@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--#39375B-->
+    <!--#745C97-->
+    <!--#D597CE-->
+    <!--#F5B0CB-->
+    
+    <SolidColorBrush x:Key="AccentBaseColor" Color="#39375B"/>
+    <SolidColorBrush x:Key="AccentBaseColorTran" Color="#745C97" Opacity=".2"/>
+    <SolidColorBrush x:Key="WhiteColor" Color="White"/>
+    <SolidColorBrush x:Key="BlackColor" Color="Black"/>
+    <SolidColorBrush x:Key="ButtonBorderColor" Color="#FF737373"/>
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundColor" Color="#FFF4F4F4"/>
+    <SolidColorBrush x:Key="ButtonDisabledBorderColor" Color="#FFADB2B5"/>
+    <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="#FF838383"/>
+</ResourceDictionary>

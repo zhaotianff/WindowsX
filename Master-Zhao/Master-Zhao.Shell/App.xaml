@@ -16,7 +16,11 @@
             <ResourceDictionary.MergedDictionaries>
                 <!--FontAwesome-->
                 <ResourceDictionary Source="FontAwesome/FontAwesomeStyle.xaml"/>
-                <ResourceDictionary Source="Themes/Default.xaml"/>
+                
+                <!--Theme-->
+                <ResourceDictionary Source="Themes/Night1.xaml"/>
+                <!--<ResourceDictionary Source="Themes/Default.xaml"/>-->
+                
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/GroupBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/CheckBoxStyle.xaml"/>

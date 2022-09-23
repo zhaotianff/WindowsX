@@ -40,7 +40,7 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             for(int i = 0;i<backgroundConfig.ResourceImages.Count;i++)
             {
                 //DrawingBrush DrawingImage
-                AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri($"pack://application:,,,/{backgroundConfig.ResourceImages[i]}")) });
+                AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri($"pack://application:,,,/{backgroundConfig.ResourceImages[i]}")) ,Stretch = Stretch.UniformToFill});
             }
             for (int i = 0; i < backgroundConfig.LocalImages.Count; i++)
             {
@@ -78,6 +78,9 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             {
                 mainWindow.Background.BeginAnimation(Brush.OpacityProperty, doubleAnimation);
             }
+
+            var index = this.wrap.Children.IndexOf(sender as Rectangle);
+            GlobalConfig.Instance.MainConfig.BackgroundSetting.Index = index;
         }
     }
 }
