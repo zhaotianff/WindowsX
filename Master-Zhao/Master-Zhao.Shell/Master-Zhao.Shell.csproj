@@ -24,6 +24,7 @@
     <None Remove="flower.jpg" />
     <None Remove="Icon\about.png" />
     <None Remove="Icon\about_back.jpeg" />
+    <None Remove="Icon\back_1.jpg" />
     <None Remove="Icon\desktop.png" />
     <None Remove="Icon\explorer.jpg" />
     <None Remove="Icon\explorer_back.png" />
@@ -52,6 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icon\back_1.jpg" />
     <Resource Include="Icon\explorer.jpg" />
     <Resource Include="Icon\explorer_back.png" />
     <Resource Include="Icon\fastrun.png" />
