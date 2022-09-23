@@ -3,7 +3,7 @@
    {
 	   "Index":4,
 	   "Colors":["Transparent","White","Silver"],
-	   "ResourceImages":["Icon/about_back.jpeg","back_1.jpg"],
+	   "ResourceImages":["Icon/about_back.jpeg","Icon/back_1.jpg"],
 	   "LocalImages":["D:\\1.jpg"]
    }
 }
