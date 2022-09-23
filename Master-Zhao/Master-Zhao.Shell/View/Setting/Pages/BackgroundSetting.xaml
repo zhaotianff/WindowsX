@@ -25,11 +25,11 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Label Content="软件背景设置" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" ToolTip="临时快捷键"/>
+            <Label Content="软件背景设置" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22"/>
         </Grid>
 
         <WrapPanel Grid.Row="1" Name="wrap">
-            
+           
         </WrapPanel>
     </Grid>
 </Page>

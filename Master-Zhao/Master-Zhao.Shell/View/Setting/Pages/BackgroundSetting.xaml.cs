@@ -40,7 +40,7 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             for(int i = 0;i<backgroundConfig.ResourceImages.Count;i++)
             {
                 //DrawingBrush DrawingImage
-                //AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri(backgroundConfig.ResourceImages[i], UriKind.Relative)) });
+                AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri($"pack://application:,,,/{backgroundConfig.ResourceImages[i]}")) });
             }
             for (int i = 0; i < backgroundConfig.LocalImages.Count; i++)
             {
