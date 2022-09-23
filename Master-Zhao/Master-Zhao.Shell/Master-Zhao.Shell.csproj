@@ -25,6 +25,8 @@
     <None Remove="Icon\about.png" />
     <None Remove="Icon\about_back.jpeg" />
     <None Remove="Icon\desktop.png" />
+    <None Remove="Icon\explorer.jpg" />
+    <None Remove="Icon\explorer_back.png" />
     <None Remove="Icon\fastrun.png" />
     <None Remove="Icon\huashui.jpg" />
     <None Remove="Icon\information.png" />
@@ -50,6 +52,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icon\explorer.jpg" />
+    <Resource Include="Icon\explorer_back.png" />
     <Resource Include="Icon\fastrun.png" />
     <Resource Include="Icon\move.jpg" />
     <Resource Include="Icon\setting.png" />

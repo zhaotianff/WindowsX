@@ -30,6 +30,7 @@
                 <ToggleButton Content="鼠标特效" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_MouseEffectClick"/>
                 <ToggleButton Content="自定义开始菜单" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_StartMenuSettingClick"/>
                 <ToggleButton Content="任务栏设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_TaskbarSettingClick"/>
+                <ToggleButton Content="资源管理器背景设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_ExplorerSettingClick"/>
                 <ToggleButton Content="右键菜单设置(开发中)" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_ContextMenuSettingClick" Visibility="Collapsed"/>
                 <ToggleButton Content="开机图像更改(开发中)" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_BootImageSettingClick" Visibility="Collapsed"/>
                 <ToggleButton Content="其它设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_OtherSettingClick"/>

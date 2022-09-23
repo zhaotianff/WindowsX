@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Master_Zhao.Shell.PInvoke;
+using Master_Zhao.Shell.View.Beautify.Pages;
 using Master_Zhao.Shell.View.Pages;
 
 namespace Master_Zhao.Shell.Pages
@@ -31,6 +32,7 @@ namespace Master_Zhao.Shell.Pages
         private MouseEffect mouseEffect = new MouseEffect();
         private StartMenuSetting startMenuSetting = new StartMenuSetting();
         private TaskbarSetting taskbarSetting = new TaskbarSetting();
+        private ExplorerBackgroundSetting explorerBackgroundSetting = new ExplorerBackgroundSetting();
         private ContextMenuManagement menuManagement = new ContextMenuManagement();
         private BootImageManagement bootImageManagement = new BootImageManagement();
         private OtherSetting otherSetting = new OtherSetting();
@@ -81,6 +83,11 @@ namespace Master_Zhao.Shell.Pages
         {
             taskbarSetting.CheckCurrentSystem();
             frame.Content = taskbarSetting;
+        }
+
+        private void btn_ExplorerSettingClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = explorerBackgroundSetting;
         }
 
         private void btn_OtherSettingClick(object sender, RoutedEventArgs e)

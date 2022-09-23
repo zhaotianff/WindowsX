@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <Label Content="老板键(Ctrl + I 或 Alt + Q)(从明天起，做一个幸福的人)" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" ToolTip="临时快捷键"/>
+                <Label Content="老板键(Ctrl + I 或 Alt + Q)(从明天起，做一个幸福的人)" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" Foreground="{DynamicResource AccentBaseColor}" ToolTip="临时快捷键"/>
             </Grid>
 
             <Grid Grid.Row="1">

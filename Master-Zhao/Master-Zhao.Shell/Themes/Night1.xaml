@@ -5,7 +5,7 @@
     <!--#745C97-->
     <!--#D597CE-->
     <!--#F5B0CB-->
-    
+
     <SolidColorBrush x:Key="AccentBaseColor" Color="#39375B"/>
     <SolidColorBrush x:Key="AccentBaseColorTran" Color="#745C97" Opacity=".2"/>
     <SolidColorBrush x:Key="WhiteColor" Color="White"/>
