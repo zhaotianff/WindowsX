@@ -41,5 +41,10 @@ namespace Master_Zhao.Shell.Util
 
             return IntPtr.Zero;
         }
+
+        public static Process FindProcess(string processName)
+        {
+            return Process.GetProcesses().FirstOrDefault(x => x.ProcessName == processName);
+        }
     }
 }

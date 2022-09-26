@@ -8,6 +8,7 @@
     <Authors>ZTI</Authors>
     <Company>https://github.com/zhaotianff</Company>
     <ApplicationIcon>logo.ico</ApplicationIcon>
+    <StartupObject>Master_Zhao.Shell.Startup</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
