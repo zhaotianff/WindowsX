@@ -24,11 +24,6 @@ namespace Master_Zhao.Shell
             else
             {
                 //TODO activate window
-                var process = Util.ProcessHelper.FindProcess(MasterZhaoProcessName);
-                if (process != null)
-                {
-                    PInvoke.DesktopTool.SwitchToWindow(process.MainWindowHandle);
-                }
             }
         }
     }
