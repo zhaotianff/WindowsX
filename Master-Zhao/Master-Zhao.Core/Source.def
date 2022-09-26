@@ -70,3 +70,6 @@ AutoCode
 ;icontool.h
 ExtractIconFromFile
 ExtractFirstIconFromFile
+
+;shelltool.h
+

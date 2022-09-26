@@ -167,6 +167,7 @@
     <ClInclude Include="InputTool.h" />
     <ClInclude Include="RegTool.h" />
     <ClInclude Include="ResTool.h" />
+    <ClInclude Include="ShellTool.h" />
     <ClInclude Include="StartupTool.h" />
     <ClInclude Include="SystemTool.h" />
   </ItemGroup>
@@ -178,6 +179,7 @@
     <ClCompile Include="InputTool.cpp" />
     <ClCompile Include="RegTool.cpp" />
     <ClCompile Include="ResTool.cpp" />
+    <ClCompile Include="ShellTool.cpp" />
     <ClCompile Include="StartupTool.cpp" />
     <ClCompile Include="SystemTool.cpp" />
   </ItemGroup>
