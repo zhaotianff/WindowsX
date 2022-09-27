@@ -28,7 +28,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8C98C198-7
 		ShellCommandsList.txt = ShellCommandsList.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master-Zhao.StartMenu.Test", "Master-Zhao.StartMenu.Test\Master-Zhao.StartMenu.Test.csproj", "{2348F117-B3F1-4538-AF16-B31BB56EB96D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master-Zhao.StartMenu.Test", "Master-Zhao.StartMenu.Test\Master-Zhao.StartMenu.Test.csproj", "{2348F117-B3F1-4538-AF16-B31BB56EB96D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Master-Zhao.Core.ShellHook", "Master-Zhao.Core.ShellHook\Master-Zhao.Core.ShellHook.vcxproj", "{80192AE5-AF1E-4A0A-B799-00EFC4199172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -156,6 +158,16 @@ Global
 		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|x64.Build.0 = Release|Any CPU
 		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|x86.ActiveCfg = Release|Any CPU
 		{2348F117-B3F1-4538-AF16-B31BB56EB96D}.Release|x86.Build.0 = Release|Any CPU
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Debug|x64.ActiveCfg = Debug|x64
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Debug|x64.Build.0 = Debug|x64
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Debug|x86.ActiveCfg = Debug|Win32
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Debug|x86.Build.0 = Debug|Win32
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Release|Any CPU.ActiveCfg = Release|Win32
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Release|x64.ActiveCfg = Release|x64
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Release|x64.Build.0 = Release|x64
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Release|x86.ActiveCfg = Release|Win32
+		{80192AE5-AF1E-4A0A-B799-00EFC4199172}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
