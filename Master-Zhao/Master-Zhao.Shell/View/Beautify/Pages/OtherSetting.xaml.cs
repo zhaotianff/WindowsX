@@ -55,7 +55,7 @@ namespace Master_Zhao.Shell.Pages
         private void LoadDesktopSettings()
         {
             cbx_Shortcut.IsChecked = DesktopTool.GetShortcutArrowState();
-            cbx_PhotoViewer.IsChecked = true;
+            cbx_PhotoViewer.IsChecked = DesktopTool.GetWindowsPhotoViewerState();
             cbx_Version.IsChecked = DesktopTool.GetPaintVersionState();
             var size = 0;
             if( DesktopTool.GetTaskbarThumbnailSize(ref size))
@@ -69,6 +69,18 @@ namespace Master_Zhao.Shell.Pages
 
             cbx_Shortcut.Checked += (sender, e) => { DesktopTool.RemoveShortcutArrow(); };
             cbx_Shortcut.Unchecked += (sender, e) => { DesktopTool.RestoreShortcutArrow(); };
+            cbx_PhotoViewer.Checked += (sender, e) => { RegisterWindowsPhotoViewer(); };
+            cbx_PhotoViewer.Unchecked += (sender, e) => { UnRegisterWindowsPhotoViewer(); };
+        }
+
+        private void RegisterWindowsPhotoViewer()
+        {
+            DesktopTool.RegisterWindowsPhotoViewerFormat();
+        }
+
+        private void UnRegisterWindowsPhotoViewer()
+        {
+            DesktopTool.UnregisterWindowsPhotoViewerFormat();
         }
 
         private void btnSetTaskbarThumbSize_Click(object sender, RoutedEventArgs e)

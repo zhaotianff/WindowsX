@@ -116,6 +116,9 @@ namespace Master_Zhao.Shell.PInvoke
         public static extern bool RestoreShortcutArrow();
 
         [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetWindowsPhotoViewerState();
+
+        [DllImport("MasterZhaoCore.dll")]
         public static extern void RegisterWindowsPhotoViewerFormat();
 
         [DllImport("MasterZhaoCore.dll")]

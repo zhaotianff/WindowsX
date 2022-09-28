@@ -29,6 +29,7 @@ RemoveGodModeShortCut
 GetShortcutArrowState
 RemoveShortcutArrow
 RestoreShortcutArrow
+GetWindowsPhotoViewerState
 RegisterWindowsPhotoViewerFormat
 UnregisterWindowsPhotoViewerFormat
 GetPaintVersionState

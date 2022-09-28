@@ -18,12 +18,30 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 //HKLM\Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations
 // support BMP, JPEG, JPEG XR (formerly HD Photo), PNG, ICO, GIF and TIFF 
 //.bmp PhotoViewer.FileAssoc.Tiff
+//.dib PhotoViewer.FileAssoc.Tiff
 //.jpeg PhotoViewer.FileAssoc.Tiff
 //.jpg PhotoViewer.FileAssoc.Tiff
+//.jxr PhotoViewer.FileAssoc.Tiff
+//.jfif PhotoViewer.FileAssoc.Tiff
+//.wdp PhotoViewer.FileAssoc.Tiff
 //.png PhotoViewer.FileAssoc.Tiff
 //.ico PhotoViewer.FileAssoc.Tiff
 //.gif PhotoViewer.FileAssoc.Tiff
 //.tiff PhotoViewer.FileAssoc.Tiff
+#define WINDOWS_PHOTO_VIEWER_PATH LR"(SOFTWARE\Microsoft\Windows Photo Viewer\Capabilities\FileAssociations)" 
+#define WINDOWS_PHOTO_VIEWER_TYPE L"PhotoViewer.FileAssoc.Tiff"
+#define WINDOWS_PHOTO_VIEWER_BMP L".bmp"
+#define WINDOWS_PHOTO_VIEWER_DIB L".dib"
+#define WINDOWS_PHOTO_VIEWER_JPEG L".jpeg"
+#define WINDOWS_PHOTO_VIEWER_JPG L".jpg"
+#define WINDOWS_PHOTO_VIEWER_JXR L".jxr"
+#define WINDOWS_PHOTO_VIEWER_JFIF L".jfif"
+#define WINDOWS_PHOTO_VIEWER_WDP L".wdp"
+#define WINDOWS_PHOTO_VIEWER_PNG L".png"
+#define WINDOWS_PHOTO_VIEWER_ICO L".ico"
+#define WINDOWS_PHOTO_VIEWER_GIF L".gif"
+#define WINDOWS_PHOTO_VIEWER_TIFF L".tiff"
+#define WINDOWS_PHOTO_VIEWER_REGISTER L"PhotoViewer.FileAssoc.Tiff"
 
 //Run history
 //HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU

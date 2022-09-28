@@ -522,37 +522,35 @@ BOOL RestoreShortcutArrow()
 
 BOOL GetWindowsPhotoViewerState()
 {
-	//TODO enum value
-	return 0;
+	return ExistRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JPG);
 }
 
 VOID RegisterWindowsPhotoViewerFormat()
 {
-	LPTSTR szTiff = _tcsdup(L"PhotoViewer.FileAssoc.Tiff");
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)",L".bmp", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".jpeg", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".jpg", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".png", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".ico", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".gif", szTiff);
-	SetSZValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".tiff", szTiff);
-	free(szTiff);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_BMP, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_DIB, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JPEG, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JPG, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JXR, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JFIF, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_WDP, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_PNG, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_ICO, WINDOWS_PHOTO_VIEWER_REGISTER);
+	SetSZValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_GIF, WINDOWS_PHOTO_VIEWER_REGISTER);
 }
 
 VOID UnregisterWindowsPhotoViewerFormat()
 {
-	LPTSTR szTiff = _tcsdup(L"PhotoViewer.FileAssoc.Tiff");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	RemovRegValue(HKEY_LOCAL_MACHINE, LR"(Software\Microsoft\Windows PhotoViewer\Capabilities\FileAssociations)", L".bmp");
-	free(szTiff);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_BMP);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_DIB);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JPEG);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JPG);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JXR);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_JFIF);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_WDP);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_PNG);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_ICO);
+	RemovRegValue(HKEY_LOCAL_MACHINE, WINDOWS_PHOTO_VIEWER_PATH, WINDOWS_PHOTO_VIEWER_GIF);
 }
 
 BOOL GetPaintVersionState()

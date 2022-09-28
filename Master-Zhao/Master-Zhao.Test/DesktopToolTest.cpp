@@ -95,6 +95,12 @@ void TestSetThumbSize(int size)
 
 void TestShotCut()
 {
-	auto result = RemoveShortcutArrow();
-	result = RestoreShortcutArrow();
+	//auto result = RemoveShortcutArrow();
+	//result = RestoreShortcutArrow();
+
+	auto state = GetWindowsPhotoViewerState();
+
+	//RegisterWindowsPhotoViewerFormat();
+
+	UnregisterWindowsPhotoViewerFormat();
 }
