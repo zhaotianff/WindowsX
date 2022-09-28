@@ -382,6 +382,8 @@ VOID SetDesktopIcon(DESKTOPICONS icon, BOOL bEnable)
 		default:
 			break;
 	}
+
+	RefreshDesktop();
 }
 
 BOOL GetDesktopIconState(DESKTOPICONS icon)
@@ -408,7 +410,7 @@ BOOL GetDesktopIconState(DESKTOPICONS icon)
 		default:
 			break;
 	}
-	return TRUE;
+	return dwState == 0;
 }
 
 VOID RefreshDesktop()
@@ -485,7 +487,7 @@ BOOL CreateGodModeShortCut()
 	SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, SHGFP_TYPE_CURRENT, szGodmodLnk);
 	StringCchCat(szGodmodLnk, MAX_PATH, L"\\god mode.lnk");
 	auto hr = CreateLink(szExplorer, szGodmodLnk, L"shell:::{ED7BA470-8E54-465E-825C-99712043E01C}", L"god mode");
-	return SUCCEEDED(hr);
+	return hr;
 }
 
 BOOL RemoveGodModeShortCut()

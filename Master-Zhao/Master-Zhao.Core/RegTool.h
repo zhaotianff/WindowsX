@@ -11,7 +11,7 @@
 //Network       {F02C1A0D-BE21-4350-88B0-7367FC96EF3C}
 
 SILVERAROWANACORE_API BOOL SetDWORDValue(HKEY hKey, LPCTSTR lpSubKey,LPCTSTR lpValueName,DWORD value);
-SILVERAROWANACORE_API BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* value);
+SILVERAROWANACORE_API BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName,LPCTSTR value);
 SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName);
 
 //Windows Photo Viewer
@@ -52,6 +52,14 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 //HKEY_LOCAL_MACHINE\Software\Policies(preferred location)
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies
 //HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies
+
+//windows 10 /11 shotcut arrow
+//¼ÆËã»ú\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons\29[REG_SZ(%windir%\System32\shell32.dll,-50)]
+
+#define DESKTOP_SHOTCUT_ARROW_REGPATH L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons"
+#define DESKTOP_SHOTCUT_ARROW L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons\\29"
+#define DESKTOP_SHOTCUT_ARROW_NAME L"29"
+#define DESKTOP_SHOTCUT_ARROW_VALUE L"%windir%\System32\shell32.dll,-50"
 
 //taskband
 #define TASKBAND_REGPATH L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Taskband"
@@ -97,6 +105,7 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 #define STARTUP_RUN_17 LR"(HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System\Scripts)"
 
 SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
+SILVERAROWANACORE_API BOOL CreateSubKey(HKEY hKey, LPCTSTR lpSubKey);
 SILVERAROWANACORE_API BOOL ExistRegValue(HKEY hKey, LPCTSTR lpSubKey,LPCTSTR lpValueName);
 SILVERAROWANACORE_API BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value);
 

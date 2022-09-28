@@ -92,3 +92,9 @@ void TestSetThumbSize(int size)
 {
 	SetTaskbarThumbnailSize(size,TRUE);
 }
+
+void TestShotCut()
+{
+	auto result = RemoveShortcutArrow();
+	result = RestoreShortcutArrow();
+}

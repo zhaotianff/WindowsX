@@ -148,6 +148,12 @@ void MasterZhaoTestCode()
     {
         TestGetFileIcon();
     }
+
+    ImGui::NewLine();
+    if (ImGui::Button("shotcut"))
+    {
+        TestShotCut();
+    }
 }
 
 bool CreateDeviceD3D(HWND hWnd)

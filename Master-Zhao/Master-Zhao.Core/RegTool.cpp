@@ -27,7 +27,7 @@ BOOL SetDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD value
 	return TRUE;
 }
 
-BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* value)
+BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName,LPCTSTR value)
 {
 	HKEY hSubKey = NULL;
 	auto lResult = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_ALL_ACCESS, &hSubKey);
@@ -89,6 +89,22 @@ BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey)
 	if (hSubKey)
 		RegCloseKey(hSubKey);
 	return result;
+}
+
+BOOL CreateSubKey(HKEY hKey, LPCTSTR lpSubKey)
+{
+	if (ExistSubKey(hKey, lpSubKey) == FALSE)
+	{
+		HKEY hNewKey = NULL;
+		if (ERROR_SUCCESS == RegCreateKey(hKey, lpSubKey, &hNewKey))
+		{
+			RegCloseKey(hNewKey);
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 BOOL ExistRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName)

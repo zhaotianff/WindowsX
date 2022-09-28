@@ -36,6 +36,20 @@ namespace Master_Zhao.Shell.Pages
             cbx_ControlPanel.IsChecked = DesktopTool.GetDesktopIconState(DesktopTool.DESKTOPICONS.ICON_CONTROL_PANEL);
             cbx_Network.IsChecked = DesktopTool.GetDesktopIconState(DesktopTool.DESKTOPICONS.ICON_NETWORK);
             cbx_GodMode.IsChecked = DesktopTool.GetGodModeShortCutState();
+
+            cbx_Computer.Checked += (sender,e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_COMPUTER, true); };
+            cbx_User.Checked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_USER, true); };
+            cbx_Recycle.Checked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_RECYCLE, true); };
+            cbx_ControlPanel.Checked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_CONTROL_PANEL, true); };
+            cbx_Network.Checked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_NETWORK, true); };
+            cbx_GodMode.Checked += (sender, e) => { DesktopTool.CreateGodModeShortCut(); ; };
+
+            cbx_Computer.Unchecked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_COMPUTER, false); };
+            cbx_User.Unchecked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_USER, false); };
+            cbx_Recycle.Unchecked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_RECYCLE, false); };
+            cbx_ControlPanel.Unchecked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_CONTROL_PANEL, false); };
+            cbx_Network.Unchecked += (sender, e) => { DesktopTool.SetDesktopIcon(DesktopTool.DESKTOPICONS.ICON_NETWORK, false); };
+            cbx_GodMode.Unchecked += (sender, e) => { DesktopTool.RemoveGodModeShortCut(); };
         }
 
         private void LoadDesktopSettings()
@@ -52,16 +66,12 @@ namespace Master_Zhao.Shell.Pages
             {
                 tbox_TaskbarThunbSize.Text = "系统默认";
             }
-        }
 
-        private void cbx_Shortcut_UnChecked(object sender, RoutedEventArgs e)
-        {
-            DesktopTool.RestoreShortcutArrow();
-        }
-
-        private void cbx_Shortcut_Checked(object sender, RoutedEventArgs e)
-        {
-            DesktopTool.RemoveShortcutArrow();
+            cbx_Shortcut.Checked += (sender, e) => { 
+                var result = DesktopTool.RemoveShortcutArrow();
+                int a = 0;
+            };
+            cbx_Shortcut.Unchecked += (sender, e) => { DesktopTool.RestoreShortcutArrow(); };
         }
 
         private void btnSetTaskbarThumbSize_Click(object sender, RoutedEventArgs e)

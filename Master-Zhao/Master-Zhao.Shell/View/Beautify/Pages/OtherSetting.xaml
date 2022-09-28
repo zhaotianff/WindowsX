@@ -43,7 +43,7 @@
                 <StackPanel Margin="0,35,0,0">
                     <StackPanel>
                         <WrapPanel>
-                            <CheckBox Content="移除快捷方式箭头" Margin="10" Name="cbx_Shortcut" Checked="cbx_Shortcut_Checked" Unchecked="cbx_Shortcut_UnChecked"/>
+                            <CheckBox Content="移除快捷方式箭头" Margin="10" Name="cbx_Shortcut"/>
 
                             <CheckBox Content="使用Windows Photo Viewer作为默认图片查看器" Margin="10" Name="cbx_PhotoViewer"></CheckBox>
                             <CheckBox Content="桌面显示Windows版本信息" Margin="10" Name="cbx_Version"></CheckBox>
