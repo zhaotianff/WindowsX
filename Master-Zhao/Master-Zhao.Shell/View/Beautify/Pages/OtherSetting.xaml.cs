@@ -71,16 +71,40 @@ namespace Master_Zhao.Shell.Pages
             cbx_Shortcut.Unchecked += (sender, e) => { DesktopTool.RestoreShortcutArrow(); };
             cbx_PhotoViewer.Checked += (sender, e) => { RegisterWindowsPhotoViewer(); };
             cbx_PhotoViewer.Unchecked += (sender, e) => { UnRegisterWindowsPhotoViewer(); };
+            cbx_Version.Checked += (sender, e) => { DesktopTool.PaintVersionInfo(true); };
+            cbx_Version.Unchecked += (sender, e) => { DesktopTool.PaintVersionInfo(false); };
         }
 
-        private void RegisterWindowsPhotoViewer()
+        private async void RegisterWindowsPhotoViewer()
         {
-            DesktopTool.RegisterWindowsPhotoViewerFormat();
+            //temp
+            var adminTaskExe = Environment.CurrentDirectory + "\\Master-Zhao.AdminTask.exe";
+            if(System.IO.File.Exists(adminTaskExe))
+            {
+                var process = Util.ProcessHelper.Execute(adminTaskExe, new string[] { "register" });
+
+                if(process != null)
+                {
+                    await Task.Delay(100);
+                    process.Kill();
+                }
+            }
         }
 
-        private void UnRegisterWindowsPhotoViewer()
+        private async void UnRegisterWindowsPhotoViewer()
         {
-            DesktopTool.UnregisterWindowsPhotoViewerFormat();
+            //temp
+            var adminTaskExe = Environment.CurrentDirectory + "\\Master-Zhao.AdminTask.exe";
+            if (System.IO.File.Exists(adminTaskExe))
+            {
+                var process = Util.ProcessHelper.Execute(adminTaskExe, new string[] { "unregister" });
+
+                if (process != null)
+                {
+                    await Task.Delay(100);
+                    process.Kill();
+                }
+            }
         }
 
         private void btnSetTaskbarThumbSize_Click(object sender, RoutedEventArgs e)

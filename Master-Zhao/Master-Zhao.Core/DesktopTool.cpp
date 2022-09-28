@@ -563,14 +563,13 @@ BOOL GetPaintVersionState()
 BOOL PaintVersionInfo(BOOL enable)
 {
 	//HKEY_CURRENT_USER\Control Panel\Desktop\PaintDesktopVersion(0x1)
-	DWORD dwValue = 1;
+	DWORD dwValue = enable == TRUE ? 1 : 0;
+	auto bResult =  SetDWORDValue(HKEY_CURRENT_USER, LR"(Control Panel\Desktop)", L"PaintDesktopVersion", dwValue);
 
-	if (enable == FALSE)
-	{
-		dwValue = 0;
-	}
+	if (bResult)
+		RefreshDesktop();
 
-	return SetDWORDValue(HKEY_CURRENT_USER, LR"(Control Panel\Desktop)", L"PaintDesktopVersion", dwValue);
+	return bResult;
 }
 
 BOOL GetTaskbarThumbnailSize(DWORD* dwSize)

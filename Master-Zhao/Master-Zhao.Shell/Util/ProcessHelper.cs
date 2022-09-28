@@ -15,15 +15,32 @@ namespace Master_Zhao.Shell.Util
             System.Diagnostics.Process.Start(processStartInfo);
         }
 
-        public static void Execute(string path,bool useShellExecute = true)
+        public static Process Execute(string path,bool useShellExecute = true)
+        {
+            return ExecuteInternal(path, null, useShellExecute);
+        }
+
+        public static Process Execute(string path,string[] args)
+        {
+            return ExecuteInternal(path, args, true);
+        }
+
+        private static Process ExecuteInternal(string path,string[] args,bool useShellExecute)
         {
             if (string.IsNullOrEmpty(path))
-                return;
+                return null;
 
             var psInfo = new System.Diagnostics.ProcessStartInfo();
             psInfo.UseShellExecute = useShellExecute;
+            if (args != null)
+            {
+                foreach (var arg in args)
+                {
+                    psInfo.ArgumentList.Add(arg);
+                }
+            }
             psInfo.FileName = path;
-            Process.Start(psInfo);
+            return Process.Start(psInfo);
         }
 
         public static void KillProcess(string processName)
