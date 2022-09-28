@@ -67,10 +67,7 @@ namespace Master_Zhao.Shell.Pages
                 tbox_TaskbarThunbSize.Text = "系统默认";
             }
 
-            cbx_Shortcut.Checked += (sender, e) => { 
-                var result = DesktopTool.RemoveShortcutArrow();
-                int a = 0;
-            };
+            cbx_Shortcut.Checked += (sender, e) => { DesktopTool.RemoveShortcutArrow(); };
             cbx_Shortcut.Unchecked += (sender, e) => { DesktopTool.RestoreShortcutArrow(); };
         }
 

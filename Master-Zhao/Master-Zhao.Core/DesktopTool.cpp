@@ -147,14 +147,15 @@ BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName)
 
 VOID RestartExplorer()
 {
-	DWORD dwPID;
-	HWND hShellTray = ::FindWindow(TEXT("Shell_TrayWnd"), NULL);
-	GetWindowThreadProcessId(hShellTray, &dwPID);
-	HANDLE hExplorer;
-	hExplorer = OpenProcess(PROCESS_TERMINATE, false, dwPID);
-	//restart explorer
-	TerminateProcess(hExplorer, 2);
-	CloseHandle(hExplorer);
+	//DWORD dwPID;
+	//HWND hShellTray = ::FindWindow(TEXT("Shell_TrayWnd"), NULL);
+	//GetWindowThreadProcessId(hShellTray, &dwPID);
+	//HANDLE hExplorer;
+	//hExplorer = OpenProcess(PROCESS_TERMINATE, false, dwPID);
+	////restart explorer
+	//TerminateProcess(hExplorer, 2);
+	//CloseHandle(hExplorer);
+	system("taskkill /f /im explorer.exe & start explorer.exe");
 }
 
 BOOL CloseEmbedWindow()
@@ -500,14 +501,14 @@ BOOL RemoveGodModeShortCut()
 
 BOOL GetShortcutArrowState()
 {
-	return ExistRegValue(HKEY_CLASSES_ROOT, L"lnkfile", L"IsShortcut");
+	return !ExistRegValue(HKEY_CLASSES_ROOT, L"lnkfile", L"IsShortcut");
 }
 
 BOOL RemoveShortcutArrow()
 {
 	auto bResult = RemovRegValue(HKEY_CLASSES_ROOT, L"lnkfile", L"IsShortcut");
 	if (bResult)
-		RefreshDesktop();
+		RestartExplorer();
 	return bResult;
 }
 
@@ -515,7 +516,7 @@ BOOL RestoreShortcutArrow()
 {
 	auto bResult =  SetSZValue(HKEY_CLASSES_ROOT, L"lnkfile", L"IsShortcut", NULL);
 	if (bResult)
-		RefreshDesktop();
+		RestartExplorer();
 	return bResult;
 }
 
