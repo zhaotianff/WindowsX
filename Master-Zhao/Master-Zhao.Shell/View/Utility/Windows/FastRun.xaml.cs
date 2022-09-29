@@ -31,23 +31,13 @@ namespace Master_Zhao.Shell.Windows
         public int SelectedIndex { get; set; } = 0;
         private bool IsFirstRun { get; set; } = true;
 
+        private System.Windows.Point dragStartPoint = new Point();
+
         public FastRun()
         {
             InitializeComponent();
 
             LoadFastRunList();
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                this.DragMove();
-            }
-            catch
-            {
-
-            }
         }
 
         public int RegisterHotKey()
@@ -66,20 +56,20 @@ namespace Master_Zhao.Shell.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Canvas.SetLeft(img_DragArea, (canvas.ActualWidth - img_DragArea.Width) / 2);
-            Canvas.SetTop(img_DragArea, (canvas.ActualHeight - img_DragArea.Height) / 2);
+            //Canvas.SetLeft(img_DragArea, (canvas.ActualWidth - img_DragArea.Width) / 2);
+            //Canvas.SetTop(img_DragArea, (canvas.ActualHeight - img_DragArea.Height) / 2);
             this.Visibility = Visibility.Hidden;
         }
 
         public void RefreshFastRunItem(int index)
         {
             //TODO 
-            var list = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
+            //var list = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
 
-            if(index < list.Count && index < canvas.Children.Count)
-            {
-                (canvas.Children[index] as FastRunButton).FastRunItem.Path = list[index].Path;
-            }
+            //if (index < list.Count && index < canvas.Children.Count)
+            //{
+            //    (canvas.Children[index] as FastRunButton).FastRunItem.Path = list[index].Path;
+            //}
         }
 
         public void LoadFastRunList()
@@ -90,7 +80,7 @@ namespace Master_Zhao.Shell.Windows
             </local:FastRunButton>/*
             */
 
-            canvas.Children.Clear();
+            //canvas.Children.Clear();
 
             //var list = GetTestList();
             var list = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
@@ -110,12 +100,32 @@ namespace Master_Zhao.Shell.Windows
                 fastRunButton.Height = 100;
                 //fastRunButton.ImagePath = @"C:\Users\Administrator\Desktop\compu.png";
                 fastRunButton.ImagePath = GetCachedIconPath(item.Path);
-                fastRunButton.HostCanvas = canvas;
+                //fastRunButton.HostCanvas = canvas;
                 fastRunButton.Click += FastRunButton_Click;
-                canvas.Children.Add(fastRunButton);
+                //canvas.Children.Add(fastRunButton);
             }
 
-            (canvas.Children[0] as FastRunButton).IsSelected = true;
+            btn_Left.FastRunName = list[0].Name;
+            btn_Left.FastRunIcon = GetCachedIconPath(list[0].Path);
+            btn_Left.FastRunData = list[0];
+            btn_Left.Click += FastRunButton_Click;
+
+            btn_Top.FastRunName = list[1].Name;
+            btn_Top.FastRunIcon = GetCachedIconPath(list[1].Path);
+            btn_Top.FastRunData = list[1];
+            btn_Top.Click += FastRunButton_Click;
+
+            btn_Right.FastRunName = list[1].Name;
+            btn_Right.FastRunIcon = GetCachedIconPath(list[1].Path);
+            btn_Right.FastRunData = list[1];
+            btn_Right.Click += FastRunButton_Click;
+
+            btn_Bottom.FastRunName = list[2].Name;
+            btn_Bottom.FastRunIcon = GetCachedIconPath(list[2].Path);
+            btn_Bottom.FastRunData = list[2];
+            btn_Bottom.Click += FastRunButton_Click;
+
+            //(canvas.Children[0] as FastRunButton).IsSelected = true;
         }
 
         private string GetCachedIconPath(string path)
@@ -140,13 +150,13 @@ namespace Master_Zhao.Shell.Windows
 
         private void FastRunButton_Click(object sender, RoutedEventArgs e)
         {
-            var fastRunButton = sender as FastRunButton;
+            var pathButton = sender as PathButton;
 
-            if (fastRunButton != null)
+            if (pathButton != null)
             {
                 var psInfo = new System.Diagnostics.ProcessStartInfo();
                 psInfo.UseShellExecute = true;
-                psInfo.FileName = fastRunButton.FastRunItem.Path;
+                psInfo.FileName = pathButton.FastRunData.Path;
                 System.Diagnostics.Process.Start(psInfo);
                 this.Visibility = Visibility.Hidden;
                 isExecuted = true;
@@ -262,27 +272,27 @@ namespace Master_Zhao.Shell.Windows
 
         private void SelectFastRunItem(int index, bool isRun = false)
         {
-           for(int i = 0;i<canvas.Children.Count;i++)
-            {
-                if(index == i)
-                {
-                    var fastRunButton = canvas.Children[i] as FastRunButton;
+           //for(int i = 0;i<canvas.Children.Count;i++)
+           // {
+           //     if(index == i)
+           //     {
+           //         var fastRunButton = canvas.Children[i] as FastRunButton;
 
-                    fastRunButton.IsSelected = true;
+           //         fastRunButton.IsSelected = true;
 
-                    if (isRun)
-                    {
-                        fastRunButton.Dispatcher.Invoke(() => {
-                            fastRunButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                        });
+           //         if (isRun)
+           //         {
+           //             fastRunButton.Dispatcher.Invoke(() => {
+           //                 fastRunButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+           //             });
 
-                    }
-                }
-                else
-                {
-                    (canvas.Children[i] as FastRunButton).IsSelected = false;
-                }
-            }
+           //         }
+           //     }
+           //     else
+           //     {
+           //         (canvas.Children[i] as FastRunButton).IsSelected = false;
+           //     }
+           // }
         }
 
         public void ShowWindowWithAnimation()
@@ -296,6 +306,22 @@ namespace Master_Zhao.Shell.Windows
             this.Visibility = Visibility.Visible;
 
             //TODO reset animation position
+        }
+
+        private void Window_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            dragStartPoint = e.GetPosition(this);
+        }
+
+        private void Window_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if(e.RightButton == MouseButtonState.Pressed)
+            {
+                Point dragEndPoint = e.GetPosition(this);
+                Vector vector = dragEndPoint - dragStartPoint;
+                this.Left += vector.X;
+                this.Top += vector.Y;
+            }
         }
     }
 }
