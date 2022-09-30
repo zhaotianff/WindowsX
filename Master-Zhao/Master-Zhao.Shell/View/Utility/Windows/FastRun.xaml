@@ -16,14 +16,14 @@
     </Window.Resources>
     <Grid>
         <Grid x:Name="grid_icon" Panel.ZIndex="1">
-            <Image Name="img_left" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0,0,0" Panel.ZIndex="111" Stretch="Fill" IsHitTestVisible="False"/>
             <Image Name="img_top" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0"  Stretch="Fill" IsHitTestVisible="False"/>
             <Image Name="img_right" Width="40" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,60,0"  Stretch="Fill" IsHitTestVisible="False"/>
             <Image Name="img_bottom" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,60"  Stretch="Fill" IsHitTestVisible="False"/>
+            <Image Name="img_left" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0,0,0"  Stretch="Fill" IsHitTestVisible="False"/>
         </Grid>
 
         <Grid x:Name="grid_info" Panel.ZIndex="0">
-            <Label Name="lbl_Name" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Name="lbl_Name" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Foreground="Black" FontWeight="Bold"/>
         </Grid>
 
         <Border Panel.ZIndex="-2" Visibility="Hidden">
@@ -37,7 +37,6 @@
         </Border>
 
         <Grid x:Name="grid_item" Panel.ZIndex="-1">
-            <local:PathButton x:Name="btn_Left" GeometryData="{StaticResource left}"  Height="264.333"  Width="133.346" Margin="17,65,250,70"/>
             <local:PathButton x:Name="btn_Top" GeometryData="{StaticResource top}" RenderTransformOrigin="0.533,0.582" Height="260.033" Margin="152,-39,107,179" Width="140.782" >
                 <local:PathButton.RenderTransform>
                     <TransformGroup>
@@ -68,6 +67,7 @@
                     </TransformGroup>
                 </local:PathButton.RenderTransform>
             </local:PathButton>
+            <local:PathButton x:Name="btn_Left" GeometryData="{StaticResource left}"  Height="264.333"  Width="133.346" Margin="17,65,250,70"/>
         </Grid>
     </Grid>
 </Window>
