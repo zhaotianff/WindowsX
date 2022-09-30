@@ -7,30 +7,38 @@
         WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
         mc:Ignorable="d"
-        Title="FastRun" Height="400" Width="400" PreviewMouseRightButtonDown="Window_PreviewMouseRightButtonDown" PreviewMouseMove="Window_PreviewMouseMove" Loaded="Window_Loaded">
+        Title="FastRun" Height="400" Width="400" PreviewMouseRightButtonDown="Window_PreviewMouseRightButtonDown" PreviewMouseMove="Window_PreviewMouseMove" Loaded="Window_Loaded" Topmost="True">
     <Window.Resources>
-
         <Geometry x:Key="left">M24,38 C0.89547628,72.038407 15.010616,113.49673 29.5,128.5 L-46.503959,207.49979 C-46.685377,207.23774 -60.991527,193.762 -61.171775,193.5 -124.74465,101.44018 -113.82155,11.469536 -40.503647,-55.83367 z</Geometry>
         <Geometry x:Key="top">M32.176792,28.041916 C2.1128207,59.994353 16.855046,119.34987 40.233181,133.90566 40.233181,133.90566 -51.663851,199.9682 -51.844099,199.7062 -121.20812,113.94111 -114.23193,12.580008 -35.5345,-59.326397 z</Geometry>
         <Geometry x:Key="right">M26.52714,38.955075 C3.4226164,72.993482 15.010616,113.49673 29.5,128.5 L-58.504946,191.5 C-58.686364,191.23795 -60.991527,193.762 -61.171775,193.5 -117.98751,110.91469 -114.47543,33.15009 -48.404503,-44.314435 z</Geometry>
         <Geometry x:Key="bottom">M30.408029,27.843472 C7.3035053,61.881879 24.762119,118.8827 39.251503,133.88597 L-42.865045,210.12047 C-43.046463,209.85842 -59.446134,193.14752 -59.626382,192.88552 -116.85354,113.89339 -114.90716,30.188753 -48.504385,-49.5 z</Geometry>
     </Window.Resources>
     <Grid>
-        <Grid Height="400" Width="400" Background="Transparent">
-            <Grid x:Name="grid_Menu">
-                <Border Grid.ColumnSpan="4" Grid.RowSpan="4">
-                    <Border.Background>
-                        <RadialGradientBrush>
-                            <GradientStop Color="White" Offset="0.9"/>
-                            <GradientStop Offset="1"/>
-                            <GradientStop x:Name="ColoCirkle" Color="Silver" Offset="0.91"/>
-                        </RadialGradientBrush>
-                    </Border.Background>
-                </Border>
-            </Grid>
+        <Grid x:Name="grid_icon" Panel.ZIndex="1">
+            <Image Name="img_left" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0,0,0" Panel.ZIndex="111" Stretch="Fill" IsHitTestVisible="False"/>
+            <Image Name="img_top" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0"  Stretch="Fill" IsHitTestVisible="False"/>
+            <Image Name="img_right" Width="40" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,60,0"  Stretch="Fill" IsHitTestVisible="False"/>
+            <Image Name="img_bottom" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,60"  Stretch="Fill" IsHitTestVisible="False"/>
+        </Grid>
 
-            <local:PathButton x:Name="btn_Left" GeometryData="{StaticResource left}"  Height="264.333"  Width="133.346" Margin="18,68,249,68"/>
-            <local:PathButton x:Name="btn_Top" GeometryData="{StaticResource top}" RenderTransformOrigin="0.533,0.582" Height="260.033" Margin="153,-42,106,182" Width="140.782" >
+        <Grid x:Name="grid_info" Panel.ZIndex="0">
+            <Label Name="lbl_Name" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Border Panel.ZIndex="-2" Visibility="Hidden">
+            <Border.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="White" Offset="0.9"/>
+                    <GradientStop Offset="1"/>
+                    <GradientStop x:Name="ColoCirkle" Color="Silver" Offset="0.91"/>
+                </RadialGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <Grid x:Name="grid_item" Panel.ZIndex="-1">
+            <local:PathButton x:Name="btn_Left" GeometryData="{StaticResource left}"  Height="264.333"  Width="133.346" Margin="17,65,250,70"/>
+            <local:PathButton x:Name="btn_Top" GeometryData="{StaticResource top}" RenderTransformOrigin="0.533,0.582" Height="260.033" Margin="152,-39,107,179" Width="140.782" >
                 <local:PathButton.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -40,7 +48,7 @@
                     </TransformGroup>
                 </local:PathButton.RenderTransform>
             </local:PathButton>
-            <local:PathButton x:Name="btn_Right" GeometryData="{StaticResource right}" Height="238.833" Margin="255,78,14,83" Width="131.566" RenderTransformOrigin="0.5,0.5">
+            <local:PathButton x:Name="btn_Right" GeometryData="{StaticResource right}" Height="238.833" Margin="252,80,17,82" Width="131.566" RenderTransformOrigin="0.5,0.5">
                 <local:PathButton.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -50,7 +58,7 @@
                     </TransformGroup>
                 </local:PathButton.RenderTransform>
             </local:PathButton>
-            <local:PathButton x:Name="btn_Bottom" GeometryData="{StaticResource bottom}" Height="260.62" Margin="136,194,123,-55" Width="140.802" RenderTransformOrigin="0.5,0.5">
+            <local:PathButton x:Name="btn_Bottom" GeometryData="{StaticResource bottom}" Height="260.62" Margin="130,195,129,-56" Width="140.802" RenderTransformOrigin="0.5,0.5">
                 <local:PathButton.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -61,7 +69,5 @@
                 </local:PathButton.RenderTransform>
             </local:PathButton>
         </Grid>
-
-
     </Grid>
 </Window>

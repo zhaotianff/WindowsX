@@ -56,77 +56,61 @@ namespace Master_Zhao.Shell.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //Canvas.SetLeft(img_DragArea, (canvas.ActualWidth - img_DragArea.Width) / 2);
-            //Canvas.SetTop(img_DragArea, (canvas.ActualHeight - img_DragArea.Height) / 2);
             this.Visibility = Visibility.Hidden;
-        }
-
-        public void RefreshFastRunItem(int index)
-        {
-            //TODO 
-            //var list = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
-
-            //if (index < list.Count && index < canvas.Children.Count)
-            //{
-            //    (canvas.Children[index] as FastRunButton).FastRunItem.Path = list[index].Path;
-            //}
         }
 
         public void LoadFastRunList()
         {
 
-            /*
-             * <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" VerticalContentAlignment="Bottom" Foreground="White" FontSize="20" Content="abc" Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
-            </local:FastRunButton>/*
-            */
-
-            //canvas.Children.Clear();
-
-            //var list = GetTestList();
             var list = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
 
-            foreach (var item in list)
+            for(int i = 0;i<list.Count;i++)
             {
-                FastRunButton fastRunButton = new FastRunButton();
-                fastRunButton.FastRunItem = item;
-                fastRunButton.ContentRadiusX = 48;
-                fastRunButton.ContentRadiusY = 48;
-                fastRunButton.Center = new Point(50, 50);
-                fastRunButton.VerticalAlignment = VerticalAlignment.Bottom;
-                fastRunButton.Foreground = Brushes.White;
-                fastRunButton.FontSize = 20;
-                fastRunButton.Content = item.Name;
-                fastRunButton.Width = 100;
-                fastRunButton.Height = 100;
-                //fastRunButton.ImagePath = @"C:\Users\Administrator\Desktop\compu.png";
-                fastRunButton.ImagePath = GetCachedIconPath(item.Path);
-                //fastRunButton.HostCanvas = canvas;
-                fastRunButton.Click += FastRunButton_Click;
-                //canvas.Children.Add(fastRunButton);
+                if(i < grid_item.Children.Count)
+                {
+                    var pathButton = grid_item.Children[i] as PathButton;
+                    pathButton.FastRunItem = list[i];
+                    pathButton.MouseDown -= PathButton_MouseDown;
+                    pathButton.MouseDown += PathButton_MouseDown;
+                    pathButton.MouseEnter -= PathButton_MouseEnter;
+                    pathButton.MouseEnter += PathButton_MouseEnter;
+
+                    var image = grid_icon.Children[i] as Image;
+                    image.Source = ImageHelper.GetBitmapImageFromLocalFile(GetCachedIconPath(list[i].Path));
+                }
+                else
+                {
+                    break;
+                }
             }
-
-            //btn_Left.FastRunName = list[0].Name;
-            //btn_Left.FastRunIcon = GetCachedIconPath(list[0].Path);
-            //btn_Left.FastRunData = list[0];
-            //btn_Left.Click += FastRunButton_Click;
-
-            //btn_Top.FastRunName = list[1].Name;
-            //btn_Top.FastRunIcon = GetCachedIconPath(list[1].Path);
-            //btn_Top.FastRunData = list[1];
-            //btn_Top.Click += FastRunButton_Click;
-
-            //btn_Right.FastRunName = list[1].Name;
-            //btn_Right.FastRunIcon = GetCachedIconPath(list[1].Path);
-            //btn_Right.FastRunData = list[1];
-            //btn_Right.Click += FastRunButton_Click;
-
-            //btn_Bottom.FastRunName = list[2].Name;
-            //btn_Bottom.FastRunIcon = GetCachedIconPath(list[2].Path);
-            //btn_Bottom.FastRunData = list[2];
-            //btn_Bottom.Click += FastRunButton_Click;
-
-            //(canvas.Children[0] as FastRunButton).IsSelected = true;
         }
+
+        private void PathButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var pathButton = sender as PathButton;
+
+            if(pathButton != null)
+            {
+                this.lbl_Name.Content = pathButton.FastRunItem.Name;
+            }
+        }
+
+        private void PathButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var pathButton = sender as PathButton;
+
+            if (pathButton != null && e.LeftButton == MouseButtonState.Pressed)
+            {
+                var psInfo = new System.Diagnostics.ProcessStartInfo();
+                psInfo.UseShellExecute = true;
+                psInfo.FileName = pathButton.FastRunItem.Path;
+                System.Diagnostics.Process.Start(psInfo);
+                this.Visibility = Visibility.Hidden;
+                isExecuted = true;
+            }
+        }
+
+      
 
         private string GetCachedIconPath(string path)
         {
@@ -146,21 +130,6 @@ namespace Master_Zhao.Shell.Windows
             }
 
             return iconPath;
-        }
-
-        private void FastRunButton_Click(object sender, RoutedEventArgs e)
-        {
-            //var pathButton = sender as PathButton;
-
-            //if (pathButton != null)
-            //{
-            //    var psInfo = new System.Diagnostics.ProcessStartInfo();
-            //    psInfo.UseShellExecute = true;
-            //    psInfo.FileName = pathButton.FastRunData.Path;
-            //    System.Diagnostics.Process.Start(psInfo);
-            //    this.Visibility = Visibility.Hidden;
-            //    isExecuted = true;
-            //}
         }
 
         #region Test Code
@@ -272,27 +241,28 @@ namespace Master_Zhao.Shell.Windows
 
         private void SelectFastRunItem(int index, bool isRun = false)
         {
-           //for(int i = 0;i<canvas.Children.Count;i++)
-           // {
-           //     if(index == i)
-           //     {
-           //         var fastRunButton = canvas.Children[i] as FastRunButton;
+            for (int i = 0; i < grid_item.Children.Count; i++)
+            {
+                if (index == i)
+                {
+                    var pathButton = grid_item.Children[i] as PathButton;
 
-           //         fastRunButton.IsSelected = true;
+                    pathButton.IsSelected = true;
 
-           //         if (isRun)
-           //         {
-           //             fastRunButton.Dispatcher.Invoke(() => {
-           //                 fastRunButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-           //             });
+                    if (isRun)
+                    {
+                        pathButton.Dispatcher.Invoke(() =>
+                        {
+                            pathButton.RaiseEvent(new RoutedEventArgs(MouseDownEvent));
+                        });
 
-           //         }
-           //     }
-           //     else
-           //     {
-           //         (canvas.Children[i] as FastRunButton).IsSelected = false;
-           //     }
-           // }
+                    }
+                }
+                else
+                {
+                    (grid_item.Children[i] as PathButton).IsSelected = false;
+                }
+            }
         }
 
         public void ShowWindowWithAnimation()
