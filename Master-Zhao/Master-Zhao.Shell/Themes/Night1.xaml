@@ -8,10 +8,14 @@
 
     <SolidColorBrush x:Key="AccentBaseColor" Color="#39375B"/>
     <SolidColorBrush x:Key="AccentBaseColorTran" Color="#745C97" Opacity=".2"/>
+    <SolidColorBrush x:Key="AccentBaseColorShadow" Color="#D597CE"/>
     <SolidColorBrush x:Key="WhiteColor" Color="White"/>
     <SolidColorBrush x:Key="BlackColor" Color="Black"/>
     <SolidColorBrush x:Key="ButtonBorderColor" Color="#FF737373"/>
     <SolidColorBrush x:Key="ButtonDisabledBackgroundColor" Color="#FFF4F4F4"/>
     <SolidColorBrush x:Key="ButtonDisabledBorderColor" Color="#FFADB2B5"/>
     <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="#FF838383"/>
+
+    <Color x:Key="BorderColor">#FF737373</Color>
+    <Color x:Key="BorderColorTran" A="120" R="115" G="115" B="115"></Color>
 </ResourceDictionary>

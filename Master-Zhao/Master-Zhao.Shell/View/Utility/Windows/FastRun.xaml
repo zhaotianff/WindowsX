@@ -26,12 +26,12 @@
             <Label Name="lbl_Name" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Foreground="Black" FontWeight="Bold"/>
         </Grid>
 
-        <Border Panel.ZIndex="-2" Visibility="Hidden">
+        <Border Panel.ZIndex="-2" Visibility="Visible">
             <Border.Background>
                 <RadialGradientBrush>
                     <GradientStop Color="White" Offset="0.9"/>
                     <GradientStop Offset="1"/>
-                    <GradientStop x:Name="ColoCirkle" Color="Silver" Offset="0.91"/>
+                    <GradientStop x:Name="ColorCircle" Color="{DynamicResource BorderColorTran}" Offset="0.91"/>
                 </RadialGradientBrush>
             </Border.Background>
         </Border>
@@ -67,7 +67,7 @@
                     </TransformGroup>
                 </local:PathButton.RenderTransform>
             </local:PathButton>
-            <local:PathButton x:Name="btn_Left" GeometryData="{StaticResource left}"  Height="264.333"  Width="133.346" Margin="17,65,250,70"/>
+            <local:PathButton x:Name="btn_Left" GeometryData="{StaticResource left}"  Height="264.333"  Width="133.346" Margin="17,64,250,72"/>
         </Grid>
     </Grid>
 </Window>

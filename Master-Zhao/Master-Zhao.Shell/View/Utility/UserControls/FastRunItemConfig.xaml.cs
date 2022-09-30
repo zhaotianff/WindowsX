@@ -63,7 +63,7 @@ namespace Master_Zhao.Shell.UserControls
 
         private void btnBrowerPath_Click(object sender, RoutedEventArgs e)
         {
-            var path = DialogHelper.BrowserSingleFile("可执行程序|*.exe;*.cpl;*.msc;*.bat;*.vbs;*.lnk");
+            var path = DialogHelper.BrowserSingleFile("可执行程序|*.exe;*.cpl;*.msc;*.bat;*.vbs;*.lnk",initPath: Environment.GetFolderPath(Environment.SpecialFolder.StartMenu));
 
             if(!string.IsNullOrEmpty(path))
             {

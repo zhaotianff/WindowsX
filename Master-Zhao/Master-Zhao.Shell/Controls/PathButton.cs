@@ -1,4 +1,5 @@
 ﻿using Master_Zhao.Config.Model;
+using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -54,24 +55,23 @@ namespace Master_Zhao.Shell.Controls
             this.MouseEnter += PathButton_MouseEnter;
             this.MouseLeave += PathButton_MouseLeave;
             this.Fill = new SolidColorBrush(Colors.White);
-            this.Stroke = Brushes.Black;
+            this.Stroke = new SolidColorBrush(Colors.Transparent);
             this.StrokeThickness = 1;
-            dropShadowEffect.Color = Colors.Green;
-            this.Effect = dropShadowEffect;
             dropShadowEffect.Color = Colors.Transparent;
+            this.Effect = dropShadowEffect;
             this.Stretch = Stretch.Fill;
         }
 
         public void StartMouseEnterAnimation()
         {
-            this.Fill.BeginAnimation(SolidColorBrush.ColorProperty, GetAnimation(Colors.Purple, TimeSpan.FromMilliseconds(200)));
-            this.dropShadowEffect.BeginAnimation(DropShadowEffect.ColorProperty, GetAnimation(Colors.Red, TimeSpan.FromMilliseconds(200)));
+            this.Fill.BeginAnimation(SolidColorBrush.ColorProperty, GetAnimation(GlobalData.Instance.AccentColorBrushTran.Color, TimeSpan.FromMilliseconds(300)));
+            this.dropShadowEffect.BeginAnimation(DropShadowEffect.ColorProperty, GetAnimation(GlobalData.Instance.AccentColorBrushShadow.Color, TimeSpan.FromMilliseconds(300)));
         }
 
         public void StartMouseLeaveAnimation()
         {
-            this.Fill.BeginAnimation(SolidColorBrush.ColorProperty, GetAnimation(Colors.White, TimeSpan.FromMilliseconds(200)));
-            this.dropShadowEffect.BeginAnimation(DropShadowEffect.ColorProperty, GetAnimation(Colors.Transparent, TimeSpan.FromMilliseconds(200)));
+            this.Fill.BeginAnimation(SolidColorBrush.ColorProperty, GetAnimation(GlobalData.Instance.WhiteColorBrush.Color, TimeSpan.FromMilliseconds(300)));
+            this.dropShadowEffect.BeginAnimation(DropShadowEffect.ColorProperty, GetAnimation(Colors.Transparent, TimeSpan.FromMilliseconds(300)));
         }
 
         private void PathButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

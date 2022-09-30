@@ -74,6 +74,8 @@ namespace Master_Zhao.Shell.Windows
                     pathButton.MouseDown += PathButton_MouseDown;
                     pathButton.MouseEnter -= PathButton_MouseEnter;
                     pathButton.MouseEnter += PathButton_MouseEnter;
+                    pathButton.MouseLeave -= PathButton_MouseLeave;
+                    pathButton.MouseLeave += PathButton_MouseLeave;
 
                     var image = grid_icon.Children[i] as Image;
                     image.Source = ImageHelper.GetBitmapImageFromLocalFile(GetCachedIconPath(list[i].Path));
@@ -85,14 +87,34 @@ namespace Master_Zhao.Shell.Windows
             }
         }
 
+        private void PathButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var pathButton = sender as PathButton;
+
+            if (pathButton != null)
+            {
+                this.ColorCircle.BeginAnimation(GradientStop.ColorProperty, GetAnimation(GlobalData.Instance.BorderColorTran, TimeSpan.FromMilliseconds(300)));
+            }
+        }
+
         private void PathButton_MouseEnter(object sender, MouseEventArgs e)
         {
             var pathButton = sender as PathButton;
 
             if(pathButton != null)
             {
-                this.lbl_Name.Content = pathButton.FastRunItem.Name;
+                this.lbl_Name.Content = pathButton.FastRunItem.Name; 
+                this.ColorCircle.BeginAnimation(GradientStop.ColorProperty, GetAnimation(GlobalData.Instance.BorderColor, TimeSpan.FromMilliseconds(300)));
             }
+        }
+
+        private System.Windows.Media.Animation.ColorAnimation GetAnimation(Color to, TimeSpan duration)
+        {
+            System.Windows.Media.Animation.ColorAnimation animation = new System.Windows.Media.Animation.ColorAnimation();
+            animation.Duration = duration;
+            animation.To = to;
+            animation.AutoReverse = false;
+            return animation;
         }
 
         private void PathButton_MouseDown(object sender, MouseButtonEventArgs e)
@@ -101,15 +123,19 @@ namespace Master_Zhao.Shell.Windows
 
             if (pathButton != null && e.LeftButton == MouseButtonState.Pressed)
             {
-                var psInfo = new System.Diagnostics.ProcessStartInfo();
-                psInfo.UseShellExecute = true;
-                psInfo.FileName = pathButton.FastRunItem.Path;
-                System.Diagnostics.Process.Start(psInfo);
-                this.Visibility = Visibility.Hidden;
-                isExecuted = true;
+                ExecuteFastRunItem(pathButton.FastRunItem.Path);
             }
         }
 
+        private void ExecuteFastRunItem(string path)
+        {
+            var psInfo = new System.Diagnostics.ProcessStartInfo();
+            psInfo.UseShellExecute = true;
+            psInfo.FileName = path;
+            System.Diagnostics.Process.Start(psInfo);
+            this.Visibility = Visibility.Hidden;
+            isExecuted = true;
+        }
       
 
         private string GetCachedIconPath(string path)
@@ -248,15 +274,13 @@ namespace Master_Zhao.Shell.Windows
                     var pathButton = grid_item.Children[i] as PathButton;
 
                     pathButton.IsSelected = true;
-
                     if (isRun)
                     {
-                        pathButton.Dispatcher.Invoke(() =>
-                        {
-                            pathButton.RaiseEvent(new RoutedEventArgs(MouseDownEvent));
+                        pathButton.Dispatcher.Invoke(()=> {
+                            ExecuteFastRunItem(pathButton.FastRunItem.Path);
                         });
-
                     }
+                    pathButton.IsSelected = false;
                 }
                 else
                 {
@@ -267,15 +291,7 @@ namespace Master_Zhao.Shell.Windows
 
         public void ShowWindowWithAnimation()
         {   
-            //for (int i = 0; i < canvas.Children.Count; i++)
-            //{
-            //    var fastRunButton = canvas.Children[i] as FastRunButton;
-            //    fastRunButton?.OnApplyTemplate();
-            //}
-
             this.Visibility = Visibility.Visible;
-
-            //TODO reset animation position
         }
 
         private void Window_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
