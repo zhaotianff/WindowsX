@@ -9,45 +9,11 @@
         mc:Ignorable="d"
         Title="FastRun" Height="400" Width="400" PreviewMouseRightButtonDown="Window_PreviewMouseRightButtonDown" PreviewMouseMove="Window_PreviewMouseMove" Loaded="Window_Loaded">
     <Window.Resources>
-        <Canvas x:Key="left" Width="133.346" Height="264.333">
-            <Path Data="M24,38 C0.89547628,72.038407 15.010616,113.49673 29.5,128.5 L-46.503959,207.49979 C-46.685377,207.23774 -60.991527,193.762 -61.171775,193.5 -124.74465,101.44018 -113.82155,11.469536 -40.503647,-55.83367 z" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button},Path=Background,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Height="264.333" Stretch="Fill" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button},Path=BorderBrush,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="133.346" Margin="15.994,64.5,250.66,71.167"/>
-        </Canvas>
-        <Canvas x:Key="top"  Width="133.346" Height="264.333">
-            <Path  Data="M32.176792,28.041916 C2.1128207,59.994353 16.855046,119.34987 40.233181,133.90566 40.233181,133.90566 -51.663851,199.9682 -51.844099,199.7062 -121.20812,113.94111 -114.23193,12.580008 -35.5345,-59.326397 z" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button},Path=Background,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="260.033" Margin="150.736,-38.005,0,0" Stretch="Fill" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button},Path=BorderBrush,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="140.782" RenderTransformOrigin="0.5,0.5">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="91.112"/>
-                        <TranslateTransform X="-12.67998211568198" Y="-3.5777541805738338"/>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-        </Canvas>
-        <Canvas x:Key="right" Width="133.346" Height="264.333">
-            <Path  Data="M26.52714,38.955075 C3.4226164,72.993482 15.010616,113.49673 29.5,128.5 L-58.504946,191.5 C-58.686364,191.23795 -60.991527,193.762 -61.171775,193.5 -117.98751,110.91469 -114.47543,33.15009 -48.404503,-44.314435 z" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button},Path=Background,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="238.833" Margin="252.75,78.393,0,0" Stretch="Fill" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button},Path=BorderBrush,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="131.566" RenderTransformOrigin="0.5,0.5">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="178.361"/>
-                        <TranslateTransform X="0.11915589801833448" Y="5.1842956001542007"/>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-        </Canvas>
-        <Canvas x:Key="bottom" Width="133.346" Height="264.333">
-            <Path Data="M30.408029,27.843472 C7.3035053,61.881879 24.762119,118.8827 39.251503,133.88597 L-42.865045,210.12047 C-43.046463,209.85842 -59.446134,193.14752 -59.626382,192.88552 -116.85354,113.89339 -114.90716,30.188753 -48.504385,-49.5 z" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button},Path=Background,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="260.62" Margin="128.716,193.847,0,-54.467" Stretch="Fill" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button},Path=BorderBrush,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="140.802" RenderTransformOrigin="0.5,0.5">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90.265"/>
-                        <TranslateTransform X="3.683656544262206" Y="-12.934341539759373"/>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-        </Canvas>
+
+        <Geometry x:Key="left">M24,38 C0.89547628,72.038407 15.010616,113.49673 29.5,128.5 L-46.503959,207.49979 C-46.685377,207.23774 -60.991527,193.762 -61.171775,193.5 -124.74465,101.44018 -113.82155,11.469536 -40.503647,-55.83367 z</Geometry>
+        <Geometry x:Key="top">M32.176792,28.041916 C2.1128207,59.994353 16.855046,119.34987 40.233181,133.90566 40.233181,133.90566 -51.663851,199.9682 -51.844099,199.7062 -121.20812,113.94111 -114.23193,12.580008 -35.5345,-59.326397 z</Geometry>
+        <Geometry x:Key="right">M26.52714,38.955075 C3.4226164,72.993482 15.010616,113.49673 29.5,128.5 L-58.504946,191.5 C-58.686364,191.23795 -60.991527,193.762 -61.171775,193.5 -117.98751,110.91469 -114.47543,33.15009 -48.404503,-44.314435 z</Geometry>
+        <Geometry x:Key="bottom">M30.408029,27.843472 C7.3035053,61.881879 24.762119,118.8827 39.251503,133.88597 L-42.865045,210.12047 C-43.046463,209.85842 -59.446134,193.14752 -59.626382,192.88552 -116.85354,113.89339 -114.90716,30.188753 -48.504385,-49.5 z</Geometry>
     </Window.Resources>
     <Grid>
         <Grid Height="400" Width="400" Background="Transparent">
@@ -63,7 +29,39 @@
                 </Border>
             </Grid>
 
-
+            <local:PathButton x:Name="btn_Left" GeometryData="{StaticResource left}"  Height="264.333"  Width="133.346" Margin="18,68,249,68"/>
+            <local:PathButton x:Name="btn_Top" GeometryData="{StaticResource top}" RenderTransformOrigin="0.533,0.582" Height="260.033" Margin="153,-42,106,182" Width="140.782" >
+                <local:PathButton.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="91.112"/>
+                        <TranslateTransform X="-38.735" Y="-20.665"/>
+                    </TransformGroup>
+                </local:PathButton.RenderTransform>
+            </local:PathButton>
+            <local:PathButton x:Name="btn_Right" GeometryData="{StaticResource right}" Height="238.833" Margin="255,78,14,83" Width="131.566" RenderTransformOrigin="0.5,0.5">
+                <local:PathButton.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="178.361"/>
+                        <TranslateTransform X="0.11915589801833448" Y="5.1842956001542007"/>
+                    </TransformGroup>
+                </local:PathButton.RenderTransform>
+            </local:PathButton>
+            <local:PathButton x:Name="btn_Bottom" GeometryData="{StaticResource bottom}" Height="260.62" Margin="136,194,123,-55" Width="140.802" RenderTransformOrigin="0.5,0.5">
+                <local:PathButton.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.265"/>
+                        <TranslateTransform X="3.683656544262206" Y="-12.934341539759373"/>
+                    </TransformGroup>
+                </local:PathButton.RenderTransform>
+            </local:PathButton>
         </Grid>
+
+
     </Grid>
 </Window>

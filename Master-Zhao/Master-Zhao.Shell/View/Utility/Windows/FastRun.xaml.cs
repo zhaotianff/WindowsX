@@ -150,17 +150,17 @@ namespace Master_Zhao.Shell.Windows
 
         private void FastRunButton_Click(object sender, RoutedEventArgs e)
         {
-            var pathButton = sender as PathButton;
+            //var pathButton = sender as PathButton;
 
-            if (pathButton != null)
-            {
-                var psInfo = new System.Diagnostics.ProcessStartInfo();
-                psInfo.UseShellExecute = true;
-                psInfo.FileName = pathButton.FastRunData.Path;
-                System.Diagnostics.Process.Start(psInfo);
-                this.Visibility = Visibility.Hidden;
-                isExecuted = true;
-            }
+            //if (pathButton != null)
+            //{
+            //    var psInfo = new System.Diagnostics.ProcessStartInfo();
+            //    psInfo.UseShellExecute = true;
+            //    psInfo.FileName = pathButton.FastRunData.Path;
+            //    System.Diagnostics.Process.Start(psInfo);
+            //    this.Visibility = Visibility.Hidden;
+            //    isExecuted = true;
+            //}
         }
 
         #region Test Code
