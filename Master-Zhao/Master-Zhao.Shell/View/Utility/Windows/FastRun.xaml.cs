@@ -105,25 +105,25 @@ namespace Master_Zhao.Shell.Windows
                 //canvas.Children.Add(fastRunButton);
             }
 
-            btn_Left.FastRunName = list[0].Name;
-            btn_Left.FastRunIcon = GetCachedIconPath(list[0].Path);
-            btn_Left.FastRunData = list[0];
-            btn_Left.Click += FastRunButton_Click;
+            //btn_Left.FastRunName = list[0].Name;
+            //btn_Left.FastRunIcon = GetCachedIconPath(list[0].Path);
+            //btn_Left.FastRunData = list[0];
+            //btn_Left.Click += FastRunButton_Click;
 
-            btn_Top.FastRunName = list[1].Name;
-            btn_Top.FastRunIcon = GetCachedIconPath(list[1].Path);
-            btn_Top.FastRunData = list[1];
-            btn_Top.Click += FastRunButton_Click;
+            //btn_Top.FastRunName = list[1].Name;
+            //btn_Top.FastRunIcon = GetCachedIconPath(list[1].Path);
+            //btn_Top.FastRunData = list[1];
+            //btn_Top.Click += FastRunButton_Click;
 
-            btn_Right.FastRunName = list[1].Name;
-            btn_Right.FastRunIcon = GetCachedIconPath(list[1].Path);
-            btn_Right.FastRunData = list[1];
-            btn_Right.Click += FastRunButton_Click;
+            //btn_Right.FastRunName = list[1].Name;
+            //btn_Right.FastRunIcon = GetCachedIconPath(list[1].Path);
+            //btn_Right.FastRunData = list[1];
+            //btn_Right.Click += FastRunButton_Click;
 
-            btn_Bottom.FastRunName = list[2].Name;
-            btn_Bottom.FastRunIcon = GetCachedIconPath(list[2].Path);
-            btn_Bottom.FastRunData = list[2];
-            btn_Bottom.Click += FastRunButton_Click;
+            //btn_Bottom.FastRunName = list[2].Name;
+            //btn_Bottom.FastRunIcon = GetCachedIconPath(list[2].Path);
+            //btn_Bottom.FastRunData = list[2];
+            //btn_Bottom.Click += FastRunButton_Click;
 
             //(canvas.Children[0] as FastRunButton).IsSelected = true;
         }

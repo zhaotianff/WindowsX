@@ -51,7 +51,7 @@
     </Window.Resources>
     <Grid>
         <Grid Height="400" Width="400" Background="Transparent">
-            <!--<Grid x:Name="gMenu">
+            <Grid x:Name="grid_Menu">
                 <Border Grid.ColumnSpan="4" Grid.RowSpan="4">
                     <Border.Background>
                         <RadialGradientBrush>
@@ -61,19 +61,8 @@
                         </RadialGradientBrush>
                     </Border.Background>
                 </Border>
-            </Grid>-->
+            </Grid>
 
-            <local:PathButton x:Name="btn_Left" Height="264" Width="133.346" Background="White" BorderBrush="Black" Content="{StaticResource left}" HorizontalAlignment="Left" VerticalAlignment="Top" >
-            </local:PathButton>
-
-            <local:PathButton x:Name="btn_Top" Height="264" Width="133.346" Background="White" BorderBrush="Black" Content="{StaticResource top}" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            </local:PathButton>
-
-            <local:PathButton x:Name="btn_Right" Height="264" Width="133.346" Background="White" BorderBrush="Black" Content="{StaticResource right}" HorizontalAlignment="Right" VerticalAlignment="Center" >
-            </local:PathButton>
-
-            <local:PathButton x:Name="btn_Bottom" Height="264" Width="133.346" Background="White" BorderBrush="Black" Content="{StaticResource bottom}" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            </local:PathButton>
 
         </Grid>
     </Grid>

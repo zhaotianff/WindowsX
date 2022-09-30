@@ -136,7 +136,7 @@
                             </EllipseGeometry>
                         </Border.Clip>
 
-                        
+
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -157,40 +157,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type local:PathButton}" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Background" Value="Purple"/>
-        <Setter Property="Focusable" Value="False"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:PathButton}">
-                    <Grid MinHeight="{TemplateBinding MinHeight}" SnapsToDevicePixels="True">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-                        <ContentPresenter ContentSource="{TemplateBinding Content}" Width="Auto" Height="Auto" 
-                                              HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2"/>
-
-                        <Image HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="50" Margin="0,0,0,20" Stretch="Fill" Grid.Row="0" Source="{Binding FastRunIcon,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Label HorizontalAlignment="Center" Grid.Row="1" Content="{Binding FastRunName,RelativeSource={RelativeSource TemplatedParent}}"></Label>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#FFD5E1F2" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#FFA3BDE3" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value=".6"/>
-                <Setter Property="Effect" Value="{x:Null}"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>
