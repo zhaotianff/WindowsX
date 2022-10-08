@@ -231,6 +231,7 @@ namespace Master_Zhao.Shell
             //TODO 
             toolsPage.Terminate();
             StartMenuManager.UnHookStart();
+            NotifyIconHelper.Instance.RemoveNotifyIcon();
         }
 
         private async void BlurWindow_StateChanged(object sender, EventArgs e)
