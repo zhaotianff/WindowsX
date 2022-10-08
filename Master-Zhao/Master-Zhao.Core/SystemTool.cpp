@@ -1,4 +1,5 @@
 #include"SystemTool.h"
+#include"InputTool.h"
 #include<VersionHelpers.h>
 #include<functional>
 #include<Winternl.h>
@@ -238,8 +239,9 @@ LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 
 		switch (wParam)
 		{
-			case WM_KEYUP:
+			case WM_KEYDOWN:
 			{
+				//TODO fix key input
 				bWinKeyStroke = (pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN) ||
 					((pKb->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0));
 				break;

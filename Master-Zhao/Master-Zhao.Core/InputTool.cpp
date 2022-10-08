@@ -52,6 +52,15 @@ BOOL SendAsciiInput(TCHAR c)
     return SendInput(2, inputs, sizeof(INPUT));
 }
 
+BOOL SendAsciiInputUp(TCHAR c)
+{
+    INPUT inputs[1]{};
+    inputs[0].type = INPUT_KEYBOARD;
+    inputs[0].ki.wVk = c;
+    inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
+    return SendInput(1, inputs, sizeof(INPUT));
+}
+
 VOID AutoCode(LPTSTR code)
 {
     int nLen = lstrlen(code);
