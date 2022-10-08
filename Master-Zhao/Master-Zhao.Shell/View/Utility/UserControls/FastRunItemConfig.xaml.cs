@@ -49,7 +49,7 @@ namespace Master_Zhao.Shell.UserControls
             set
             {
                 tbox_Path.Text = value;
-                FastRunName =  System.IO.Path.GetFileNameWithoutExtension(tbox_Path.Text);
+                FastRunName = System.Diagnostics.FileVersionInfo.GetVersionInfo(value).FileDescription;
             }
         }
 

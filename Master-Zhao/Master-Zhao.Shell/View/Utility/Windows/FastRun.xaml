@@ -47,7 +47,7 @@
                     </TransformGroup>
                 </local:PathButton.RenderTransform>
             </local:PathButton>
-            <local:PathButton x:Name="btn_Right" GeometryData="{StaticResource right}" Height="238.833" Margin="252,80,17,82" Width="131.566" RenderTransformOrigin="0.5,0.5">
+            <local:PathButton x:Name="btn_Right" GeometryData="{StaticResource right}" Height="238.833" Margin="251,79,17,83" Width="131.566" RenderTransformOrigin="0.5,0.5">
                 <local:PathButton.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -57,7 +57,7 @@
                     </TransformGroup>
                 </local:PathButton.RenderTransform>
             </local:PathButton>
-            <local:PathButton x:Name="btn_Bottom" GeometryData="{StaticResource bottom}" Height="260.62" Margin="130,195,129,-56" Width="140.802" RenderTransformOrigin="0.5,0.5">
+            <local:PathButton x:Name="btn_Bottom" GeometryData="{StaticResource bottom}" Height="260.62" Margin="129,193,131,-54" Width="140.802" RenderTransformOrigin="0.5,0.5">
                 <local:PathButton.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
