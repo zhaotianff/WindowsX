@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Windows Flat" Height="631" Width="624" IsEnableContextMenu="False" 
                  TitleVisibility="Collapsed" IconVisibility="Collapsed" ControlBoxVisibility="Collapsed"
-                 ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual">
+                 ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" Topmost="True">
     <blur:BlurWindow.Background>
         <ImageBrush ImageSource="../../Icon/back_1.jpg" Stretch="UniformToFill" Opacity=".8"/>
     </blur:BlurWindow.Background>
@@ -26,15 +26,18 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-
+            <Popup Grid.Column="0" Grid.ColumnSpan="2" AllowsTransparency="True" PopupAnimation="Slide" Name="popup_poweroff" Width="120" Height="100" PlacementTarget="{Binding ElementName=img_poweroff}" Placement="Top" VerticalOffset="-5" LostFocus="popup_poweroff_LostFocus">
+                <StackPanel Background="Silver">
+                    <Label Content="睡眠"></Label>
+                    <Label Content="关机"></Label>
+                    <Label Content="重启"></Label>
+                </StackPanel>
+            </Popup>
+            
             <ScrollViewer Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <DockPanel LastChildFill="False" Margin="0,0,0,10">
-                    <Ellipse Width="45" Height="45" HorizontalAlignment="Left" Fill="White" Opacity=".2" DockPanel.Dock="Bottom" Margin="2"/>
-                    <Ellipse Width="45" Height="45" HorizontalAlignment="Left" Fill="White" Opacity=".2" DockPanel.Dock="Bottom" Margin="2"/>
-                    <Ellipse Width="45" Height="45" HorizontalAlignment="Left" Fill="White" Opacity=".2" DockPanel.Dock="Bottom" Margin="2"/>
-                    <Ellipse Width="45" Height="45" HorizontalAlignment="Left" Fill="White" Opacity=".2" DockPanel.Dock="Bottom" Margin="2"/>
-                    <Ellipse Width="45" Height="45" HorizontalAlignment="Left" Fill="White" Opacity=".2" DockPanel.Dock="Bottom" Margin="2"/>
-                    <Ellipse Width="45" Height="45" HorizontalAlignment="Left" Fill="White" Opacity=".2" DockPanel.Dock="Bottom" Margin="2"/>
+                    <Image Width="20" Height="20" Stretch="UniformToFill" Source="C:\Users\xi\Desktop\power.png" DockPanel.Dock="Bottom" Margin="2" Style="{StaticResource ImageStyleForStartMenu}" Name="img_poweroff"  MouseDown="img_poweroff_MouseDown"/>
+                    <Image Width="20" Height="20" Stretch="UniformToFill" Source="C:\Users\xi\Desktop\setting.png" DockPanel.Dock="Bottom" Margin="2,2,2,10"  Style="{StaticResource ImageStyleForStartMenu}" MouseDown="img_setting_MouseDown"/>
                 </DockPanel>
             </ScrollViewer>
 

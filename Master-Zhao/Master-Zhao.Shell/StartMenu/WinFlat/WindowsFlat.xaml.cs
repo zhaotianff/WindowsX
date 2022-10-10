@@ -41,5 +41,21 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
         {
 
         }
+
+        private void img_poweroff_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.popup_poweroff.IsOpen = !this.popup_poweroff.IsOpen;
+            popup_poweroff.Focus();
+        }
+
+        private void img_setting_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void popup_poweroff_LostFocus(object sender, RoutedEventArgs e)
+        {
+            popup_poweroff.IsOpen = false;
+        }
     }
 }
