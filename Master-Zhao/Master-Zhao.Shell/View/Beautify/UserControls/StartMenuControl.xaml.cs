@@ -52,14 +52,12 @@ namespace Master_Zhao.Shell.View.UserControls
         public static readonly DependencyProperty MenuNameProperty =
            DependencyProperty.Register("MenuName",
                typeof(string),
-               typeof(StartMenuControl),
-               new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, OnMenuNameChanged, null), null);
+               typeof(StartMenuControl));
 
-        private static void OnMenuNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            StartMenuControl startMenuControl = (StartMenuControl)d;
-            startMenuControl.MenuName = e.NewValue.ToString();
-        }
+        public static readonly DependencyProperty DisplayNameProperty =
+         DependencyProperty.Register("DisplayName",
+             typeof(string),
+             typeof(StartMenuControl),new PropertyMetadata(OnDisplayNameChanged));
 
         public string MenuName
         {
@@ -67,8 +65,23 @@ namespace Master_Zhao.Shell.View.UserControls
             set
             {
                 SetValue(MenuNameProperty, value);
+            }
+        }
+
+        public string DisplayName
+        {
+            get => GetValue(DisplayNameProperty).ToString();
+            set
+            {
+                SetValue(DisplayNameProperty, value);
                 this.title.Content = value;
             }
+        }
+
+        private static void OnDisplayNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            StartMenuControl startMenuControl = (StartMenuControl)d;
+            startMenuControl.DisplayName = e.NewValue.ToString();
         }
 
         public StartMenuControl()

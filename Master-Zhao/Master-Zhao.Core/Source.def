@@ -53,6 +53,7 @@ HookStart
 UnHookStart
 ShowCustomStart
 HideCustomStart
+CloseCustomStart
 RegisterBossKeyHotKey
 UnRegisterBossKeyHotKey
 

@@ -349,6 +349,14 @@ BOOL HideCustomStart()
 	return FALSE;
 }
 
+VOID CloseCustomStart()
+{
+	if (hStartMenuWindow)
+	{
+		SendMessage(hStartMenuWindow, WM_CLOSE, NULL, NULL);
+	}
+}
+
 BOOL RegisterBossKeyHotKey(HWND hwnd, UINT modifier,UINT vkCode,UINT nHotKeyId)
 {
 	return RegisterHotKey(hwnd, nHotKeyId, modifier, vkCode);

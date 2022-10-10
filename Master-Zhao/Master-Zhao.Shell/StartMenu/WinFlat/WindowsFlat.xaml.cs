@@ -12,31 +12,20 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Master_Zhao.Shell.StartMenu.Flat
+namespace Master_Zhao.Shell.StartMenu.WinFlat
 {
     /// <summary>
-    /// FlatStartMenu.xaml 的交互逻辑
+    /// WindowsFlat.xaml 的交互逻辑
     /// </summary>
-    public partial class FlatStartMenu : TianXiaTech.BlurWindow
+    public partial class WindowsFlat : TianXiaTech.BlurWindow
     {
-        public FlatStartMenu()
+        public WindowsFlat()
         {
             InitializeComponent();
-            this.Visibility = Visibility.Hidden;
-            Test();
+            this.Left = 10;
+            this.Top = SystemParameters.WorkArea.Height - this.Height - 10;
         }
 
-        private async void Test()
-        {
-            await Task.Delay(1000);
-
-            this.Left = 0;
-            this.Top = SystemParameters.WorkArea.Height - this.Height;
-
-
-            await Task.Delay(2000);
-            ShowMenu();
-        }
 
         private void ShowMenu()
         {

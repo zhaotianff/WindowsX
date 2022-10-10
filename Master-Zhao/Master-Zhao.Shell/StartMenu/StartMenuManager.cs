@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Windows.Interop;
 using Master_Zhao.Shell.StartMenu.Win98;
+using Master_Zhao.Shell.StartMenu.WinFlat;
 using Master_Zhao.Shell.Util;
 
 namespace Master_Zhao.Shell.StartMenu
 {
     public class StartMenuManager
     {
-        private static readonly string SYS_MENU_NAME = "系统默认";
-        private static string previousStartMenuName = "";
+        private const string DEFAULT_MENU_NAME = "Default";
+        private const string Win98_MENU_NAME = "Windows98";
+        private const string WINFLAT_MENU_NAME = "WindowsFlat";
+
+        private static string previousStartMenuName = DEFAULT_MENU_NAME;
         private static bool hookFlag = false;
 
         public static void LaunchStartMenu(string menuName)
@@ -16,16 +20,33 @@ namespace Master_Zhao.Shell.StartMenu
             if (menuName == previousStartMenuName)
                 return;
 
-            if (menuName == SYS_MENU_NAME)
+            ClosePreviousStartMenu();
+
+            switch (menuName)
             {
-                SetDefaultStartMenu();
-                return;
+                case DEFAULT_MENU_NAME:
+                    SetDefaultStartMenu();
+                    break;
+                case Win98_MENU_NAME:
+                    SetWindows98StartMenu();
+                    break;
+                case WINFLAT_MENU_NAME:
+                    SetWindowsFlatStartMenu();
+                    break;
             }
 
-            if (!string.IsNullOrEmpty(previousStartMenuName))
-                StopStartMenu(menuName);
+            previousStartMenuName = menuName;
+        }
 
-            var startMenuHandle = ProcessHelper.FindProcessWindow(menuName);
+
+        private static void SetDefaultStartMenu()
+        {
+            PInvoke.SystemTool.UnHookStart();
+        }
+
+        private static void SetWindows98StartMenu()
+        {
+            var startMenuHandle = ProcessHelper.FindProcessWindow(Win98_MENU_NAME);
             if (startMenuHandle == IntPtr.Zero)
             {
                 Windows98 windows98 = new Windows98();
@@ -33,28 +54,31 @@ namespace Master_Zhao.Shell.StartMenu
                 hookFlag = PInvoke.SystemTool.HookStart(new WindowInteropHelper(windows98).Handle);
                 HideStartMenu();
             }
-
-            previousStartMenuName = menuName;
         }
 
-        private static void StopStartMenu(string menuName)
+        private static void SetWindowsFlatStartMenu()
         {
-            ProcessHelper.KillProcess(menuName);
-        }
-
-        public static void SetDefaultStartMenu()
-        {
-            if(!string.IsNullOrEmpty(previousStartMenuName))
+            var startMenuHandle = ProcessHelper.FindProcessWindow(Win98_MENU_NAME);
+            if (startMenuHandle == IntPtr.Zero)
             {
-                UnHookStart();
+                WindowsFlat windowsFlat = new WindowsFlat();
+                windowsFlat.Show();
+                hookFlag = PInvoke.SystemTool.HookStart(new WindowInteropHelper(windowsFlat).Handle);
+                HideStartMenu();
             }
+        }
+
+        public static void ClosePreviousStartMenu()
+        {
+            if (!string.IsNullOrEmpty(previousStartMenuName) && previousStartMenuName != DEFAULT_MENU_NAME)
+                PInvoke.SystemTool.CloseCustomStart();
         }
 
         public static void UnHookStart()
         {
             if(hookFlag)
             {
-                ProcessHelper.KillProcess(previousStartMenuName);
+                PInvoke.SystemTool.CloseCustomStart();
                 PInvoke.SystemTool.UnHookStart();
             }
 

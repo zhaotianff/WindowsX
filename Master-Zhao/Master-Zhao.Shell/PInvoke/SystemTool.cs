@@ -40,6 +40,9 @@ namespace Master_Zhao.Shell.PInvoke
         public static extern bool HideCustomStart();
 
         [DllImport("MasterZhaoCore.dll")]
+        public static extern void CloseCustomStart();
+
+        [DllImport("MasterZhaoCore.dll")]
         public static extern bool RegisterBossKeyHotKey(IntPtr hwnd, uint modifier, uint vkCode,uint hotKeyId);
 
         [DllImport("MasterZhaoCore.dll")]
