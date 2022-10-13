@@ -71,6 +71,8 @@ namespace Master_Zhao.Shell
                     tempIndex = index - colorsLength - resourcesLength;
                     this.Background = new ImageBrush() { ImageSource = new System.Windows.Media.Imaging.BitmapImage(new Uri(wallpaperConfig.LocalImages[tempIndex], UriKind.Absolute)), Stretch = Stretch.UniformToFill };
                 }
+
+                this.Background.Opacity = wallpaperConfig.Opacity;
             }
             catch
             {
