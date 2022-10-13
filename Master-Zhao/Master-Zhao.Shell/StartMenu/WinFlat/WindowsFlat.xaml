@@ -33,7 +33,7 @@
                     <Label Content="重启"></Label>
                 </StackPanel>
             </Popup>
-            
+
             <ScrollViewer Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <DockPanel LastChildFill="False" Margin="0,0,0,10">
                     <Image Width="20" Height="20" Stretch="UniformToFill" Source="C:\Users\xi\Desktop\power.png" DockPanel.Dock="Bottom" Margin="2" Style="{StaticResource ImageStyleForStartMenu}" Name="img_poweroff"  MouseDown="img_poweroff_MouseDown"/>
@@ -52,10 +52,31 @@
                         <Border.Background>
                             <SolidColorBrush Color="#f4f8fe" Opacity=".5"></SolidColorBrush>
                         </Border.Background>
-                    </Border>
 
-                    <Image Source="../../Icon/weather.png" Visibility="Collapsed"/>
-                    <Label Content="天气"></Label>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="天气" Grid.Row="0"></Label>
+
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Canvas Name="canvas_TodayWeather" Grid.Row="0">
+                                    <Image Width="40" Height="40" Source="C:\Users\xi\Desktop\sunny.png" Stretch="UniformToFill"/>
+                                    <Label Content="24 ℃" FontSize="40" Canvas.Top="74" Canvas.Left="3"/>
+                                    <Label Content="空气质量:优" Canvas.Right="0"/>
+                                    <Label Content="西北风 1级" Canvas.Right="0" Canvas.Top="25"/>
+                                    <Label Content="相对湿度 27%" Canvas.Right="0" Canvas.Top="50"/>
+                                </Canvas>
+                            </Grid>
+                        </Grid>
+                    </Border>
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="10">

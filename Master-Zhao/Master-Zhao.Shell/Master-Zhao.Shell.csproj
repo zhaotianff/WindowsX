@@ -105,4 +105,8 @@
     <Resource Include="StartMenu\Win98\Icon\windows_update.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Icon\Weather\" />
+  </ItemGroup>
+
 </Project>
