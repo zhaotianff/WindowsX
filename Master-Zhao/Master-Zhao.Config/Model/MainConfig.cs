@@ -13,6 +13,8 @@ namespace Master_Zhao.Config.Model
         public List<string> ResourceImages { get; set; } = new List<string>();
 
         public List<string> LocalImages { get; set; } = new List<string>();
+
+        public float Opacity { get; set; }
     }
 
     public class MainConfig

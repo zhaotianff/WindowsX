@@ -53,6 +53,8 @@ namespace Master_Zhao.Shell.View.Setting.Pages
                 AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri(backgroundConfig.LocalImages[i], UriKind.Absolute)),Stretch = Stretch.UniformToFill });
             }
 
+            this.slider_Opacity.Value = backgroundConfig.Opacity;
+
             isBackgroundLoaded = true;
         }
 
@@ -81,6 +83,12 @@ namespace Master_Zhao.Shell.View.Setting.Pages
 
             var index = this.wrap.Children.IndexOf(sender as Rectangle);
             GlobalConfig.Instance.MainConfig.BackgroundSetting.Index = index;
+        }
+
+        private void slider_Opacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Application.Current.MainWindow.Background.Opacity = e.NewValue;
+            GlobalConfig.Instance.MainConfig.BackgroundSetting.Opacity = (float)e.NewValue;
         }
     }
 }

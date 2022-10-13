@@ -34,10 +34,8 @@
         </WrapPanel>
 
         <DockPanel  Grid.Row="2" LastChildFill="False">
-            <Slider Width="120" VerticalAlignment="Center" DockPanel.Dock="Right"  Name="slider_Opacity" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True"/>
+            <Slider Width="120" VerticalAlignment="Center" DockPanel.Dock="Right"  Name="slider_Opacity" Minimum="0" Maximum="1" TickFrequency="0.01" IsSnapToTickEnabled="True" ValueChanged="slider_Opacity_ValueChanged"/>
             <Label Content="背景透明度" VerticalAlignment="Center" DockPanel.Dock="Right"></Label>
-            <Slider Width="120" VerticalAlignment="Center" DockPanel.Dock="Right" Name="slider_Blur" Minimum="0" Maximum="1" TickFrequency="0.01" IsSnapToTickEnabled="True"/>
-            <Label Content="背景模糊度" VerticalAlignment="Center" DockPanel.Dock="Right"></Label>
         </DockPanel>
     </Grid>
 </Page>

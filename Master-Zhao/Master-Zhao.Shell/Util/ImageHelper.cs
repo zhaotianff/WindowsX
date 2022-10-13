@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.PInvoke;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -44,6 +45,19 @@ namespace Master_Zhao.Shell.Util
         public static BitmapSource GetBitmapImageFromHIcon(IntPtr hIcon)
         {
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        public static BitmapSource GetBitmapImageFromHBitmap(IntPtr hBitmap)
+        {
+            try
+            {
+                var source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, System.Windows.Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+                return source;
+            }
+            finally
+            {
+                GDIPlus.DeleteObject(hBitmap);
+            }
         }
 
         public static void SaveBitmapImageToFile(BitmapSource image, string filePath)

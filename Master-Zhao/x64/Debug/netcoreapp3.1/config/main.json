@@ -5,7 +5,6 @@
 	   "Colors":["Transparent","White","Silver"],
 	   "ResourceImages":["Icon/about_back.jpeg","Icon/back_1.jpg"],
 	   "LocalImages":["D:\\1.jpg"],
-	   "Opacity":1,
-	   "Blur":128
+	   "Opacity":1
    }
 }
