@@ -39,7 +39,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
 
         private void HideMenu()
         {
-
+            
         }
 
         private void img_poweroff_MouseDown(object sender, MouseButtonEventArgs e)
