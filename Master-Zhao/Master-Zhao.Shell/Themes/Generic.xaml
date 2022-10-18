@@ -158,4 +158,51 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type local:ImageButtonForStartMenu}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ImageButtonForStartMenu}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="auto"/>
+                              
+                            </Grid.RowDefinitions>
+
+                            <Image Margin="10" Grid.Row="0" Source="{Binding IconPath,RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Center" VerticalAlignment="Center"  Stretch="Uniform"></Image>
+                            <TextBlock Grid.Row="1" Margin="0,1" TextWrapping="Wrap" Text="{Binding ExecName,RelativeSource={RelativeSource TemplatedParent}}"  VerticalAlignment="Bottom" HorizontalAlignment="Center" ToolTip="{Binding RelativeSource={RelativeSource Mode=Self},Path=Content}"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard Storyboard.TargetProperty="Background.(SolidColorBrush.Color)">
+                                    <ColorAnimation Duration="0:0:0.2">
+                                        <ColorAnimation.To>
+                                            <Color R="255" G="255" B="255" A="255"/>
+                                        </ColorAnimation.To>
+                                    </ColorAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard Storyboard.TargetProperty="Background.(SolidColorBrush.Color)">
+                                    <ColorAnimation Duration="0:0:0.2" To="Transparent"></ColorAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

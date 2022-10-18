@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Master_Zhao.Shell.StartMenu.WinFlat"
         xmlns:blur="clr-namespace:TianXiaTech;assembly=BlurWindow"
+        xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
         mc:Ignorable="d"
         Title="Windows Flat" Height="631" Width="624" IsEnableContextMenu="False" 
                  TitleVisibility="Collapsed" IconVisibility="Collapsed" ControlBoxVisibility="Collapsed"
@@ -198,10 +199,38 @@
 
                 <Grid Grid.Row="0" Margin="10">
                     <Border CornerRadius="10">
-                        <Border.Background>
+                        <!--<Border.Background>
                             <SolidColorBrush Color="#f4f8fe" Opacity=".5"></SolidColorBrush>
-                        </Border.Background>
+                        </Border.Background>-->
                     </Border>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="程序" Grid.Row="0"></Label>
+
+                        <Label Content="全部程序>" HorizontalAlignment="Right"/>
+
+                        <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                               
+
+                                <Label Content="游戏" FontWeight="Bold"></Label>
+                                <Separator></Separator>
+                                <WrapPanel>
+                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
+                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
+                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
+                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
+                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
+                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
+                                </WrapPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="10,0,0,10">

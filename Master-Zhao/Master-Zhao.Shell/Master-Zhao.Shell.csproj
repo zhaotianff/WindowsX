@@ -39,6 +39,7 @@
     <None Remove="Icon\StartMenu\startmenu_98.png" />
     <None Remove="Icon\StartMenu\startmenu_flat.png" />
     <None Remove="Icon\system.png" />
+    <None Remove="Icon\visual studio.png" />
     <None Remove="Icon\Weather\MostlySunnyDay.png" />
     <None Remove="Icon\windows10_blur_taskbar.png" />
     <None Remove="Icon\windows10_taskbar.png" />
@@ -68,6 +69,7 @@
     <Resource Include="Icon\StartMenu\setting.png" />
     <Resource Include="Icon\StartMenu\startmenu_98.png" />
     <Resource Include="Icon\StartMenu\startmenu_flat.png" />
+    <Resource Include="Icon\visual studio.png" />
     <Resource Include="Icon\Weather\MostlySunnyDay.png" />
     <Resource Include="Icon\windows10_blur_taskbar.png" />
     <Resource Include="Icon\windows10_transparent_taskbar.png" />
