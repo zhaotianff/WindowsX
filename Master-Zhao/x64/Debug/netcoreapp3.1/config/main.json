@@ -16,7 +16,7 @@
         ],
         "Opacity":0.9
     },
-    "FlatStartMenuGoupedItems":
+    "FlatStartMenuGroupedItems":
 	[
         {
             "GroupName":"系统",
@@ -24,15 +24,15 @@
 			[
                 {
                     "Name":"cmd",
-                    "Path":"C:\\Windows\\System32\\cmd.exe",
+                    "Path":"C:\\Windows\\System32\\cmd.exe"
                 },
 				{
                     "Name":"calc",
-                    "Path":"C:\\Windows\\System32\\calc.exe",
+                    "Path":"C:\\Windows\\System32\\calc.exe"
                 },
 				{
                     "Name":"control",
-                    "Path":"C:\\Windows\\System32\\control.exe",
+                    "Path":"C:\\Windows\\System32\\control.exe"
                 }
             ]
         },
@@ -42,7 +42,7 @@
 			[
                 {
                     "Name":"notepad",
-                    "Path":"C:\\Windows\\System32\\notepad.exe",
+                    "Path":"C:\\Windows\\System32\\notepad.exe"
                 }
             ]
         }

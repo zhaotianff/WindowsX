@@ -22,6 +22,6 @@ namespace Master_Zhao.Config.Model
     {
         public BackgroundSetting BackgroundSetting { get; set; }
 
-        public List<FlatStartMenuGoupedItem> FlatStartMenuGoupedItems { get; set; }
+        public List<FlatStartMenuGroupedItem> FlatStartMenuGroupedItems { get; set; }
     }
 }

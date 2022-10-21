@@ -48,7 +48,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
                 imageButtonForStartMenu.ExecName = item.Name;
                 imageButtonForStartMenu.Width = 80;
                 imageButtonForStartMenu.Height = 80;
-                imageButtonForStartMenu.IconPath = item.FilePathIcon;
+                imageButtonForStartMenu.IconSource = item.ImageSourceIcon;
                 ucGroupedFlatStartMenuItem.wrap_List.Children.Add(imageButtonForStartMenu);
             }
         }

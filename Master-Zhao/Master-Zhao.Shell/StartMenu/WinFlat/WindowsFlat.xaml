@@ -215,7 +215,7 @@
 
                         <Label Content="全部程序>" HorizontalAlignment="Right"/>
 
-                        <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" Focusable="False">
                             <StackPanel Name="stack">
                             </StackPanel>
                         </ScrollViewer>
