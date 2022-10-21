@@ -68,6 +68,7 @@ IsKeyPressed
 SendUnicodeInput
 SendAsciiInput
 AutoCode
+SendSearch
 
 ;icontool.h
 ExtractIconFromFile

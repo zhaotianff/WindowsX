@@ -35,16 +35,21 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
         private static void OnGroupedDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var ucGroupedFlatStartMenuItem = d as UcGroupedFlatStartMenuItem;
+
+            ucGroupedFlatStartMenuItem.wrap_List.Children.Clear();
             var groupedData = ucGroupedFlatStartMenuItem.GroupedData;
             ucGroupedFlatStartMenuItem.lbl_Title.Content = groupedData.GroupName;
 
             foreach (WinFlatStartMenuItem item in groupedData.MenuItems)
             {
-                /* <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>*/
-
                 ImageButtonForStartMenu imageButtonForStartMenu = new ImageButtonForStartMenu();
+                imageButtonForStartMenu.StartMenuItemData = item;
                 imageButtonForStartMenu.Margin = new Thickness(20, 10, 10, 10);
-                
+                imageButtonForStartMenu.ExecName = item.Name;
+                imageButtonForStartMenu.Width = 80;
+                imageButtonForStartMenu.Height = 80;
+                imageButtonForStartMenu.IconPath = item.FilePathIcon;
+                ucGroupedFlatStartMenuItem.wrap_List.Children.Add(imageButtonForStartMenu);
             }
         }
     }

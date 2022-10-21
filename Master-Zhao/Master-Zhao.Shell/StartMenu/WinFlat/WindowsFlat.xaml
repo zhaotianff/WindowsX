@@ -39,6 +39,7 @@
                 <DockPanel LastChildFill="False" Margin="0,0,0,10">
                     <Image Width="25" Height="25" Stretch="UniformToFill" Source="../../Icon/StartMenu/power.png" DockPanel.Dock="Bottom" Margin="2" Style="{StaticResource ImageStyleForStartMenu}" Name="img_poweroff"  MouseDown="img_poweroff_MouseDown"/>
                     <Image Width="25" Height="25" Stretch="UniformToFill" Source="../../Icon/StartMenu/setting.png" DockPanel.Dock="Bottom" Margin="2,2,2,10"  Style="{StaticResource ImageStyleForStartMenu}" MouseDown="img_setting_MouseDown"/>
+                    <Image Width="25" Height="25" Stretch="UniformToFill" Source="../../Icon/StartMenu/search.png" DockPanel.Dock="Bottom" Margin="2,2,2,10"  Style="{StaticResource ImageStyleForStartMenu}" MouseDown="img_search_MouseDown"/>
                 </DockPanel>
             </ScrollViewer>
 
@@ -215,19 +216,7 @@
                         <Label Content="全部程序>" HorizontalAlignment="Right"/>
 
                         <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                            <StackPanel>
-                               
-
-                                <Label Content="游戏" FontWeight="Bold"></Label>
-                                <Separator></Separator>
-                                <WrapPanel>
-                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
-                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
-                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
-                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
-                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
-                                    <controls:ImageButtonForStartMenu Margin="20,10,10,10" ExecName="Visual Studio" Width="80" Height="80" IconPath="../../Icon/visual studio.png"/>
-                                </WrapPanel>
+                            <StackPanel Name="stack">
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

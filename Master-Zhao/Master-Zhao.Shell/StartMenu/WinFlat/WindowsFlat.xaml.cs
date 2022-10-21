@@ -57,5 +57,10 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
         {
             popup_poweroff.IsOpen = false;
         }
+
+        private void img_search_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PInvoke.InputTool.SendSearch();
+        }
     }
 }

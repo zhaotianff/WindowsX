@@ -1,5 +1,6 @@
 #include "InputTool.h"
 #include <time.h>
+#include<stdarg.h>
 
 SILVERAROWANACORE_API int GetRawInput(LPARAM lParam)
 {
@@ -52,6 +53,36 @@ BOOL SendAsciiInput(TCHAR c)
     return SendInput(2, inputs, sizeof(INPUT));
 }
 
+BOOL SendMultiAsciiInput(int nArgs, ...)
+{
+    std::vector<INPUT> inputs;
+
+    va_list ap;
+    va_start(ap, nArgs);
+    for (int i = 0; i < nArgs; i++)
+    {
+        TCHAR c = va_arg(ap, TCHAR);
+
+        INPUT inputDown{};
+
+        inputDown.type = INPUT_KEYBOARD;
+        inputDown.ki.wVk = c;
+        inputs.push_back(inputDown);
+    }
+    va_end(ap);
+
+    for (int i = 0; i < nArgs; i++)
+    {
+        INPUT inputUp{};
+        inputUp.type = INPUT_KEYBOARD;
+        inputUp.ki.wVk = inputs[i].ki.wVk;
+        inputUp.ki.dwFlags = KEYEVENTF_KEYUP;
+        inputs.push_back(inputUp);
+    }
+
+    return SendInput(nArgs * 2, inputs.data(), sizeof(INPUT));
+}
+
 BOOL SendAsciiInputUp(TCHAR c)
 {
     INPUT inputs[1]{};
@@ -81,5 +112,10 @@ VOID AutoCode(LPTSTR code)
             SendUnicodeInput(code[i]);
         }  
     }
+}
+
+VOID SendSearch()
+{
+    SendMultiAsciiInput(2, VK_LWIN, 'Q');
 }
 

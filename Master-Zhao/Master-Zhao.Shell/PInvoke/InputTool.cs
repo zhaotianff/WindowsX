@@ -22,5 +22,8 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool SendAsciiInput([MarshalAs(UnmanagedType.LPWStr)]char c);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool SendSearch();
     }
 }

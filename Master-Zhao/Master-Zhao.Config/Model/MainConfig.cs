@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Config.Model.StartMenu;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,5 +21,7 @@ namespace Master_Zhao.Config.Model
     public class MainConfig
     {
         public BackgroundSetting BackgroundSetting { get; set; }
+
+        public List<FlatStartMenuGoupedItem> FlatStartMenuGoupedItems { get; set; }
     }
 }

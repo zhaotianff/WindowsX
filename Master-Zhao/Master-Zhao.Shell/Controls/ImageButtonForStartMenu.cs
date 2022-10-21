@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.StartMenu.Data;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,6 +18,8 @@ namespace Master_Zhao.Shell.Controls
     {
         public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register("IconPath", typeof(string), typeof(Button));
         public static readonly DependencyProperty ExecNameProperty = DependencyProperty.Register("ExecName", typeof(string), typeof(Button));
+
+        public StartMenuItemBase StartMenuItemData { get; set; }
 
         static ImageButtonForStartMenu()
         {
