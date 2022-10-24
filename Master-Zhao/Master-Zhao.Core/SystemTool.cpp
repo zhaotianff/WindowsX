@@ -143,12 +143,16 @@ BOOL AdjustPrivilege()
 	privValues.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
 	//The AdjustTokenPrivileges function enables or disables privileges in the specified access token. 
 	//Enabling or disabling privileges in an access token requires TOKEN_ADJUST_PRIVILEGES access.
-	BOOL bAdjusted = AdjustTokenPrivileges(hToken, FALSE, &privValues, sizeof(privValues), NULL, NULL);
+
+	BOOL bAdjusted = FALSE;
+	if(hToken)
+		bAdjusted = AdjustTokenPrivileges(hToken, FALSE, &privValues, sizeof(privValues), NULL, NULL);
 
 	if (!bAdjusted)
 		return FALSE;
 
-	CloseHandle(hToken);
+	if(hToken)
+		CloseHandle(hToken);
 	hToken = NULL;
 	return TRUE;
 }
@@ -200,7 +204,8 @@ BOOL ForceDeleteFile(LPTSTR lpszFilePah)
 
 VOID Shutdown()
 {
-	ExitWindowsEx(EWX_POWEROFF, SHTDN_REASON_MINOR_PROCESSOR);
+	//InitiateSystemShutdownEx(NULL, NULL, 0, FALSE, FALSE, SHTDN_REASON_MINOR_PROCESSOR);
+	system("shutdown -s -t 0");
 }
 
 VOID SwitchUser()
@@ -239,12 +244,12 @@ LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 
 		switch (wParam)
 		{
-			case WM_KEYDOWN:
-			{
-				//TODO fix key input
-				bWinKeyStroke = (pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN) ||
-					((pKb->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0));
-				break;
+		case WM_KEYDOWN:
+		{
+			//TODO fix key input
+			bWinKeyStroke = (pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN) ||
+				((pKb->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0));
+			break;
 			}
 			default:
 				break;

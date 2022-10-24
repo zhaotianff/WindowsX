@@ -7,8 +7,10 @@ struct tagBASICWINDOWINFO
 	TCHAR szName[260];
 };
 
-HWND hEmbedHwnd;
+HWND hEmbedHwnd = NULL;
 std::vector<tagBASICWINDOWINFO> lstWindows;
+HWND hStartMenu = NULL;
+HWND hStartMenuBtn = NULL;
 
 BOOL SetBackground(LPTSTR lpImagePath)
 {
@@ -234,6 +236,48 @@ HBITMAP GetFileThumbnail(PCWSTR path)
 	CoUninitialize();
 
 	return hbitmap;
+}
+
+BOOL FindStartMenu(HWND& startMenuHwnd, HWND& startMenuBtnHwnd)
+{
+	RECT rectDesktop{}, rectShellTrayWnd{}, rectNotify{}, rectStart{};
+	HWND hShell_TrayWnd = FindWindow(L"Shell_TrayWnd", NULL);
+	GetWindowRect(hShell_TrayWnd, &rectShellTrayWnd);
+	POINT point{ 0, rectShellTrayWnd.top - 10 };
+
+	if (NULL == hStartMenuBtn)
+	{
+		hStartMenuBtn = FindWindowEx(hShell_TrayWnd, NULL, L"Start", NULL);
+	}
+
+	if (NULL == hStartMenu)
+	{
+		keybd_event(VK_LWIN, 0x45, NULL, NULL);
+		keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+
+		Sleep(100);
+		hStartMenu = WindowFromPoint(point);
+
+		TCHAR szStartClass[260]{};
+		GetClassName(startMenuHwnd, szStartClass, 260);
+
+		if (lstrcmp(szStartClass, L"Windows.UI.Core.CoreWindow") != 0)
+		{
+			Sleep(100);
+			keybd_event(VK_LWIN, 0x45, NULL, NULL);
+			keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+			return FALSE;
+		}
+
+		Sleep(100);
+		keybd_event(VK_LWIN, 0x45, NULL, NULL);
+		keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+	}
+
+	startMenuHwnd = hStartMenu;
+	startMenuBtnHwnd = hStartMenuBtn;
+
+	return startMenuHwnd && startMenuBtnHwnd;
 }
 
 BOOL CenterStartMenu(BOOL enable)
