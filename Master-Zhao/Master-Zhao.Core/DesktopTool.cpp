@@ -259,7 +259,7 @@ BOOL FindStartMenu(HWND& startMenuHwnd, HWND& startMenuBtnHwnd)
 		hStartMenu = WindowFromPoint(point);
 
 		TCHAR szStartClass[260]{};
-		GetClassName(startMenuHwnd, szStartClass, 260);
+		GetClassName(hStartMenu, szStartClass, 260);
 
 		if (lstrcmp(szStartClass, L"Windows.UI.Core.CoreWindow") != 0)
 		{

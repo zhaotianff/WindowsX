@@ -1,4 +1,5 @@
 #include"SystemTool.h"
+#include"DesktopTool.h"
 #include"InputTool.h"
 #include<VersionHelpers.h>
 #include<functional>
@@ -20,6 +21,7 @@ HHOOK g_hHookMs = NULL;
 HWND hStartMenuWindow = NULL;
 BOOL bStartMenuDisplay = FALSE;
 TCHAR szStartMenu[MAX_PATH];
+DWORD cKeyCode = 0;
 
 SYSTEMTIME GetUserLoginTime()
 {
@@ -245,8 +247,13 @@ LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case WM_KEYDOWN:
-		{
-			//TODO fix key input
+			if (pKb->vkCode != VK_LWIN && pKb->vkCode != VK_RWIN)
+			{
+				cKeyCode = pKb->vkCode;
+			}
+			break;
+		case WM_KEYUP:
+		{	
 			bWinKeyStroke = (pKb->vkCode == VK_LWIN) || (pKb->vkCode == VK_RWIN) ||
 				((pKb->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0));
 			break;
@@ -258,9 +265,19 @@ LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 
 	if (bWinKeyStroke && hStartMenuWindow)
 	{
-		bStartMenuDisplay = !bStartMenuDisplay;
-		ShowWindow(hStartMenuWindow, bStartMenuDisplay ? SW_SHOW : SW_HIDE);
+		if (cKeyCode == 0)
+		{
+			bStartMenuDisplay = !bStartMenuDisplay;
+			ShowWindow(hStartMenuWindow, bStartMenuDisplay ? SW_SHOW : SW_HIDE);
+		}
+		else
+		{
+			cKeyCode = 0;
+		}
 	}
+
+	//hide start menu directly 
+	bWinKeyStroke = FALSE;
 
 	return bWinKeyStroke ? TRUE : CallNextHookEx(g_hHookKb, code, wParam, lParam);
 }
@@ -294,12 +311,24 @@ LRESULT WINAPI MsLLProc(int code, WPARAM wParam, LPARAM lParam)
 		ShowWindow(hStartMenuWindow, bStartMenuDisplay ? SW_SHOW : SW_HIDE);
 	}
 
+	//hide start menu directly 
+	bStartMenuClick = FALSE;
+
 	return (bStartMenuClick ? TRUE : CallNextHookEx(g_hHookMs, code, wParam, lParam));
 }
 
 BOOL HookStart(HWND hwnd)
 {
 	hStartMenuWindow = hwnd;
+
+	HWND hStart = NULL;
+	HWND hStartBtn = NULL;
+	FindStartMenu(hStart, hStartBtn);
+
+	if (hStart)
+	{
+		ShowWindow(hStart, SW_HIDE);
+	}
 
 	g_hHookKb = SetWindowsHookEx(WH_KEYBOARD_LL, KbLLProc, g_hDllModule, 0);
 
@@ -309,7 +338,8 @@ BOOL HookStart(HWND hwnd)
 	if (NULL == hRetroBar)
 	{
 		g_hHookMs = SetWindowsHookEx(WH_MOUSE_LL, MsLLProc, g_hDllModule, 0);
-		return (g_hHookKb && g_hHookMs);
+
+		return (g_hHookKb && g_hHookMs && hStart);
 	}
 
 	return NULL != g_hHookKb;
@@ -328,6 +358,17 @@ BOOL UnHookStart()
 
 	if(g_hHookMs)
 		bResult &= UnhookWindowsHookEx(g_hHookMs);
+
+	HWND hStart = NULL;
+	HWND hStartBtn = NULL;
+	FindStartMenu(hStart, hStartBtn);
+
+	if (hStart)
+	{
+		ShowWindow(hStart, SW_SHOW);
+	}
+
+	bResult &= NULL != hStart;
 
 	return bResult;
 }
