@@ -92,6 +92,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
                 }
 
                 UcGroupedFlatStartMenuItem ucGroupedFlatStartMenuItem = new UcGroupedFlatStartMenuItem();
+                ucGroupedFlatStartMenuItem.MouseDownHandler += (a, b) => { PInvoke.SystemTool.HideCustomStart(); };
                 ucGroupedFlatStartMenuItem.GroupedData = groupedFlatStartMenuItem;
                 this.stack.Children.Add(ucGroupedFlatStartMenuItem);
             }

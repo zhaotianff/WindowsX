@@ -21,6 +21,8 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
     {
         public static readonly DependencyProperty GroupedDataProperty = DependencyProperty.Register("GroupedData",typeof(GroupedFlatStartMenuItem),typeof(UserControl),new PropertyMetadata(OnGroupedDataChanged));
 
+        public MouseButtonEventHandler MouseDownHandler { get; set; }
+
         public GroupedFlatStartMenuItem GroupedData
         {
             get => GetValue(GroupedDataProperty) as GroupedFlatStartMenuItem;
@@ -49,6 +51,8 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
                 imageButtonForStartMenu.Width = 80;
                 imageButtonForStartMenu.Height = 80;
                 imageButtonForStartMenu.IconSource = item.ImageSourceIcon;
+                if (ucGroupedFlatStartMenuItem.MouseDownHandler != null)
+                    imageButtonForStartMenu.MouseDown += ucGroupedFlatStartMenuItem.MouseDownHandler;
                 ucGroupedFlatStartMenuItem.wrap_List.Children.Add(imageButtonForStartMenu);
             }
         }
