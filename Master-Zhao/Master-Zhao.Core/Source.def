@@ -41,6 +41,7 @@ CanAddToTaskBar
 GetProcessNameFomrHwnd
 
 EmbedWindowToDesktop
+RestartExplorer
 
 ;systemtool.h
 GetUserLoginTime

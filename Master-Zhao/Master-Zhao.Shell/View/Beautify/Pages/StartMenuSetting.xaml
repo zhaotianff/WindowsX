@@ -9,11 +9,22 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StartMenuSetting">
 
-    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
-        <WrapPanel Name="wrap">
-            <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../../Icon/about_back.jpeg" Margin="10" x:Name="menu_default" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="Default" DisplayName="系统默认"/>
-            <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../../Icon/StartMenu/startmenu_98.png" Margin="10" x:Name="menu_98" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="Windows98" DisplayName="Windows 98"/>
-            <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../../Icon/StartMenu/startmenu_flat.png" Margin="10" x:Name="menu_flat" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="WindowsFlat" DisplayName="Windows Flat"/>
-        </WrapPanel>
-    </ScrollViewer>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="85"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <WrapPanel Name="wrap">
+                <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../../Icon/about_back.jpeg" Margin="10" x:Name="menu_default" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="Default" DisplayName="系统默认"/>
+                <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../../Icon/StartMenu/startmenu_98.png" Margin="10" x:Name="menu_98" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="Windows98" DisplayName="Windows 98"/>
+                <user:StartMenuControl Width="200" Height="300" MenuThumbnail="../../../Icon/StartMenu/startmenu_flat.png" Margin="10" x:Name="menu_flat" OnSet="OnSetStartMenu" OnSelect="OnSelectStartMenu" MenuName="WindowsFlat" DisplayName="Windows Flat"/>
+            </WrapPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1">
+            <Button Content="开始菜单显示异常？点我!!!" HorizontalAlignment="Right" Height="28" Width="160" VerticalAlignment="Center" Style="{StaticResource ButtonStyle}" Margin="0,0,5,0" Click="btn_RestartExplorer_Click"/>
+        </Grid>
+    </Grid>
 </Page>

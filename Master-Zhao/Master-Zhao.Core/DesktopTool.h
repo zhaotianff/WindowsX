@@ -103,4 +103,4 @@ SILVERAROWANACORE_API LPTSTR GetProcessNameFomrHwnd(HWND hWnd);
 
 
 SILVERAROWANACORE_API BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName);
-VOID RestartExplorer();
+SILVERAROWANACORE_API VOID RestartExplorer();

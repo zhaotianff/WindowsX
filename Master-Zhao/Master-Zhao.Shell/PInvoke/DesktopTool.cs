@@ -150,5 +150,8 @@ namespace Master_Zhao.Shell.PInvoke
         /// <remarks>why not return string ? https://stackoverflow.com/questions/370079/pinvoke-for-c-function-that-returns-char</remarks>
         [DllImport("MasterZhaoCore.dll")]
         public static extern IntPtr GetProcessNameFomrHwnd(IntPtr hWnd);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void RestartExplorer();
     }
 }

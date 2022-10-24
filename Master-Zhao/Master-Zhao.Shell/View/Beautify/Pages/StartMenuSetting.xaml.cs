@@ -45,5 +45,11 @@ namespace Master_Zhao.Shell.View.Pages
                 startMenuControl?.ResetBorderBrush();
             }
         }
+
+        private void btn_RestartExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            StartMenuManager.UnHookStart();
+            PInvoke.DesktopTool.RestartExplorer();
+        }
     }
 }

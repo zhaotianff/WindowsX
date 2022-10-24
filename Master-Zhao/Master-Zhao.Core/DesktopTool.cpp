@@ -158,6 +158,9 @@ VOID RestartExplorer()
 	//TerminateProcess(hExplorer, 2);
 	//CloseHandle(hExplorer);
 	system("taskkill /f /im explorer.exe & start explorer.exe");
+
+	hStartMenu = NULL;
+	hStartMenuBtn = NULL;
 }
 
 BOOL CloseEmbedWindow()
