@@ -1,0 +1,28 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Master_Zhao.Web.CnWeather;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Master_Zhao.Web.CnWeather.Tests
+{
+    [TestClass()]
+    public class IpCityAPITests
+    {
+        [TestMethod()]
+        public void GetIPTest()
+        {
+            var ip = IpCityAPI.GetIP().Result;
+            Assert.IsTrue(!string.IsNullOrEmpty(ip));
+        }
+
+        [TestMethod()]
+        public void GetCurrentIpCityInfoTest()
+        {
+            var ip = IpCityAPI.GetIP().Result;
+            var ipCityInfo = IpCityAPI.GetCurrentIpCityInfo(ip).Result;
+
+            Assert.IsTrue(ipCityInfo.City.Length > 0);
+        }
+    }
+}
