@@ -15,8 +15,10 @@ namespace Master_Zhao.Web.Util
     public class WebHelper
     {
         private const string CNBingImageDetailUrl = "https://cn.bing.com/images/api/custom/search?q=[keyword]&count=25&offset=[start]&skey=x0N3tvnBi4Or09GnYTSGBz-1Y_hczfN8mDl9KUAupCo&safeSearch=Strict&mkt=zh-cn&setLang=zh-cn&IG=095F7668227148A5BE61ABD2FCF8DA04&IID=idpfs&SFX=2";
+        private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36";
+        private const string ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
 
-        public static async Task<string> GetHtmlSource(string url, string accept, string userAgent, Encoding encoding = null, CookieContainer cookieContainer = null)
+        public static async Task<string> GetHtmlSource(string url, string accept = ACCEPT, string userAgent = USER_AGENT, Encoding encoding = null, CookieContainer cookieContainer = null)
         {
             try
             {

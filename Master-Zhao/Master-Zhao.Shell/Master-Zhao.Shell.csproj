@@ -41,7 +41,11 @@
     <None Remove="Icon\StartMenu\startmenu_flat.png" />
     <None Remove="Icon\system.png" />
     <None Remove="Icon\visual studio.png" />
-    <None Remove="Icon\Weather\MostlySunnyDay.png" />
+    <None Remove="Icon\Weather\Cloudy.png" />
+    <None Remove="Icon\Weather\LightRain.png" />
+    <None Remove="Icon\Weather\MostlySunny.png" />
+    <None Remove="Icon\Weather\Sunny.png" />
+    <None Remove="Icon\Weather\Thunderstorm.png" />
     <None Remove="Icon\windows10_blur_taskbar.png" />
     <None Remove="Icon\windows10_taskbar.png" />
     <None Remove="Icon\windows10_transparent_taskbar.png" />
@@ -72,7 +76,11 @@
     <Resource Include="Icon\StartMenu\startmenu_98.png" />
     <Resource Include="Icon\StartMenu\startmenu_flat.png" />
     <Resource Include="Icon\visual studio.png" />
-    <Resource Include="Icon\Weather\MostlySunnyDay.png" />
+    <Resource Include="Icon\Weather\Cloudy.png" />
+    <Resource Include="Icon\Weather\LightRain.png" />
+    <Resource Include="Icon\Weather\MostlySunny.png" />
+    <Resource Include="Icon\Weather\Sunny.png" />
+    <Resource Include="Icon\Weather\Thunderstorm.png" />
     <Resource Include="Icon\windows10_blur_taskbar.png" />
     <Resource Include="Icon\windows10_transparent_taskbar.png" />
     <Resource Include="logo.ico" />

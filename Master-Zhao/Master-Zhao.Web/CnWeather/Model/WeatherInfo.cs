@@ -4,40 +4,60 @@ using System.Text;
 
 namespace Master_Zhao.Web.Model
 {
-    /// <summary>
-    /// from https://github.com/zhaotianff/CSharpCrawler/blob/master/CSharpCrawler/Model/WeatherInfo.cs
-    /// </summary>
-    public class WeatherInfo
+    public class CityWeatherData
     {
-        public string City { get; set; } = "";
-        public string CityId { get; set; } = "";
-        public string Temp { get; set; } = "";
-        public string WD { get; set; } = "";
-        public string WS { get; set; } = "";
-        public string SD { get; set; } = "";
-        public string AP { get; set; } = "";
-        public string Njd { get; set; } = "";
-        public string WSE { get; set; } = "";
-        public string Time { get; set; } = "";
-        public string SM { get; set; } = "";
-        public string IsRadar { get; set; } = "";
-        public string Radar { get; set; } = "";
+        public string city { get; set; }
 
-        public override string ToString()
-        {
-            return string.Format($"City:{City}\r\n"
-                + $"CityId:{CityId}\r\n"
-                + $"Temp:{Temp}\r\n"
-                + $"WD:{WD}\r\n"
-                + $"WS:{WS}\r\n"
-                + $"SD:{SD}\r\n"
-                + $"AP:{AP}\r\n"
-                + $"Njd:{Njd}\r\n"
-                + $"WSD:{WSE}\r\n"
-                + $"Time:{Time}\r\n"
-                + $"SM:{SM}\r\n"
-                + $"IsRadar:{IsRadar}\r\n"
-                + $"Radar:{Radar}\r\n");
-        }
+        public string lastUpdateTime { get; set; }
+
+        public string date { get; set; }
+
+        public string weather { get; set; }
+
+        public float temp { get; set; }
+
+        public string humidity { get; set; }
+
+        public string wind { get; set; }
+
+        public float pm25 { get; set; }
+
+        public float pm10 { get; set; }
+
+        public float low { get; set; }
+
+        public float high { get; set; }
+
+        public string airData { get; set; }
+
+        public string airQuality { get; set; }
+
+        public string dateLong { get; set; }
+
+        public int weatherType { get; set; }
+
+        public int windLevel { get; set; }
+
+        public string province { get; set; }
+    }
+
+    public class WeatherData
+    {
+        public int total { get; set; }
+
+        public string sourceName { get; set; }
+
+        public List<CityWeatherData> list { get; set; }
+
+        public string logoUrl { get; set; }
+    }
+
+    public class WeatherInfoRoot
+    {
+        public int code { get; set; }
+
+        public string msg { get; set; }
+
+        public WeatherData data { get; set; }
     }
 }

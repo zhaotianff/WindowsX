@@ -1,5 +1,6 @@
 ﻿using Master_Zhao.Config.Helper;
 using Master_Zhao.Config.Model;
+using Master_Zhao.Config.Model.Weather;
 using System;
 using System.Collections.Generic;
 using System.Linq;

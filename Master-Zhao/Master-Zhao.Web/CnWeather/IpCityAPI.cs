@@ -10,13 +10,11 @@ namespace Master_Zhao.Web.CnWeather
     public class IpCityAPI
     {
         private const string IP_URL = "https://www.ipshudi.com";
-        private const string IP_CITY_URL = "https://www.ipshudi.com/{0}.htm";
-        private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36";
-        private const string ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
+        private const string IP_CITY_URL = "https://www.ipshudi.com/{0}.htm"; 
 
         public async static Task<string> GetIP()
         {
-            var html = await WebHelper.GetHtmlSource(IP_URL, ACCEPT, USER_AGENT);
+            var html = await WebHelper.GetHtmlSource(IP_URL);
             var inputElement = HtmlAgilityPackUtil.XPathQuerySingle(html, "//input");
             return inputElement.GetAttributeValue("value","");
         }
@@ -24,7 +22,7 @@ namespace Master_Zhao.Web.CnWeather
         public async static Task<IpCityInfo> GetCurrentIpCityInfo(string ipAddress)
         {         
             var url = string.Format(IP_CITY_URL, ipAddress);
-            var html = await WebHelper.GetHtmlSource(url, ACCEPT, USER_AGENT);
+            var html = await WebHelper.GetHtmlSource(url);
 
             if (string.IsNullOrEmpty(html))
                 return null;
