@@ -12,7 +12,7 @@ namespace Master_Zhao.Web.CnWeather.Tests
         [TestMethod()]
         public void GetWeatherInfoTest()
         {
-            var weatherInfo = WeatherAPI.GetWeatherInfo("深圳").Result;
+            var weatherInfo = WeatherAPI.GetWeatherInfoAsync("深圳").Result;
             Assert.IsNotNull(weatherInfo.weather);
         }
     }

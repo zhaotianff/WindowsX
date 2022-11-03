@@ -16,9 +16,17 @@ namespace Master_Zhao.Shell.Util
 
         public async static Task<CityWeatherData> GetWeatherDataAsync()
         {
-            var ip = await Master_Zhao.Web.CnWeather.IpCityAPI.GetIP();
-            var ipCityInfo = await Master_Zhao.Web.CnWeather.IpCityAPI.GetCurrentIpCityInfo(ip);
-            var weatherInfo = await Master_Zhao.Web.CnWeather.WeatherAPI.GetWeatherInfo(ipCityInfo.GetCityString());
+            var weatherInfoList = await GetWeatherDataListAsync();
+            if (weatherInfoList != null && weatherInfoList.Count > 0)
+                return weatherInfoList[0];
+            return null;
+        }
+
+        public async static Task<List<CityWeatherData>> GetWeatherDataListAsync()
+        {
+            var ip = await Master_Zhao.Web.CnWeather.IpCityAPI.GetIPAsync();
+            var ipCityInfo = await Master_Zhao.Web.CnWeather.IpCityAPI.GetCurrentIpCityInfoAsync(ip);
+            var weatherInfo = await Master_Zhao.Web.CnWeather.WeatherAPI.GetWeatherInfoListAsync(ipCityInfo.GetCityString());
             return weatherInfo;
         }
 

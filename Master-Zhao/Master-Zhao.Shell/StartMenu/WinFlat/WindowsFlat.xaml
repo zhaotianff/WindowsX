@@ -97,9 +97,9 @@
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
-                                        <Label Content="10月33日" VerticalAlignment="Center"/>
-                                        <Image Source="../../Icon/Weather/MostlySunnyDay.png" Stretch="Uniform" Width="40" Height="40" Grid.Row="1" VerticalAlignment="Top"/>
-                                        <Label Content="晴 30 ℃" Grid.Row="1" VerticalAlignment="Bottom"/>
+                                        <Label Content="10月33日" VerticalAlignment="Center" Name="lbl_nextdate"/>
+                                        <Image Source="../../Icon/Weather/MostlySunnyDay.png" Stretch="Uniform" Width="40" Height="40" Grid.Row="1" VerticalAlignment="Top" Name="img_next"/>
+                                        <Label Content="晴 30 ℃" Grid.Row="1" VerticalAlignment="Bottom" Name="lbl_nextweather" HorizontalAlignment="Center"/>
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
@@ -107,9 +107,9 @@
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
-                                        <Label Content="10月33日" VerticalAlignment="Center"/>
-                                        <Image Source="../../Icon/Weather/MostlySunnyDay.png" Stretch="Uniform" Width="40" Height="40" Grid.Row="1" VerticalAlignment="Top"/>
-                                        <Label Content="晴 30 ℃" Grid.Row="1" VerticalAlignment="Bottom"/>
+                                        <Label Content="10月33日" VerticalAlignment="Center" Name="lbl_nextdate_2"/>
+                                        <Image Source="../../Icon/Weather/MostlySunnyDay.png" Stretch="Uniform" Width="40" Height="40" Grid.Row="1" VerticalAlignment="Top" Name="img_next_2"/>
+                                        <Label Content="晴 30 ℃" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="lbl_nextweather_2"/>
                                     </Grid>
                                     <Grid Grid.Column="2">
                                         <Grid.RowDefinitions>
@@ -117,9 +117,9 @@
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
-                                        <Label Content="10月33日" VerticalAlignment="Center"/>
-                                        <Image Source="../../Icon/Weather/MostlySunnyDay.png" Stretch="Uniform" Width="40" Height="40" Grid.Row="1" VerticalAlignment="Top"/>
-                                        <Label Content="晴 30 ℃" Grid.Row="1" VerticalAlignment="Bottom"/>
+                                        <Label Content="10月33日" VerticalAlignment="Center" Name="lbl_nextdate_3"/>
+                                        <Image Source="../../Icon/Weather/MostlySunnyDay.png" Stretch="Uniform" Width="40" Height="40" Grid.Row="1" VerticalAlignment="Top" Name="img_next_3"/>
+                                        <Label Content="晴 30 ℃" Grid.Row="1" VerticalAlignment="Bottom" Name="lbl_nextweather_3" HorizontalAlignment="Center"/>
                                     </Grid>
                                 </Grid>
                             </Grid>

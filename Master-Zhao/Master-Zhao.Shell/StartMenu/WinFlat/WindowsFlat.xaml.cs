@@ -110,12 +110,32 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
                 return;
             }
 
-            var weatherInfo = await WeatherHelper.GetWeatherDataAsync();
+            var weatherInfoList = await WeatherHelper.GetWeatherDataListAsync();
+
+            if (weatherInfoList == null || weatherInfoList.Count < 4)
+                return;
+
+            var weatherInfo = weatherInfoList[0];
             this.img_WeateherIcon.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
             this.lbl_City.Content = weatherInfo.city;
             this.lbl_Temperature.Content = weatherInfo.temp + " ℃";
             this.lbl_Weather.Content = weatherInfo.weather;
             this.lbl_Wind.Content = weatherInfo.wind;
+
+            weatherInfo = weatherInfoList[1];
+            this.lbl_nextdate.Content = weatherInfo.date;
+            this.img_next.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
+            this.lbl_nextweather.Content = weatherInfo.weather;
+
+            weatherInfo = weatherInfoList[2];
+            this.lbl_nextdate_2.Content = weatherInfo.date;
+            this.img_next_2.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
+            this.lbl_nextweather_2.Content = weatherInfo.weather;
+
+            weatherInfo = weatherInfoList[3];
+            this.lbl_nextdate_3.Content = weatherInfo.date;
+            this.img_next_3.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
+            this.lbl_nextweather_3.Content = weatherInfo.weather;
 
             lastWeatherUpdateTime = DateTime.Now;
         }

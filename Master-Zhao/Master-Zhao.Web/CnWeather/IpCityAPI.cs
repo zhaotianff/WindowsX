@@ -12,14 +12,14 @@ namespace Master_Zhao.Web.CnWeather
         private const string IP_URL = "https://www.ipshudi.com";
         private const string IP_CITY_URL = "https://www.ipshudi.com/{0}.htm"; 
 
-        public async static Task<string> GetIP()
+        public async static Task<string> GetIPAsync()
         {
             var html = await WebHelper.GetHtmlSource(IP_URL);
             var inputElement = HtmlAgilityPackUtil.XPathQuerySingle(html, "//input");
             return inputElement.GetAttributeValue("value","");
         }
 
-        public async static Task<IpCityInfo> GetCurrentIpCityInfo(string ipAddress)
+        public async static Task<IpCityInfo> GetCurrentIpCityInfoAsync(string ipAddress)
         {         
             var url = string.Format(IP_CITY_URL, ipAddress);
             var html = await WebHelper.GetHtmlSource(url);

@@ -12,15 +12,15 @@ namespace Master_Zhao.Web.CnWeather.Tests
         [TestMethod()]
         public void GetIPTest()
         {
-            var ip = IpCityAPI.GetIP().Result;
+            var ip = IpCityAPI.GetIPAsync().Result;
             Assert.IsTrue(!string.IsNullOrEmpty(ip));
         }
 
         [TestMethod()]
         public void GetCurrentIpCityInfoTest()
         {
-            var ip = IpCityAPI.GetIP().Result;
-            var ipCityInfo = IpCityAPI.GetCurrentIpCityInfo(ip).Result;
+            var ip = IpCityAPI.GetIPAsync().Result;
+            var ipCityInfo = IpCityAPI.GetCurrentIpCityInfoAsync(ip).Result;
 
             Assert.IsTrue(ipCityInfo.City.Length > 0);
         }
