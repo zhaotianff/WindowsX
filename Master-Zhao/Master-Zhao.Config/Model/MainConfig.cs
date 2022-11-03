@@ -24,6 +24,6 @@ namespace Master_Zhao.Config.Model
 
         public List<FlatStartMenuGroupedItem> FlatStartMenuGroupedItems { get; set; }
 
-        public FlatStartMenuSetting FlatStartMenuSetting { get; set; }
+        public List<TodoDateItem> FlatStartMenuToDoList { get; set; }
     }
 }

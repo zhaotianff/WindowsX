@@ -1,6 +1,5 @@
 ﻿{
-    "BackgroundSetting":
-	{
+    "BackgroundSetting":{
         "Index":4,
         "Colors":[
             "Transparent",
@@ -16,30 +15,27 @@
         ],
         "Opacity":0.9
     },
-    "FlatStartMenuGroupedItems":
-	[
+    "FlatStartMenuGroupedItems":[
         {
             "GroupName":"系统",
-            "MenuItems":
-			[
+            "MenuItems":[
                 {
                     "Name":"cmd",
                     "Path":"C:\\Windows\\System32\\cmd.exe"
                 },
-				{
+                {
                     "Name":"calc",
                     "Path":"C:\\Windows\\System32\\calc.exe"
                 },
-				{
+                {
                     "Name":"control",
                     "Path":"C:\\Windows\\System32\\control.exe"
                 }
             ]
         },
-		{
+        {
             "GroupName":"开发",
-            "MenuItems":
-			[
+            "MenuItems":[
                 {
                     "Name":"notepad",
                     "Path":"C:\\Windows\\System32\\notepad.exe"
@@ -47,8 +43,45 @@
             ]
         }
     ],
-	"FlatStartMenuSetting":
-	{
-		"WeatherUpdateTime":133112290900066442
-	}
+    "FlatStartMenuToDoList":[
+        {
+            "Date":"2022-11-3",
+            "TodoList":[
+                {
+                    "Description":"去西湾红树林公园写代码",
+                    "FinishStatus":false
+                },
+                {
+                    "Description":"去召唤师峡谷练习跑步",
+                    "FinishStatus":false
+                }
+            ]
+        },
+        {
+            "Date":"2022-11-4",
+            "TodoList":[
+                {
+                    "Description":"去白嫖",
+                    "FinishStatus":false
+                },
+                {
+                    "Description":"去撩妹",
+                    "FinishStatus":false
+                }
+            ]
+        },
+        {
+            "Date":"2022-11-5",
+            "TodoList":[
+                {
+                    "Description":"去给妹子拍照",
+                    "FinishStatus":false
+                },
+                {
+                    "Description":"摆烂",
+                    "FinishStatus":false
+                }
+            ]
+        }
+    ]
 }

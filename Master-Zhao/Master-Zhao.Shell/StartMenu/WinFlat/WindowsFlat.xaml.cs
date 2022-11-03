@@ -21,12 +21,17 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
     /// </summary>
     public partial class WindowsFlat : TianXiaTech.BlurWindow
     {
+        private const int UPDATE_GAP = 2;
+
+        private DateTime lastWeatherUpdateTime = DateTime.MinValue;
+
         public WindowsFlat()
         {
             InitializeComponent();
             this.Left = 10;
             this.Top = SystemParameters.WorkArea.Height - this.Height - 10;
             LoadGroupedMenu();
+            LoadWeatherAsync();
         }
 
         private void ShowMenu()
@@ -96,6 +101,23 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
                 ucGroupedFlatStartMenuItem.GroupedData = groupedFlatStartMenuItem;
                 this.stack.Children.Add(ucGroupedFlatStartMenuItem);
             }
+        }
+
+        private async void LoadWeatherAsync()
+        {
+            if ((DateTime.Now - lastWeatherUpdateTime).TotalHours < UPDATE_GAP)
+            {
+                return;
+            }
+
+            var weatherInfo = await WeatherHelper.GetWeatherDataAsync();
+            this.img_WeateherIcon.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
+            this.lbl_City.Content = weatherInfo.city;
+            this.lbl_Temperature.Content = weatherInfo.temp + " ℃";
+            this.lbl_Weather.Content = weatherInfo.weather;
+            this.lbl_Wind.Content = weatherInfo.wind;
+
+            lastWeatherUpdateTime = DateTime.Now;
         }
     }
 }

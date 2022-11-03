@@ -11,7 +11,7 @@ namespace Master_Zhao.Web.CnWeather
     {
         private const string WEATHER_URL = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city={0}&needMoreData=false&pageNo=1&pageSize=1";
 
-        public async Task<CityWeatherData> GetWeatherInfo(string cityName)
+        public static async Task<CityWeatherData> GetWeatherInfo(string cityName)
         {
             var url = string.Format(WEATHER_URL, cityName);
             var html = await WebHelper.GetHtmlSource(url);

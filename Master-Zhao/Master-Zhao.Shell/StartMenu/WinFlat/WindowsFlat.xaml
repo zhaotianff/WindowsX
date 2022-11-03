@@ -70,13 +70,17 @@
                                 </Grid.RowDefinitions>
 
                                 <Canvas Name="canvas_TodayWeather" Grid.Row="0">
-                                    <Label Content="广东省深圳市" Canvas.Right="0" Canvas.Top="30" Canvas.Left="2" FontWeight="Bold" FontSize="15"/>
-                                    <Image Width="50" Height="50" Source="../../Icon/Weather/MostlySunnyDay.png" Stretch="UniformToFill" Canvas.Left="110" Canvas.Top="16"/>
+                                    <Grid  Canvas.Right="0" Canvas.Top="30" Canvas.Left="2" Width="100">
+                                        <Label Content="广东省深圳市" FontWeight="Bold" FontSize="15" Name="lbl_City" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                    <Image Width="50" Height="50" Name="img_WeateherIcon" Stretch="UniformToFill" Canvas.Left="110" Canvas.Top="16"/>
                                     <!--<Label Content="2022年10月32日" Canvas.Right="0" Canvas.Top="4" Canvas.Left="78"/>-->
-                                    <Label Content="多云" Canvas.Right="0" Canvas.Top="80" Canvas.Left="115" FontWeight="Bold"/>
-                                    <Label Content="24 ℃" FontSize="30" Canvas.Top="82" Canvas.Left="10"/>
+                                    <Grid Width="50" Canvas.Top="80" Canvas.Left="110">
+                                        <Label FontWeight="Bold"  Content="多云" Name="lbl_Weather" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                    <Label Content="24 ℃" Name="lbl_Temperature" FontSize="30" Canvas.Top="82" Canvas.Left="10"/>
 
-                                    <Label Content="西北风 1级" Canvas.Right="0" Canvas.Top="115" Canvas.Left="100"/>
+                                    <Label Content="西北风 1级" Name="lbl_Wind" Canvas.Right="0" Canvas.Top="115" Canvas.Left="100"/>
 
                                 </Canvas>
 
