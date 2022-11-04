@@ -33,6 +33,10 @@ namespace Master_Zhao.Web.CnWeather
         private static IpCityInfo ParseIpCityInfo(string html,string ip)
         {
             var tableElement = HtmlAgilityPackUtil.XPathQuerySingle(html, "//table/tbody/tr/td/span");
+
+            if (tableElement == null)
+                return IpCityInfo.DefaultIpCityInfo;
+
             var ipCityInfo = new IpCityInfo();
             ipCityInfo.Ip = ip;
             var spanText = tableElement.InnerText;

@@ -1,4 +1,5 @@
 #include "DesktopTool.h"
+#include"InputTool.h"
 #include <dwmapi.h>
 
 struct tagBASICWINDOWINFO
@@ -255,9 +256,7 @@ BOOL FindStartMenu(HWND& startMenuHwnd, HWND& startMenuBtnHwnd)
 
 	if (NULL == hStartMenu)
 	{
-		keybd_event(VK_LWIN, 0x45, NULL, NULL);
-		keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
-
+		SendAsciiInput(VK_LWIN);
 		Sleep(100);
 		hStartMenu = WindowFromPoint(point);
 
@@ -267,14 +266,12 @@ BOOL FindStartMenu(HWND& startMenuHwnd, HWND& startMenuBtnHwnd)
 		if (lstrcmp(szStartClass, L"Windows.UI.Core.CoreWindow") != 0)
 		{
 			Sleep(100);
-			keybd_event(VK_LWIN, 0x45, NULL, NULL);
-			keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+			SendAsciiInput(VK_LWIN);
 			return FALSE;
 		}
 
 		Sleep(100);
-		keybd_event(VK_LWIN, 0x45, NULL, NULL);
-		keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
+		SendAsciiInput(VK_LWIN);
 	}
 
 	startMenuHwnd = hStartMenu;

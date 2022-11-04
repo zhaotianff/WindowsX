@@ -37,6 +37,8 @@ namespace Master_Zhao.Shell.Util
             {
                 case "阴":
                     return relativePathPrefix + CLOUDY_IMAGE;
+                case "霾":
+                    return relativePathPrefix + SUNNY_IMAGE;
                 default:
                     return relativePathPrefix + SUNNY_IMAGE;
             }

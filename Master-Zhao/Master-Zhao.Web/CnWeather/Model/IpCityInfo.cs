@@ -6,6 +6,8 @@ namespace Master_Zhao.Web.Model
 {
     public class IpCityInfo
     {
+        public static IpCityInfo DefaultIpCityInfo = new IpCityInfo() { City = new string[] { "广东", "深圳", "福田" } };
+
         public string Ip { get; set; }
 
         public string[] City { get; set; }

@@ -123,17 +123,17 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
             this.lbl_Wind.Content = weatherInfo.wind;
 
             weatherInfo = weatherInfoList[1];
-            this.lbl_nextdate.Content = weatherInfo.date;
+            this.lbl_nextdate.Content = weatherInfo.date.GetDateWithoutYear();
             this.img_next.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
-            this.lbl_nextweather.Content = weatherInfo.weather;
+            this.lbl_nextweather.Content = weatherInfo.weather + weatherInfo.temp;
 
             weatherInfo = weatherInfoList[2];
-            this.lbl_nextdate_2.Content = weatherInfo.date;
+            this.lbl_nextdate_2.Content = weatherInfo.date.GetDateWithoutYear();
             this.img_next_2.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
             this.lbl_nextweather_2.Content = weatherInfo.weather;
 
             weatherInfo = weatherInfoList[3];
-            this.lbl_nextdate_3.Content = weatherInfo.date;
+            this.lbl_nextdate_3.Content = weatherInfo.date.GetDateWithoutYear();
             this.img_next_3.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
             this.lbl_nextweather_3.Content = weatherInfo.weather;
 
