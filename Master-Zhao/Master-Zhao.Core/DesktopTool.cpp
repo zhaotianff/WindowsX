@@ -257,7 +257,7 @@ BOOL FindStartMenu(HWND& startMenuHwnd, HWND& startMenuBtnHwnd)
 	if (NULL == hStartMenu)
 	{
 		SendAsciiInput(VK_LWIN);
-		Sleep(100);
+		Sleep(300);
 		hStartMenu = WindowFromPoint(point);
 
 		TCHAR szStartClass[260]{};
