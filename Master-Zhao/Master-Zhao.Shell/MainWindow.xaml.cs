@@ -108,7 +108,7 @@ namespace Master_Zhao.Shell
             exitMenu.Click += (a, b) => 
             {
                 NotifyIconHelper.Instance.SetNotifyIconState(false);
-                Environment.Exit(0); 
+                BlurWindow_Closing(null, null);
             };
         }
 

@@ -1,7 +1,9 @@
-﻿using Master_Zhao.Shell.PInvoke;
+﻿using Master_Zhao.Config.Model.StartMenu;
+using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,6 +34,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
             this.Top = SystemParameters.WorkArea.Height - this.Height - 10;
             LoadGroupedMenu();
             LoadWeatherAsync();
+            LoadTodoList();
         }
 
         private void ShowMenu()
@@ -72,6 +75,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
 
         private void LoadGroupedMenu()
         {
+            //TODO
             this.stack.Children.Clear();
 
             var groupedItems = Config.GlobalConfig.Instance.MainConfig.FlatStartMenuGroupedItems;
@@ -105,6 +109,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
 
         private async void LoadWeatherAsync()
         {
+            //TODO
             if ((DateTime.Now - lastWeatherUpdateTime).TotalHours < UPDATE_GAP)
             {
                 return;
@@ -138,6 +143,67 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
             this.lbl_nextweather_3.Content = weatherInfo.weather;
 
             lastWeatherUpdateTime = DateTime.Now;
+        }
+
+        private void LoadTodoList()
+        {
+            if (list_todo == null)
+                return;
+
+            var todolist = Config.GlobalConfig.Instance.MainConfig.FlatStartMenuToDoList;
+            list_todo.Items.Clear();
+            var todoDateItem = todolist.FirstOrDefault(x => x.Date == date_picker.SelectedDate);
+
+            if (todoDateItem == null)
+                return;
+
+            foreach (var todoitem in todoDateItem.TodoList)
+            {
+                list_todo.Items.Add(GetTodoListItem(todoitem));
+            }
+        }
+
+        private ListBoxItem GetTodoListItem(TodoItem todoItem)
+        {
+            TextBlock tb = new TextBlock();
+            tb.TextWrapping = TextWrapping.Wrap;
+            tb.Text = todoItem.Description;
+            RadioButton radioButton = new RadioButton();
+            radioButton.VerticalAlignment = VerticalAlignment.Center;
+            radioButton.HorizontalAlignment = HorizontalAlignment.Center;
+            radioButton.Content = tb;
+            radioButton.IsChecked = todoItem.FinishStatus;
+            Grid grid = new Grid();
+            grid.MinHeight = 35;
+            grid.Children.Add(radioButton);
+            ListBoxItem listBoxItem = new ListBoxItem();
+            listBoxItem.Content = grid;
+            return listBoxItem;
+        }
+
+        private void date_picker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadTodoList();
+        }
+
+        private void btn_AddTodoClick(object sender, RoutedEventArgs e)
+        {
+            AddTodoWindow addTodoWindow = new AddTodoWindow(this);
+            if (addTodoWindow.ShowDialog() == true)
+            {
+                var todoDateList = Config.GlobalConfig.Instance.MainConfig.FlatStartMenuToDoList;
+                var todoDateItem = todoDateList.FirstOrDefault(x => x.Date == date_picker.SelectedDate);
+
+                if (todoDateItem == null)
+                {
+                    todoDateItem = new TodoDateItem() { Date = date_picker.SelectedDate.Value, TodoList = new List<TodoItem>() };
+                    todoDateList.Add(todoDateItem);
+                }
+
+                var todoItem = new TodoItem() { Description = addTodoWindow.TodoItem, FinishStatus = false };
+                todoDateItem.TodoList.Add(todoItem);
+                list_todo.Items.Add(GetTodoListItem(todoItem));
+            }
         }
     }
 }
