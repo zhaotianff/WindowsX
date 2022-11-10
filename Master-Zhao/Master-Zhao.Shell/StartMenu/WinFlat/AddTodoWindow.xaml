@@ -22,7 +22,7 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
-            <RichTextBox Grid.Row="0" Margin="10" Name="tbox_Todo"/>
+            <RichTextBox Grid.Row="0" Margin="10" Name="tbox_Todo" Background="Transparent"/>
 
             <Grid Grid.Row="1">
                 <Button Content="确认" HorizontalAlignment="Right" VerticalAlignment="Center" Width="58" Margin="0,0,75,0" Style="{StaticResource ButtonStyle}" IsDefault="True" Click="ok_Click"/>

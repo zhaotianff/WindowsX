@@ -26,6 +26,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
         private const int UPDATE_GAP = 2;
 
         private DateTime lastWeatherUpdateTime = DateTime.MinValue;
+        private Grid todoSelectedItem;
 
         public WindowsFlat()
         {
@@ -130,7 +131,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
             weatherInfo = weatherInfoList[1];
             this.lbl_nextdate.Content = weatherInfo.date.GetDateWithoutYear();
             this.img_next.Source = ImageHelper.GetBitmapImageFromResource(WeatherHelper.GetWeatherImage(weatherInfo.weather));
-            this.lbl_nextweather.Content = weatherInfo.weather + weatherInfo.temp;
+            this.lbl_nextweather.Content = weatherInfo.weather;
 
             weatherInfo = weatherInfoList[2];
             this.lbl_nextdate_2.Content = weatherInfo.date.GetDateWithoutYear();
@@ -147,11 +148,11 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
 
         private void LoadTodoList()
         {
-            if (list_todo == null)
+            if (stack_todo == null)
                 return;
 
             var todolist = Config.GlobalConfig.Instance.MainConfig.FlatStartMenuToDoList;
-            list_todo.Items.Clear();
+            stack_todo.Children.Clear();
             var todoDateItem = todolist.FirstOrDefault(x => x.Date == date_picker.SelectedDate);
 
             if (todoDateItem == null)
@@ -159,26 +160,46 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
 
             foreach (var todoitem in todoDateItem.TodoList)
             {
-                list_todo.Items.Add(GetTodoListItem(todoitem));
+                stack_todo.Children.Add(GetTodoListItem(todoitem));
             }
         }
 
-        private ListBoxItem GetTodoListItem(TodoItem todoItem)
+        private Grid GetTodoListItem(TodoItem todoItem)
         {
+            Grid grid = new Grid();
+
+            CheckBox checkbox = new CheckBox();
+            checkbox.VerticalAlignment = VerticalAlignment.Center;
+            checkbox.HorizontalAlignment = HorizontalAlignment.Left;
+            checkbox.IsChecked = todoItem.FinishStatus;
+            checkbox.Style = FindResource("CheckBoxStyle") as Style;
+            grid.Children.Add(checkbox);
+
             TextBlock tb = new TextBlock();
             tb.TextWrapping = TextWrapping.Wrap;
             tb.Text = todoItem.Description;
-            RadioButton radioButton = new RadioButton();
-            radioButton.VerticalAlignment = VerticalAlignment.Center;
-            radioButton.HorizontalAlignment = HorizontalAlignment.Center;
-            radioButton.Content = tb;
-            radioButton.IsChecked = todoItem.FinishStatus;
-            Grid grid = new Grid();
-            grid.MinHeight = 35;
-            grid.Children.Add(radioButton);
-            ListBoxItem listBoxItem = new ListBoxItem();
-            listBoxItem.Content = grid;
-            return listBoxItem;
+            tb.HorizontalAlignment = HorizontalAlignment.Left;
+            tb.VerticalAlignment = VerticalAlignment.Center;
+            tb.Margin = new Thickness(35, 0, 0, 0);
+            grid.Children.Add(tb);
+
+            grid.MouseEnter += (a, b) => { grid.Background = FindResource("AccentBaseColorTran") as SolidColorBrush; };
+            grid.MouseDown += (a, b) => 
+            {
+                foreach (Grid panel in stack_todo.Children)
+                {
+                    if (grid == panel)
+                        continue;
+
+                    panel.Background = Brushes.Transparent;
+                }
+
+                todoSelectedItem = grid;
+            };
+            grid.MouseLeave += (a, b) => { if(grid != todoSelectedItem) grid.Background = Brushes.Transparent; };
+            grid.Margin = new Thickness(0, 0, 0, 2);
+
+            return grid;
         }
 
         private void date_picker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -202,8 +223,16 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
 
                 var todoItem = new TodoItem() { Description = addTodoWindow.TodoItem, FinishStatus = false };
                 todoDateItem.TodoList.Add(todoItem);
-                list_todo.Items.Add(GetTodoListItem(todoItem));
+                stack_todo.Children.Add(GetTodoListItem(todoItem));
             }
+        }
+
+        private void btn_RemoveTodoClick(object sender, RoutedEventArgs e)
+        {
+            var index = stack_todo.Children.IndexOf(todoSelectedItem);
+            Config.GlobalConfig.Instance.MainConfig.FlatStartMenuToDoList.RemoveAt(index);
+            stack_todo.Children.Remove(todoSelectedItem);
+            todoSelectedItem = null;
         }
     }
 }

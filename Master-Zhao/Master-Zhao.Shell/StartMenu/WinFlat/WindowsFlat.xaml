@@ -46,8 +46,8 @@
 
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="4*"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" Margin="10,10,10,0">
@@ -66,22 +66,22 @@
 
                             <Grid Grid.Row="1">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="4*"/>
                                     <RowDefinition Height="3*"/>
-                                    <RowDefinition Height="2*"/>
                                 </Grid.RowDefinitions>
 
                                 <Canvas Name="canvas_TodayWeather" Grid.Row="0">
-                                    <Grid  Canvas.Right="0" Canvas.Top="30" Canvas.Left="2" Width="100">
+                                    <Grid  Canvas.Right="0" Canvas.Top="20" Canvas.Left="2" Width="100">
                                         <Label Content="广东省深圳市" FontWeight="Bold" FontSize="15" Name="lbl_City" HorizontalAlignment="Center"/>
                                     </Grid>
-                                    <Image Width="50" Height="50" Name="img_WeateherIcon" Stretch="UniformToFill" Canvas.Left="110" Canvas.Top="16"/>
+                                    <Image Width="50" Height="50" Name="img_WeateherIcon" Stretch="UniformToFill" Canvas.Left="110" Canvas.Top="6"/>
                                     <!--<Label Content="2022年10月32日" Canvas.Right="0" Canvas.Top="4" Canvas.Left="78"/>-->
-                                    <Grid Width="50" Canvas.Top="80" Canvas.Left="110">
+                                    <Grid Width="50" Canvas.Top="70" Canvas.Left="110">
                                         <Label FontWeight="Bold"  Content="多云" Name="lbl_Weather" HorizontalAlignment="Center"/>
                                     </Grid>
-                                    <Label Content="24 ℃" Name="lbl_Temperature" FontSize="30" Canvas.Top="82" Canvas.Left="10"/>
+                                    <Label Content="24 ℃" Name="lbl_Temperature" FontSize="30" Canvas.Top="72" Canvas.Left="10"/>
 
-                                    <Label Content="西北风 1级" Name="lbl_Wind" Canvas.Right="0" Canvas.Top="115" Canvas.Left="100"/>
+                                    <Label Content="西北风 1级" Name="lbl_Wind" Canvas.Right="0" Canvas.Top="100" Canvas.Left="100"/>
 
                                 </Canvas>
 
@@ -94,7 +94,7 @@
 
                                     <Grid >
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="45"/>
+                                            <RowDefinition Height="35"/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
@@ -104,7 +104,7 @@
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="45"/>
+                                            <RowDefinition Height="35"/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
@@ -114,7 +114,7 @@
                                     </Grid>
                                     <Grid Grid.Column="2">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="45"/>
+                                            <RowDefinition Height="35"/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
@@ -128,7 +128,7 @@
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="1" Margin="10,20,10,10">
+                <Grid Grid.Row="1" Margin="10,10,10,10">
                     <Border CornerRadius="10">
                         <!--<Border.Background>
                             <SolidColorBrush Color="#f4f8fe" Opacity=".5"></SolidColorBrush>
@@ -161,46 +161,12 @@
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
 
-                            <ListBox Grid.Row="0" Background="Transparent" BorderThickness="0" Name="list_todo">
-                                <ListBoxItem>
-                                    <Grid MinHeight="35">
-                                        <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <RadioButton.Content>
-                                                <TextBlock Text="去西湾红树林公园写代码" TextWrapping="Wrap"></TextBlock>
-                                            </RadioButton.Content>
-                                        </RadioButton>
-                                    </Grid>
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid MinHeight="35">
-                                        <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <RadioButton.Content>
-                                                <TextBlock Text="去召唤师峡谷练习跑步" TextWrapping="Wrap"></TextBlock>
-                                            </RadioButton.Content>
-                                        </RadioButton>
-                                    </Grid>
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid MinHeight="35">
-                                        <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <RadioButton.Content>
-                                                <TextBlock Text="去白嫖" TextWrapping="Wrap"></TextBlock>
-                                            </RadioButton.Content>
-                                        </RadioButton>
-                                    </Grid>
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid MinHeight="35">
-                                        <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <RadioButton.Content>
-                                                <TextBlock Text="去撩妹" TextWrapping="Wrap"></TextBlock>
-                                            </RadioButton.Content>
-                                        </RadioButton>
-                                    </Grid>
-                                </ListBoxItem>
-                            </ListBox>
+                            <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <StackPanel Background="Transparent" Name="stack_todo"/>
+                            </ScrollViewer>
 
-                            <Button Grid.Row="1" Content="+" Width="25" Height="25" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Style="{StaticResource ButtonStyle}" Click="btn_AddTodoClick"/>
+                            <Button Grid.Row="1" Content="-" Width="25" Height="25" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Style="{StaticResource ButtonStyle}" Click="btn_RemoveTodoClick"/>
+                            <Button Grid.Row="1" Content="+" Width="25" Height="25" HorizontalAlignment="Right" Margin="0,0,35,0" VerticalAlignment="Center" Style="{StaticResource ButtonStyle}" Click="btn_AddTodoClick"/>
                         </Grid>
                     </Grid>
                 </Grid>

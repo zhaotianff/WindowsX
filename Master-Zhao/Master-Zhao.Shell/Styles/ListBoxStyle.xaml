@@ -81,11 +81,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentBaseColor}" />
-                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Foreground" Value="{DynamicResource Items.Selected.Foreground}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentBaseColor}" />
-                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Foreground" Value="{DynamicResource Items.Selected.Foreground}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Border" Property="Opacity" Value="0.3" />
