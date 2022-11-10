@@ -17,7 +17,8 @@ namespace Master_Zhao.Shell.Controls
     public class ImageButtonForStartMenu : Control
     {
         public static readonly DependencyProperty IconSourceProperty = DependencyProperty.Register("IconSource", typeof(ImageSource), typeof(ImageButtonForStartMenu));
-        public static readonly DependencyProperty ExecNameProperty = DependencyProperty.Register("ExecName", typeof(string), typeof(ImageButtonForStartMenu));
+        public static readonly DependencyProperty DisplayNameProperty = DependencyProperty.Register("DisplayName", typeof(string), typeof(ImageButtonForStartMenu));
+        public static readonly DependencyProperty ExecPathProperty = DependencyProperty.Register("ExecPath", typeof(string), typeof(ImageButtonForStartMenu),new PropertyMetadata(string.Empty));
 
         public StartMenuItemBase StartMenuItemData { get; set; }
 
@@ -32,16 +33,22 @@ namespace Master_Zhao.Shell.Controls
             set => SetValue(IconSourceProperty, value);
         }
 
-        public string ExecName
+        public string DisplayName
         {
-            get => GetValue(ExecNameProperty).ToString();
-            set => SetValue(ExecNameProperty, value);
+            get => GetValue(DisplayNameProperty).ToString();
+            set => SetValue(DisplayNameProperty, value);
+        }
+
+        public string ExecPath
+        {
+            get => GetValue(ExecPathProperty).ToString();
+            set => SetValue(ExecPathProperty, value);
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
-            Util.ProcessHelper.Execute(ExecName);
+            Util.ProcessHelper.Execute(ExecPath);
         }
     }
 }

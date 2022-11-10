@@ -28,11 +28,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Popup Grid.Column="0" Grid.ColumnSpan="2" AllowsTransparency="True" PopupAnimation="Slide" Name="popup_poweroff" Width="120" Height="100" PlacementTarget="{Binding ElementName=img_poweroff}" Placement="Top" VerticalOffset="-5" LostFocus="popup_poweroff_LostFocus">
-                <StackPanel Background="Silver">
-                    <Label Content="睡眠"></Label>
-                    <Label Content="关机"></Label>
-                    <Label Content="重启"></Label>
+            <Popup Grid.Column="0" Grid.ColumnSpan="2" AllowsTransparency="True" PopupAnimation="Slide" Name="popup_poweroff" Width="60" Height="180" PlacementTarget="{Binding ElementName=img_poweroff}" Placement="Top" VerticalOffset="-5" LostFocus="popup_poweroff_LostFocus">
+                <StackPanel Background="WhiteSmoke">
+                    <controls:ImageButtonForStartMenu IconSource="../../Icon/StartMenu/sleep.png" DisplayName="睡眠"  Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                    <controls:ImageButtonForStartMenu IconSource="../../Icon/StartMenu/power.png" DisplayName="关机"  Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                    <controls:ImageButtonForStartMenu IconSource="../../Icon/StartMenu/restart.png" DisplayName="重启"  Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
                 </StackPanel>
             </Popup>
 

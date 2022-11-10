@@ -50,7 +50,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
 
         private void HideMenu()
         {
-            
+            SystemTool.HideCustomStart();
         }
 
         private void img_poweroff_MouseDown(object sender, MouseButtonEventArgs e)
@@ -61,7 +61,8 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
 
         private void img_setting_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            ProcessHelper.OpenModernSetting();
+            HideMenu();
         }
 
         private void popup_poweroff_LostFocus(object sender, RoutedEventArgs e)
@@ -102,7 +103,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
                 }
 
                 UcGroupedFlatStartMenuItem ucGroupedFlatStartMenuItem = new UcGroupedFlatStartMenuItem();
-                ucGroupedFlatStartMenuItem.MouseDownHandler += (a, b) => { PInvoke.SystemTool.HideCustomStart(); };
+                ucGroupedFlatStartMenuItem.MouseDownHandler += (a, b) => { HideMenu(); };
                 ucGroupedFlatStartMenuItem.GroupedData = groupedFlatStartMenuItem;
                 this.stack.Children.Add(ucGroupedFlatStartMenuItem);
             }

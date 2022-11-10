@@ -35,8 +35,10 @@
     <None Remove="Icon\move.jpg" />
     <None Remove="Icon\setting.png" />
     <None Remove="Icon\StartMenu\power.png" />
+    <None Remove="Icon\StartMenu\restart.png" />
     <None Remove="Icon\StartMenu\search.png" />
     <None Remove="Icon\StartMenu\setting.png" />
+    <None Remove="Icon\StartMenu\sleep.png" />
     <None Remove="Icon\StartMenu\startmenu_98.png" />
     <None Remove="Icon\StartMenu\startmenu_flat.png" />
     <None Remove="Icon\system.png" />
@@ -71,8 +73,10 @@
     <Resource Include="Icon\move.jpg" />
     <Resource Include="Icon\setting.png" />
     <Resource Include="Icon\StartMenu\power.png" />
+    <Resource Include="Icon\StartMenu\restart.png" />
     <Resource Include="Icon\StartMenu\search.png" />
     <Resource Include="Icon\StartMenu\setting.png" />
+    <Resource Include="Icon\StartMenu\sleep.png" />
     <Resource Include="Icon\StartMenu\startmenu_98.png" />
     <Resource Include="Icon\StartMenu\startmenu_flat.png" />
     <Resource Include="Icon\visual studio.png" />

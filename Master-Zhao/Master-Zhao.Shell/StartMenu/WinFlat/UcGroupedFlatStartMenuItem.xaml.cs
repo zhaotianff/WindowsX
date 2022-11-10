@@ -47,7 +47,8 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
                 ImageButtonForStartMenu imageButtonForStartMenu = new ImageButtonForStartMenu();
                 imageButtonForStartMenu.StartMenuItemData = item;
                 imageButtonForStartMenu.Margin = new Thickness(20, 10, 10, 10);
-                imageButtonForStartMenu.ExecName = item.Name;
+                imageButtonForStartMenu.DisplayName = item.Name;
+                imageButtonForStartMenu.ExecPath = item.Path;
                 imageButtonForStartMenu.Width = 80;
                 imageButtonForStartMenu.Height = 80;
                 imageButtonForStartMenu.IconSource = item.ImageSourceIcon;

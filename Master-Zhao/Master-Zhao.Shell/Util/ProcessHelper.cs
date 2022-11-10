@@ -63,5 +63,10 @@ namespace Master_Zhao.Shell.Util
         {
             return Process.GetProcesses().FirstOrDefault(x => x.ProcessName == processName);
         }
+
+        public static void OpenModernSetting()
+        {
+            Execute("ms-settings:main");
+        }
     }
 }

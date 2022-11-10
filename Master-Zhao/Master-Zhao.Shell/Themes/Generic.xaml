@@ -176,7 +176,7 @@
                             </Grid.RowDefinitions>
 
                             <Image Margin="10" Grid.Row="0" x:Name="img_Icon" Source="{Binding RelativeSource={RelativeSource TemplatedParent},Path=IconSource}" HorizontalAlignment="Center" VerticalAlignment="Center"  Stretch="Uniform"></Image>
-                            <TextBlock Grid.Row="1" Margin="0,1" TextWrapping="Wrap" Text="{Binding ExecName,RelativeSource={RelativeSource TemplatedParent}}"  VerticalAlignment="Bottom" HorizontalAlignment="Center" ToolTip="{Binding RelativeSource={RelativeSource Mode=Self},Path=Content}"/>
+                            <TextBlock Grid.Row="1" Margin="0,1" TextWrapping="Wrap" Text="{Binding DisplayName,RelativeSource={RelativeSource TemplatedParent}}"  VerticalAlignment="Bottom" HorizontalAlignment="Center" ToolTip="{Binding RelativeSource={RelativeSource Mode=Self},Path=Content}"/>
                         </Grid>
                     </Border>
 
