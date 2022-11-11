@@ -109,6 +109,7 @@ namespace Master_Zhao.Shell
             {
                 NotifyIconHelper.Instance.SetNotifyIconState(false);
                 BlurWindow_Closing(null, null);
+                Environment.Exit(0);
             };
         }
 
