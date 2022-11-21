@@ -22,6 +22,7 @@ struct SYSTEM_TIME_INFORMATION
 
 typedef long(__stdcall* funNtQuerySystemInformation)(UINT, PVOID, ULONG, PULONG);
 typedef void(__stdcall* funRtlGetNtVersionNumbers)(DWORD*, DWORD*, DWORD*);
+typedef HRESULT(__stdcall* funSHGetUserPicturePath)(LPCWSTR pwszPicOrUserName, DWORD sguppFlags, LPWSTR pwszPicPath, UINT picPathLen);
 
 SILVERAROWANACORE_API SYSTEMTIME GetUserLoginTime();
 void GetVersionNumbers(DWORD*, DWORD*, DWORD*);
@@ -56,4 +57,6 @@ SILVERAROWANACORE_API VOID CloseCustomStart();
 
 SILVERAROWANACORE_API BOOL RegisterBossKeyHotKey(HWND hwnd, UINT modifier, UINT vkCode, UINT nHotKeyId);
 SILVERAROWANACORE_API BOOL UnRegisterBossKeyHotKey(HWND hwnd, UINT nHotKeyId);
+
+SILVERAROWANACORE_API BOOL GetUserProfilePicturePath(LPTSTR buf, DWORD nSize);
 

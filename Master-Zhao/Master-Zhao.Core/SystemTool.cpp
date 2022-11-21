@@ -413,6 +413,28 @@ BOOL UnRegisterBossKeyHotKey(HWND hwnd,UINT nHotKeyId)
 	return UnregisterHotKey(hwnd, nHotKeyId);
 }
 
+BOOL GetUserProfilePicturePath(LPTSTR buf,DWORD nSize)
+{
+	HMODULE hModule = LoadLibrary(L"shell32.dll");
+
+	if (hModule)
+	{
+		funSHGetUserPicturePath  SHGetUserPicturePath = (funSHGetUserPicturePath)GetProcAddress(hModule, MAKEINTRESOURCEA(261));
+
+		if (SHGetUserPicturePath)
+		{
+			TCHAR szPicturebuf[MAX_PATH];
+			DWORD nUserName = 128;
+			TCHAR szUserName[128];
+			GetUserName(szUserName, &nUserName);
+			HRESULT hr = SHGetUserPicturePath(szUserName, 0x80000000, szPicturebuf, MAX_PATH);
+			StringCchCopy(buf, nSize, szPicturebuf);
+			CloseHandle(hModule);
+			return SUCCEEDED(hr);
+		}
+	}
+	return FALSE;
+}
 
 
 
