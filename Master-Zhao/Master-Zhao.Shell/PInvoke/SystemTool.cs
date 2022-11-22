@@ -47,5 +47,8 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool UnRegisterBossKeyHotKey(IntPtr hwnd, uint hotKeyId);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetUserProfilePicturePath(IntPtr buf, uint nSize);
     }
 }

@@ -57,6 +57,7 @@ HideCustomStart
 CloseCustomStart
 RegisterBossKeyHotKey
 UnRegisterBossKeyHotKey
+GetUserProfilePicturePath
 
 ;startuptool.h
 IsExistStartupRun

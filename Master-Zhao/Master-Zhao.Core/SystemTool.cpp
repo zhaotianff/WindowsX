@@ -429,7 +429,7 @@ BOOL GetUserProfilePicturePath(LPTSTR buf,DWORD nSize)
 			GetUserName(szUserName, &nUserName);
 			HRESULT hr = SHGetUserPicturePath(szUserName, 0x80000000, szPicturebuf, MAX_PATH);
 			StringCchCopy(buf, nSize, szPicturebuf);
-			CloseHandle(hModule);
+			FreeLibrary(hModule);
 			return SUCCEEDED(hr);
 		}
 	}

@@ -4,6 +4,7 @@ using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,6 +37,7 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
             LoadGroupedMenu();
             LoadWeatherAsync();
             LoadTodoList();
+            LoadUserInfo();
         }
 
         private void ShowMenu()
@@ -165,6 +167,22 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
             }
         }
 
+        private void LoadUserInfo()
+        {
+            uint size = 260;
+            IntPtr userAvatarPtr = Marshal.AllocHGlobal((int)size);
+            var result = PInvoke.SystemTool.GetUserProfilePicturePath(userAvatarPtr, size);
+
+            if(result)
+            {
+                var path = Marshal.PtrToStringUni(userAvatarPtr);
+                avatarBrush.ImageSource = ImageHelper.GetBitmapImageFromLocalFile(path);
+                Marshal.FreeHGlobal(userAvatarPtr);
+            }
+
+            lbl_UserName.Content = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+        }
+
         private Grid GetTodoListItem(TodoItem todoItem)
         {
             Grid grid = new Grid();
@@ -234,6 +252,11 @@ namespace Master_Zhao.Shell.StartMenu.WinFlat
             Config.GlobalConfig.Instance.MainConfig.FlatStartMenuToDoList.RemoveAt(index);
             stack_todo.Children.Remove(todoSelectedItem);
             todoSelectedItem = null;
+        }
+
+        private void lbl_allProgram_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

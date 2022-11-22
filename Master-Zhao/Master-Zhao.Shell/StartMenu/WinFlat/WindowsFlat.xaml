@@ -193,7 +193,7 @@
 
                         <Label Content="程序" Grid.Row="0"></Label>
 
-                        <Label Content="全部程序>" HorizontalAlignment="Right"/>
+                        <Label Content="全部程序>" HorizontalAlignment="Right" Cursor="Hand" MouseDown="lbl_allProgram_MouseDown"/>
 
                         <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" Focusable="False">
                             <StackPanel Name="stack">
@@ -203,9 +203,13 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="10,0,0,10">
-                    <Ellipse Width="55" Height="55" HorizontalAlignment="Left" Fill="White" Opacity=".2"/>
-                    <Label Content="zhaotianff" HorizontalAlignment="Left" Margin="60,5,0,0" VerticalAlignment="Top"></Label>
-                    <Label Content="又是秋殘也，無聊意若何。客程江外遠，歸思夜深多。" HorizontalAlignment="Left" Margin="60,0,0,5" VerticalAlignment="Bottom"></Label>
+                    <Ellipse Stroke="{DynamicResource AccentBaseColor}" StrokeThickness="1" Width="55" Height="55" HorizontalAlignment="Left">
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="avatarBrush" Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Label Content="zhaotianff" Name="lbl_UserName" HorizontalAlignment="Left" Margin="60,5,0,0" VerticalAlignment="Top"></Label>
+                    <Label Content="又是秋殘也，無聊意若何。客程江外遠，歸思夜深多。" Name="lbl_Poem"  HorizontalAlignment="Left" Margin="60,0,0,5" VerticalAlignment="Bottom"></Label>
                 </Grid>
             </Grid>
         </Grid>
