@@ -92,10 +92,13 @@ SILVERAROWANACORE_API BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lp
 #define TASKBAR_THUMB_THUMB_SPACING_X "ThumbSpacingXPx" //specifies the horizontal spacing between the stacked items
 #define TASKBAR_THUMB_THUMB_SPACING_Y "ThumbSpacingYPx"
 
-#define STARTUP_RUN_1 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)"
-#define STARTUP_RUN_2 LR"(HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run)"
-#define STARTUP_RUN_3 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run)"
-#define STARTUP_RUN_4 LR"(HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run)"
+//HKEY_CURRENT_USER
+#define STARTUP_RUN_1 LR"(Software\Microsoft\Windows\CurrentVersion\Run)"
+#define STARTUP_RUN_2 LR"(Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run)"
+
+//HKEY_LOCAL_MACHINE
+#define STARTUP_RUN_3 LR"(Software\Microsoft\Windows\CurrentVersion\Run)"
+#define STARTUP_RUN_4 LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run)"
 
 //RunOnce 自动执行一次
 #define STARTUP_RUN_5 LR"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce)"

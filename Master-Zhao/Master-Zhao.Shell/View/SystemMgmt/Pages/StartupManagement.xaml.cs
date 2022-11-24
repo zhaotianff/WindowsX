@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Master_Zhao.Shell.Pages
+namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 {
     /// <summary>
-    /// Interaction logic for SystemManagement.xaml
+    /// StartupManagement.xaml 的交互逻辑
     /// </summary>
-    public partial class SystemManagement : Page
+    public partial class StartupManagement : Page
     {
-        public SystemManagement()
+        public StartupManagement()
         {
             InitializeComponent();
         }

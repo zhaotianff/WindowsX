@@ -39,3 +39,8 @@ BOOL RemoveStartupRun(LPTSTR lpszPath)
 		return DeleteFile(szLnkPath);
 	return FALSE;
 }
+
+BOOL GetStartupItems(tagStartupItem** items, int count)
+{
+	return FALSE;
+}

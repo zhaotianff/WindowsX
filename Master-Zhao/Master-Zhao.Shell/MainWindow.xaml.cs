@@ -151,7 +151,7 @@ namespace Master_Zhao.Shell
                     return desktopBeautify;
                 case NavigationPages.SysManagement:
                     return systemManagement;
-                case NavigationPages.Tools:
+                case NavigationPages.Utility:
                     return toolsPage;
                 case NavigationPages.HuaShui:
                     return null;
@@ -207,9 +207,14 @@ namespace Master_Zhao.Shell
             BeginShowMenuAnimation(NavigationPages.Beautify);
         }
 
-        private void btnTool_Click(object sender, RoutedEventArgs e)
+        private void btnUtility_Click(object sender, RoutedEventArgs e)
         {
-            BeginShowMenuAnimation(NavigationPages.Tools);
+            BeginShowMenuAnimation(NavigationPages.Utility);
+        }
+
+        private void btnSystem_Click(object sender, RoutedEventArgs e)
+        {
+            BeginShowMenuAnimation(NavigationPages.SysManagement);
         }
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)

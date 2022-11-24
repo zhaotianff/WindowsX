@@ -1,0 +1,37 @@
+﻿<Page x:Class="Master_Zhao.Shell.View.SystemMgmt.Pages.StartupManagement"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StartupManagement">
+
+    <Grid>
+        <ListBox>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <DockPanel Grid.Row="0" LastChildFill="False">
+                            <Label Content="Microsoft To Do" FontSize="15" HorizontalAlignment="Left" MinWidth="200"/>
+                            <Label Content="Microsft" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        </DockPanel>
+                        <Label Content="C:\Program Files (x86)\Common Files\Adobe\CS5ServiceManager\CS5ServiceManager.exe" Foreground="Silver" Grid.Row="1"/>
+
+                        <CheckBox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBoxItem></ListBoxItem>
+            <ListBoxItem></ListBoxItem>
+            <ListBoxItem></ListBoxItem>
+            <ListBoxItem></ListBoxItem>
+        </ListBox>
+    </Grid>
+</Page>

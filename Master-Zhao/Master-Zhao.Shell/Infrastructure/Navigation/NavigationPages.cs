@@ -11,7 +11,7 @@ namespace Master_Zhao.Shell.Infrastructure.Navigation
         Main = 0,
         Beautify = 1,
         SysManagement = 2,
-        Tools = 3,
+        Utility = 3,
         HuaShui = 4,
         Setting = 5,
         About
