@@ -137,3 +137,18 @@ BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* va
 	}
 	return FALSE;
 }
+
+BOOL QuerySZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* szValue, DWORD* nSize)
+{
+	auto result = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_READ, &hKey);
+	if (ERROR_SUCCESS == result)
+	{
+		result = RegQueryValueEx(hKey, lpValueName, 0, NULL, (BYTE*)szValue, nSize);
+		if (ERROR_SUCCESS == result)
+		{
+			RegCloseKey(hKey);
+			return TRUE;
+		}
+	}
+	return FALSE;
+}

@@ -2,17 +2,24 @@
 
 #include "framework.h"
 
-typedef struct tagStartupItem
+#define MAX_KEY_LENGTH 255
+#define MAX_VALUE_NAME 16383
+
+typedef struct tagSTARTUPITEM
 {
-    TCHAR szName[128];
+    TCHAR szName[MAX_VALUE_NAME];
     TCHAR szPath[MAX_PATH];
-} StartupItem, * PStartupItem;
+} STARTUPITEM, * PSTARTUPITEM;
+
+TCHAR  achValue[MAX_VALUE_NAME];
+DWORD cchValue = MAX_VALUE_NAME;
 
 SILVERAROWANACORE_API BOOL IsExistStartupRun(LPTSTR lpszPath,LPTSTR* lpszLnkPath);
 SILVERAROWANACORE_API BOOL CreateStartupRun(LPTSTR lpszPath);
 SILVERAROWANACORE_API BOOL RemoveStartupRun(LPTSTR lpszPath);
 
-SILVERAROWANACORE_API BOOL GetStartupItems(tagStartupItem** items, int count);
+SILVERAROWANACORE_API BOOL GetStartupItems(tagSTARTUPITEM** items, int count);
+std::vector<STARTUPITEM> GetStartupItemList(HKEY hKeyStartupKey);
 
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run

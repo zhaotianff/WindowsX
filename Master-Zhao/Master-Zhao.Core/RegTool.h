@@ -129,6 +129,7 @@ SILVERAROWANACORE_API BOOL ExistSubKey(HKEY hKey, LPCTSTR lpSubKey);
 SILVERAROWANACORE_API BOOL CreateSubKey(HKEY hKey, LPCTSTR lpSubKey);
 SILVERAROWANACORE_API BOOL ExistRegValue(HKEY hKey, LPCTSTR lpSubKey,LPCTSTR lpValueName);
 SILVERAROWANACORE_API BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* value);
+SILVERAROWANACORE_API BOOL QuerySZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* szValue, DWORD* nSize);
 
 //recent file
 //HKEY_CLASS_ROOT\LocalSettings\Software\Microsoft\Windows\Shell\MuiCache
