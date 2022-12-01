@@ -15,10 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Master-Zhao.Core.DeskToolTests.cpp">
+    <ClCompile Include="DeskToolTests.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StartupToolTests.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -28,7 +31,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Master-Zhao.Core.IconToolTests.cpp">
+    <None Include="IconToolTests.cpp">
       <Filter>源文件</Filter>
     </None>
   </ItemGroup>

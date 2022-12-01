@@ -19,7 +19,7 @@ SILVERAROWANACORE_API BOOL CreateStartupRun(LPTSTR lpszPath);
 SILVERAROWANACORE_API BOOL RemoveStartupRun(LPTSTR lpszPath);
 
 SILVERAROWANACORE_API BOOL GetStartupItems(tagSTARTUPITEM** items, int count);
-std::vector<STARTUPITEM> GetStartupItemList(HKEY hKeyStartupKey);
+std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey);
 
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run

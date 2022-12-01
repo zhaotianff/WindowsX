@@ -45,7 +45,7 @@ BOOL GetStartupItems(tagSTARTUPITEM** items, int count)
 	return FALSE;
 }
 
-std::vector<STARTUPITEM> GetStartupItemList(HKEY hKeyStartupKey)
+std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)
 {
     std::vector<STARTUPITEM> lstStartup;
     TCHAR    achKey[MAX_KEY_LENGTH];   // buffer for subkey name
