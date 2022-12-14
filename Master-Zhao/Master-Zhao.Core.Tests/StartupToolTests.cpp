@@ -12,7 +12,8 @@ namespace MasterZhaoCoreTests
 
 		TEST_METHOD(TestGetStartupItemList)
 		{
-			
+			int count = 0;
+			GetStartupItems(&count);
 		}
 	};
 }

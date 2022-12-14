@@ -40,57 +40,66 @@ BOOL RemoveStartupRun(LPTSTR lpszPath)
 	return FALSE;
 }
 
-BOOL GetStartupItems(tagSTARTUPITEM** items, int count)
+STARTUPITEM* GetStartupItems(int* count)
 {
-	return FALSE;
+    HKEY wow64_32Key = NULL;
+    RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH, 0, KEY_READ | KEY_WOW64_32KEY, &wow64_32Key);
+
+    std::vector<STARTUPITEM> totalVector;
+
+    if (wow64_32Key)
+    {
+        auto list = InternalGetStartupItemList(wow64_32Key);
+        RegCloseKey(wow64_32Key);
+        totalVector.insert(totalVector.begin(), list.begin(),list.end());
+    }
+
+    HKEY wow64_64Key = NULL;
+    RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH, 0, KEY_READ | KEY_WOW64_64KEY, &wow64_64Key);
+
+    if (wow64_64Key)
+    {
+        auto list2 = InternalGetStartupItemList(wow64_64Key);
+        RegCloseKey(wow64_64Key);
+        totalVector.insert(totalVector.begin(), list2.begin(), list2.end());
+    }
+
+    *count = totalVector.size();
+
+    if (count == 0)
+        return nullptr;
+
+    return totalVector.data();
 }
 
 std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)
 {
     std::vector<STARTUPITEM> lstStartup;
-    TCHAR    achKey[MAX_KEY_LENGTH];   // buffer for subkey name
-    DWORD    cbName;                   // size of name string 
-    TCHAR    achClass[MAX_PATH] = TEXT("");  // buffer for class name 
-    DWORD    cchClassName = MAX_PATH;  // size of class string 
-    DWORD    cSubKeys = 0;               // number of subkeys 
-    DWORD    cbMaxSubKey;              // longest subkey size 
-    DWORD    cchMaxClass;              // longest class string 
-    DWORD    cValues;              // number of values for key 
-    DWORD    cchMaxValue;          // longest value name 
-    DWORD    cbMaxValueData;       // longest value data 
-    DWORD    cbSecurityDescriptor; // size of security descriptor 
-    FILETIME ftLastWriteTime;      // last write time 
+    TCHAR  achValue[MAX_VALUE_NAME];
+    DWORD cchValue = MAX_VALUE_NAME;
+    TCHAR    achKey[MAX_KEY_LENGTH];   
+    DWORD    cbName;                 
+    TCHAR    achClass[MAX_PATH] = TEXT("");   
+    DWORD    cchClassName = MAX_PATH;  
+    DWORD    cSubKeys = 0;             
+    DWORD    cbMaxSubKey;              
+    DWORD    cchMaxClass;             
+    DWORD    cValues;             
+    DWORD    cchMaxValue;          
+    DWORD    cbMaxValueData;      
+    DWORD    cbSecurityDescriptor; 
+    FILETIME ftLastWriteTime;      
     DWORD i, retCode;
 
-    // Get the class name and the value count. 
-    retCode = RegQueryInfoKey(
-        hKeyStartupKey,                    // key handle 
-        achClass,                // buffer for class name 
-        &cchClassName,           // size of class string 
-        NULL,                    // reserved 
-        &cSubKeys,               // number of subkeys 
-        &cbMaxSubKey,            // longest subkey size 
-        &cchMaxClass,            // longest class string 
-        &cValues,                // number of values for this key 
-        &cchMaxValue,            // longest value name 
-        &cbMaxValueData,         // longest value data 
-        &cbSecurityDescriptor,   // security descriptor 
-        &ftLastWriteTime);       // last write time 
+    retCode = RegQueryInfoKey(hKeyStartupKey, achClass, &cchClassName, NULL, &cSubKeys, &cbMaxSubKey, &cchMaxClass, &cValues, &cchMaxValue, &cbMaxValueData, &cbSecurityDescriptor, &ftLastWriteTime);
 
-    // Enumerate the key values. 
     if (cValues)
     {
         for (i = 0, retCode = ERROR_SUCCESS; i < cValues; i++)
         {
             cchValue = MAX_VALUE_NAME;
             achValue[0] = '\0';
-            retCode = RegEnumValue(hKeyStartupKey, i,
-                achValue,
-                &cchValue,
-                NULL,
-                NULL,
-                NULL,
-                NULL);
+            retCode = RegEnumValue(hKeyStartupKey, i, achValue, &cchValue, NULL, NULL, NULL, NULL);
 
             if (retCode == ERROR_SUCCESS)
             {
@@ -98,10 +107,11 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)
                 
                 StringCchCopy(item.szName, MAX_VALUE_NAME, achValue);
 
-                DWORD dwPath = 0;
-                QuerySZValue(hKeyStartupKey, NULL, achValue, item.szPath, &dwPath);
+                DWORD dwPathSize = MAX_PATH;
+                item.szPath[0] = '\0';
+                QuerySZValue(hKeyStartupKey, NULL, achValue, item.szPath, &dwPathSize);
 
-                _tprintf(TEXT("(%d) %s\n"), i + 1, achValue);
+                lstStartup.push_back(item);
             }
         }
     }

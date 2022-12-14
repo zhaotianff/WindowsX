@@ -143,7 +143,9 @@ BOOL QuerySZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* szVal
 	auto result = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_READ, &hKey);
 	if (ERROR_SUCCESS == result)
 	{
-		result = RegQueryValueEx(hKey, lpValueName, 0, NULL, (BYTE*)szValue, nSize);
+		DWORD dwType = REG_SZ;
+		result = RegGetValue(hKey, lpSubKey, lpValueName, RRF_RT_REG_SZ, &dwType, (PVOID)szValue, nSize);
+
 		if (ERROR_SUCCESS == result)
 		{
 			RegCloseKey(hKey);

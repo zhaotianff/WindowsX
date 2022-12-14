@@ -5,6 +5,8 @@
     <RootNamespace>Master_Zhao.WebTests</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
