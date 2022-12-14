@@ -7,6 +7,16 @@ using System.Threading.Tasks;
 
 namespace Master_Zhao.Shell.PInvoke
 {
+
+    public struct tagSTARTUPITEM
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+        public string szName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+        public string szPath;
+    }
+    
+
     public class StartupTool
     {
         [DllImport("MasterZhaoCore.dll")]
@@ -14,5 +24,8 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool RemoveStartupRun(string lpszPath);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern IntPtr GetStartupItems(ref int count);
     }
 }

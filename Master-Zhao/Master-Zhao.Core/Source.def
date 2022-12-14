@@ -63,6 +63,7 @@ GetUserProfilePicturePath
 IsExistStartupRun
 CreateStartupRun
 RemoveStartupRun
+GetStartupItems
 
 ;inputtool.h
 GetRawInput
