@@ -22,6 +22,9 @@
 #include<vector>
 #include<string>
 
+#include <Propkey.h> 
+#include <atlbase.h>  
+
 #pragma comment(lib,"Shlwapi.lib")
 
 #define SZ_BACKSLASH TEXT("\\")

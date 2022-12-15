@@ -436,6 +436,35 @@ BOOL GetUserProfilePicturePath(LPTSTR buf,DWORD nSize)
 	return FALSE;
 }
 
+BOOL GetFileDescrption(LPTSTR pszFilePath, LPTSTR pszDescription)
+{
+	CoInitialize(nullptr);   
+	//PKEY_Software_ProductName
+	pszDescription = GetShellPropertyStringFromPath(pszFilePath, PKEY_FileDescription);
+	CoUninitialize();
+
+	if (pszDescription == NULL)
+		return FALSE;
+
+	return TRUE;
+}
+
+LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key)
+{
+	CComPtr<IShellItem2> pItem;
+	HRESULT hr = SHCreateItemFromParsingName(pszPath, nullptr, IID_PPV_ARGS(&pItem));
+
+	if (FAILED(hr))
+		return NULL;
+
+	CComHeapPtr<WCHAR> pValue;
+	hr = pItem->GetString(key, &pValue);
+
+	if (FAILED(hr))
+		return NULL;
+
+	return pValue;
+}
 
 
 

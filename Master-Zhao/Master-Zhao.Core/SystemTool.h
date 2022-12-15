@@ -60,3 +60,7 @@ SILVERAROWANACORE_API BOOL UnRegisterBossKeyHotKey(HWND hwnd, UINT nHotKeyId);
 
 SILVERAROWANACORE_API BOOL GetUserProfilePicturePath(LPTSTR buf, DWORD nSize);
 
+LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key);
+
+SILVERAROWANACORE_API BOOL GetFileDescrption(LPTSTR pszFilePath, LPTSTR pszDescription);
+
