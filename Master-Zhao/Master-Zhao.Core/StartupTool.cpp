@@ -40,7 +40,7 @@ BOOL RemoveStartupRun(LPTSTR lpszPath)
 	return FALSE;
 }
 
-STARTUPITEM* GetStartupItems(int* count)
+BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
 {
     HKEY wow64_32Key = NULL;
     RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH, 0, KEY_READ | KEY_WOW64_32KEY, &wow64_32Key);
@@ -64,12 +64,26 @@ STARTUPITEM* GetStartupItems(int* count)
         totalVector.insert(totalVector.begin(), list2.begin(), list2.end());
     }
 
+    if (*count < totalVector.size())
+        return FALSE;
+
     *count = totalVector.size();
+    auto nSizeSource = *count * sizeof(tagSTARTUPITEM);
 
     if (count == 0)
-        return nullptr;
+        return FALSE;
 
-    return totalVector.data();
+    memcpy_s(buffer, nSizeTarget,totalVector.data(),nSizeSource);
+
+    //test code
+    /* for (int i = 0; i < 5; i++)
+     {
+         tagSTARTUPITEM* item = (tagSTARTUPITEM*)buffer;
+    
+         buffer += sizeof(tagSTARTUPITEM);
+     }*/
+
+    return TRUE;
 }
 
 std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)

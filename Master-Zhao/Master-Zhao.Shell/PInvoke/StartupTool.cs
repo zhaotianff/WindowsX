@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Master_Zhao.Shell.PInvoke
 {
-
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct tagSTARTUPITEM
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
@@ -26,6 +26,6 @@ namespace Master_Zhao.Shell.PInvoke
         public static extern bool RemoveStartupRun(string lpszPath);
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern IntPtr GetStartupItems(ref int count);
+        public static extern bool GetStartupItems(IntPtr buffer, int nSizeTarget, ref int count);
     }
 }

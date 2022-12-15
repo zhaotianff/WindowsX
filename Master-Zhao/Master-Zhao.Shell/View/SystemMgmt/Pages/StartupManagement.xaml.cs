@@ -27,20 +27,27 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
         private void LoadStartUpItem()
         {
-            int count = 0;
-            var itemPtr = PInvoke.StartupTool.GetStartupItems(ref count);
-
-            var offset = 0;
+            //temp 10
+            int count = 10;
             var itemSize = Marshal.SizeOf<tagSTARTUPITEM>();
+            int size = count * itemSize;
+            IntPtr buffer = Marshal.AllocHGlobal(size);
+            var result = PInvoke.StartupTool.GetStartupItems(buffer, size, ref count);
+
+            if (result == false)
+                return;
+
             for(int i = 0;i<count;i++)
             {
-                byte[] buffer = new byte[itemSize];
-                Marshal.Copy(itemPtr, buffer, offset, itemSize);
+                byte[] startupItemBuffer = new byte[itemSize];
+                Marshal.Copy(buffer, startupItemBuffer, 0, itemSize);
 
                 IntPtr newPtr = Marshal.AllocHGlobal(itemSize);
-                Marshal.Copy(buffer, 0, newPtr, itemSize);
+                Marshal.Copy(startupItemBuffer, 0, newPtr, itemSize);
 
                 var str = Marshal.PtrToStructure<tagSTARTUPITEM>(newPtr);
+                
+                buffer = new IntPtr(buffer.ToInt64() + itemSize);
             }
         }
 

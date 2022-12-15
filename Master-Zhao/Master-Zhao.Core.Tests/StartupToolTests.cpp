@@ -12,8 +12,13 @@ namespace MasterZhaoCoreTests
 
 		TEST_METHOD(TestGetStartupItemList)
 		{
-			int count = 0;
-			GetStartupItems(&count);
+			int count = 10;
+			int size = sizeof(tagSTARTUPITEM) * count;
+			byte* buffer = new byte[size];
+
+			GetStartupItems(buffer, size, &count);
+
+			delete[] buffer;
 		}
 	};
 }

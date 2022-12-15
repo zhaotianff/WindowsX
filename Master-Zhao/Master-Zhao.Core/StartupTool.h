@@ -15,7 +15,7 @@ SILVERAROWANACORE_API BOOL IsExistStartupRun(LPTSTR lpszPath,LPTSTR* lpszLnkPath
 SILVERAROWANACORE_API BOOL CreateStartupRun(LPTSTR lpszPath);
 SILVERAROWANACORE_API BOOL RemoveStartupRun(LPTSTR lpszPath);
 
-SILVERAROWANACORE_API STARTUPITEM* GetStartupItems(int* count);
+SILVERAROWANACORE_API BOOL GetStartupItems(byte* buffer, int nSizeTarget, int* count);
 std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey);
 
 #define RUN_REGPATH LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)"
