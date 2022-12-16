@@ -3,12 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800" Loaded="Page_Loaded"
       Title="StartupManagement">
 
     <Grid>
-        <ListBox>
+        <ListBox x:Name="listbox" Style="{StaticResource ListBoxStyle}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -18,20 +19,17 @@
                         </Grid.RowDefinitions>
 
                         <DockPanel Grid.Row="0" LastChildFill="False">
-                            <Label Content="Microsoft To Do" FontSize="15" HorizontalAlignment="Left" MinWidth="200"/>
-                            <Label Content="Microsft" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Label Content="{Binding Name}" FontSize="15" HorizontalAlignment="Left" MinWidth="200" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
+                            <Label Content="{Binding Version}" FontSize="15" HorizontalAlignment="Left" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
+                            <Label Content="{Binding Description}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}" />
                         </DockPanel>
-                        <Label Content="C:\Program Files (x86)\Common Files\Adobe\CS5ServiceManager\CS5ServiceManager.exe" Foreground="Silver" Grid.Row="1"/>
-
-                        <CheckBox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Path}" Grid.Row="1" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
+                        <controls:ToggleSwitch Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" ToggleSwitchState="{Binding IsEnabled}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
-            <ListBoxItem></ListBoxItem>
-            <ListBoxItem></ListBoxItem>
-            <ListBoxItem></ListBoxItem>
-            <ListBoxItem></ListBoxItem>
+           
         </ListBox>
     </Grid>
 </Page>

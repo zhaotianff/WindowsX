@@ -436,17 +436,15 @@ BOOL GetUserProfilePicturePath(LPTSTR buf,DWORD nSize)
 	return FALSE;
 }
 
-BOOL GetFileDescrption(LPTSTR pszFilePath, LPTSTR pszDescription)
+LPTSTR GetFileDescrption(LPTSTR pszFilePath)
 {
 	CoInitialize(nullptr);   
+
 	//PKEY_Software_ProductName
-	pszDescription = GetShellPropertyStringFromPath(pszFilePath, PKEY_FileDescription);
+	LPTSTR pszDescription = GetShellPropertyStringFromPath(pszFilePath, PKEY_FileDescription);
+
 	CoUninitialize();
-
-	if (pszDescription == NULL)
-		return FALSE;
-
-	return TRUE;
+	return pszDescription;
 }
 
 LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key)
@@ -463,7 +461,7 @@ LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key)
 	if (FAILED(hr))
 		return NULL;
 
-	return pValue;
+	return pValue.m_pData;
 }
 
 

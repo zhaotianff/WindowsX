@@ -62,5 +62,5 @@ SILVERAROWANACORE_API BOOL GetUserProfilePicturePath(LPTSTR buf, DWORD nSize);
 
 LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key);
 
-SILVERAROWANACORE_API BOOL GetFileDescrption(LPTSTR pszFilePath, LPTSTR pszDescription);
+SILVERAROWANACORE_API LPTSTR GetFileDescrption(LPTSTR pszFilePath);
 

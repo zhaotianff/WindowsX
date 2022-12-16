@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Shell.PInvoke;
+﻿using Master_Zhao.Shell.Model.SystemMgmt;
+using Master_Zhao.Shell.PInvoke;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -37,6 +38,8 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             if (result == false)
                 return;
 
+            var startupItemList = new List<StartupItem>();
+
             for(int i = 0;i<count;i++)
             {
                 byte[] startupItemBuffer = new byte[itemSize];
@@ -48,7 +51,15 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 var str = Marshal.PtrToStructure<tagSTARTUPITEM>(newPtr);
                 
                 buffer = new IntPtr(buffer.ToInt64() + itemSize);
+
+                StartupItem startupItem = new StartupItem();
+                startupItem.Name = str.szName;
+                startupItem.Path = str.szPath;
+                startupItem.IsEnabled = true;
+                startupItemList.Add(startupItem);
             }
+
+            this.listbox.ItemsSource = startupItemList;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
