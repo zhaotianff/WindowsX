@@ -4,19 +4,22 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
+      xmlns:converters="clr-namespace:Master_Zhao.Shell.Infrastructure.Converter"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800" Loaded="Page_Loaded"
       Title="StartupManagement">
-
+    <Page.Resources>
+        <converters:ItemSelectedConverter x:Key="ItemSelectedConverter"/>
+    </Page.Resources>
     <Grid>
         <ListBox x:Name="listbox" Style="{StaticResource ListBoxStyle}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="打开文件路径"/>
-                                <MenuItem Header="属性"/>
+                            <ContextMenu IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox},Path=SelectedItem,Converter={StaticResource ItemSelectedConverter}}">
+                                <MenuItem Header="打开文件路径" Click="openFilePath_Click"/>
+                                <MenuItem Header="属性" Click="openProperty_Click"/>
                             </ContextMenu>
                         </Grid.ContextMenu>
                         <Grid.RowDefinitions>

@@ -164,6 +164,39 @@ VOID RestartExplorer()
 	hStartMenuBtn = NULL;
 }
 
+VOID SelectFile(LPCTSTR lpszFile)
+{
+	TCHAR szCmd[260]{};
+	STARTUPINFO si{};
+	PROCESS_INFORMATION pi{};
+	si.cb = sizeof(si);
+	wsprintf(szCmd, L"explorer.exe /e,/select,%s", lpszFile);
+	auto nRet = CreateProcess(NULL, szCmd, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
+
+	if (!nRet)
+	{
+		if (pi.hThread)
+		{
+			CloseHandle(pi.hThread);
+		}
+
+		if (pi.hProcess)
+		{
+			CloseHandle(pi.hProcess);
+		}
+	}
+}
+
+VOID OpenFileProperty(LPCTSTR lpszFile)
+{
+	SHELLEXECUTEINFO shellInfo{};
+	shellInfo.cbSize = sizeof(shellInfo);
+	shellInfo.lpVerb = L"properties";
+	shellInfo.lpFile = lpszFile;
+	shellInfo.fMask = SEE_MASK_INVOKEIDLIST;
+	ShellExecuteEx(&shellInfo);
+}
+
 BOOL CloseEmbedWindow()
 {
 	if (hEmbedHwnd)

@@ -39,6 +39,8 @@ SetTaskbarThumbnailSize
 ActivateTaskBar
 CanAddToTaskBar
 GetProcessNameFomrHwnd
+SelectFile
+OpenFileProperty
 
 EmbedWindowToDesktop
 RestartExplorer

@@ -153,5 +153,11 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern void RestartExplorer();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void SelectFile([MarshalAs(UnmanagedType.LPWStr)]string lpszFile);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void OpenFileProperty([MarshalAs(UnmanagedType.LPWStr)]string lpszFile);
     }
 }
