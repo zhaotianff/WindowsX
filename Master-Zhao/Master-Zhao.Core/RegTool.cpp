@@ -30,7 +30,7 @@ BOOL SetDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD value
 BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName,LPCTSTR value)
 {
 	HKEY hSubKey = NULL;
-	auto lResult = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_ALL_ACCESS, &hSubKey);
+	auto lResult = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_WRITE, &hSubKey);
 
 	if (lResult != ERROR_SUCCESS)
 	{

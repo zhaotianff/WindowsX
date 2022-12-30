@@ -85,7 +85,7 @@ namespace Master_Zhao.Shell.Pages
 
                 if(process != null)
                 {
-                    await Task.Delay(100);
+                    await Task.Delay(1000);
                     process.Kill();
                 }
             }
