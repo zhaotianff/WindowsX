@@ -10,12 +10,13 @@
       Title="StartupManagement">
     <Page.Resources>
         <converters:ItemSelectedConverter x:Key="ItemSelectedConverter"/>
+        <converters:StartupItemConverter x:Key="StartupItemConverter"/>
     </Page.Resources>
     <Grid>
         <ListBox x:Name="listbox" Style="{StaticResource ListBoxStyle}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Margin="0,3,0,0">
                         <Grid.ContextMenu>
                             <ContextMenu IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox},Path=SelectedItem,Converter={StaticResource ItemSelectedConverter}}">
                                 <MenuItem Header="打开文件路径" Click="openFilePath_Click"/>
@@ -25,15 +26,16 @@
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
                         <DockPanel Grid.Row="0" LastChildFill="False">
-                            <Label Content="{Binding Name}" FontSize="15" HorizontalAlignment="Left" MinWidth="200" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
-                            <Label Content="{Binding Version}" FontSize="15" HorizontalAlignment="Left" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
-                            <Label Content="{Binding Description}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}" />
+                            <Label Content="{Binding Name,Converter={StaticResource StartupItemConverter},ConverterParameter=Name}" FontSize="13" HorizontalAlignment="Left" MinWidth="200" FontWeight="SemiBold" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
+                            <Label Content="{Binding Version,Converter={StaticResource StartupItemConverter},ConverterParameter=Version}" FontSize="15" HorizontalAlignment="Left" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
                         </DockPanel>
-                        <Label Content="{Binding Path}" Grid.Row="1" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
-                        <controls:ToggleSwitch Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" ToggleSwitchState="{Binding IsEnabled}"/>
+                        <Label Content="{Binding Description,Converter={StaticResource StartupItemConverter},ConverterParameter=Description}" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}" />
+                        <Label Content="{Binding Path,Converter={StaticResource StartupItemConverter},ConverterParameter=Path}" Grid.Row="2" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
+                        <controls:ToggleSwitch Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" ToggleSwitchState="{Binding IsEnabled}" Margin="0,0,3,0"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

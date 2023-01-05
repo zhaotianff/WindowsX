@@ -48,13 +48,18 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 IntPtr newPtr = Marshal.AllocHGlobal(itemSize);
                 Marshal.Copy(startupItemBuffer, 0, newPtr, itemSize);
 
-                var str = Marshal.PtrToStructure<tagSTARTUPITEM>(newPtr);
+                var tagStartupItem = Marshal.PtrToStructure<tagSTARTUPITEM>(newPtr);
                 
                 buffer = new IntPtr(buffer.ToInt64() + itemSize);
 
                 StartupItem startupItem = new StartupItem();
-                startupItem.Name = str.szName;
-                startupItem.Path = str.szPath;
+                startupItem.Name = tagStartupItem.szName;
+
+                if (string.IsNullOrEmpty(tagStartupItem.szPath))
+                    continue;
+
+                startupItem.Path = tagStartupItem.szPath;
+                startupItem.Description = tagStartupItem.szDescription;
                 startupItem.IsEnabled = true;
                 startupItemList.Add(startupItem);
             }

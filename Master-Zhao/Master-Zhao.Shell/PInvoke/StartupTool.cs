@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Master_Zhao.Shell.PInvoke
 {
@@ -14,6 +15,9 @@ namespace Master_Zhao.Shell.PInvoke
         public string szName;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
         public string szPath;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+        public string szDescription;
+        IntPtr hKey;
     }
     
 

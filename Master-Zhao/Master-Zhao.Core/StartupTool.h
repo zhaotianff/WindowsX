@@ -9,6 +9,8 @@ typedef struct tagSTARTUPITEM
 {
     TCHAR szName[MAX_VALUE_NAME];
     TCHAR szPath[MAX_PATH];
+    TCHAR szDescription[MAX_PATH];
+    HKEY hKey;
 } STARTUPITEM, * PSTARTUPITEM;
 
 SILVERAROWANACORE_API BOOL IsExistStartupRun(LPTSTR lpszPath,LPTSTR* lpszLnkPath);
@@ -19,6 +21,7 @@ SILVERAROWANACORE_API BOOL GetStartupItems(byte* buffer, int nSizeTarget, int* c
 std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey);
 
 #define RUN_REGPATH LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)"
+#define RUN_ONCE_REGPATH LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce)"
 
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
