@@ -16,7 +16,7 @@
         <ListBox x:Name="listbox" Style="{StaticResource ListBoxStyle}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="0,3,0,0">
+                    <Grid Margin="0,3,0,0" Background="Transparent">
                         <Grid.ContextMenu>
                             <ContextMenu IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox},Path=SelectedItem,Converter={StaticResource ItemSelectedConverter}}">
                                 <MenuItem Header="打开文件路径" Click="openFilePath_Click"/>

@@ -74,7 +74,12 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
         private void openProperty_Click(object sender, RoutedEventArgs e)
         {
+            var selectedItem = this.listbox.SelectedItem as StartupItem;
 
+            if (selectedItem != null)
+            {
+                DesktopTool.OpenFileProperty(selectedItem.Path);
+            }
         }
 
         private void openFilePath_Click(object sender, RoutedEventArgs e)
