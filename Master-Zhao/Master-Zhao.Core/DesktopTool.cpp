@@ -1,5 +1,6 @@
 #include "DesktopTool.h"
 #include"InputTool.h"
+#include"SystemTool.h"
 #include <dwmapi.h>
 
 struct tagBASICWINDOWINFO
@@ -166,11 +167,13 @@ VOID RestartExplorer()
 
 VOID SelectFile(LPCTSTR lpszFile)
 {
+	TCHAR szFullPath[MAX_PATH]{};
+	MakeFullPath(lpszFile, szFullPath, MAX_PATH);
 	TCHAR szCmd[260]{};
 	STARTUPINFO si{};
 	PROCESS_INFORMATION pi{};
 	si.cb = sizeof(si);
-	wsprintf(szCmd, L"explorer.exe /e,/select,%s", lpszFile);
+	wsprintf(szCmd, L"explorer.exe /e,/select,%s", szFullPath);
 	auto nRet = CreateProcess(NULL, szCmd, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
 
 	if (!nRet)
@@ -189,10 +192,12 @@ VOID SelectFile(LPCTSTR lpszFile)
 
 VOID OpenFileProperty(LPCTSTR lpszFile)
 {
+	TCHAR szFullPath[MAX_PATH]{};
+	MakeFullPath(lpszFile, szFullPath, MAX_PATH);
 	SHELLEXECUTEINFO shellInfo{};
 	shellInfo.cbSize = sizeof(shellInfo);
 	shellInfo.lpVerb = L"properties";
-	shellInfo.lpFile = lpszFile;
+	shellInfo.lpFile = szFullPath;
 	shellInfo.fMask = SEE_MASK_INVOKEIDLIST;
 	ShellExecuteEx(&shellInfo);
 }

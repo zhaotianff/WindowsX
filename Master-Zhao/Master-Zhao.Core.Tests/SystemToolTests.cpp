@@ -12,7 +12,7 @@ namespace MasterZhaoCoreTests
 
 		TEST_METHOD(TestGetFileDescription)
 		{
-			LPTSTR szBuffer = GetFileDescrption(LR"(C:\windows\notepad.exe)");
+			LPTSTR szBuffer = GetFileDescrption(LR"(%windir%\notepad.exe)");
 			Assert::IsNotNull(szBuffer);
 		}
 	};

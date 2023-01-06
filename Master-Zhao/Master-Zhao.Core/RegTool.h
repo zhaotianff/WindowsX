@@ -140,3 +140,7 @@ SILVERAROWANACORE_API BOOL QuerySZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpV
 
 //Taskbar
 //HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize
+
+//Visual Studio
+//HKEY_CLASSES_ROOT\Directory\background\shell\AnyCode
+//HKEY_CLASSES_ROOT\Directory\shell\AnyCode

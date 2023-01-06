@@ -14,7 +14,9 @@ BOOL IsExistStartupRun(LPTSTR lpszPath, LPTSTR* lpszLnkPath)
 		return FALSE;
 
 	LPITEMIDLIST pIdList;
-	SHGetSpecialFolderLocation(NULL, CSIDL_STARTUP, &pIdList);
+	HRESULT hr = SHGetSpecialFolderLocation(NULL, CSIDL_STARTUP, &pIdList);
+    if (FAILED(hr))
+        return FALSE;
 	TCHAR szStartupPath[MAX_PATH]{};
 	SHGetPathFromIDList(pIdList, szStartupPath);
 	TCHAR szLnkPath[MAX_PATH]{};

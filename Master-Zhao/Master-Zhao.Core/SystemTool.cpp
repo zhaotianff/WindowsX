@@ -451,24 +451,10 @@ LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key)
 {
 	CComPtr<IShellItem2> pItem;
 
-	//a best way ?
-	std::wstring path = pszPath;
-	if (path.find('%') != std::wstring::npos)
-	{
-		auto nStart = path.find_first_of('%') + 1;
-		auto nEnd = path.find_last_of('%');
-		std::wstring strEnv = path.substr(nStart, nEnd - nStart);
+	TCHAR szFullPath[MAX_PATH]{};
+	MakeFullPath(pszPath, szFullPath, MAX_PATH);
 
-		TCHAR envBuffer[MAX_PATH]{};
-
-		if (GetEnvironmentVariable(strEnv.data(), envBuffer, MAX_PATH))
-		{
-			path = path.replace(nStart -1 , nEnd - nStart + 2, envBuffer);
-			pszPath = path.data();
-		}
-	}
-
-	HRESULT hr = SHCreateItemFromParsingName(pszPath, nullptr, IID_PPV_ARGS(&pItem));
+	HRESULT hr = SHCreateItemFromParsingName(szFullPath, nullptr, IID_PPV_ARGS(&pItem));
 
 	if (FAILED(hr))
 		return NULL;
@@ -482,9 +468,25 @@ LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key)
 	return pValue.m_pData;
 }
 
-LPTSTR GetFullPath(LPTSTR szPath)
+VOID MakeFullPath(LPCWSTR pszPath,LPTSTR szFullPath,DWORD nFullPathSize)
 {
-	
+	StringCchCopy(szFullPath, nFullPathSize, pszPath);
+
+	std::wstring path = pszPath;
+	if (path.find('%') != std::wstring::npos)
+	{
+		auto nStart = path.find_first_of('%') + 1;
+		auto nEnd = path.find_last_of('%');
+		std::wstring strEnv = path.substr(nStart, nEnd - nStart);
+
+		TCHAR envBuffer[MAX_PATH]{};
+
+		if (GetEnvironmentVariable(strEnv.data(), envBuffer, MAX_PATH))
+		{
+			path = path.replace(nStart - 1, nEnd - nStart + 2, envBuffer);
+			StringCchCopy(szFullPath,path.size() + 1, path.data());
+		}
+	}
 }
 
 
