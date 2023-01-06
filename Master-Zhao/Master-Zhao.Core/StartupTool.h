@@ -19,6 +19,8 @@ SILVERAROWANACORE_API BOOL RemoveStartupRun(LPTSTR lpszPath);
 
 SILVERAROWANACORE_API BOOL GetStartupItems(byte* buffer, int nSizeTarget, int* count);
 std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey);
+SILVERAROWANACORE_API BOOL DisableStartupItem(HKEY hKey, LPTSTR szName, LPTSTR szPath);
+SILVERAROWANACORE_API BOOL EnableStartupItem(HKEY hKey, LPTSTR szName, LPTSTR szPath);
 
 #define RUN_REGPATH LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)"
 #define RUN_ONCE_REGPATH LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce)"

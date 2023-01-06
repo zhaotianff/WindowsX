@@ -1,5 +1,7 @@
-﻿using Master_Zhao.Shell.Model.SystemMgmt;
+﻿using Master_Zhao.Shell.Controls;
+using Master_Zhao.Shell.Model.SystemMgmt;
 using Master_Zhao.Shell.PInvoke;
+using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -28,6 +30,14 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
         private void LoadStartUpItem()
         {
+            var startupItemList = new List<StartupItem>();
+            startupItemList.AddRange(LoadRegistryStartupItem());
+            this.listbox.ItemsSource = startupItemList;
+        }
+
+        private List<StartupItem> LoadRegistryStartupItem()
+        {
+            var startupItemList = new List<StartupItem>();
             //temp 10
             int count = 10;
             var itemSize = Marshal.SizeOf<tagSTARTUPITEM>();
@@ -36,11 +46,9 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             var result = PInvoke.StartupTool.GetStartupItems(buffer, size, ref count);
 
             if (result == false)
-                return;
+                return startupItemList;
 
-            var startupItemList = new List<StartupItem>();
-
-            for(int i = 0;i<count;i++)
+            for (int i = 0; i < count; i++)
             {
                 byte[] startupItemBuffer = new byte[itemSize];
                 Marshal.Copy(buffer, startupItemBuffer, 0, itemSize);
@@ -49,7 +57,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 Marshal.Copy(startupItemBuffer, 0, newPtr, itemSize);
 
                 var tagStartupItem = Marshal.PtrToStructure<tagSTARTUPITEM>(newPtr);
-                
+
                 buffer = new IntPtr(buffer.ToInt64() + itemSize);
 
                 StartupItem startupItem = new StartupItem();
@@ -58,13 +66,15 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 if (string.IsNullOrEmpty(tagStartupItem.szPath))
                     continue;
 
+                startupItem.HKey = tagStartupItem.hKey;
                 startupItem.Path = tagStartupItem.szPath;
                 startupItem.Description = tagStartupItem.szDescription;
                 startupItem.IsEnabled = true;
+                startupItem.StartupItemType = StartupItemType.Registry;
                 startupItemList.Add(startupItem);
             }
 
-            this.listbox.ItemsSource = startupItemList;
+            return startupItemList;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -89,6 +99,28 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             if(selectedItem != null)
             {
                 DesktopTool.SelectFile(selectedItem.Path);
+            }
+        }
+
+        private void enable_Checked(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = TreeHelper.FindParent<ListBoxItem>(sender as ToggleSwitch);
+
+            if(selectedItem != null)
+            {
+                var startupItem = selectedItem.Content as StartupItem;
+                StartupTool.EnableStartupItem(startupItem.HKey, startupItem.Name, startupItem.Path);
+            }
+        }
+
+        private void disable_Checked(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = TreeHelper.FindParent<ListBoxItem>(sender as ToggleSwitch);
+
+            if (selectedItem != null)
+            {
+                var startupItem = selectedItem.Content as StartupItem;
+                StartupTool.DisableStartupItem(startupItem.HKey, startupItem.Name, startupItem.Path);
             }
         }
     }

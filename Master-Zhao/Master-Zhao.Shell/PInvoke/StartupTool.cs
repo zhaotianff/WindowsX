@@ -17,7 +17,7 @@ namespace Master_Zhao.Shell.PInvoke
         public string szPath;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
         public string szDescription;
-        IntPtr hKey;
+        public IntPtr hKey;
     }
     
 
@@ -31,5 +31,11 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool GetStartupItems(IntPtr buffer, int nSizeTarget, ref int count);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool DisableStartupItem(IntPtr hKey, string szName, string szPath);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool EnableStartupItem(IntPtr hKey, string szName, string szPath);
     }
 }

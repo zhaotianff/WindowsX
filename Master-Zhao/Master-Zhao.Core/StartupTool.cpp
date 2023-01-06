@@ -155,3 +155,13 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)
 
     return lstStartup;
 }
+
+BOOL DisableStartupItem(HKEY hKey, LPTSTR szName, LPTSTR szPath)
+{
+    return 0;
+}
+
+BOOL EnableStartupItem(HKEY hKey, LPTSTR szName, LPTSTR szPath)
+{
+    return 0;
+}

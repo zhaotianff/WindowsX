@@ -35,7 +35,7 @@
                         </DockPanel>
                         <Label Content="{Binding Description,Converter={StaticResource StartupItemConverter},ConverterParameter=Description}" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}" />
                         <Label Content="{Binding Path,Converter={StaticResource StartupItemConverter},ConverterParameter=Path}" Grid.Row="2" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
-                        <controls:ToggleSwitch Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" ToggleSwitchState="{Binding IsEnabled}" Margin="0,0,3,0"/>
+                        <controls:ToggleSwitch Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" ToggleSwitchState="{Binding IsEnabled}" Margin="0,0,3,0" SwitchChecked="enable_Checked" SwitchUnChecked="disable_Checked"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
