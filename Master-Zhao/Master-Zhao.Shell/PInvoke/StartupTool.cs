@@ -18,6 +18,10 @@ namespace Master_Zhao.Shell.PInvoke
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
         public string szDescription;
         public IntPtr hKey;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+        public string szRegPath;
+        public uint samDesired;
+        public bool bEnabled;
     }
     
 

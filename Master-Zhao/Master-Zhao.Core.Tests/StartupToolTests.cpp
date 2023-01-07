@@ -20,5 +20,39 @@ namespace MasterZhaoCoreTests
 
 			delete[] buffer;
 		}
+
+		TEST_METHOD(TestDisableStartupItem)
+		{
+			int count = 10;
+			int size = sizeof(tagSTARTUPITEM) * count;
+			byte* buffer = new byte[size];
+
+			GetStartupItems(buffer, size, &count);
+
+			tagSTARTUPITEM* item = (tagSTARTUPITEM*)buffer;
+
+			auto result = DisableStartupItem(item->hKey, item->szRegPath, item->samDesired, item->szName, item->szPath);
+
+			delete[] buffer;
+
+			Assert::IsTrue(result);
+		}
+
+		TEST_METHOD(TestEnableStartupItem)
+		{
+			int count = 10;
+			int size = sizeof(tagSTARTUPITEM) * count;
+			byte* buffer = new byte[size];
+
+			GetStartupItems(buffer, size, &count);
+
+			tagSTARTUPITEM* item = (tagSTARTUPITEM*)buffer;
+
+			auto result = EnableStartupItem(item->hKey, item->szRegPath, item->samDesired, item->szName, item->szPath);
+
+			delete[] buffer;
+
+			Assert::IsTrue(result);
+		}
 	};
 }

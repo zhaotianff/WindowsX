@@ -69,7 +69,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 startupItem.HKey = tagStartupItem.hKey;
                 startupItem.Path = tagStartupItem.szPath;
                 startupItem.Description = tagStartupItem.szDescription;
-                startupItem.IsEnabled = true;
+                startupItem.IsEnabled = tagStartupItem.bEnabled;
                 startupItem.StartupItemType = StartupItemType.Registry;
                 startupItemList.Add(startupItem);
             }

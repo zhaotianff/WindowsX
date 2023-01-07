@@ -52,9 +52,18 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
     RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH, 0, KEY_READ | KEY_WOW64_32KEY, &wow64_32Key);
     if (wow64_32Key)
     {
-        auto list = InternalGetStartupItemList(wow64_32Key);
+        auto list = InternalGetStartupItemList(wow64_32Key, HKEY_LOCAL_MACHINE, RUN_REGPATH, KEY_READ | KEY_WOW64_32KEY,TRUE);
         RegCloseKey(wow64_32Key);
-        totalVector.insert(totalVector.begin(), list.begin(),list.end());
+        totalVector.insert(totalVector.end(), list.begin(),list.end());
+    }
+
+    HKEY wow64_32Key_disable = NULL;
+    RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE, 0, KEY_READ | KEY_WOW64_32KEY, &wow64_32Key_disable);
+    if (wow64_32Key_disable)
+    {
+        auto list_disable = InternalGetStartupItemList(wow64_32Key_disable, HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE, KEY_READ | KEY_WOW64_32KEY, FALSE);
+        RegCloseKey(wow64_32Key_disable);
+        totalVector.insert(totalVector.end(), list_disable.begin(), list_disable.end());
     }
 
     //run wow64_64
@@ -63,9 +72,19 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
 
     if (wow64_64Key)
     {
-        auto list2 = InternalGetStartupItemList(wow64_64Key);
+        auto list2 = InternalGetStartupItemList(wow64_64Key, HKEY_LOCAL_MACHINE, RUN_REGPATH, KEY_READ | KEY_WOW64_64KEY,TRUE);
         RegCloseKey(wow64_64Key);
-        totalVector.insert(totalVector.begin(), list2.begin(), list2.end());
+        totalVector.insert(totalVector.end(), list2.begin(), list2.end());
+    }
+
+    HKEY wow64_64Key_disable = NULL;
+    RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE, 0, KEY_READ | KEY_WOW64_64KEY, &wow64_64Key_disable);
+
+    if (wow64_64Key_disable)
+    {
+        auto list2_disable = InternalGetStartupItemList(wow64_64Key_disable, HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE, KEY_READ | KEY_WOW64_64KEY, FALSE);
+        RegCloseKey(wow64_64Key_disable);
+        totalVector.insert(totalVector.end(), list2_disable.begin(), list2_disable.end());
     }
 
     //run once wow64_32
@@ -74,9 +93,19 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
 
     if (runonce64_32_Key)
     {
-        auto list3 = InternalGetStartupItemList(runonce64_32_Key);
+        auto list3 = InternalGetStartupItemList(runonce64_32_Key, HKEY_LOCAL_MACHINE, RUN_ONCE_REGPATH, KEY_READ | KEY_WOW64_32KEY,TRUE);
         RegCloseKey(runonce64_32_Key);
-        totalVector.insert(totalVector.begin(), list3.begin(), list3.end());
+        totalVector.insert(totalVector.end(), list3.begin(), list3.end());
+    }
+
+    HKEY runonce64_32_Key_disable = NULL;
+    RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_ONCE_REGPATH_DISABLE, 0, KEY_READ | KEY_WOW64_32KEY, &runonce64_32_Key_disable);
+
+    if (runonce64_32_Key_disable)
+    {
+        auto list3_disable = InternalGetStartupItemList(runonce64_32_Key_disable, HKEY_LOCAL_MACHINE, RUN_ONCE_REGPATH_DISABLE, KEY_READ | KEY_WOW64_32KEY, FALSE);
+        RegCloseKey(runonce64_32_Key_disable);
+        totalVector.insert(totalVector.end(), list3_disable.begin(), list3_disable.end());
     }
 
     if (*count < totalVector.size())
@@ -101,7 +130,7 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
     return TRUE;
 }
 
-std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)
+std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hKeyRoot, LPCTSTR szRegPath, DWORD samDesired,BOOL bEnabled)
 {
     std::vector<STARTUPITEM> lstStartup;
     TCHAR  achValue[MAX_VALUE_NAME];
@@ -133,11 +162,8 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)
             if (retCode == ERROR_SUCCESS)
             {
                 STARTUPITEM item;
-
-                item.hKey = hKeyStartupKey;
-                
+                item.hKey = hKeyRoot;
                 StringCchCopy(item.szName, MAX_VALUE_NAME, achValue);
-
                 DWORD dwPathSize = MAX_PATH;
                 item.szPath[0] = '\0';
                 QuerySZValue(hKeyStartupKey, NULL, achValue, item.szPath, &dwPathSize);
@@ -148,6 +174,10 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)
                 if(szFileDescription)
                     StringCchCopy(item.szDescription, MAX_VALUE_NAME, szFileDescription);
 
+                StringCchCopy(item.szRegPath, MAX_VALUE_NAME, szRegPath);
+                item.samDesired = samDesired;
+                item.bEnabled = bEnabled;
+
                 lstStartup.push_back(item);
             }
         }
@@ -156,12 +186,45 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey)
     return lstStartup;
 }
 
-BOOL DisableStartupItem(HKEY hKey, LPTSTR szName, LPTSTR szPath)
+BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath)
 {
-    return 0;
+    std::wstring strDisabledPath = szRegPath;
+    strDisabledPath += L"\\Disabled";
+    HKEY hSubKey = NULL;
+    auto lResult = RegOpenKeyEx(hKey, strDisabledPath.data(), 0, samDesired, &hSubKey);
+    RegCloseKey(hSubKey);
+
+    if (lResult == ERROR_FILE_NOT_FOUND)
+    {
+        lResult = RegCreateKey(hKey, strDisabledPath.data(), &hSubKey);
+    }
+
+    if (lResult != ERROR_SUCCESS)
+        return FALSE;
+
+    //TODO backup register
+
+    BOOL bCreate = SetSZValue(hKey, strDisabledPath.data(), szName, szPath);
+    BOOL bRemove = RemovRegValue(hKey, szRegPath, szName);
+
+    return bCreate && bRemove;
 }
 
-BOOL EnableStartupItem(HKEY hKey, LPTSTR szName, LPTSTR szPath)
+BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath)
 {
-    return 0;
+    std::wstring strEnabledPath = szRegPath;
+    strEnabledPath = strEnabledPath.substr(0, strEnabledPath.length() - lstrlen(L"\\Disabled"));
+    HKEY hSubKey = NULL;
+    auto lResult = RegOpenKeyEx(hKey, strEnabledPath.data(), 0, samDesired, &hSubKey);
+    RegCloseKey(hSubKey);
+
+    if (lResult == ERROR_FILE_NOT_FOUND)
+    {
+        return FALSE;
+    }
+
+    BOOL bCreate = SetSZValue(hKey, strEnabledPath.data(), szName, szPath);
+    BOOL bRemove = RemovRegValue(hKey, szRegPath, szName);
+
+    return bCreate && bRemove;
 }
