@@ -5,6 +5,13 @@
 #define MAX_KEY_LENGTH 255
 #define MAX_VALUE_NAME 260
 
+enum class STARTUPITEM_TYPE : INT
+{
+    Registry,
+    ShellStartup,
+    TaskScheduler
+};
+
 typedef struct tagSTARTUPITEM
 {
     TCHAR szName[MAX_VALUE_NAME];
@@ -14,6 +21,8 @@ typedef struct tagSTARTUPITEM
     TCHAR szRegPath[MAX_VALUE_NAME];
     DWORD samDesired;
     BOOL bEnabled;
+    STARTUPITEM_TYPE type;
+
 } STARTUPITEM, * PSTARTUPITEM;
 
 SILVERAROWANACORE_API BOOL IsExistStartupRun(LPTSTR lpszPath,LPTSTR* lpszLnkPath);
@@ -22,6 +31,8 @@ SILVERAROWANACORE_API BOOL RemoveStartupRun(LPTSTR lpszPath);
 
 SILVERAROWANACORE_API BOOL GetStartupItems(byte* buffer, int nSizeTarget, int* count);
 std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey,HKEY hKeyRoot,LPCTSTR szRegPath, DWORD samDesired,BOOL bEnabled);
+BOOL InternalGetStartupItemFromFile(PSTARTUPITEM item, LPTSTR szFile);
+std::vector<STARTUPITEM> InternalGetStartupItemListFromShell();
 SILVERAROWANACORE_API BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath);
 SILVERAROWANACORE_API BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath);
 

@@ -108,6 +108,9 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
         totalVector.insert(totalVector.end(), list3_disable.begin(), list3_disable.end());
     }
 
+    auto list4 = InternalGetStartupItemListFromShell();
+    totalVector.insert(totalVector.end(), list4.begin(), list4.end());
+
     if (*count < totalVector.size())
         return FALSE;
 
@@ -184,6 +187,60 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hK
     }
 
     return lstStartup;
+}
+
+BOOL InternalGetStartupItemFromFile(PSTARTUPITEM item, LPTSTR szFile)
+{
+    /*item->bEnabled = TRUE;
+    LPTSTR szDescription = GetFileDescrption(szFile);
+    StringCchCopy(item->szDescription, MAX_VALUE_NAME, szDescription);
+    StringCchCopy(item->szDescription, MAX_VALUE_NAME, szFile);
+    item->type = STARTUPITEM_TYPE::ShellStartup;
+    if (GetFileNameWithoutExtension(&szFile))
+    {
+        StringCchCopy(item->szName, MAX_PATH, szFile);
+    }*/
+
+    return TRUE;
+}
+
+std::vector<STARTUPITEM> InternalGetStartupItemListFromShell()
+{
+    std::vector<STARTUPITEM> list;
+
+    LPITEMIDLIST pIdList;
+    HRESULT hr = SHGetSpecialFolderLocation(NULL, CSIDL_STARTUP, &pIdList);
+    if (FAILED(hr))
+        return list;
+    TCHAR szStartupPath[MAX_PATH]{};
+    SHGetPathFromIDList(pIdList, szStartupPath);
+    
+    std::wstring strSearchPattern = szStartupPath;
+    strSearchPattern += L"\\*.lnk";
+
+    WIN32_FIND_DATA find_data;
+    auto hFind = FindFirstFile(strSearchPattern.data(), &find_data);
+
+    if (INVALID_HANDLE_VALUE == hFind)
+    {
+        return list;
+    }
+
+    do
+    {
+        if (!(find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+        {
+            STARTUPITEM item;
+            StringCchCat(szStartupPath, MAX_PATH, find_data.cFileName);
+            if (InternalGetStartupItemFromFile(&item, szStartupPath))
+            {
+                list.push_back(item);
+            }
+        }
+
+    } while ( FindNextFile(hFind,&find_data) != 0);
+
+    FindClose(hFind);
 }
 
 BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath)

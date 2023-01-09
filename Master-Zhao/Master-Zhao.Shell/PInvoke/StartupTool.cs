@@ -22,6 +22,7 @@ namespace Master_Zhao.Shell.PInvoke
         public string szRegPath;
         public uint samDesired;
         public bool bEnabled;
+        public int type;
     }
     
 
