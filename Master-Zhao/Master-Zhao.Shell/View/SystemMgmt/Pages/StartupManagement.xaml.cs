@@ -67,6 +67,8 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                     continue;
 
                 startupItem.HKey = tagStartupItem.hKey;
+                startupItem.RegPath = tagStartupItem.szRegPath;
+                startupItem.SamDesired = tagStartupItem.samDesired;
                 startupItem.Path = tagStartupItem.szPath;
                 startupItem.Description = tagStartupItem.szDescription;
                 startupItem.IsEnabled = tagStartupItem.bEnabled;
@@ -109,7 +111,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             if(selectedItem != null)
             {
                 var startupItem = selectedItem.Content as StartupItem;
-                StartupTool.EnableStartupItem(startupItem.HKey, startupItem.Name, startupItem.Path);
+                ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-enable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath, startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
             }
         }
 
@@ -120,7 +122,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             if (selectedItem != null)
             {
                 var startupItem = selectedItem.Content as StartupItem;
-                StartupTool.DisableStartupItem(startupItem.HKey, startupItem.Name, startupItem.Path);
+                ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-disable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath,startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
             }
         }
     }

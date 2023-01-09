@@ -37,9 +37,9 @@ namespace Master_Zhao.Shell.PInvoke
         public static extern bool GetStartupItems(IntPtr buffer, int nSizeTarget, ref int count);
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern bool DisableStartupItem(IntPtr hKey, string szName, string szPath);
+        public static extern bool DisableStartupItem(IntPtr hKey, string szRegPath, uint samDesired, string szName, string szPath);
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern bool EnableStartupItem(IntPtr hKey, string szName, string szPath);
+        public static extern bool EnableStartupItem(IntPtr hKey, string szRegPath, uint samDesired, string szName, string szPath);
     }
 }

@@ -68,5 +68,22 @@ namespace Master_Zhao.Shell.Util
         {
             Execute("ms-settings:main");
         }
+
+        public async static void ExecuteAdminTask(string[] args, string adminTaskExePath = null)
+        {
+            if (string.IsNullOrEmpty(adminTaskExePath))
+                adminTaskExePath = Environment.CurrentDirectory + "\\Master-Zhao.AdminTask.exe";
+
+            if (System.IO.File.Exists(adminTaskExePath))
+            {
+                var process = Execute(adminTaskExePath, args);
+
+                if (process != null)
+                {
+                    await Task.Delay(1000);
+                    process.Kill();
+                }
+            }
+        }
     }
 }

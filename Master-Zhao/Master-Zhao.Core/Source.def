@@ -66,6 +66,8 @@ IsExistStartupRun
 CreateStartupRun
 RemoveStartupRun
 GetStartupItems
+DisableStartupItem
+EnableStartupItem
 
 ;inputtool.h
 GetRawInput
