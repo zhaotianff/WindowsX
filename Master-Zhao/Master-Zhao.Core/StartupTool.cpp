@@ -108,8 +108,41 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
         totalVector.insert(totalVector.end(), list3_disable.begin(), list3_disable.end());
     }
 
-    auto list4 = InternalGetStartupItemListFromShell();
-    totalVector.insert(totalVector.end(), list4.begin(), list4.end());
+    //current user run 
+    HKEY run_user_Key = NULL;
+    RegOpenKeyEx(HKEY_CURRENT_USER, RUN_USER_REGPATH, 0, KEY_READ, &run_user_Key);
+
+    if (run_user_Key)
+    {
+        auto list4 = InternalGetStartupItemList(run_user_Key, HKEY_CURRENT_USER, RUN_USER_REGPATH, KEY_READ , TRUE);
+        RegCloseKey(run_user_Key);
+        totalVector.insert(totalVector.end(), list4.begin(), list4.end());
+    }
+
+    HKEY run_user_Key_disable = NULL;
+    RegOpenKeyEx(HKEY_CURRENT_USER, RUN_USER_REGPATH_DISABLE, 0, KEY_READ, &run_user_Key_disable);
+
+    if (run_user_Key_disable)
+    {
+        auto list4_disable = InternalGetStartupItemList(run_user_Key_disable, HKEY_CURRENT_USER, RUN_USER_REGPATH_DISABLE, KEY_READ, FALSE);
+        RegCloseKey(run_user_Key_disable);
+        totalVector.insert(totalVector.end(), list4_disable.begin(), list4_disable.end());
+    }
+
+    TCHAR szStartupPath[MAX_PATH]{};
+    BOOL result = GetSpeicalFolder(CSIDL_STARTUP, szStartupPath);
+    if (result)
+    {
+        auto list5 = InternalGetStartupItemListFromShell(szStartupPath,TRUE);
+        totalVector.insert(totalVector.end(), list5.begin(), list5.end());
+
+        StringCchCat(szStartupPath, MAX_PATH, L"\\Disabled");
+        auto list6 = InternalGetStartupItemListFromShell(szStartupPath, FALSE);
+        totalVector.insert(totalVector.end(), list6.begin(), list6.end());
+
+        //TODO 
+        //disable & enable shell start up
+    }
 
     if (*count < totalVector.size())
         return FALSE;
@@ -191,30 +224,30 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hK
 
 BOOL InternalGetStartupItemFromFile(PSTARTUPITEM item, LPTSTR szFile)
 {
-    /*item->bEnabled = TRUE;
-    LPTSTR szDescription = GetFileDescrption(szFile);
-    StringCchCopy(item->szDescription, MAX_VALUE_NAME, szDescription);
-    StringCchCopy(item->szDescription, MAX_VALUE_NAME, szFile);
+    TCHAR szRealPath[MAX_PATH]{};
+    HRESULT hr =  GetShortcutPath(szFile, szRealPath, MAX_PATH);
+
+    if (FAILED(hr))
+        return FALSE;
+
+    LPTSTR szDescription = GetFileDescrption(szRealPath);
+
+    if(szDescription)
+        StringCchCopy(item->szDescription, MAX_VALUE_NAME, szDescription);
+
+    StringCchCopy(item->szPath, MAX_VALUE_NAME, szFile);
     item->type = STARTUPITEM_TYPE::ShellStartup;
     if (GetFileNameWithoutExtension(&szFile))
     {
         StringCchCopy(item->szName, MAX_PATH, szFile);
-    }*/
+    }
 
     return TRUE;
 }
 
-std::vector<STARTUPITEM> InternalGetStartupItemListFromShell()
+std::vector<STARTUPITEM> InternalGetStartupItemListFromShell(LPTSTR szStartupPath,BOOL isEnable)
 {
     std::vector<STARTUPITEM> list;
-
-    LPITEMIDLIST pIdList;
-    HRESULT hr = SHGetSpecialFolderLocation(NULL, CSIDL_STARTUP, &pIdList);
-    if (FAILED(hr))
-        return list;
-    TCHAR szStartupPath[MAX_PATH]{};
-    SHGetPathFromIDList(pIdList, szStartupPath);
-    
     std::wstring strSearchPattern = szStartupPath;
     strSearchPattern += L"\\*.lnk";
 
@@ -230,9 +263,15 @@ std::vector<STARTUPITEM> InternalGetStartupItemListFromShell()
     {
         if (!(find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
         {
-            STARTUPITEM item;
-            StringCchCat(szStartupPath, MAX_PATH, find_data.cFileName);
-            if (InternalGetStartupItemFromFile(&item, szStartupPath))
+            STARTUPITEM item{};
+            item.bEnabled = isEnable;
+
+            TCHAR szLnkPath[MAX_PATH]{};
+
+            StringCchCat(szLnkPath, MAX_PATH, szStartupPath);
+            StringCchCat(szLnkPath, MAX_PATH, L"\\");
+            StringCchCat(szLnkPath, MAX_PATH, find_data.cFileName);
+            if (InternalGetStartupItemFromFile(&item, szLnkPath))
             {
                 list.push_back(item);
             }
@@ -241,6 +280,8 @@ std::vector<STARTUPITEM> InternalGetStartupItemListFromShell()
     } while ( FindNextFile(hFind,&find_data) != 0);
 
     FindClose(hFind);
+
+    return list;
 }
 
 BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath)

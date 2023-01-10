@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -104,25 +105,27 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             }
         }
 
-        private void enable_Checked(object sender, RoutedEventArgs e)
+        private async void enable_Checked(object sender, RoutedEventArgs e)
         {
             var selectedItem = TreeHelper.FindParent<ListBoxItem>(sender as ToggleSwitch);
 
             if(selectedItem != null)
             {
                 var startupItem = selectedItem.Content as StartupItem;
-                ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-enable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath, startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
+                await ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-enable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath, startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
+                LoadStartUpItem();
             }
         }
 
-        private void disable_Checked(object sender, RoutedEventArgs e)
+        private async void disable_Checked(object sender, RoutedEventArgs e)
         {
             var selectedItem = TreeHelper.FindParent<ListBoxItem>(sender as ToggleSwitch);
 
             if (selectedItem != null)
             {
                 var startupItem = selectedItem.Content as StartupItem;
-                ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-disable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath,startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
+                await ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-disable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath,startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
+                LoadStartUpItem();
             }
         }
     }

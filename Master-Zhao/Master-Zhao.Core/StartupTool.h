@@ -32,7 +32,7 @@ SILVERAROWANACORE_API BOOL RemoveStartupRun(LPTSTR lpszPath);
 SILVERAROWANACORE_API BOOL GetStartupItems(byte* buffer, int nSizeTarget, int* count);
 std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey,HKEY hKeyRoot,LPCTSTR szRegPath, DWORD samDesired,BOOL bEnabled);
 BOOL InternalGetStartupItemFromFile(PSTARTUPITEM item, LPTSTR szFile);
-std::vector<STARTUPITEM> InternalGetStartupItemListFromShell();
+std::vector<STARTUPITEM> InternalGetStartupItemListFromShell(LPTSTR szStartupPath,BOOL isEnable);
 SILVERAROWANACORE_API BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath);
 SILVERAROWANACORE_API BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath);
 
@@ -40,6 +40,8 @@ SILVERAROWANACORE_API BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD 
 #define RUN_REGPATH_DISABLE LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Disabled)"
 #define RUN_ONCE_REGPATH LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce)"
 #define RUN_ONCE_REGPATH_DISABLE LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\Disabled)"
+#define RUN_USER_REGPATH LR"(Software\Microsoft\Windows\CurrentVersion\Run)"
+#define RUN_USER_REGPATH_DISABLE LR"(Software\Microsoft\Windows\CurrentVersion\Run\Disabled)"
 
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
 //HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run

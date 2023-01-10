@@ -29,6 +29,8 @@ namespace MasterZhaoCoreTests
 
 			GetStartupItems(buffer, size, &count);
 
+			buffer += sizeof(tagSTARTUPITEM) * 1;
+
 			tagSTARTUPITEM* item = (tagSTARTUPITEM*)buffer;
 
 			auto result = DisableStartupItem(item->hKey, item->szRegPath, item->samDesired, item->szName, item->szPath);

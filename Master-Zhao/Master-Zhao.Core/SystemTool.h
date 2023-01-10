@@ -64,4 +64,6 @@ LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key);
 VOID MakeFullPath(LPCWSTR pszPath, LPTSTR szFullPath, DWORD nFullPathSize);
 
 SILVERAROWANACORE_API LPTSTR GetFileDescrption(LPTSTR pszFilePath);
+SILVERAROWANACORE_API HRESULT GetShortcutPath(LPTSTR szLnkPath, LPTSTR szAbsoluatePath, DWORD nBufferSize);
+SILVERAROWANACORE_API BOOL GetSpeicalFolder(DWORD csidl, LPTSTR szBuffer);
 

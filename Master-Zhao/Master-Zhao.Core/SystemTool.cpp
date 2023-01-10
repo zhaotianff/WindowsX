@@ -447,6 +447,42 @@ LPTSTR GetFileDescrption(LPTSTR pszFilePath)
 	return pszDescription;
 }
 
+HRESULT GetShortcutPath(LPTSTR szLnkPath, LPTSTR szAbsoluatePath, DWORD nBufferSize)
+{
+	IShellLink* psl;
+
+	HRESULT hr = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
+	if (SUCCEEDED(hr))
+	{
+		IPersistFile* ppf;
+
+		hr = psl->QueryInterface(IID_IPersistFile, (void**)&ppf);
+
+		if (SUCCEEDED(hr))
+		{
+			hr = ppf->Load(szLnkPath, STGM_READ);
+
+			if (SUCCEEDED(hr))
+			{
+				hr = psl->GetPath(szAbsoluatePath, MAX_PATH, NULL, SLGP_SHORTPATH);
+			}
+			ppf->Release();
+		}
+		psl->Release();
+	}
+	return hr;
+}
+
+BOOL GetSpeicalFolder(DWORD csidl, LPTSTR szBuffer)
+{
+	LPITEMIDLIST pIdList;
+	HRESULT hr = SHGetSpecialFolderLocation(NULL, csidl, &pIdList);
+	if (FAILED(hr))
+		return FALSE;
+	return SHGetPathFromIDList(pIdList, szBuffer);
+}
+
+
 LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key)
 {
 	CComPtr<IShellItem2> pItem;
