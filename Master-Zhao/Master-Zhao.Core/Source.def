@@ -67,7 +67,9 @@ CreateStartupRun
 RemoveStartupRun
 GetStartupItems
 DisableStartupItem
+DisableShellStartupItem
 EnableStartupItem
+EnableShellStartupItem
 
 ;inputtool.h
 GetRawInput

@@ -73,7 +73,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 startupItem.Path = tagStartupItem.szPath;
                 startupItem.Description = tagStartupItem.szDescription;
                 startupItem.IsEnabled = tagStartupItem.bEnabled;
-                startupItem.StartupItemType = StartupItemType.Registry;
+                startupItem.StartupItemType = (StartupItemType)tagStartupItem.type;
                 startupItemList.Add(startupItem);
             }
 
@@ -105,28 +105,59 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             }
         }
 
-        private async void enable_Checked(object sender, RoutedEventArgs e)
+        private void enable_Checked(object sender, RoutedEventArgs e)
         {
             var selectedItem = TreeHelper.FindParent<ListBoxItem>(sender as ToggleSwitch);
 
             if(selectedItem != null)
             {
                 var startupItem = selectedItem.Content as StartupItem;
-                await ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-enable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath, startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
-                LoadStartUpItem();
+                EnableStartupItem(startupItem);
             }
         }
 
-        private async void disable_Checked(object sender, RoutedEventArgs e)
+        private void disable_Checked(object sender, RoutedEventArgs e)
         {
             var selectedItem = TreeHelper.FindParent<ListBoxItem>(sender as ToggleSwitch);
 
             if (selectedItem != null)
             {
                 var startupItem = selectedItem.Content as StartupItem;
-                await ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-disable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath,startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
-                LoadStartUpItem();
+                DisableStartupItem(startupItem);
             }
+        }
+
+        private async void EnableStartupItem(StartupItem startupItem)
+        {
+            if (startupItem == null)
+                return;
+
+            if(startupItem.StartupItemType == StartupItemType.Registry)
+            {
+                await ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-enable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath, startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
+            }
+            else if(startupItem.StartupItemType == StartupItemType.ShellStartup)
+            {
+                StartupTool.EnableShellStartupItem(startupItem.Name, startupItem.Path);
+            }
+            
+            LoadStartUpItem();
+        }
+
+        private async void DisableStartupItem(StartupItem startupItem)
+        {
+            if (startupItem == null)
+                return;
+
+            if(startupItem.StartupItemType == StartupItemType.Registry)
+            {
+                await ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-disable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath, startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
+            }
+            else if(startupItem.StartupItemType == StartupItemType.ShellStartup)
+            {
+                StartupTool.DisableShellStartupItem(startupItem.Name, startupItem.Path);
+            }
+            LoadStartUpItem();
         }
     }
 }

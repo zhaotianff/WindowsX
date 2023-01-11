@@ -56,5 +56,47 @@ namespace MasterZhaoCoreTests
 
 			Assert::IsTrue(result);
 		}
+
+		TEST_METHOD(TestDisableShellStartupItem)
+		{
+			int count = 10;
+			int size = sizeof(tagSTARTUPITEM) * count;
+			byte* buffer = new byte[size];
+
+			GetStartupItems(buffer, size, &count);
+
+			auto tempBuffer = buffer;
+
+			tempBuffer += sizeof(tagSTARTUPITEM) * 2;
+
+			tagSTARTUPITEM* item = (tagSTARTUPITEM*)tempBuffer;
+
+			auto result = DisableShellStartupItem(item->szName, item->szPath);
+
+			delete[] buffer;
+
+			Assert::IsTrue(result);
+		}
+
+		TEST_METHOD(TestEnableShellStartupItem)
+		{
+			int count = 10;
+			int size = sizeof(tagSTARTUPITEM) * count;
+			byte* buffer = new byte[size];
+
+			GetStartupItems(buffer, size, &count);
+
+			auto tempBuffer = buffer;
+
+			tempBuffer += sizeof(tagSTARTUPITEM) * 2;
+
+			tagSTARTUPITEM* item = (tagSTARTUPITEM*)tempBuffer;
+
+		    auto result = EnableShellStartupItem(item->szName, item->szPath);
+
+			delete[] buffer;
+
+			Assert::IsTrue(result);
+		}
 	};
 }

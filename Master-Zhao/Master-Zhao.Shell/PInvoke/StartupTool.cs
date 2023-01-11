@@ -42,5 +42,11 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool EnableStartupItem(IntPtr hKey, string szRegPath, uint samDesired, string szName, string szPath);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool DisableShellStartupItem([MarshalAs(UnmanagedType.LPWStr)]string szName, [MarshalAs(UnmanagedType.LPWStr)]string szPath);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool EnableShellStartupItem([MarshalAs(UnmanagedType.LPWStr)] string szName, [MarshalAs(UnmanagedType.LPWStr)] string szPath);
     }
 }

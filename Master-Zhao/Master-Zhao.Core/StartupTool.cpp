@@ -213,6 +213,7 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hK
                 StringCchCopy(item.szRegPath, MAX_VALUE_NAME, szRegPath);
                 item.samDesired = samDesired;
                 item.bEnabled = bEnabled;
+                item.type = STARTUPITEM_TYPE::Registry;
 
                 lstStartup.push_back(item);
             }
@@ -308,6 +309,16 @@ BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR sz
     return bCreate && bRemove;
 }
 
+BOOL DisableShellStartupItem(LPTSTR szName, LPTSTR szPath)
+{
+    TCHAR szDisabledPath[MAX_PATH]{};
+    GetSpeicalFolder(CSIDL_STARTUP, szDisabledPath);
+    StringCchCat(szDisabledPath, MAX_PATH, L"\\Disabled\\");
+    StringCchCat(szDisabledPath, MAX_PATH, szName);
+    StringCchCat(szDisabledPath, MAX_PATH, L".lnk");
+    return MoveFile(szPath, szDisabledPath);
+}
+
 BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath)
 {
     std::wstring strEnabledPath = szRegPath;
@@ -325,4 +336,14 @@ BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szN
     BOOL bRemove = RemovRegValue(hKey, szRegPath, szName);
 
     return bCreate && bRemove;
+}
+
+BOOL EnableShellStartupItem(LPTSTR szName, LPTSTR szPath)
+{
+    TCHAR szEnabledPath[MAX_PATH]{};
+    GetSpeicalFolder(CSIDL_STARTUP, szEnabledPath);
+    StringCchCat(szEnabledPath, MAX_PATH, L"\\");
+    StringCchCat(szEnabledPath, MAX_PATH, szName);
+    StringCchCat(szEnabledPath, MAX_PATH, L".lnk");
+    return MoveFile(szPath, szEnabledPath);
 }

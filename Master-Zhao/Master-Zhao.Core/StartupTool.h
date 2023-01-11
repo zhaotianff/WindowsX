@@ -34,7 +34,9 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey,HKEY hKe
 BOOL InternalGetStartupItemFromFile(PSTARTUPITEM item, LPTSTR szFile);
 std::vector<STARTUPITEM> InternalGetStartupItemListFromShell(LPTSTR szStartupPath,BOOL isEnable);
 SILVERAROWANACORE_API BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath);
+SILVERAROWANACORE_API BOOL DisableShellStartupItem(LPTSTR szName, LPTSTR szPath);
 SILVERAROWANACORE_API BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath);
+SILVERAROWANACORE_API BOOL EnableShellStartupItem(LPTSTR szName, LPTSTR szPath);
 
 #define RUN_REGPATH LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)"
 #define RUN_REGPATH_DISABLE LR"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Disabled)"
