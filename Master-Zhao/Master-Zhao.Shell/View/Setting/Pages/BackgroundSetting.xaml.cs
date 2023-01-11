@@ -1,4 +1,6 @@
 ﻿using Master_Zhao.Config;
+using Master_Zhao.Config.Helper;
+using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -58,16 +60,22 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             isBackgroundLoaded = true;
         }
 
-        private void AppendBackgroundItem(Brush brush)
+        private FrameworkElement AppendBackgroundItem(Brush brush)
         {
             Rectangle rectangle = new Rectangle();
             rectangle.Margin = new Thickness(10);
             rectangle.Fill = brush;
             rectangle.MouseDown += Setbackground_MouseDown;
             this.wrap.Children.Add(rectangle);
+            return rectangle;
         }
 
         private void Setbackground_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetBackground(sender);
+        }
+
+        private void SetBackground(object sender)
         {
             var mainWindow = Application.Current.MainWindow;
             mainWindow.Background = (sender as Rectangle).Fill;
@@ -76,7 +84,7 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             doubleAnimation.From = 0;
             doubleAnimation.To = 1;
 
-            if(mainWindow.Background is ImageBrush)
+            if (mainWindow.Background is ImageBrush)
             {
                 mainWindow.Background.BeginAnimation(Brush.OpacityProperty, doubleAnimation);
             }
@@ -89,6 +97,19 @@ namespace Master_Zhao.Shell.View.Setting.Pages
         {
             Application.Current.MainWindow.Background.Opacity = e.NewValue;
             GlobalConfig.Instance.MainConfig.BackgroundSetting.Opacity = (float)e.NewValue;
+        }
+
+        private void btn_BrowseImage(object sender, RoutedEventArgs e)
+        {
+            var file = DialogHelper.BrowserSingleFile("图片文件|*.jpg;*.png;*.bmp;*.tiff");
+
+            if (string.IsNullOrEmpty(file))
+                return;
+
+            var backgroundImageList = GlobalConfig.Instance.MainConfig.BackgroundSetting.LocalImages;
+            backgroundImageList.Add(file);
+            var rect = AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri(file, UriKind.Absolute)), Stretch = Stretch.UniformToFill });
+            SetBackground(rect);
         }
     }
 }

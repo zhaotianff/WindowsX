@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition/>
-            <RowDefinition Height="75"/>
+            <RowDefinition Height="85"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -34,8 +34,10 @@
         </WrapPanel>
 
         <DockPanel  Grid.Row="2" LastChildFill="False">
-            <Slider Width="120" VerticalAlignment="Center" DockPanel.Dock="Right"  Name="slider_Opacity" Minimum="0" Maximum="1" TickFrequency="0.01" IsSnapToTickEnabled="True" ValueChanged="slider_Opacity_ValueChanged"/>
-            <Label Content="背景透明度" VerticalAlignment="Center" DockPanel.Dock="Right"></Label>
+            <Label Content="背景透明度" VerticalAlignment="Center" DockPanel.Dock="Left"></Label>
+            <Slider Width="120" VerticalAlignment="Center" DockPanel.Dock="Left"  Name="slider_Opacity" Minimum="0" Maximum="1" TickFrequency="0.01" IsSnapToTickEnabled="True" ValueChanged="slider_Opacity_ValueChanged"/>
+
+            <Button Content="自定义背景" DockPanel.Dock="Right" VerticalAlignment="Center" Height="28" Width="88" Margin="0,0,10,0" Style="{StaticResource ButtonStyle}" Click="btn_BrowseImage"/>
         </DockPanel>
     </Grid>
 </Page>
