@@ -1,5 +1,6 @@
 ﻿using Master_Zhao.Config;
 using Master_Zhao.Config.Helper;
+using Master_Zhao.Shell.Controls.UserControls;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,12 @@ namespace Master_Zhao.Shell.View.Setting.Pages
         public BackgroundSetting()
         {
             InitializeComponent();
+        }
+
+        public void Load()
+        {
+            LoadBackground();
+            LoadTheme();
         }
 
         public void LoadBackground()
@@ -58,6 +65,35 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             this.slider_Opacity.Value = backgroundConfig.Opacity;
 
             isBackgroundLoaded = true;
+        }
+
+        public void LoadTheme()
+        {
+            //temp
+            ThemeControl themeControl = new ThemeControl();
+            themeControl.ColorBrush = System.Windows.Media.Brushes.Silver;
+            themeControl.Margin = new Thickness(10);
+            themeControl.Title = "默认";
+            themeControl.ThemeFile = "pack://application:,,,/Themes/Default.xaml";
+            themeControl.MouseDown += ThemeControl_MouseDown;
+
+            ThemeControl themeControl2 = new ThemeControl();
+            themeControl2.ColorBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#39375B")); ;
+            themeControl2.Margin = new Thickness(10);
+            themeControl2.Title = "深色";
+            themeControl2.ThemeFile = "pack://application:,,,/Themes/Night1.xaml";
+            themeControl2.MouseDown += ThemeControl_MouseDown;
+
+            this.wrap_theme.Children.Clear();
+            this.wrap_theme.Children.Add(themeControl);
+            this.wrap_theme.Children.Add(themeControl2);
+        }
+
+        private void ThemeControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var themeControl = sender as ThemeControl;
+            var rd = Application.Current.Resources.MergedDictionaries[1];
+            rd.Source = new Uri(themeControl.ThemeFile, UriKind.Absolute);
         }
 
         private FrameworkElement AppendBackgroundItem(Brush brush)

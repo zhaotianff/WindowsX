@@ -21,6 +21,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
             <RowDefinition Height="85"/>
         </Grid.RowDefinitions>
@@ -33,7 +35,15 @@
            
         </WrapPanel>
 
-        <DockPanel  Grid.Row="2" LastChildFill="False">
+        <Grid Grid.Row="2">
+            <Label Content="主题颜色设置" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22"/>
+        </Grid>
+
+        <WrapPanel Grid.Row="3" Name="wrap_theme">
+
+        </WrapPanel>
+
+        <DockPanel  Grid.Row="5" LastChildFill="False">
             <Label Content="背景透明度" VerticalAlignment="Center" DockPanel.Dock="Left"></Label>
             <Slider Width="120" VerticalAlignment="Center" DockPanel.Dock="Left"  Name="slider_Opacity" Minimum="0" Maximum="1" TickFrequency="0.01" IsSnapToTickEnabled="True" ValueChanged="slider_Opacity_ValueChanged"/>
 
