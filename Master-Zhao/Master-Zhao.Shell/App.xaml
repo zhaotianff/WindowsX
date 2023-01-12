@@ -5,7 +5,10 @@
              StartupUri="MainWindow.xaml" Startup="Application_Startup" DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <!--default startup-->
     <!--MainWindow.xaml-->
-    
+
+    <!--Test startup-->
+    <!--TestWindow.xaml-->
+
     <!--fast run test-->
     <!--Windows/FastRun.xaml-->
     

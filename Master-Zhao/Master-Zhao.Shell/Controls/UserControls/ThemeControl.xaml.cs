@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -19,7 +20,7 @@ namespace Master_Zhao.Shell.Controls.UserControls
     /// </summary>
     public partial class ThemeControl : UserControl
     {
-        public static readonly DependencyProperty ImagePathProperty = DependencyProperty.Register("ImagePath", typeof(string), typeof(ThemeControl));
+        public static readonly DependencyProperty ImagePathProperty = DependencyProperty.Register("ImagePath", typeof(string), typeof(ThemeControl),new PropertyMetadata(OnImagePathChanged));
         public static readonly DependencyProperty ColorBrushProperty = DependencyProperty.Register("ColorBrush", typeof(Brush), typeof(ThemeControl));
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ThemeControl));
         public static readonly DependencyProperty ThemeFileProperty = DependencyProperty.Register("ThemeFile", typeof(string), typeof(ThemeControl));
@@ -28,12 +29,8 @@ namespace Master_Zhao.Shell.Controls.UserControls
         public string ImagePath
         {
             get => GetValue(ImagePathProperty).ToString();
-            set
-            {
-                SetValue(ImagePathProperty, value);
-                this.image.Source = new BitmapImage(new Uri(value, UriKind.Absolute));
-                this.rect.Visibility = Visibility.Hidden;
-            }
+            set => SetValue(ImagePathProperty, value);
+            
         }
 
         public Brush ColorBrush
@@ -77,6 +74,24 @@ namespace Master_Zhao.Shell.Controls.UserControls
         {
             InitializeComponent();
             this.Cursor = Cursors.Hand;
+        }
+
+        private static void OnImagePathChanged(DependencyObject d,DependencyPropertyChangedEventArgs args)
+        {
+            var themeControl = d as ThemeControl;
+            themeControl.image.Source = new BitmapImage(new Uri(themeControl.ImagePath, UriKind.Absolute));
+            themeControl.rect.Visibility = Visibility.Hidden;
+        }
+
+        private void Border_MouseEnter(object sender, MouseEventArgs e)
+        {
+            border.Background = new SolidColorBrush(Color.FromRgb(0,0,0));
+            border.Background.Opacity = 0.1f;
+        }
+
+        private void Border_MouseLeave(object sender, MouseEventArgs e)
+        {
+            border.Background = Brushes.Transparent;
         }
     }
 }
