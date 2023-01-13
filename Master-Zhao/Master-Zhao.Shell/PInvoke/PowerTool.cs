@@ -11,6 +11,9 @@ namespace Master_Zhao.Shell.PInvoke
         public static extern void Shutdown();
 
         [DllImport("MasterZhaoCore.dll")]
+        public static extern void ShowShutDownDialog();
+
+        [DllImport("MasterZhaoCore.dll")]
         public static extern void SwitchUser();
 
         [DllImport("MasterZhaoCore.dll")]

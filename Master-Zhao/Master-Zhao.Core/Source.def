@@ -82,3 +82,6 @@ SendSearch
 ;icontool.h
 ExtractIconFromFile
 ExtractFirstIconFromFile
+
+;powertool.h
+ShowShutDownDialog

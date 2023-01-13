@@ -30,6 +30,9 @@
     <ClCompile Include="RegToolTests.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="PowerToolTests.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

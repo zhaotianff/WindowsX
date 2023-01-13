@@ -107,6 +107,11 @@ namespace Master_Zhao.Shell.StartMenu
             PowerTool.Shutdown();
         }
 
+        public void ShowShutDownDialog(object sender,RoutedEventArgs e)
+        {
+            PowerTool.ShowShutDownDialog();
+        }
+
         public void SwitchUser(object sender,RoutedEventArgs e)
         {
             PowerTool.SwitchUser();

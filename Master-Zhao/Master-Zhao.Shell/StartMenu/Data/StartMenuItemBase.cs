@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Master_Zhao.Shell.StartMenu.Data
@@ -13,6 +14,7 @@ namespace Master_Zhao.Shell.StartMenu.Data
         public BitmapSource ImageSourceIcon { get; set; }
         public string FilePathIcon { get; set; }
         public string Exec { get; set; }
+        public RoutedEventHandler Handler { get; set; }
         public List<StartMenuItemBase> Child { get; set; } = new List<StartMenuItemBase>();
         public bool IsSeperator => Name == "/";
 

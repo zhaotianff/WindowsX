@@ -118,6 +118,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             //Shutdown
             Win98StartMenuItem shutdownItem = new Win98StartMenuItem();
             shutdownItem.Name = "关机";
+            shutdownItem.Handler = ShowShutDownDialog;
             shutdownItem.FilePathIcon = "./Icon/shutdown.png";
             list.Add(shutdownItem);
 
@@ -207,7 +208,15 @@ namespace Master_Zhao.Shell.StartMenu.Win98
                 if (startMenuItem.Child.Count == 0)
                 {
                     StartMenuManager.HideStartMenu();
-                    ProcessHelper.Execute(startMenuItem?.Exec);
+
+                    if (startMenuItem.Handler != null)
+                    {
+                        startMenuItem.Handler.Invoke(sender, e);
+                    }
+                    else
+                    {
+                        ProcessHelper.Execute(startMenuItem?.Exec);
+                    }
                 }
             }
         }
