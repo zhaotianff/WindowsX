@@ -4,6 +4,7 @@ using Master_Zhao.Shell.Controls.UserControls;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Master_Zhao.Shell.View.Setting.Pages
 {
@@ -44,22 +44,20 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             var backgroundConfig = GlobalConfig.Instance.MainConfig.BackgroundSetting;
             for(int i = 0;i<backgroundConfig.Colors.Count;i++)
             {
-                AppendBackgroundItem(new SolidColorBrush((Color)ColorConverter.ConvertFromString(backgroundConfig.Colors[i])));
+                AppendBackgroundItem(colorStr: backgroundConfig.Colors[i], title: backgroundConfig.Colors[i]);
             }
             for(int i = 0;i<backgroundConfig.ResourceImages.Count;i++)
             {
-                //DrawingBrush DrawingImage
-                AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri($"pack://application:,,,/{backgroundConfig.ResourceImages[i]}")) ,Stretch = Stretch.UniformToFill});
+                AppendBackgroundItem($"pack://application:,,,/{backgroundConfig.ResourceImages[i]}", title: $"预置{i + 1}");
             }
             for (int i = 0; i < backgroundConfig.LocalImages.Count; i++)
             {
-                //DrawingBrush DrawingImage
                 var imagePath = backgroundConfig.LocalImages[i];
 
                 if (System.IO.File.Exists(imagePath) == false)
                     continue;
 
-                AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri(backgroundConfig.LocalImages[i], UriKind.Absolute)),Stretch = Stretch.UniformToFill });
+                AppendBackgroundItem(imagePath, title: Path.GetFileNameWithoutExtension(imagePath));
             }
 
             this.slider_Opacity.Value = backgroundConfig.Opacity;
@@ -96,14 +94,24 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             rd.Source = new Uri(themeControl.ThemeFile, UriKind.Absolute);
         }
 
-        private FrameworkElement AppendBackgroundItem(Brush brush)
+        private ThemeControl AppendBackgroundItem(string imagePath = "",string colorStr = "",string title = "")
         {
-            Rectangle rectangle = new Rectangle();
-            rectangle.Margin = new Thickness(10);
-            rectangle.Fill = brush;
-            rectangle.MouseDown += Setbackground_MouseDown;
-            this.wrap.Children.Add(rectangle);
-            return rectangle;
+            ThemeControl themeControl = new ThemeControl();
+            if (!string.IsNullOrEmpty(imagePath))
+            {
+                themeControl.Stretch = Stretch.UniformToFill;
+                themeControl.ImagePath = imagePath;
+            }
+
+            if (!string.IsNullOrEmpty(colorStr))
+                themeControl.ColorBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colorStr));
+
+            themeControl.Margin = new Thickness(10);
+            themeControl.Title = title;
+            themeControl.MouseDown += Setbackground_MouseDown;
+
+            this.wrap.Children.Add(themeControl);
+            return themeControl;
         }
 
         private void Setbackground_MouseDown(object sender, MouseButtonEventArgs e)
@@ -113,20 +121,36 @@ namespace Master_Zhao.Shell.View.Setting.Pages
 
         private void SetBackground(object sender)
         {
-            var mainWindow = Application.Current.MainWindow;
-            mainWindow.Background = (sender as Rectangle).Fill;
-            DoubleAnimation doubleAnimation = new DoubleAnimation();
-            doubleAnimation.Duration = TimeSpan.FromSeconds(2);
-            doubleAnimation.From = 0;
-            doubleAnimation.To = 1;
+            var themeControl = sender as ThemeControl;
 
+            var mainWindow = Application.Current.MainWindow;
+
+            if(!string.IsNullOrEmpty(themeControl.ImagePath))
+            {
+                mainWindow.Background = new ImageBrush() { ImageSource = new BitmapImage(new Uri(themeControl.ImagePath, UriKind.Absolute)), Opacity = this.slider_Opacity.Value, Stretch = themeControl.Stretch };
+            }
+            else
+            {
+                mainWindow.Background = themeControl.ColorBrush;
+            }
+            
             if (mainWindow.Background is ImageBrush)
             {
+                DoubleAnimation doubleAnimation = new DoubleAnimation();
+                doubleAnimation.Duration = TimeSpan.FromSeconds(2);
+                doubleAnimation.From = 0;
+                doubleAnimation.To = this.slider_Opacity.Value;
+                doubleAnimation.Completed += DoubleAnimation_Completed;
                 mainWindow.Background.BeginAnimation(Brush.OpacityProperty, doubleAnimation);
             }
 
-            var index = this.wrap.Children.IndexOf(sender as Rectangle);
+            var index = this.wrap.Children.IndexOf(themeControl);
             GlobalConfig.Instance.MainConfig.BackgroundSetting.Index = index;
+        }
+
+        private void DoubleAnimation_Completed(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow.Background.BeginAnimation(Brush.OpacityProperty, null);
         }
 
         private void slider_Opacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -144,7 +168,7 @@ namespace Master_Zhao.Shell.View.Setting.Pages
 
             var backgroundImageList = GlobalConfig.Instance.MainConfig.BackgroundSetting.LocalImages;
             backgroundImageList.Add(file);
-            var rect = AppendBackgroundItem(new ImageBrush() { ImageSource = new BitmapImage(new Uri(file, UriKind.Absolute)), Stretch = Stretch.UniformToFill });
+            var rect = AppendBackgroundItem(file,title:System.IO.Path.GetFileNameWithoutExtension(file));
             SetBackground(rect);
         }
     }

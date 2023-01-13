@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -28,7 +29,7 @@ namespace Master_Zhao.Shell.Controls.UserControls
 
         public string ImagePath
         {
-            get => GetValue(ImagePathProperty).ToString();
+            get => (string)GetValue(ImagePathProperty);
             set => SetValue(ImagePathProperty, value);
             
         }
@@ -85,13 +86,18 @@ namespace Master_Zhao.Shell.Controls.UserControls
 
         private void Border_MouseEnter(object sender, MouseEventArgs e)
         {
-            border.Background = new SolidColorBrush(Color.FromRgb(0,0,0));
-            border.Background.Opacity = 0.1f;
+            DoubleAnimation opacityAnimation = new DoubleAnimation();
+            opacityAnimation.To = 0.3f;
+            opacityAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            border.Background.BeginAnimation(Brush.OpacityProperty, opacityAnimation);
         }
 
         private void Border_MouseLeave(object sender, MouseEventArgs e)
         {
-            border.Background = Brushes.Transparent;
+            DoubleAnimation opacityAnimation = new DoubleAnimation();
+            opacityAnimation.To = 0f;
+            opacityAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            border.Background.BeginAnimation(Brush.OpacityProperty, opacityAnimation);
         }
     }
 }
