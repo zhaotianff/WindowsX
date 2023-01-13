@@ -104,7 +104,7 @@ namespace Master_Zhao.Shell.StartMenu
 
         public void Shutdown(object sender,RoutedEventArgs e)
         {
-            PowerTool.Shutdown();
+            PowerTool.ShutdownComputer();
         }
 
         public void ShowShutDownDialog(object sender,RoutedEventArgs e)
@@ -122,19 +122,24 @@ namespace Master_Zhao.Shell.StartMenu
             PowerTool.Logoff();
         }
 
+        public void Run(object sender,RoutedEventArgs e)
+        {
+            PowerTool.ShowRunDialog();
+        }
+
         public void Lock(object sender, RoutedEventArgs e)
         {
-            PowerTool.Lock();
+            PowerTool.LockComputer();
         }
 
         public void Restart(object sender, RoutedEventArgs e)
         {
-            PowerTool.Restart();
+            PowerTool.RestartComputer();
         }
 
         public void Sleep(object sender, RoutedEventArgs e)
         {
-            PowerTool.Sleep();
+            PowerTool.SleepComputer();
         }
     }
 }

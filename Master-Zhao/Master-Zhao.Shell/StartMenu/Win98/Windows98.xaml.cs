@@ -102,8 +102,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             //Run
             Win98StartMenuItem runItem = new Win98StartMenuItem();
             runItem.Name = "运行";
-            //TODO win+r
-            runItem.Exec = "";
+            runItem.Handler = Run;
             runItem.FilePathIcon = "./Icon/run.png";
             list.Add(runItem);
 
@@ -113,6 +112,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             Win98StartMenuItem logoffItem = new Win98StartMenuItem();
             logoffItem.Name = "注销";
             logoffItem.FilePathIcon = "./Icon/logoff.png";
+            logoffItem.Handler = Logoff;
             list.Add(logoffItem);
 
             //Shutdown

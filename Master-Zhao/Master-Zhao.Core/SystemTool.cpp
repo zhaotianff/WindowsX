@@ -204,37 +204,6 @@ BOOL ForceDeleteFile(LPTSTR lpszFilePah)
 	return bResult;
 }
 
-VOID Shutdown()
-{
-	//InitiateSystemShutdownEx(NULL, NULL, 0, FALSE, FALSE, SHTDN_REASON_MINOR_PROCESSOR);
-	system("shutdown -s -t 0");
-}
-
-VOID SwitchUser()
-{
-	WTSDisconnectSession(WTS_CURRENT_SERVER_HANDLE, WTS_CURRENT_SESSION, FALSE);
-}
-
-VOID Logoff()
-{
-	ExitWindows();
-}
-
-VOID Lock()
-{
-	LockWorkStation();
-}
-
-VOID Restart()
-{
-	ExitWindowsEx(EWX_REBOOT, SHTDN_REASON_MINOR_PROCESSOR);
-}
-
-VOID Sleep()
-{
-	SetSuspendState(FALSE, FALSE, TRUE);
-}
-
 LRESULT WINAPI KbLLProc(int code, WPARAM wParam, LPARAM lParam)
 {
 	PKBDLLHOOKSTRUCT pKb = NULL;

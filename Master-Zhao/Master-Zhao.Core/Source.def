@@ -85,3 +85,10 @@ ExtractFirstIconFromFile
 
 ;powertool.h
 ShowShutDownDialog
+Logoff
+ShutdownComputer
+SwitchUser
+LockComputer
+RestartComputer
+SleepComputer
+ShowRunDialog
