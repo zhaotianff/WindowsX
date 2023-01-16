@@ -127,6 +127,11 @@ namespace Master_Zhao.Shell.StartMenu
             PowerTool.ShowRunDialog();
         }
 
+        public void ShowHelp(object sender,RoutedEventArgs e)
+        {
+            DesktopTool.OpenWindowsHelp();
+        }
+
         public void Lock(object sender, RoutedEventArgs e)
         {
             PowerTool.LockComputer();

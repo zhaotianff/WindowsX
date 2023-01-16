@@ -54,7 +54,7 @@
                                        FontSize="12" />
 
                                 <Popup x:Name="SubMenuPopup" AllowsTransparency="true" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" 
-                                        Placement="Right"  Focusable="false" VerticalOffset="0" HorizontalOffset="0"
+                                        Placement="Right"  Focusable="false" VerticalOffset="0" HorizontalOffset="2"
                                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" PlacementTarget="{Binding ElementName=border}">
                                     <Border Background="{TemplateBinding Background}"  CornerRadius="0" Margin="0"
                                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
@@ -157,8 +157,8 @@
         </Grid>
 
         <Grid Grid.Column="1" Name="grid_menu">
-            <StackPanel Name="menu" Background="{DynamicResource ActiveBorder}">
-            </StackPanel>
+            <Menu Name="menu" Background="{DynamicResource ActiveBorder}">
+            </Menu>
         </Grid>
     </Grid>
 </start:StartMenuWindowBase>

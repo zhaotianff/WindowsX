@@ -202,6 +202,16 @@ VOID OpenFileProperty(LPCTSTR lpszFile)
 	ShellExecuteEx(&shellInfo);
 }
 
+VOID OpenWindowsHelp()
+{
+	SHELLEXECUTEINFO shellInfo{};
+	shellInfo.cbSize = sizeof(shellInfo);
+	shellInfo.lpVerb = L"open";
+	shellInfo.lpFile = L"https://support.microsoft.com/home/contact";
+	shellInfo.fMask = SEE_MASK_INVOKEIDLIST;
+	ShellExecuteEx(&shellInfo);
+}
+
 BOOL CloseEmbedWindow()
 {
 	if (hEmbedHwnd)

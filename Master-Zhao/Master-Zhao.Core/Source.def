@@ -41,6 +41,7 @@ CanAddToTaskBar
 GetProcessNameFomrHwnd
 SelectFile
 OpenFileProperty
+OpenWindowsHelp
 
 EmbedWindowToDesktop
 RestartExplorer

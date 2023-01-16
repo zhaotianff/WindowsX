@@ -95,7 +95,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             Win98StartMenuItem helpItem = new Win98StartMenuItem();
             helpItem.Name = "帮助";
             //TODO f1
-            helpItem.Exec = "";
+            helpItem.Handler = ShowHelp;
             helpItem.FilePathIcon = "./Icon/help.png";
             list.Add(helpItem);
 
@@ -140,7 +140,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
                         separator.Width = this.menu.Width;
 
                         if (subMenu == null)
-                            this.menu.Children.Add(separator);
+                            this.menu.Items.Add(separator);
                         else
                             subMenu.Items.Add(separator);
                         continue;
@@ -149,7 +149,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
                     var item = GetMenuItem(menuItem,subMenu);
 
                     if (subMenu == null)
-                        this.menu.Children.Add(item);
+                        this.menu.Items.Add(item);
                     else
                         subMenu.Items.Add(item);
                 }
@@ -158,7 +158,7 @@ namespace Master_Zhao.Shell.StartMenu.Win98
                     var item = GetMenuItem(menuItem,subMenu);
 
                     if (subMenu == null)
-                        this.menu.Children.Add(item);
+                        this.menu.Items.Add(item);
                     else
                         subMenu.Items.Add(item);
 
@@ -193,6 +193,12 @@ namespace Master_Zhao.Shell.StartMenu.Win98
             item.HorizontalAlignment = HorizontalAlignment.Left;
             item.VerticalAlignment = VerticalAlignment.Center;
             item.Click += menuItem_Click;
+
+            //TODO
+            if(menuItem.Name == "程序")
+            {
+                item.MouseEnter += (a, b) => { item.IsSubmenuOpen = true; };
+            }
 
             return item;
         }
