@@ -52,8 +52,8 @@
                 <Label Name="title" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
             </Grid>
             <Grid Grid.Row="1">
-                <Button Content="预览" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Margin="0,0,55,0" Click="preview_Click" Name="btn_Preview"/>
-                <Button Content="设置" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Click="set_Click"/>
+                <Button Content="预览" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Margin="0,0,55,0" Click="preview_Click" Name="btn_Preview" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="设置" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Click="set_Click" Style="{StaticResource ButtonStyle}"/>
             </Grid>
         </Grid>
     </Border>
