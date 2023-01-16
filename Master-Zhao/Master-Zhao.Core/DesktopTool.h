@@ -73,6 +73,7 @@ SILVERAROWANACORE_API BOOL GetRecentBackground(LPTSTR lpRecentPath);
 SILVERAROWANACORE_API VOID SwitchToDesktop();
 SILVERAROWANACORE_API VOID SwitchToWindow(HWND hwnd);
 SILVERAROWANACORE_API BOOL CloseEmbedWindow();
+VOID ResetWallpaper();
 BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam);
 SILVERAROWANACORE_API HBITMAP GetFileThumbnail(PCWSTR path);
 BOOL FindStartMenu(HWND& startMenuHwnd, HWND& startMenuBtnHwnd);

@@ -71,11 +71,6 @@ namespace Master_Zhao.Shell.UserControls
             OnPreview?.Invoke(sender, VideoPath);
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
-        {
-            SetBorderBrush();
-        }
-
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             if (IsChecked == false)

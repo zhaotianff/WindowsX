@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:Master_Zhao.Shell.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="150" Width="300" Height="300"  BorderThickness="2" 
-             MouseEnter="UserControl_MouseEnter" 
              MouseLeave="UserControl_MouseLeave" 
              MouseDown="UserControl_MouseDown">
     <!--<UserControl.Resources>
@@ -18,23 +17,44 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>-->
-    <Grid Margin="5">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-
-        <Grid>
+    <Border x:Name="main" CornerRadius="5">
+        <Border.Background>
+            <SolidColorBrush Color="White" Opacity="0"/>
+        </Border.Background>
+        <Border.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard Storyboard.TargetProperty="(Background).(Brush.Opacity)" Storyboard.TargetName="main">
+                        <DoubleAnimation To="0.3" Duration="0:0:0.2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard Storyboard.TargetProperty="(Background).(Brush.Opacity)" Storyboard.TargetName="main">
+                        <DoubleAnimation To="0" Duration="0:0:0.2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Border.Triggers>
+        <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="28"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <Image Name="image"></Image>
-            <Label Name="title" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="28"/>
+                </Grid.RowDefinitions>
+                <Image Name="image"></Image>
+                <Label Name="title" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Button Content="预览" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Margin="0,0,55,0" Click="preview_Click" Name="btn_Preview"/>
+                <Button Content="设置" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Click="set_Click"/>
+            </Grid>
         </Grid>
-        <Grid Grid.Row="1">
-            <Button Content="预览" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Margin="0,0,55,0" Click="preview_Click" Name="btn_Preview"/>
-            <Button Content="设置" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Click="set_Click"/>
-        </Grid>
-    </Grid>
+    </Border>
 </UserControl>

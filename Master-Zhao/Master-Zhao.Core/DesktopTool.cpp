@@ -217,10 +217,30 @@ BOOL CloseEmbedWindow()
 	if (hEmbedHwnd)
 	{
 		SendMessage(hEmbedHwnd, WM_CLOSE, NULL, NULL);
+		ResetWallpaper();
 		return TRUE;
 	}
 
 	return FALSE;
+}
+
+VOID ResetWallpaper()
+{
+	CoInitialize(NULL);
+
+	IDesktopWallpaper* pDesktopWallpaper = NULL;
+	HRESULT sc = CoCreateInstance(CLSID_DesktopWallpaper, NULL, CLSCTX_ALL, IID_IDesktopWallpaper, (LPVOID*)&pDesktopWallpaper);
+
+	if (SUCCEEDED(sc))
+	{
+		LPTSTR szWallpaper = NULL;
+		sc = pDesktopWallpaper->GetWallpaper(NULL, &szWallpaper);
+		if(szWallpaper)
+			pDesktopWallpaper->SetWallpaper(NULL, szWallpaper);
+		pDesktopWallpaper->Release();
+	}
+
+	CoUninitialize();
 }
 
 VOID SwitchToDesktop()
