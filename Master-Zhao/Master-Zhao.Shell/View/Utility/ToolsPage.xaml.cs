@@ -1,5 +1,6 @@
 ﻿using Master_Zhao.Shell.Infrastructure.Navigation;
 using Master_Zhao.Shell.View.Pages;
+using Master_Zhao.Shell.View.Utility.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace Master_Zhao.Shell.Pages
         private ToggleButton toggleButton = null;
         private FastRunSetting fastRunSetting = new FastRunSetting();
         private BossKeySetting bossKeySetting = new BossKeySetting();
+        private ExecuteToolSetting executeToolSetting = new ExecuteToolSetting();
         private Page defaultPage = null;
 
         public ToolsPage()
@@ -75,6 +77,12 @@ namespace Master_Zhao.Shell.Pages
             {
                 frame.Content = defaultPage;
             }    
+        }
+
+        private async void btn_ExecuteToolClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = executeToolSetting;
+            await executeToolSetting.LoadExecuteListAsync();
         }
     }
 }

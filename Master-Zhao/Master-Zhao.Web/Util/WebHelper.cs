@@ -135,5 +135,22 @@ namespace Master_Zhao.Web.Util
                 //TODO
             }
         }
+
+        /// <summary>
+        /// https://github.com/zhaotianff/Windows-run-tool/blob/main/Windows-run-tool/Helper/WebHelper.cs
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async static Task<string> GetHtmlSourceHttpClient(string url)
+        {
+            System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
+            using (Stream stream = await httpClient.GetStreamAsync(url))
+            {
+                using (StreamReader sr = new StreamReader(stream, Encoding.UTF8))
+                {
+                    return await sr.ReadToEndAsync();
+                }
+            }
+        }
     }
 }

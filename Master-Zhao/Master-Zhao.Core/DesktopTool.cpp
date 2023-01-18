@@ -212,6 +212,33 @@ VOID OpenWindowsHelp()
 	ShellExecuteEx(&shellInfo);
 }
 
+VOID OpenRunDialog(LPTSTR command)
+{
+	SendMultiAsciiInput(2, VK_LWIN, 'R');
+	Sleep(50);
+	//TODO locale 
+	HWND hWndRun = FindWindow(NULL, L"ÔËÐÐ");
+
+	if (hWndRun)
+	{
+		HWND hComBox = FindWindowEx(hWndRun, NULL, L"ComboBox", NULL);
+
+		if (hComBox)
+		{
+			HWND hEdit = FindWindowEx(hComBox, NULL, L"Edit", NULL);
+
+			TCHAR buf[MAX_PATH]{};
+			GetWindowText(hEdit, buf, MAX_PATH);
+			if (hEdit)
+			{
+				SetWindowText(hEdit, command);
+				GetWindowText(hEdit, buf, MAX_PATH);
+				//TODO
+			}
+		}
+	}
+}
+
 BOOL CloseEmbedWindow()
 {
 	if (hEmbedHwnd)

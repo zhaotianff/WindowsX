@@ -94,6 +94,9 @@ namespace MasterZhaoCoreTests
 			UnregisterWindowsPhotoViewerFormat();
 		}
 
-
+		TEST_METHOD(TestOpenRunDialog)
+		{
+			OpenRunDialog(L"cmd");
+		}
 	};
 }
