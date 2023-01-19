@@ -42,6 +42,7 @@ GetProcessNameFomrHwnd
 SelectFile
 OpenFileProperty
 OpenWindowsHelp
+OpenRunDialog
 
 EmbedWindowToDesktop
 RestartExplorer

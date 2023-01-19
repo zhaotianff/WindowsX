@@ -47,6 +47,23 @@ namespace Master_Zhao.Shell.Util
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
 
+        public static BitmapSource GetIconImageFromFile(string filePath)
+        {
+            if (System.IO.File.Exists(filePath) == false)
+                return null;
+
+            IntPtr hIcon = IntPtr.Zero;
+            IconTool.ExtractFirstIconFromFile(filePath, true, ref hIcon);
+
+            if (hIcon != IntPtr.Zero)
+            {
+                return GetBitmapImageFromHIcon(hIcon);
+            }
+
+            return null;
+        }
+
+
         public static BitmapSource GetBitmapImageFromHBitmap(IntPtr hBitmap)
         {
             try

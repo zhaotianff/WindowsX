@@ -1,0 +1,25 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="azman.msc">授权管理器</sys:String>
+    <sys:String x:Key="certlm.msc">证书-本地计算机</sys:String>
+    <sys:String x:Key="certmgr.msc">证书-当前用户</sys:String>
+    <sys:String x:Key="comexp.msc">组件服务</sys:String>
+    <sys:String x:Key="compmgmt.msc">计算机管理</sys:String>
+    <sys:String x:Key="devmgmt.msc">设备管理器</sys:String>
+    <sys:String x:Key="DevModeRunAsUserConfig.msc">DevModeRunAsUserConfig</sys:String>
+    <sys:String x:Key="diskmgmt.msc">磁盘管理</sys:String>
+    <sys:String x:Key="eventvwr.msc">事件查看器</sys:String>
+    <sys:String x:Key="fsmgmt.msc">共享文件夹</sys:String>
+    <sys:String x:Key="gpedit.msc">组策略编辑器</sys:String>
+    <sys:String x:Key="lusrmgr.msc">本地用户和组-本地</sys:String>
+    <sys:String x:Key="perfmon.msc">性能监视器</sys:String>
+    <sys:String x:Key="printmanagement.msc">打印管理</sys:String>
+    <sys:String x:Key="rsop.msc">策略的结果集</sys:String>
+    <sys:String x:Key="secpol.msc">本地安全策略</sys:String>
+    <sys:String x:Key="services.msc">服务</sys:String>
+    <sys:String x:Key="taskschd.msc">计划任务程序</sys:String>
+    <sys:String x:Key="tpm.msc">本地计算机上受信任的平台模块(TPM)管理</sys:String>
+    <sys:String x:Key="WF.msc">高级安全 Windows Defender 防火墙</sys:String>
+    <sys:String x:Key="WmiMgmt.msc">WmiMgmt</sys:String>
+</ResourceDictionary>

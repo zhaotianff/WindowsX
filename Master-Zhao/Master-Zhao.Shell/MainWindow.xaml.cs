@@ -114,7 +114,7 @@ namespace Master_Zhao.Shell
         }
 
 
-        public void BeginShowMenuAnimation(NavigationPages targetPage)
+        public void BeginShowMenuAnimation(NavigationPages targetPage,bool isStateChanged = false)
         {
             DoubleAnimation startWidthAnimation = start.Children[0] as DoubleAnimation;
             startWidthAnimation.From = this.ActualWidth - 100;
@@ -123,7 +123,8 @@ namespace Master_Zhao.Shell
             startHeightAnimation.From = this.ActualHeight - 50;
             startHeightAnimation.To = this.ActualHeight;
             var pageContent = GetNavigationPage(targetPage);
-            (pageContent as IPageAction)?.ShowDefaultPage();//TODO
+            if(isStateChanged == false)
+                (pageContent as IPageAction)?.ShowDefaultPage();//TODO
             this.frame.Content = pageContent;
             start?.Begin();
             CurrentPage = targetPage;
@@ -247,7 +248,7 @@ namespace Master_Zhao.Shell
             if (CurrentPage != NavigationPages.Main)
             {
                 await System.Threading.Tasks.Task.Delay(100);
-                BeginShowMenuAnimation(CurrentPage);
+                BeginShowMenuAnimation(CurrentPage,true);
             }
 
             if(WindowState == WindowState.Minimized)

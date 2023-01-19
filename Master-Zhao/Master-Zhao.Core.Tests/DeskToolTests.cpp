@@ -96,7 +96,7 @@ namespace MasterZhaoCoreTests
 
 		TEST_METHOD(TestOpenRunDialog)
 		{
-			OpenRunDialog(L"cmd");
+			OpenRunDialog(L"test");
 		}
 	};
 }

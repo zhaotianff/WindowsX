@@ -225,16 +225,8 @@ VOID OpenRunDialog(LPTSTR command)
 
 		if (hComBox)
 		{
-			HWND hEdit = FindWindowEx(hComBox, NULL, L"Edit", NULL);
-
-			TCHAR buf[MAX_PATH]{};
-			GetWindowText(hEdit, buf, MAX_PATH);
-			if (hEdit)
-			{
-				SetWindowText(hEdit, command);
-				GetWindowText(hEdit, buf, MAX_PATH);
-				//TODO
-			}
+			SendMessage(hComBox, CB_INSERTSTRING, (WPARAM)0, (LPARAM)command);
+			SendMessage(hComBox, CB_SELECTSTRING, NULL, (LPARAM)command);
 		}
 	}
 }

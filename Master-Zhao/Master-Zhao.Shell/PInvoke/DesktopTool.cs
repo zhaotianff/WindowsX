@@ -162,5 +162,8 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern void OpenWindowsHelp();
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern void OpenRunDialog([MarshalAs(UnmanagedType.LPWStr)]string command);
     }
 }

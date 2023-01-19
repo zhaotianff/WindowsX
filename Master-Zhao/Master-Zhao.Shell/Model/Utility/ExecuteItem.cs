@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
 
 namespace Master_Zhao.Shell.Model.Utility
 {
@@ -9,6 +10,17 @@ namespace Master_Zhao.Shell.Model.Utility
         public string Name { get; set; }
         public string Path { get; set; }
         public string Description { get; set; }
-        public IntPtr HIcon { get; set; }
+        public ImageSource Icon { get; set; }
+        public ExecuteItemType ItemType { get; set; }
+    }
+
+    public enum ExecuteItemType
+    {
+        EXE,
+        MMC, 
+        CPL, 
+        SCRIPT, 
+        DLL, 
+        MSSETTING
     }
 }
