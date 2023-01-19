@@ -51,6 +51,9 @@
     <ClInclude Include="PowerTool.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AppTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -81,6 +84,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="PowerTool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AppTool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -27,6 +27,9 @@
         </Grid.ColumnDefinitions>
 
         <TabControl Background="Transparent" Style="{StaticResource TabControlStyle}">
+            <TabItem Header="已安装的程序" ToolTip="已安装的程序">
+                <ListBox Style="{StaticResource ListBoxStyle}" Name="list_installed" ItemTemplate="{StaticResource ListBoxItemDataTemplate}" Margin="0,0,0,30" SelectionChanged="list_SelectionChanged" ItemContainerStyle="{StaticResource ListBoxItemStyle}" ContextMenu="{StaticResource ExecuteListContextMenu}"></ListBox>
+            </TabItem>
             <TabItem Header="可执行文件" ToolTip="可执行文件">
                 <ListBox Style="{StaticResource ListBoxStyle}" Name="list_exe" ItemTemplate="{StaticResource ListBoxItemDataTemplate}" Margin="0,0,0,30" SelectionChanged="list_SelectionChanged" ItemContainerStyle="{StaticResource ListBoxItemStyle}" ContextMenu="{StaticResource ExecuteListContextMenu}"></ListBox>
             </TabItem>

@@ -154,3 +154,8 @@ BOOL QuerySZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* szVal
 	}
 	return FALSE;
 }
+
+std::vector<std::wstring> GetAllSubKey(HKEY hKey, LPCTSTR lpSubKey)
+{
+	return std::vector<std::wstring>();
+}

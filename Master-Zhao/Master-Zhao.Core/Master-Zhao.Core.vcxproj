@@ -160,6 +160,7 @@
     <None Include="Source.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppTool.h" />
     <ClInclude Include="CoreUtil.h" />
     <ClInclude Include="DesktopTool.h" />
     <ClInclude Include="framework.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="SystemTool.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AppTool.cpp" />
     <ClCompile Include="CoreUtil.cpp" />
     <ClCompile Include="DesktopTool.cpp" />
     <ClCompile Include="dllmain.cpp" />
