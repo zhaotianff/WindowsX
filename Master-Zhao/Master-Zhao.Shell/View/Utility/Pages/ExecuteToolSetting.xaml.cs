@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,6 +34,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
         public async Task LoadExecuteListAsync()
         {
             var fullList = await GetAllExecuteItemInEnvironmentVariable();
+            //list_installed.ItemsSource = LoadInstalledExecuteItems();
             list_exe.ItemsSource = fullList.Where(x => x.Name.ToLower().EndsWith(".exe")).SetItemType(ExecuteItemType.EXE);
             list_mmc.ItemsSource = fullList.Where(x => x.Name.ToLower().EndsWith(".msc")).SetItemType(ExecuteItemType.MMC);
             list_control.ItemsSource = fullList.Where(x => x.Name.ToLower().EndsWith(".cpl")).SetItemType(ExecuteItemType.CPL);
@@ -212,6 +214,44 @@ namespace Master_Zhao.Shell.View.Utility.Pages
                 executeItem.Description = listStr[i + 2];
                 list.Add(executeItem);
             }
+            return list;
+        }
+
+        private List<ExecuteItem> LoadInstalledExecuteItems()
+        {
+            var list = new List<ExecuteItem>();
+
+            uint size = 2048;
+            IntPtr ptr = Marshal.AllocHGlobal((int)size);
+
+            var result = PInvoke.AppTool.GetAppPath(ptr, size);
+
+            if (result == false)
+                return list;
+
+            var str = Marshal.PtrToStringAuto(ptr);
+            Marshal.FreeHGlobal(ptr);
+
+            if (str == null)
+                return list;
+
+            var appArray = str.Split(';');
+
+            foreach (var app in appArray)
+            {
+                var appSubArray = app.Split('-');
+                ExecuteItem executeItem = new ExecuteItem();
+                executeItem.Name = appSubArray[0];
+                executeItem.Path = appSubArray[1].Replace("\"", "");
+
+                //TODO
+                if (System.IO.File.Exists(executeItem.Path) == false)
+                    continue;
+
+                executeItem.Description = FileExtension.GetFileDescription(executeItem.Path);
+                list.Add(executeItem);
+            }
+
             return list;
         }
     }

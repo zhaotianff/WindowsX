@@ -27,10 +27,11 @@
         </Grid.ColumnDefinitions>
 
         <TabControl Background="Transparent" Style="{StaticResource TabControlStyle}">
-            <TabItem Header="已安装的程序" ToolTip="已安装的程序">
+            <!--new year-->
+            <!--<TabItem Header="已安装的程序" ToolTip="已安装的程序">
                 <ListBox Style="{StaticResource ListBoxStyle}" Name="list_installed" ItemTemplate="{StaticResource ListBoxItemDataTemplate}" Margin="0,0,0,30" SelectionChanged="list_SelectionChanged" ItemContainerStyle="{StaticResource ListBoxItemStyle}" ContextMenu="{StaticResource ExecuteListContextMenu}"></ListBox>
-            </TabItem>
-            <TabItem Header="可执行文件" ToolTip="可执行文件">
+            </TabItem>-->
+            <TabItem Header="系统程序" ToolTip="系统程序">
                 <ListBox Style="{StaticResource ListBoxStyle}" Name="list_exe" ItemTemplate="{StaticResource ListBoxItemDataTemplate}" Margin="0,0,0,30" SelectionChanged="list_SelectionChanged" ItemContainerStyle="{StaticResource ListBoxItemStyle}" ContextMenu="{StaticResource ExecuteListContextMenu}"></ListBox>
             </TabItem>
             <TabItem Header="管理控制台项" ToolTip="微软管理控制台MMC(Microsoft Management Console)用来添加/删除的嵌入式管理单元文件">

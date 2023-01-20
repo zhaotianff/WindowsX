@@ -94,3 +94,6 @@ LockComputer
 RestartComputer
 SleepComputer
 ShowRunDialog
+
+;apptool.h
+GetAppPath

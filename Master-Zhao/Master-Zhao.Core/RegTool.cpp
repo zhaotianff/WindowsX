@@ -140,22 +140,43 @@ BOOL QueryDWORDValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, DWORD* va
 
 BOOL QuerySZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* szValue, DWORD* nSize)
 {
-	auto result = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_READ, &hKey);
+	DWORD dwType = REG_SZ;
+	auto result = RegGetValue(hKey, lpSubKey, lpValueName, RRF_RT_REG_SZ | RRF_RT_REG_EXPAND_SZ, &dwType, (PVOID)szValue, nSize);
+
 	if (ERROR_SUCCESS == result)
 	{
-		DWORD dwType = REG_SZ;
-		result = RegGetValue(hKey, lpSubKey, lpValueName, RRF_RT_REG_SZ, &dwType, (PVOID)szValue, nSize);
-
-		if (ERROR_SUCCESS == result)
-		{
-			RegCloseKey(hKey);
-			return TRUE;
-		}
+		return TRUE;
 	}
 	return FALSE;
 }
 
 std::vector<std::wstring> GetAllSubKey(HKEY hKey, LPCTSTR lpSubKey)
 {
-	return std::vector<std::wstring>();
+	std::vector<std::wstring> list_key;
+
+	HKEY hAppKey = NULL;
+	auto result = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_ENUMERATE_SUB_KEYS, &hAppKey);
+
+	DWORD dwIndex = 0;
+	DWORD cchValue = 260;
+	TCHAR achValue[260]{};
+
+	if (ERROR_SUCCESS == result)
+	{
+		LRESULT sr = RegEnumKeyEx(hAppKey, dwIndex, achValue, &cchValue, NULL, NULL, NULL, NULL);
+
+		while (sr == ERROR_SUCCESS)
+		{
+			std::wstring value = achValue;
+			list_key.push_back(value);
+			achValue[0] = '\0';
+			dwIndex++;
+			cchValue = 260;
+			sr = RegEnumKeyEx(hAppKey, dwIndex, achValue, &cchValue, NULL, NULL, NULL, NULL);
+		}
+
+		RegCloseKey(hAppKey);
+	}
+
+	return list_key;
 }
