@@ -13,7 +13,8 @@
         "LocalImages":[
 		
         ],
-        "Opacity":0.9
+        "Opacity":0.9,
+        "IsBlurBackground":false
     },
     "FlatStartMenuGroupedItems":[
         {
