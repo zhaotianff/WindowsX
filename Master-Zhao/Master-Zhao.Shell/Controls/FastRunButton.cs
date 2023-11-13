@@ -97,7 +97,7 @@ namespace Master_Zhao.Shell.Controls
             set => SetValue(IsSelectedProperty, value);
         }
 
-        public FastRunItem FastRunItem { get; set; }
+        public FastRunConfigItem FastRunItem { get; set; }
 
         public UIElementCollection Children
         {

@@ -23,7 +23,7 @@ namespace Master_Zhao.Shell.UserControls
     /// </summary>
     public partial class FastRunItemConfig : UserControl,INotifyPropertyChanged
     {
-        private FastRunItem currentItem;
+        private FastRunConfigItem currentItem;
         private string fastRunName = "";
 
         public string FastRunName
@@ -53,7 +53,7 @@ namespace Master_Zhao.Shell.UserControls
             }
         }
 
-        public Action<FastRunItem> OnFastRunItemConfigChanged;
+        public Action<FastRunConfigItem> OnFastRunItemConfigChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FastRunItemConfig()
@@ -69,7 +69,7 @@ namespace Master_Zhao.Shell.UserControls
             {
                 tbox_Path.Text = path;
 
-                var fastRunItem = new FastRunItem();
+                var fastRunItem = new FastRunConfigItem();
                 fastRunItem.Name = System.IO.Path.GetFileNameWithoutExtension(path);
                 FastRunName = fastRunItem.Name;
                 fastRunItem.Path = path;

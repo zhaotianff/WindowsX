@@ -1,0 +1,25 @@
+﻿<Window x:Class="Master_Zhao.Shell.View.Utility.Windows.FastRunNew"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Master_Zhao.Shell.View.Utility.Windows"
+        xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
+        mc:Ignorable="d"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent"
+        Title="FastRun" Height="400" Width="400" PreviewMouseRightButtonDown="Window_PreviewMouseRightButtonDown" PreviewMouseMove="Window_PreviewMouseMove" Loaded="Window_Loaded" Topmost="True">
+    <Grid>
+        <Border Panel.ZIndex="-2" Visibility="Visible">
+            <Border.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="White" Offset="0.9"/>
+                    <GradientStop Offset="1"/>
+                    <GradientStop x:Name="ColorCircle" Color="{DynamicResource BorderColorTran}" Offset="0.91"/>
+                </RadialGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <controls:CircularMenu x:Name="menu" MouseDown="menu_MouseDown" MouseMove="menu_MouseMove"></controls:CircularMenu>
+    </Grid>
+</Window>

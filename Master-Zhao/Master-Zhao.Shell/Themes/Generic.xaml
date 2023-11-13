@@ -269,4 +269,101 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type local:CircularMenuItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CircularMenuItem}">
+                    <local:SmallPanel VerticalAlignment="Top" x:Name="PART_CONTROL">
+                        <local:SmallPanel.RenderTransform>
+                            <RotateTransform x:Name="PART_RotateTransform" Angle="{TemplateBinding Angle}" CenterX="200" CenterY="200" />
+                        </local:SmallPanel.RenderTransform>
+                        <Path
+                            x:Name="PART_Path"
+                            VerticalAlignment="Center"
+                            Data="M 200,200 0,200 A 200,200 0 0 1 58.6,58.6z"
+                            Fill="{TemplateBinding BackgroundColor}" />
+                        <Image
+                            Width="40"
+                            Height="40"
+                            Margin="60,100,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            RenderTransformOrigin="0.5,0.5"
+                            Source="{TemplateBinding IconImage}">
+                            <Image.RenderTransform>
+                                <RotateTransform Angle="-70" />
+                            </Image.RenderTransform>
+                        </Image>
+                    </local:SmallPanel>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter" >
+                            <BeginStoryboard>
+                                <Storyboard Storyboard.TargetName="PART_Path" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)">
+                                    <ColorAnimation From="White" To="#D597CE" Duration="0:0:0.5"></ColorAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave" >
+                            <BeginStoryboard>
+                                <Storyboard Storyboard.TargetName="PART_Path" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)">
+                                    <ColorAnimation To="White" Duration="0:0:0.2"></ColorAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_CONTROL" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="Silver" BlurRadius="1" Opacity="0.1"></DropShadowEffect>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type local:CircularMenu}">
+        <Setter Property="Width" Value="400" />
+        <Setter Property="Height" Value="400" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CircularMenu}">
+                    <local:SmallPanel>
+                        <ItemsControl x:Name="PART_ItemsControl" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" 
+                                      AlternationCount="{TemplateBinding AlternationCount}" ItemsSource="{TemplateBinding ItemsSource}">
+                            <ItemsControl.Clip>
+                                <EllipseGeometry
+                                    x:Name="PART_EllipseGeometry"
+                                    Center="200,200"
+                                    RadiusX="0"
+                                    RadiusY="0" />
+                            </ItemsControl.Clip>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:CircularMenuItem
+                                        Angle="{Binding Angle}"
+                                        BackgroundColor="White"
+                                        IconImage="{Binding Icon}"
+                                        MenuTxt="{Binding DisplayName}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <local:SmallPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                        <Grid>
+                            <Ellipse x:Name="PART_Ellipse"
+                                            Width="150"
+                                            Height="150"
+                                            Fill="White" />
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding StatusText}"></Label>
+                        </Grid>
+                    </local:SmallPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

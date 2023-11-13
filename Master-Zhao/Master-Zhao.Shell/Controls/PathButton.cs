@@ -17,7 +17,7 @@ namespace Master_Zhao.Shell.Controls
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(Shape),new PropertyMetadata());
         private DropShadowEffect dropShadowEffect = new DropShadowEffect();
 
-        public FastRunItem FastRunItem { get; set; }
+        public FastRunConfigItem FastRunItem { get; set; }
 
         public Geometry GeometryData
         {

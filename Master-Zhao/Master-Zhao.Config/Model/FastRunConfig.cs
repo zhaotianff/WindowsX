@@ -15,10 +15,10 @@ namespace Master_Zhao.Config.Model
 
     public class FastRunConfig
     {
-        public List<FastRunItem> FastRunList { get; set; } = new List<FastRunItem>();
+        public List<FastRunConfigItem> FastRunList { get; set; } = new List<FastRunConfigItem>();
     }
 
-    public class FastRunItem
+    public class FastRunConfigItem
     {
         public string Name { get; set; }
         public string Path { get; set; }
