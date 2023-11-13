@@ -94,7 +94,7 @@
             },
             {
                 "Name":"explorer",
-                "Path":"C:\\Windows\\System32\\explorer.exe",
+                "Path":"C:\\Windows\\explorer.exe",
                 "Icon":null,
                 "Args":[
                     ""
