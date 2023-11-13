@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
-        Title="FastRun" Height="400" Width="400" PreviewMouseRightButtonDown="Window_PreviewMouseRightButtonDown" PreviewMouseMove="Window_PreviewMouseMove" Loaded="Window_Loaded" Topmost="True">
+        Title="FastRun" Height="450" Width="450" PreviewMouseRightButtonDown="Window_PreviewMouseRightButtonDown" PreviewMouseMove="Window_PreviewMouseMove" Loaded="Window_Loaded" Topmost="True">
     <Grid>
         <Border Panel.ZIndex="-2" Visibility="Visible">
             <Border.Background>
@@ -20,6 +20,6 @@
             </Border.Background>
         </Border>
 
-        <controls:CircularMenu x:Name="menu" MouseDown="menu_MouseDown" MouseMove="menu_MouseMove"></controls:CircularMenu>
+        <controls:CircularMenu x:Name="menu" MouseLeftButtonDown="menu_MouseDown" MouseMove="menu_MouseMove" MouseEnter="menu_MouseEnter" MouseLeave="menu_MouseLeave" FontSize="12" Foreground="Black" FontWeight="Bold"></controls:CircularMenu>
     </Grid>
 </Window>

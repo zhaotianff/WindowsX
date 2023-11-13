@@ -92,7 +92,6 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             isExecuted = true;
         }
 
-
         private string GetCachedIconPath(string path)
         {
             var temp = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Master-Zhao");
@@ -238,6 +237,25 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             {
                 menu.StatusText = listBoxItem.MenuTxt;
             }
+        }
+
+        private System.Windows.Media.Animation.ColorAnimation GetAnimation(Color to, TimeSpan duration)
+        {
+            System.Windows.Media.Animation.ColorAnimation animation = new System.Windows.Media.Animation.ColorAnimation();
+            animation.Duration = duration;
+            animation.To = to;
+            animation.AutoReverse = false;
+            return animation;
+        }
+
+        private void menu_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.ColorCircle.BeginAnimation(GradientStop.ColorProperty, GetAnimation(GlobalData.Instance.BorderColorTran, TimeSpan.FromMilliseconds(300)));
+        }
+
+        private void menu_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.ColorCircle.BeginAnimation(GradientStop.ColorProperty, GetAnimation(GlobalData.Instance.BorderColor, TimeSpan.FromMilliseconds(300)));
         }
     }
 }
