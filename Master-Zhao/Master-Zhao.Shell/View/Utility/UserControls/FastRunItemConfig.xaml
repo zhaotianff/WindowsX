@@ -19,11 +19,13 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="命令路径:"></Label>
-        <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbox_Path"/>
-        <Button Content="浏览" Grid.Column="2" Width="88" Click="btnBrowerPath_Click"/>
+        <Label x:Name="lbl_Title" FontWeight="Bold" FontSize="15"></Label>
+        
+        <Label Content="命令路径:" Grid.Row="1"></Label>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbox_Path"/>
+        <Button Content="浏览" Grid.Row="1" Grid.Column="2" Width="88" Click="btnBrowerPath_Click"/>
 
-        <Label Content="快捷键（暂未启用）:" Grid.Row="1" IsEnabled="False"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1" IsEnabled="False"/>
+        <Label Content="快捷键（暂未启用）:" Grid.Row="2" IsEnabled="False"></Label>
+        <TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False"/>
     </Grid>
 </UserControl>

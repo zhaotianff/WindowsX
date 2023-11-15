@@ -16,40 +16,49 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <CheckBox Content="启用快速启动菜单(按住Alt显示菜单  Alt+1/2/3/4运行或鼠标单击运行 ESC取消)" VerticalAlignment="Center" Name="cbx_FastRun" Checked="cbxFastrun_Checked" Unchecked="cbxFastrun_Unchecked" Focusable="False"/>
+            <CheckBox Style="{StaticResource CheckBoxStyle}" Content="启用快速启动菜单" ToolTip="按住/松开Alt显示/隐藏菜单  Alt+1/2/3/4/Q/W/E/R或鼠标单击运行" VerticalAlignment="Center" Name="cbx_FastRun" Checked="cbxFastrun_Checked" Unchecked="cbxFastrun_Unchecked" Focusable="False"/>
         </Grid>
 
-        <Grid Grid.Row="1" IsEnabled="{Binding ElementName=cbx_FastRun,Path=IsChecked}">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!--  basic version-->
-            <Grid Height="300" Background="LightBlue" Grid.Column="1">
-                <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" HorizontalAlignment="Center" VerticalAlignment="Top"
-                                     Foreground="White" FontSize="20" Content="{Binding ElementName=fastrun_item1,Path=FastRunName,UpdateSourceTrigger=PropertyChanged}" 
-                                     Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
-                </local:FastRunButton>
-                <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                     Foreground="White" FontSize="20" Content="{Binding ElementName=fastrun_item2,Path=FastRunName,UpdateSourceTrigger=PropertyChanged}" 
-                                     Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
-                </local:FastRunButton>
-                <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                                     Foreground="White" FontSize="20" Content="{Binding ElementName=fastrun_item3,Path=FastRunName,UpdateSourceTrigger=PropertyChanged}" 
-                                     Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
-                </local:FastRunButton>
-                <local:FastRunButton ContentRadiusX="48" ContentRadiusY="48" Center="50,50" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                     Foreground="White" FontSize="20" Content="{Binding ElementName=fastrun_item4,Path=FastRunName,UpdateSourceTrigger=PropertyChanged}" 
-                                     Width="100" Height="100" ImagePath="../Icon/system.png" HostCanvas="{Binding ElementName=canvas}">
-                </local:FastRunButton>
-            </Grid>
-            <!--temp-->
-            <user:FastRunItemConfig VerticalAlignment="Top" Grid.Column="1" Margin="0,0,0,0" x:Name="fastrun_item1"/>
-            <user:FastRunItemConfig VerticalAlignment="Center" Grid.Column="2" x:Name="fastrun_item2"/>
-            <user:FastRunItemConfig VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,0" x:Name="fastrun_item3"/>
-            <user:FastRunItemConfig VerticalAlignment="Center" x:Name="fastrun_item4"/>
+            <ListBox Background="Transparent" IsEnabled="{Binding ElementName=cbx_FastRun,Path=IsChecked}" Name="lst_FastRunItems">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Source="{Binding Icon}" HorizontalAlignment="Left" Width="45" Height="45" VerticalAlignment="Center" Margin="5"/>
+                            <Label Content="{Binding DisplayName}" VerticalContentAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="15" Height="50" Margin="55,0,0,0"></Label>
+
+                            <Label Content="命令路径:" Grid.Row="1"></Label>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path}" Width="300"/>
+                            <Button Content="浏览" Grid.Row="1" Grid.Column="2" Width="88" Click="btnBrowerPath_Click" Style="{StaticResource ButtonStyle}"/>
+
+                            <Label Content="快捷键（暂未启用）:" Grid.Row="2" IsEnabled="False"></Label>
+                            <TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False" Width="300"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Column="1">
+                <Button Content="新增" Width="88" Height="28" Style="{StaticResource ButtonStyle}" Margin="10" Name="btn_AddFastRunItem" Click="btn_AddFastRunItem_Click"></Button>
+                <Button Content="移除" Width="88" Height="28" Style="{StaticResource ButtonStyle}" Margin="10" Name="btn_RemoveFastRunItem" Click="btn_RemoveFastRunItem_Click"></Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

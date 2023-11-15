@@ -25,6 +25,7 @@ namespace Master_Zhao.Shell.UserControls
     {
         private FastRunConfigItem currentItem;
         private string fastRunName = "";
+        private string titleText;
 
         public string FastRunName
         {
@@ -40,6 +41,17 @@ namespace Master_Zhao.Shell.UserControls
             }
         }
 
+        public string TitleText 
+        {
+            get => this.lbl_Title.Content.ToString();
+            set
+            {
+                titleText = value;
+                lbl_Title.Content = value;
+            }
+        }
+
+
         public string FastRunPath
         {
             get
@@ -52,6 +64,7 @@ namespace Master_Zhao.Shell.UserControls
                 FastRunName = System.Diagnostics.FileVersionInfo.GetVersionInfo(value).FileDescription;
             }
         }
+
 
         public Action<FastRunConfigItem> OnFastRunItemConfigChanged;
         public event PropertyChangedEventHandler PropertyChanged;

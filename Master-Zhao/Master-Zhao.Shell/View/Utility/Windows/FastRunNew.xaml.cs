@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Master_Zhao.Shell.Model.Utility;
+using System.Collections.ObjectModel;
 
 namespace Master_Zhao.Shell.View.Utility.Windows
 {
@@ -32,13 +33,18 @@ namespace Master_Zhao.Shell.View.Utility.Windows
 
         private System.Windows.Point dragStartPoint = new Point();
 
-        List<FastRunItem> fastRunItemList;
+        ObservableCollection<FastRunItem> fastRunItemList = new ObservableCollection<FastRunItem>();
 
         public FastRunNew()
         {
             InitializeComponent();
+        }
 
-            LoadFastRunList();
+        public void LoadFastRunList(ObservableCollection<FastRunItem> fastRunItemList)
+        {
+            this.fastRunItemList = fastRunItemList;
+            this.menu.ItemsSource = null;
+            this.menu.ItemsSource = fastRunItemList;
         }
 
         public int RegisterHotKey()
@@ -60,28 +66,6 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             this.Visibility = Visibility.Hidden;
         }
 
-        public void LoadFastRunList()
-        {
-            var list = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
-            var angle = 0;
-            fastRunItemList = new List<FastRunItem>();
-           
-            for (int i = 0; i < list.Count; i++)
-            {
-                var fastRunConfigItem = list[i];
-                FastRunItem fastRunItem = new FastRunItem();
-                fastRunItem.Angle = angle;
-                fastRunItem.DisplayName = fastRunConfigItem.Name;
-                fastRunItem.Icon = ImageHelper.GetBitmapImageFromLocalFile(GetCachedIconPath(list[i].Path));
-                fastRunItem.Args = fastRunConfigItem.Args;
-                fastRunItem.HotKey = fastRunConfigItem.HotKey;
-                fastRunItem.Path = fastRunConfigItem.Path;
-                angle += 45;
-                fastRunItemList.Add(fastRunItem);
-            }
-            this.menu.ItemsSource = fastRunItemList;
-        }
-
         private void ExecuteFastRunItem(string path)
         {
             var psInfo = new System.Diagnostics.ProcessStartInfo();
@@ -90,26 +74,6 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             System.Diagnostics.Process.Start(psInfo);
             this.Visibility = Visibility.Hidden;
             isExecuted = true;
-        }
-
-        private string GetCachedIconPath(string path)
-        {
-            var temp = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Master-Zhao");
-            var iconPath = System.IO.Path.Combine(temp, System.IO.Path.GetFileNameWithoutExtension(path) + ".png");
-            if (System.IO.Directory.Exists(temp) == false)
-                System.IO.Directory.CreateDirectory(temp);
-
-            if (System.IO.File.Exists(iconPath) == false)
-            {
-                IntPtr hIcon = IntPtr.Zero;
-                if (IconTool.ExtractFirstIconFromFile(path, true, ref hIcon))
-                {
-                    var bi = ImageHelper.GetBitmapImageFromHIcon(hIcon);
-                    ImageHelper.SaveBitmapImageToFile(bi, iconPath);
-                }
-            }
-
-            return iconPath;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -159,6 +123,8 @@ namespace Master_Zhao.Shell.View.Utility.Windows
         {
             if (this.Visibility == Visibility.Hidden)
                 return;
+
+            //deal with tab pressed
 
             if (Keyboard.IsKeyDown(Key.D1))
             {

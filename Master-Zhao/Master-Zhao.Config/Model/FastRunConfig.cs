@@ -22,7 +22,6 @@ namespace Master_Zhao.Config.Model
     {
         public string Name { get; set; }
         public string Path { get; set; }
-        public byte[] Icon { get; set; }
         public string[] Args { get; set; }
         public FastRunType RunType { get; set; }
         public int[] HotKey { get; set; }
