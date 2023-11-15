@@ -98,6 +98,9 @@ namespace Master_Zhao.Shell.PInvoke
             [MarshalAs(UnmanagedType.LPWStr)] string lpszDesc);
 
         [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetLink([MarshalAs(UnmanagedType.LPWStr)]string lpszLinkFile, [MarshalAs(UnmanagedType.LPWStr)]StringBuilder lpszPath, int iPathBufferSize);
+
+        [DllImport("MasterZhaoCore.dll")]
         public static extern bool GetGodModeShortCutState();
 
         [DllImport("MasterZhaoCore.dll")]

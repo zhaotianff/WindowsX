@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <ListBox Background="Transparent" IsEnabled="{Binding ElementName=cbx_FastRun,Path=IsChecked}" Name="lst_FastRunItems">
+            <ListBox Background="Transparent" BorderThickness="0" IsEnabled="{Binding ElementName=cbx_FastRun,Path=IsChecked}" Name="lst_FastRunItems">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>

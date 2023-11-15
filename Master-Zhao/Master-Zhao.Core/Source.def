@@ -23,6 +23,7 @@ SetDesktopIcon
 GetDesktopIconState
 RefreshDesktop
 CreateLink
+GetLink
 GetGodModeShortCutState
 CreateGodModeShortCut
 RemoveGodModeShortCut

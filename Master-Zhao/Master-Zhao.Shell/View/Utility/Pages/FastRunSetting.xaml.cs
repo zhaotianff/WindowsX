@@ -145,9 +145,9 @@ namespace Master_Zhao.Shell.Pages
 
             if (!string.IsNullOrEmpty(path))
             {
-                fastRunItem.Path = path;
+                fastRunItem.Path = GetLinkPath(path);
                 fastRunItem.DisplayName = System.IO.Path.GetFileNameWithoutExtension(path);
-                fastRunItem.Icon = ImageHelper.GetBitmapImageFromLocalFile(GetCachedIconPath(path));
+                fastRunItem.Icon = ImageHelper.GetBitmapImageFromLocalFile(GetCachedIconPath(fastRunItem.Path));
 
                 var fastRunSettingList = GlobalConfig.Instance.ToolsConfig.FastRunConfig.FastRunList;
                 FastRunConfigItem updateFastRunItem;
@@ -164,6 +164,26 @@ namespace Master_Zhao.Shell.Pages
                 updateFastRunItem.Name = fastRunItem.DisplayName;
                 updateFastRunItem.Path = fastRunItem.Path;
                 updateFastRunItem.RunType = FastRunType.Applicataion;
+            }
+        }
+
+        private string GetLinkPath(string path)
+        {
+            if (path.ToUpper().EndsWith(".LNK"))
+            {
+                StringBuilder sb = new StringBuilder(260);
+                if (PInvoke.DesktopTool.GetLink(path, sb, 260))
+                {
+                    return sb.ToString();
+                }
+                else
+                {
+                    return path;
+                }
+            }
+            else
+            {
+                return path;
             }
         }
 

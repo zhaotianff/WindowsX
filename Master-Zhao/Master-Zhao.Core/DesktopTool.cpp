@@ -589,6 +589,74 @@ BOOL CreateLink(LPCWSTR lpszPathObj, LPCTSTR lpszPathLink, LPCTSTR lpszArgs,LPCW
 	return SUCCEEDED(hres);
 }
 
+//from msdn 
+//https://docs.microsoft.com/en-us/windows/win32/shell/links?redirectedfrom=MSDN#creating-a-shortcut-and-a-folder-shortcut-to-a-file
+BOOL GetLink(LPCWSTR lpszLinkFile, LPWSTR lpszPath, int iPathBufferSize)
+{
+	HRESULT hres;
+	IShellLink* psl;
+	WCHAR szGotPath[MAX_PATH];
+	WCHAR szDescription[MAX_PATH];
+	WIN32_FIND_DATA wfd;
+
+	*lpszPath = 0; // Assume failure 
+
+	hres = CoInitialize(nullptr);
+
+	if (FAILED(hres))
+		return FALSE;
+
+	// Get a pointer to the IShellLink interface. It is assumed that CoInitialize
+	// has already been called. 
+	hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
+	if (SUCCEEDED(hres))
+	{
+		IPersistFile* ppf;
+
+		// Get a pointer to the IPersistFile interface. 
+		hres = psl->QueryInterface(IID_IPersistFile, (void**)&ppf);
+
+		if (SUCCEEDED(hres))
+		{
+			// Load the shortcut. 
+			hres = ppf->Load(lpszLinkFile, STGM_READ);
+
+			if (SUCCEEDED(hres))
+			{
+				// Resolve the link. 
+				hres = psl->Resolve(NULL, 0);
+
+				if (SUCCEEDED(hres))
+				{
+					// Get the path to the link target. 
+					hres = psl->GetPath(szGotPath, MAX_PATH, (WIN32_FIND_DATA*)&wfd, SLGP_SHORTPATH);
+
+					if (SUCCEEDED(hres))
+					{
+						// Get the description of the target. 
+						hres = psl->GetDescription(szDescription, MAX_PATH);
+
+						if (SUCCEEDED(hres))
+						{
+							hres = StringCbCopy(lpszPath, iPathBufferSize, szGotPath);
+							return SUCCEEDED(hres);
+						}
+					}
+				}
+			}
+
+			// Release the pointer to the IPersistFile interface. 
+			ppf->Release();
+		}
+
+		// Release the pointer to the IShellLink interface. 
+		psl->Release();
+	}
+
+	CoUninitialize();
+	return SUCCEEDED(hres);
+}
+
 BOOL GetGodModeShortCutState()
 {
 	WIN32_FIND_DATA ffd;
