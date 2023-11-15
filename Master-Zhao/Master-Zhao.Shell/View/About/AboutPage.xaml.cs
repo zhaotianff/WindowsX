@@ -37,7 +37,8 @@ namespace Master_Zhao.Shell.Pages
                 new ReferenceProjectInfo(){ProjectName = "TaskbarX",ProjectUrl = "https://github.com/ChrisAnd1998/TaskbarX",ProjectDescription = "TaskbarX gives you control over the position of your taskbar icons. TaskbarX will give you an original Windows dock like feel." },
                 new ReferenceProjectInfo(){ProjectName = "TaskbarTool",ProjectUrl = "https://github.com/Elestriel/TaskbarTools",ProjectDescription = "Grants the ability to set the Windows Taskbars to any opacity and colour desired. This will affect the Taskbars on every monitor/desktop, not only the primary." },
                 new ReferenceProjectInfo(){ProjectName = "BlurWindow",ProjectUrl = "https://github.com/TianXiaTech/BlurWindow",ProjectDescription = "WPF Aero Glass Lib." },
-                new ReferenceProjectInfo(){ProjectName = "ManagedShell",ProjectUrl = "https://github.com/cairoshell/ManagedShell",ProjectDescription = "A library for creating Windows shell replacements using .NET, written in C#." }
+                new ReferenceProjectInfo(){ProjectName = "ManagedShell",ProjectUrl = "https://github.com/cairoshell/ManagedShell",ProjectDescription = "A library for creating Windows shell replacements using .NET, written in C#." },
+                new ReferenceProjectInfo(){ProjectName = "WPFDevelopers",ProjectUrl="https://github.com/WPFDevelopersOrg/WPFDevelopers",ProjectDescription = "This is a UI library for WPF developers based on WPF custom advanced controls. Welcome to use.." }
             };
 
             this.list_ProjectReference.ItemsSource = list;
