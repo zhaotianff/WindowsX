@@ -7,6 +7,7 @@ namespace Master_Zhao.Shell.PInvoke
     {
         public static readonly int VK_CONTROL = 0x11;
         public static readonly int VK_MENU = 0x12;
+        public static readonly int VK_TAB = 0x09;
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern int GetRawInput(IntPtr lParam);

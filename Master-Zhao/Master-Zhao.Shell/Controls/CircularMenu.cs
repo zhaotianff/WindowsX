@@ -10,6 +10,9 @@ using System.Xml.Linq;
 
 namespace Master_Zhao.Shell.Controls
 {
+    /// <summary>
+    /// CircularMenu(Refrerence from https://github.com/WPFDevelopersOrg/WPFDevelopers,thanks @yanjinhuagood)
+    /// </summary>
     [TemplatePart(Name = ItemsControlTemplateName, Type = typeof(ItemsControl))]
     [TemplatePart(Name = EllipseGeometryTemplateName, Type = typeof(EllipseGeometry))]
     public class CircularMenu : ListBox
