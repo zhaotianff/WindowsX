@@ -1,5 +1,7 @@
+<font size=4> README: English | <a href="./README.md">中文</a>  </font>
+
 # Master-Zhao
-Master-Zhao is a toolset software for Windows. Including beautification, system management, gadgets, paddling and other functions.  
+Master-Zhao is a toolset software for Windows. Including beautification, system management, gadgets, paddling and other functions.   
 
 Why write such a software?  
 Willing to go through hardships and never forget the original intention.  
@@ -27,12 +29,12 @@ Right here waiting to recall, just at that time already disconsolate.
 </p>
 <h1 align="center">Master-Zhao :hammer_and_wrench: </h1>
 
-# Development environment
+# 开发环境
 * ~~.NET5~~ .NET Core 3.1
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 
-# Build
+# 构建
 Set the project to 64 bit
 <p align="center">
     <img align="center" alt="error dll format" src="Screenshots/error_dll_format.png" />
@@ -41,9 +43,9 @@ Set the project to 64 bit
     <img align="center" alt="build x64" src="Screenshots/build_x64.png" />
 </p>
 
-# Run directly
+# 直接运行
 If it just runs without compiling. After installing .NET Core 3.1 Runtime and Visual C++ 2019 x64 Redistributable Package, execute Master.Zhao.Shell.exe.
-* [.NET Core 3.1 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-3.1.27-windows-x64-installer)
+* [.NET Core 3.1 Runtime](https://dotnet.microsoft.com/zh-cn/download/dotnet/thank-you/runtime-desktop-3.1.27-windows-x64-installer)
 * [Visual C++ 2019 Redistributable Package (x64)](https://aka.ms/vs/16/release/VC_redist.x64.exe)
 
 # List of completed features  
@@ -80,36 +82,36 @@ If it just runs without compiling. After installing .NET Core 3.1 Runtime and Vi
 ## huá shuǐ
 
 # Features
-![main](Screenshots/main.png)
-**Main**      
 
-![static_wallpaper](Screenshots/static_wallpaper.png)  
-**Static wallpaper settings**  
+https://github.com/zhaotianff/Master-Zhao/assets/22126367/ed30324a-16e1-42d3-8519-863e574eef43
 
-![dynamic_wallpaper](Screenshots/dynamic_wallpaper.png)  
+**Static wallpaper settings**   
+
+---
+
+https://github.com/zhaotianff/Master-Zhao/assets/22126367/0f319b6f-b69c-4bb3-876a-0ca7ff60d205
+
 **Live Wallpaper Settings**  
-Currently, only local videos are supported as the desktop background, and other types of dynamic wallpapers will be added later.  
-
-![mouse_effect](Screenshots/mouse_effect.png)  
-**Mouse Effects**  
 For now, only a simple version is made, and some points to follow are drawn. You can add cool effects later  
 
-![center_taskbar](Screenshots/center_taskbar.png)  
-**Taskbar settings**  
-At present, settings such as taskbar transparency and Windows 11-style taskbar have been supported, and other settings are still being gradually improved.  
-**Note: If the taskbar or desktop display abnormally, you can restart the resource manager process. Find explorer.exe in task manager and restart it**  
+---
 
-![win98_startmenu](Screenshots/win98_startmenu.png)  
+https://github.com/zhaotianff/Master-Zhao/assets/22126367/4354bbfc-90c0-4566-a89d-5469ec6c1e82
+
 **Customize the start menu**  
 At present, a simplified version of the Windows 98 start menu has been made, which shields the Win key and the start menu button. If you open the start menu in other ways (such as Ctrl + ESC), the system start menu will still be displayed.  
 Some functions of the Windows 98 Start menu are still being perfected.  
 
-![fast_run](Screenshots/fast_run.png)
+---
+
+https://github.com/zhaotianff/Master-Zhao/assets/22126367/de833f95-83dc-4cb3-9ade-0d57ea3c6b56
+
 **Quick Start Menu**  
 This is a menu that supports quick startup. It was originally intended to be a menu effect similar to the weapon switching in "Shadow of the Tomb Raider".  
 But time is limited and there are still some technical difficulties, so I made a simple quick start menu.  
-How to use: After configuring the quick start item on the interface, press and hold the Alt key to display the menu at the mouse. At this time, press the 1/2/3/4 number key to run the corresponding menu item, or you can use the mouse to run the corresponding menu item. Click Run.  
+How to use: After configuring the quick start item on the interface, press and hold the Alt key to display the menu at the mouse. At this time, press the 1/2/3/4/Q/W/E/R key to run the corresponding menu item, or you can use the mouse to run the corresponding menu item. Click Run.    
 
+---
 ![boss_key](Screenshots/boss_key.png)  
 **Boss key**  
 This is a convenient function for paddling. After starting the boss key function, you can choose 5 response methods  
@@ -124,6 +126,10 @@ The currently set keys are Alt + Q (convenient to use with one hand with the lef
 
 # Development Plan
 - [ ] boss key
-
+  
+---
 # License
 [GPLV3](LICENSE)
+
+
+

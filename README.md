@@ -1,3 +1,5 @@
+<font size=4> README: 中文 | <a href="./README-en.md">English</a>  </font>
+
 # Master-Zhao
 Master-Zhao是Windows的一个工具集软件。 包括了美化、系统管理、小工具、划水等功能。  
 
