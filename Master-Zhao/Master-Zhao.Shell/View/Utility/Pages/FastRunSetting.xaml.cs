@@ -200,6 +200,9 @@ namespace Master_Zhao.Shell.Pages
             fastRunItem.DisplayName = "";
             fastRunItem.Path = "";
             fastRunItemList.Add(fastRunItem);
+
+            this.lst_FastRunItems.ScrollIntoView(fastRunItem);
+            this.lst_FastRunItems.SelectedIndex = fastRunItemList.Count - 1;
         }
 
         private void btn_RemoveFastRunItem_Click(object sender, RoutedEventArgs e)

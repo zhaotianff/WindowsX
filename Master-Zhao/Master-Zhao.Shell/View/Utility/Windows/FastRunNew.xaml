@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
         mc:Ignorable="d"
         WindowStyle="None" AllowsTransparency="True"
-        Background="Transparent"
+        Background="Transparent" ShowInTaskbar="False"
         Title="FastRun" Height="450" Width="450" PreviewMouseRightButtonDown="Window_PreviewMouseRightButtonDown" PreviewMouseMove="Window_PreviewMouseMove" Loaded="Window_Loaded" Topmost="True">
     <Grid>
         <Border Panel.ZIndex="-2" Visibility="Visible">

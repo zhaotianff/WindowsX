@@ -149,10 +149,37 @@ namespace Master_Zhao.Shell.View.Utility.Windows
                 SelectFastRunItem(3, true);
                 this.Visibility = Visibility.Hidden;
             }
+
+            if (Keyboard.IsKeyDown(Key.Q))
+            {
+                SelectFastRunItem(4, true);
+                this.Visibility = Visibility.Hidden;
+            }
+
+            if (Keyboard.IsKeyDown(Key.W))
+            {
+                SelectFastRunItem(5, true);
+                this.Visibility = Visibility.Hidden;
+            }
+
+            if (Keyboard.IsKeyDown(Key.E))
+            {
+                SelectFastRunItem(6, true);
+                this.Visibility = Visibility.Hidden;
+            }
+
+            if (Keyboard.IsKeyDown(Key.R))
+            {
+                SelectFastRunItem(7, true);
+                this.Visibility = Visibility.Hidden;
+            }
         }
 
         private void SelectFastRunItem(int index, bool isRun = false)
         {
+            if (index >= fastRunItemList.Count)
+                return;
+
            var item = fastRunItemList[index];
            ExecuteFastRunItem(item.Path);
         }
