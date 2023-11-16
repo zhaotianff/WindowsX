@@ -29,12 +29,12 @@ Right here waiting to recall, just at that time already disconsolate.
 </p>
 <h1 align="center">Master-Zhao :hammer_and_wrench: </h1>
 
-# 开发环境
+# Development environment
 * ~~.NET5~~ .NET Core 3.1
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 
-# 构建
+# Build
 Set the project to 64 bit
 <p align="center">
     <img align="center" alt="error dll format" src="Screenshots/error_dll_format.png" />
@@ -43,7 +43,7 @@ Set the project to 64 bit
     <img align="center" alt="build x64" src="Screenshots/build_x64.png" />
 </p>
 
-# 直接运行
+# Run directly
 If it just runs without compiling. After installing .NET Core 3.1 Runtime and Visual C++ 2019 x64 Redistributable Package, execute Master.Zhao.Shell.exe.
 * [.NET Core 3.1 Runtime](https://dotnet.microsoft.com/zh-cn/download/dotnet/thank-you/runtime-desktop-3.1.27-windows-x64-installer)
 * [Visual C++ 2019 Redistributable Package (x64)](https://aka.ms/vs/16/release/VC_redist.x64.exe)
