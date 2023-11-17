@@ -26,6 +26,9 @@ namespace Master_Zhao.Shell.Util
             if (string.IsNullOrEmpty(path))
                 return null;
 
+            if (File.Exists(path) == false)
+                return null;
+
             BitmapImage bi = new BitmapImage();
             bi.BeginInit();
             if(useStream)

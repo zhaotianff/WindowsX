@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
 
 namespace Master_Zhao.Shell.Model.SystemMgmt
 {
@@ -15,5 +16,6 @@ namespace Master_Zhao.Shell.Model.SystemMgmt
         public string Path { get; set; }
         public Version Version { get; set; }
         public StartupItemType StartupItemType { get; set; }
+        public ImageSource Icon { get; set; }
     }
 }

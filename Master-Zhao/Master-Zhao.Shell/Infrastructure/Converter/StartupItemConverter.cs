@@ -13,7 +13,7 @@ namespace Master_Zhao.Shell.Infrastructure.Converter
             switch(parameter.ToString())
             {
                 case "Name":
-                    return "启动项: " + value;
+                    return "" + value;
                 case "Path":
                     return "路径: " + value;
                 case "Description":

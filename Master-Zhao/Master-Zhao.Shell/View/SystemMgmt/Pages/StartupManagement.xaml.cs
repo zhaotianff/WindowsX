@@ -24,6 +24,9 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
     /// </summary>
     public partial class StartupManagement : Page
     {
+        List<StartupItem> startupItemList;
+        List<StartupItem> startupItemDisableList;
+
         public StartupManagement()
         {
             InitializeComponent();
@@ -31,9 +34,10 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
         private void LoadStartUpItem()
         {
-            var startupItemList = new List<StartupItem>();
-            startupItemList.AddRange(LoadRegistryStartupItem());
+            var startupItemList = LoadRegistryStartupItem();
             this.listbox.ItemsSource = startupItemList;
+
+            startupItemDisableList = LoadRegistryStartupDisableItem();
         }
 
         private List<StartupItem> LoadRegistryStartupItem()
@@ -70,14 +74,32 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 startupItem.HKey = tagStartupItem.hKey;
                 startupItem.RegPath = tagStartupItem.szRegPath;
                 startupItem.SamDesired = tagStartupItem.samDesired;
-                startupItem.Path = tagStartupItem.szPath;
+                startupItem.Path = FixPath(tagStartupItem.szPath);
                 startupItem.Description = tagStartupItem.szDescription;
                 startupItem.IsEnabled = tagStartupItem.bEnabled;
                 startupItem.StartupItemType = (StartupItemType)tagStartupItem.type;
+                startupItem.Icon = ImageHelper.GetBitmapImageFromLocalFile(IconHelper.GetCachedIconPath(startupItem.Path));
                 startupItemList.Add(startupItem);
             }
 
             return startupItemList;
+        }
+
+        private string FixPath(string path)
+        {
+            if (path.Contains("\""))
+            {
+                var startIndex = path.IndexOf("\"") + 1;
+                var lastIndex = path.LastIndexOf("\"");
+                return path.Substring(startIndex, lastIndex - startIndex);
+            }
+
+            return path;
+        }
+
+        private List<StartupItem> LoadRegistryStartupDisableItem()
+        {
+            return new List<StartupItem>();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
