@@ -170,6 +170,7 @@
     <ClCompile Include="PowerToolTests.cpp" />
     <ClCompile Include="RegToolTests.cpp" />
     <ClCompile Include="StartupToolTests.cpp" />
+    <ClCompile Include="StringHelperTests.cpp" />
     <ClCompile Include="SystemToolTests.cpp" />
   </ItemGroup>
   <ItemGroup>

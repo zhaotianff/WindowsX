@@ -2,6 +2,7 @@
 #include "CoreUtil.h"
 #include "DesktopTool.h"
 #include "SystemTool.h"
+#include"StringHelper.h"
 
 BOOL IsExistStartupRun(LPTSTR lpszPath, LPTSTR* lpszLnkPath)
 {
@@ -127,7 +128,57 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
     return TRUE;
 }
 
-std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hKeyRoot, LPCTSTR szRegPath, DWORD samDesired,BOOL bEnabled)
+BOOL GetStartupDisabledItems(byte* buffer, int nSizeTarget, int* count)
+{
+    std::vector<STARTUPITEM> totalVector;
+
+    //run local machine run
+    auto lstRun = InternalGetStartupItemList(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE);
+    if (lstRun.first == true)
+        totalVector.insert(totalVector.end(), lstRun.second.begin(), lstRun.second.end());
+
+    auto lstRun32 = InternalGetStartupItemList(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE_RUN32);
+    if (lstRun32.first == true)
+        totalVector.insert(totalVector.end(), lstRun32.second.begin(), lstRun32.second.end());
+
+    auto lstRunStartup = InternalGetStartupItemList(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE_STARTUPFOLDER, STARTUPITEM_TYPE::ShellStartup);
+    if (lstRunStartup.first == true)
+        totalVector.insert(totalVector.end(), lstRunStartup.second.begin(), lstRunStartup.second.end());
+
+    if (*count < totalVector.size())
+        return FALSE;
+
+    *count = totalVector.size();
+    auto nSizeSource = *count * sizeof(tagSTARTUPITEM);
+
+    if (count == 0)
+        return FALSE;
+
+    memcpy_s(buffer, nSizeTarget, totalVector.data(), nSizeSource);
+    return TRUE;
+}
+
+std::pair<bool, std::vector<STARTUPITEM>> InternalGetStartupItemList(HKEY hKeyRoot, LPCTSTR szRegPath, STARTUPITEM_TYPE startupType)
+{
+    std::vector<STARTUPITEM> lstStartItem;
+    HKEY wow64_32Key = NULL;
+    RegOpenKeyEx(hKeyRoot, szRegPath, 0, KEY_READ, &wow64_32Key);
+    bool reg32 = false;
+    if (wow64_32Key)
+    {
+        auto lst32 = InternalGetStartupItemList(wow64_32Key, hKeyRoot, szRegPath, KEY_READ, TRUE);
+        RegCloseKey(wow64_32Key);
+
+        if (lst32.size() > 0)
+            lstStartItem.insert(lstStartItem.end(), lst32.begin(), lst32.end());
+
+        reg32 = true;
+    }
+
+    return std::make_pair(reg32, lstStartItem);
+}
+
+std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hKeyRoot, LPCTSTR szRegPath, DWORD samDesired,BOOL bEnabled, STARTUPITEM_TYPE startupType)
 {
     std::vector<STARTUPITEM> lstStartup;
     TCHAR  achValue[MAX_VALUE_NAME];
@@ -163,7 +214,29 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hK
                 StringCchCopy(item.szName, MAX_VALUE_NAME, achValue);
                 DWORD dwPathSize = MAX_PATH;
                 item.szPath[0] = '\0';
-                QuerySZValue(hKeyStartupKey, NULL, achValue, item.szPath, &dwPathSize);
+
+                //TODO pass parameter to get binary/sz value
+                if (Contains(szRegPath, L"StartupApproved"))
+                {
+                    BYTE* buffer = new BYTE[1024];
+                    DWORD nBufferSize = 1024;
+                    if (QueryByteValue(hKeyStartupKey, NULL, achValue, buffer, &nBufferSize))
+                    {
+                        if (InternalGetIsEnableItem(buffer, nBufferSize))
+                        {
+                            StringCchCopy(item.szPath, MAX_VALUE_NAME, L"Enable");
+                        }
+                        else
+                        {
+                            StringCchCopy(item.szPath, MAX_VALUE_NAME, L"Disable");
+                        }
+                    }
+                }
+                else
+                {
+                    QuerySZValue(hKeyStartupKey, NULL, achValue, item.szPath, &dwPathSize);
+                }
+              
 
                 item.szDescription[0] = '\0';
                 auto szFileDescription = GetFileDescrption(item.szPath);
@@ -174,7 +247,7 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hK
                 StringCchCopy(item.szRegPath, MAX_VALUE_NAME, szRegPath);
                 item.samDesired = samDesired;
                 item.bEnabled = bEnabled;
-                item.type = STARTUPITEM_TYPE::Registry;
+                item.type = startupType;
 
                 lstStartup.push_back(item);
             }
@@ -307,4 +380,10 @@ BOOL EnableShellStartupItem(LPTSTR szName, LPTSTR szPath)
     StringCchCat(szEnabledPath, MAX_PATH, szName);
     StringCchCat(szEnabledPath, MAX_PATH, L".lnk");
     return MoveFile(szPath, szEnabledPath);
+}
+
+BOOL InternalGetIsEnableItem(BYTE* byteData, DWORD nSize)
+{
+    BYTE bytesEnable[] = { 06 ,00, 00, 00 ,00 ,00 };
+    return memcmp(byteData, bytesEnable, 6) == 0;
 }

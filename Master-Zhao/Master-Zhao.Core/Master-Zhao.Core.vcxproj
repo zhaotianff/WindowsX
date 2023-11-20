@@ -170,6 +170,7 @@
     <ClInclude Include="RegTool.h" />
     <ClInclude Include="ResTool.h" />
     <ClInclude Include="StartupTool.h" />
+    <ClInclude Include="StringHelper.h" />
     <ClInclude Include="SystemTool.h" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +184,7 @@
     <ClCompile Include="RegTool.cpp" />
     <ClCompile Include="ResTool.cpp" />
     <ClCompile Include="StartupTool.cpp" />
+    <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="SystemTool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

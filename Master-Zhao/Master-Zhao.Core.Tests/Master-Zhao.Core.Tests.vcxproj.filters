@@ -36,6 +36,9 @@
     <ClCompile Include="AppToolTests.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="StringHelperTests.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

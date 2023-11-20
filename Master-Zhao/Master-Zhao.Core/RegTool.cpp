@@ -150,6 +150,18 @@ BOOL QuerySZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, TCHAR* szVal
 	return FALSE;
 }
 
+BOOL QueryByteValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, BYTE* byteValue, DWORD* nSize)
+{
+	DWORD dwType = REG_SZ;
+	auto result = RegGetValue(hKey, lpSubKey, lpValueName, RRF_RT_REG_BINARY, &dwType, (PVOID)byteValue, nSize);
+
+	if (ERROR_SUCCESS == result)
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
 std::vector<std::wstring> GetAllSubKey(HKEY hKey, LPCTSTR lpSubKey)
 {
 	std::vector<std::wstring> list_key;

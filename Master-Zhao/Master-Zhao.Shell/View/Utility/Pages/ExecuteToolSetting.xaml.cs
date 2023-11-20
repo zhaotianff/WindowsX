@@ -25,6 +25,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
     public partial class ExecuteToolSetting : Page
     {
         private ExecuteItem currentSelectedItem;
+        private bool isLoaded = false;
 
         public ExecuteToolSetting()
         {
@@ -33,6 +34,9 @@ namespace Master_Zhao.Shell.View.Utility.Pages
 
         public async Task LoadExecuteListAsync()
         {
+            if (isLoaded == true)
+                return;
+
             var fullList = await GetAllExecuteItemInEnvironmentVariable();
             //list_installed.ItemsSource = LoadInstalledExecuteItems();
             list_exe.ItemsSource = fullList.Where(x => x.Name.ToLower().EndsWith(".exe")).SetItemType(ExecuteItemType.EXE);
@@ -41,6 +45,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
             list_dll.ItemsSource = LoadDllExecuteItemsFromResource().SetItemType(ExecuteItemType.DLL);
             list_mssetting.ItemsSource = LoadMsSettingItemsFromResource().SetItemType(ExecuteItemType.MSSETTING);
             list_shellfolder.ItemsSource = LoadShellShotcutItemsFromResource().SetItemType(ExecuteItemType.SHELL);
+            isLoaded = true;
         }
 
         private async Task<List<ExecuteItem>> GetAllExecuteItemInEnvironmentVariable()
