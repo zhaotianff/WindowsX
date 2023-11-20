@@ -40,6 +40,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
             list_control.ItemsSource = fullList.Where(x => x.Name.ToLower().EndsWith(".cpl")).SetItemType(ExecuteItemType.CPL);
             list_dll.ItemsSource = LoadDllExecuteItemsFromResource().SetItemType(ExecuteItemType.DLL);
             list_mssetting.ItemsSource = LoadMsSettingItemsFromResource().SetItemType(ExecuteItemType.MSSETTING);
+            list_shellfolder.ItemsSource = LoadShellShotcutItemsFromResource().SetItemType(ExecuteItemType.SHELL);
         }
 
         private async Task<List<ExecuteItem>> GetAllExecuteItemInEnvironmentVariable()
@@ -252,6 +253,33 @@ namespace Master_Zhao.Shell.View.Utility.Pages
                 list.Add(executeItem);
             }
 
+            return list;
+        }
+
+        private List<ExecuteItem> LoadShellShotcutItemsFromResource()
+        {
+            var list = new List<ExecuteItem>();
+            var listStr = new List<string>();
+
+            using (StringReader sr = new StringReader(Properties.Resources.shell))
+            {
+                var str = sr.ReadLine();
+
+                while (!string.IsNullOrEmpty(str))
+                {
+                    listStr.Add(str);
+                    str = sr.ReadLine();
+                }
+            }
+
+            for (int i = 0; i < listStr.Count; i += 2)
+            {
+                ExecuteItem executeItem = new ExecuteItem();
+                executeItem.Name = listStr[i];
+                executeItem.Path = listStr[i + 1];
+                executeItem.Description = listStr[i];
+                list.Add(executeItem);
+            }
             return list;
         }
     }

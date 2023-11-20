@@ -24,6 +24,7 @@ namespace Master_Zhao.Shell
             //unhandled exception
             //todo
             MessageBox.Show(e.Exception.Message);
+            e.Handled = true;
         }
     }
 }

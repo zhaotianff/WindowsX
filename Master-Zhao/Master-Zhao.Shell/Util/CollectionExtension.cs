@@ -35,6 +35,11 @@ namespace Master_Zhao.Shell.Util
                 {
                     item.Icon = ImageHelper.GetIconImageFromFile(Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "\\ImmersiveControlPanel\\SystemSettings.exe");
                 }
+
+                if(executeItemType == ExecuteItemType.SHELL)
+                {
+                    item.Icon = ImageHelper.GetIconImageFromFile(Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "\\explorer.exe");
+                }
                 yield return item;
             }
         }

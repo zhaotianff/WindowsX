@@ -21,6 +21,7 @@ namespace Master_Zhao.Shell.Model.Utility
         CPL, 
         SCRIPT, 
         DLL, 
-        MSSETTING
+        MSSETTING,
+        SHELL
     }
 }

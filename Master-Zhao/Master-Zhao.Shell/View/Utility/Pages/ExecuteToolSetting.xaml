@@ -49,6 +49,9 @@
             <TabItem Header="Windows设置项" ToolTip="Windows 10设置项">
                 <ListBox Style="{StaticResource ListBoxStyle}" Name="list_mssetting" ItemTemplate="{StaticResource ListBoxItemDataTemplate}" Margin="0,0,0,30" SelectionChanged="list_SelectionChanged" ItemContainerStyle="{StaticResource ListBoxItemStyle}" ContextMenu="{StaticResource ExecuteListContextMenu}"></ListBox>
             </TabItem>
+            <TabItem Header="Shell文件夹" ToolTip="Shell文件夹快捷方式">
+                <ListBox Style="{StaticResource ListBoxStyle}" Name="list_shellfolder" ItemTemplate="{StaticResource ListBoxItemDataTemplate}" Margin="0,0,0,30" SelectionChanged="list_SelectionChanged" ItemContainerStyle="{StaticResource ListBoxItemStyle}" ContextMenu="{StaticResource ExecuteListContextMenu}"></ListBox>
+            </TabItem>
         </TabControl>
 
         <Grid Grid.Column="1">

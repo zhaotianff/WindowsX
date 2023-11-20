@@ -1,0 +1,198 @@
+Display installed Windows Updates	
+shell:AppUpdatesFolder
+Open the user’s Start Menu\Administrative Tools folder (if any)	
+shell:Administrative Tools
+Open All Users Start Menu\Administrative Tools folder	
+shell:Common Administrative Tools
+Open the Public Application Data folder	
+shell:Common AppData
+Open the user’s Application Data folder	
+shell:AppData
+Open the user’s Application Data folder	
+shell:Local AppData
+Apps folder	
+shell:appsFolder
+Open the Temporary Internet Files folder	
+shell:Cache
+Open the user’s certificates folder	
+shell:SystemCertificates
+Open the Client Side Cache Offline Files folder, if supported	
+shell:CSCFolder
+Open the folder where files are stored before being burned to disc	
+shell:CD Burning
+Open the user’s Windows Contacts folder	
+shell:Contacts
+Open the Internet Explorer Cookies folder	
+shell:Cookies
+Open the user’s Credentials folder	
+shell:CredentialManager
+Open the list of Network Connections	
+shell:ConnectionsFolder
+Display the Control Panel	
+shell:ControlPanelFolder
+Open the user’s encryption keys folder	
+shell:Cryptokeys
+Open the user’s desktop folder	
+shell:Desktop
+Open the Public Desktop	
+shell:Common Desktop
+Opens the user’s AppData\Roaming\Microsoft\Protect folder	
+shell:DpAPIKeys
+Open the Public Documents folder	
+shell:Common Documents
+Open the user’s downloads folder	
+shell:Downloads
+Open the Public Downloads folder	
+shell:CommonDownloads
+Open the Internet Explorer Favorites folder	
+shell:Favorites
+Open the Fonts folder	
+shell:Fonts
+Open the user folder of downloaded Sidebar Gadgets	
+shell:Gadgets
+Open the default Sidebar Gadgets folder	
+shell:Default Gadgets
+Open the Games folder	
+shell:Games
+Open the user’s Game Explorer folder	
+shell:GameTasks
+Open the user’s History folder	
+shell:History
+Open the HomeGroup folder	
+shell:HomeGroupFolder
+Open the HomeGroup folder for the currently logged-on user (if any)	
+shell:HomeGroupCurrentUserFolder
+Launches Internet Explorer Applets and applications	
+shell:InternetFolder
+Open the hidden ImplicitAppShortcuts folder	
+shell:ImplicitAppShortcuts
+Open the Libraries folder	
+shell:Libraries
+Open the Documents library	
+shell:DocumentsLibrary
+Display public libraries, if any	
+shell:PublicLibraries
+Display your Music library	
+shell:MusicLibrary
+Open the Public Music folder	
+shell:CommonMusic
+Open the user’s Music folder	
+shell:My Music
+Open the Sample Music folder	
+shell:SampleMusic
+Open the user’s Pictures\Slide Shows folder (if present)	
+shell:PhotoAlbums
+Account Pictures	
+Shell:AccountPictures
+Display your Pictures library	
+shell:PicturesLibrary
+Open the Public Pictures folder	
+shell:CommonPictures
+Open the Sample Pictures folder	
+shell:SamplePictures
+Open the Windows Photo Gallery Original Images folder, if installed	
+shell:Original Images
+Display your Videos library	
+shell:VideosLibrary
+Open the user’s Links folder	
+shell:Links
+Open the Computer folder	
+shell:MyComputerFolder
+Open the user’s Network Places folder	
+shell:NetHood
+Open the Network Places folder	
+shell:NetworkPlacesFolder
+Display links provided by your PC manufacturer (if any)	
+shell:OEM Links
+Open the user’s Documents folder	
+shell:Personal
+Open the user’s printer shortcuts folder	
+shell:PrintHood
+Open the user’s profile folder	
+shell:Profile
+Access shortcuts pinned to the Start menu or Taskbar	
+shell:User Pinned
+Open the user’s \Music\Playlists folder	
+shell:Playlists
+Open the folder holding all user profiles	
+shell:UserProfiles
+Open the Printers folder	
+shell:PrintersFolder
+Open the user’s Start Menu Programs folder	
+shell:Programs
+Open the Public Start Menu Programs folder	
+shell:Common Programs
+Open the Control Panel "Install a program from the network" applet	
+shell:AddNewProgramsFolder
+Open the Control Panel "Uninstall or change a program" applet	
+shell:ChangeRemoveProgramsFolder
+Open the Program Files folder	
+shell:ProgramFiles
+Open the Program Files\Common Files folder	
+shell:ProgramFilesCommon
+Display 32-bit programs stored on 64-bit Windows,or the \Program Files folder on 32-bit Windows	
+shell:ProgramFilesX86
+Open the Common Files for 32-bit programs stored on 64-bit Windows,Or the Program Files\Common Files folder on 32-bit Windows	
+shell:ProgramFilesCommonX86
+Open the Public Game Explorer folder	
+shell:PublicGameTasks
+Open the Users\Public folder (Shared files)	
+shell:Public
+Open the Quick Launch folder (disabled by default)	
+shell:Quick Launch
+Open the user’s Recent Documents folder	
+shell:Recent
+Open the Recycle Bin	
+shell:RecycleBinFolder
+Open the Windows Resources folder (themes are stored here)	
+shell:ResourceDir
+Display the user's Ringtones folder	
+shell:Ringtones
+Open the Public ringtones folder.	
+shell:CommonRingtones
+Open the Saved Games folder	
+shell:SavedGames
+Open the saved searches folder	
+shell:Searches
+Open the Windows Search tool	
+shell:SearchHomeFolder
+Open the user’s Send To folder	
+shell:SendTo
+Open the user’s Start Menu folder	
+shell:Start Menu
+Open the Public Start Menu folder	
+shell:Common Start Menu
+Open the user’s Startup folder	
+shell:Startup
+Open the Public Startup folder	
+shell:Common Startup
+Display Sync Centre	
+shell:SyncCenterFolder
+Display Sync Centre Conflicts	
+shell:ConflictFolder
+Display Sync Centre Results	
+shell:SyncResultsFolder
+Open the Sync Centre Setup options	
+shell:SyncSetupFolder
+Open the Windows System folder	
+shell:System
+Open the Windows System folder for 32-bit files on 64-bit Windows,Or \Windows\System32 on 32-bit Windows	
+shell:Systemx86
+Open the user’s Templates folder	
+shell:Templates
+Open the Public Templates folder	
+shell:Common Templates
+Display further user tiles	
+shell:Roaming Tiles
+Display your user tiles (the images you can use for your account)	
+shell:UserTiles
+Open the Public user tiles folder	
+shell:PublicUserTiles
+Open the user’s Videos folder	
+shell:My Video
+Open the Public Video folder	
+shell:CommonVideo
+Open the Sample Videos folder	
+shell:SampleVideos
+Open the Windows installation folder (usually \Windows)	
+shell:Windows

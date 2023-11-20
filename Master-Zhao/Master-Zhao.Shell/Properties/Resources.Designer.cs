@@ -116,5 +116,29 @@ namespace Master_Zhao.Shell.Properties {
                 return ResourceManager.GetString("rundll32", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Display installed Windows Updates	
+        ///shell:AppUpdatesFolder
+        ///Open the user’s Start Menu\Administrative Tools folder (if any)	
+        ///shell:Administrative Tools
+        ///Open All Users Start Menu\Administrative Tools folder	
+        ///shell:Common Administrative Tools
+        ///Open the Public Application Data folder	
+        ///shell:Common AppData
+        ///Open the user’s Application Data folder	
+        ///shell:AppData
+        ///Open the user’s Application Data folder	
+        ///shell:Local AppData
+        ///Apps folder	
+        ///shell:appsFolder
+        ///Open the Temporary Internet Files folder	
+        ///shell:Ca [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string shell {
+            get {
+                return ResourceManager.GetString("shell", resourceCulture);
+            }
+        }
     }
 }
