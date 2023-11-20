@@ -57,15 +57,6 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
         totalVector.insert(totalVector.end(), list.begin(),list.end());
     }
 
-    HKEY wow64_32Key_disable = NULL;
-    RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE, 0, KEY_READ | KEY_WOW64_32KEY, &wow64_32Key_disable);
-    if (wow64_32Key_disable)
-    {
-        auto list_disable = InternalGetStartupItemList(wow64_32Key_disable, HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE, KEY_READ | KEY_WOW64_32KEY, FALSE);
-        RegCloseKey(wow64_32Key_disable);
-        totalVector.insert(totalVector.end(), list_disable.begin(), list_disable.end());
-    }
-
     //run wow64_64
     HKEY wow64_64Key = NULL;
     RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH, 0, KEY_READ | KEY_WOW64_64KEY, &wow64_64Key);
@@ -75,16 +66,6 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
         auto list2 = InternalGetStartupItemList(wow64_64Key, HKEY_LOCAL_MACHINE, RUN_REGPATH, KEY_READ | KEY_WOW64_64KEY,TRUE);
         RegCloseKey(wow64_64Key);
         totalVector.insert(totalVector.end(), list2.begin(), list2.end());
-    }
-
-    HKEY wow64_64Key_disable = NULL;
-    RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE, 0, KEY_READ | KEY_WOW64_64KEY, &wow64_64Key_disable);
-
-    if (wow64_64Key_disable)
-    {
-        auto list2_disable = InternalGetStartupItemList(wow64_64Key_disable, HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE, KEY_READ | KEY_WOW64_64KEY, FALSE);
-        RegCloseKey(wow64_64Key_disable);
-        totalVector.insert(totalVector.end(), list2_disable.begin(), list2_disable.end());
     }
 
     //run once wow64_32
@@ -98,16 +79,6 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
         totalVector.insert(totalVector.end(), list3.begin(), list3.end());
     }
 
-    HKEY runonce64_32_Key_disable = NULL;
-    RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN_ONCE_REGPATH_DISABLE, 0, KEY_READ | KEY_WOW64_32KEY, &runonce64_32_Key_disable);
-
-    if (runonce64_32_Key_disable)
-    {
-        auto list3_disable = InternalGetStartupItemList(runonce64_32_Key_disable, HKEY_LOCAL_MACHINE, RUN_ONCE_REGPATH_DISABLE, KEY_READ | KEY_WOW64_32KEY, FALSE);
-        RegCloseKey(runonce64_32_Key_disable);
-        totalVector.insert(totalVector.end(), list3_disable.begin(), list3_disable.end());
-    }
-
     //current user run 
     HKEY run_user_Key = NULL;
     RegOpenKeyEx(HKEY_CURRENT_USER, RUN_USER_REGPATH, 0, KEY_READ, &run_user_Key);
@@ -117,16 +88,6 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
         auto list4 = InternalGetStartupItemList(run_user_Key, HKEY_CURRENT_USER, RUN_USER_REGPATH, KEY_READ , TRUE);
         RegCloseKey(run_user_Key);
         totalVector.insert(totalVector.end(), list4.begin(), list4.end());
-    }
-
-    HKEY run_user_Key_disable = NULL;
-    RegOpenKeyEx(HKEY_CURRENT_USER, RUN_USER_REGPATH_DISABLE, 0, KEY_READ, &run_user_Key_disable);
-
-    if (run_user_Key_disable)
-    {
-        auto list4_disable = InternalGetStartupItemList(run_user_Key_disable, HKEY_CURRENT_USER, RUN_USER_REGPATH_DISABLE, KEY_READ, FALSE);
-        RegCloseKey(run_user_Key_disable);
-        totalVector.insert(totalVector.end(), list4_disable.begin(), list4_disable.end());
     }
 
     TCHAR szStartupPath[MAX_PATH]{};
