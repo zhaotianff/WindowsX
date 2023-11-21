@@ -92,6 +92,7 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             var themeControl = sender as ThemeControl;
             var rd = Application.Current.Resources.MergedDictionaries[1];
             rd.Source = new Uri(themeControl.ThemeFile, UriKind.Absolute);
+            GlobalConfig.Instance.MainConfig.BackgroundSetting.BackgroundIndex = wrap_theme.Children.IndexOf(themeControl);
         }
 
         private ThemeControl AppendBackgroundItem(string imagePath = "",string colorStr = "",string title = "")

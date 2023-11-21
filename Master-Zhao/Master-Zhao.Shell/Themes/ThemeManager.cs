@@ -10,7 +10,7 @@ namespace Master_Zhao.Shell.Themes
         public static void SwitchTheme(LocalTheme localTheme)
         {
             var rd = Application.Current.Resources.MergedDictionaries[1];
-            rd.Source = new Uri($"pack://application:,,,/Themes/{nameof(localTheme)}.xaml", UriKind.Absolute);
+            rd.Source = new Uri($"pack://application:,,,/Themes/{localTheme.ToString()}.xaml", UriKind.Absolute);
         }
     }
 

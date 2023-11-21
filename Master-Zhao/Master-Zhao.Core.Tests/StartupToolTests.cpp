@@ -41,11 +41,14 @@ namespace MasterZhaoCoreTests
 
 			GetStartupItems(buffer, size, &count);
 
-			buffer += sizeof(tagSTARTUPITEM) * 1;
+			byte* offsetBuffer = buffer + sizeof(tagSTARTUPITEM) * 5;
 
-			tagSTARTUPITEM* item = (tagSTARTUPITEM*)buffer;
+			tagSTARTUPITEM* item = (tagSTARTUPITEM*)offsetBuffer;
 
-			auto result = DisableStartupItem(item->hKey, item->szRegPath, item->samDesired, item->szName, item->szPath);
+			//registry
+			auto result = DisableStartupItem(item->hKey, item->szRegPath, item->samDesired, item->szName,STARTUPITEM_TYPE::Registry);
+			//shellstartup
+			//auto result = DisableStartupItem(item->hKey, item->szPath, item->samDesired, item->szName, STARTUPITEM_TYPE::ShellStartup);
 
 			delete[] buffer;
 
@@ -60,9 +63,11 @@ namespace MasterZhaoCoreTests
 
 			GetStartupItems(buffer, size, &count);
 
-			tagSTARTUPITEM* item = (tagSTARTUPITEM*)buffer;
+			byte* offsetBuffer = buffer + sizeof(tagSTARTUPITEM) * 5;
 
-			auto result = EnableStartupItem(item->hKey, item->szRegPath, item->samDesired, item->szName, item->szPath);
+			tagSTARTUPITEM* item = (tagSTARTUPITEM*)offsetBuffer;
+
+			auto result = EnableStartupItem(item->hKey, item->szRegPath, item->samDesired, item->szName, item->type);
 
 			delete[] buffer;
 

@@ -7,6 +7,8 @@ namespace Master_Zhao.AdminTask
 {
     public class AdminTaskHelper
     {
+        private const int STARTUP_ITEM_TYPE_REGISTRY = 0;
+
         [DllImport("MasterZhaoCore.dll")]
         public static extern void RegisterWindowsPhotoViewerFormat();
 
@@ -14,10 +16,10 @@ namespace Master_Zhao.AdminTask
         public static extern void UnregisterWindowsPhotoViewerFormat();
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern bool DisableStartupItem(IntPtr hKey, [MarshalAs(UnmanagedType.LPWStr)] string szRegPath, uint samDesired, [MarshalAs(UnmanagedType.LPWStr)] string szName, [MarshalAs(UnmanagedType.LPWStr)] string szPath);
+        public static extern bool DisableStartupItem(IntPtr hKey, [MarshalAs(UnmanagedType.LPWStr)] string szRegPath, uint samDesired, [MarshalAs(UnmanagedType.LPWStr)] string szName, int type);
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern bool EnableStartupItem(IntPtr hKey, [MarshalAs(UnmanagedType.LPWStr)]string szRegPath, uint samDesired, [MarshalAs(UnmanagedType.LPWStr)] string szName, [MarshalAs(UnmanagedType.LPWStr)] string szPath);
+        public static extern bool EnableStartupItem(IntPtr hKey, [MarshalAs(UnmanagedType.LPWStr)]string szRegPath, uint samDesired, [MarshalAs(UnmanagedType.LPWStr)] string szName, int type);
 
 
         public static void DoRegisterTask(string[] args)
@@ -50,11 +52,11 @@ namespace Master_Zhao.AdminTask
 
             if(flag)
             {
-                var result = EnableStartupItem(hKey, regPath, samDesired, name, path);
+                var result = EnableStartupItem(hKey, regPath, samDesired, name, STARTUP_ITEM_TYPE_REGISTRY);
             }
             else
             {
-                DisableStartupItem(hKey, regPath, samDesired, name, path);
+                DisableStartupItem(hKey, regPath, samDesired, name, STARTUP_ITEM_TYPE_REGISTRY);
             }
         }
     }

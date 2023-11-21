@@ -24,7 +24,7 @@ namespace Master_Zhao.Shell.PInvoke
         public bool bEnabled;
         public int type;
     }
-    
+
 
     public class StartupTool
     {
@@ -41,15 +41,15 @@ namespace Master_Zhao.Shell.PInvoke
         public static extern bool GetStartupDisabledItems(IntPtr buffer, int nSizeTarget, ref int count);
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern bool DisableStartupItem(IntPtr hKey, string szRegPath, uint samDesired, string szName, string szPath);
+        public static extern bool DisableStartupItem(IntPtr hKey, [MarshalAs(UnmanagedType.LPWStr)] string szRegPath, uint samDesired, [MarshalAs(UnmanagedType.LPWStr)] string szName, int type);
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern bool EnableStartupItem(IntPtr hKey, string szRegPath, uint samDesired, string szName, string szPath);
+        public static extern bool EnableStartupItem(IntPtr hKey, [MarshalAs(UnmanagedType.LPWStr)] string szRegPath, uint samDesired, [MarshalAs(UnmanagedType.LPWStr)] string szName, int type);
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool DisableShellStartupItem([MarshalAs(UnmanagedType.LPWStr)]string szName, [MarshalAs(UnmanagedType.LPWStr)]string szPath);
 
         [DllImport("MasterZhaoCore.dll")]
-        public static extern bool EnableShellStartupItem([MarshalAs(UnmanagedType.LPWStr)] string szName, [MarshalAs(UnmanagedType.LPWStr)] string szPath);
+        public static extern bool EnableShellStartupItem( [MarshalAs(UnmanagedType.LPWStr)] string szName, [MarshalAs(UnmanagedType.LPWStr)] string szPath);
     }
 }

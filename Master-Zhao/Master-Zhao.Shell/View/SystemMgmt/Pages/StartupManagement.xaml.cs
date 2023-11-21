@@ -186,13 +186,20 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             if (startupItem == null)
                 return;
 
-            if(startupItem.StartupItemType == StartupItemType.Registry)
+            if ((uint)startupItem.HKey == 0x80000002)
             {
                 await ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-enable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath, startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
             }
-            else if(startupItem.StartupItemType == StartupItemType.ShellStartup)
+            else
             {
-                StartupTool.EnableShellStartupItem(startupItem.Name, startupItem.Path);
+                if(startupItem.StartupItemType == StartupItemType.ShellStartup)
+                {
+                    StartupTool.EnableStartupItem(startupItem.HKey, startupItem.Path, startupItem.SamDesired, startupItem.Name, (int)startupItem.StartupItemType);
+                }
+                else
+                {
+                    StartupTool.EnableStartupItem(startupItem.HKey, startupItem.RegPath, startupItem.SamDesired, startupItem.Name, (int)startupItem.StartupItemType);
+                }
             }
             
             LoadStartUpItem();
@@ -203,13 +210,23 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             if (startupItem == null)
                 return;
 
-            if(startupItem.StartupItemType == StartupItemType.Registry)
+            //HKEY_LOCAL_MACHINE
+            if((uint)startupItem.HKey == 0x80000002)
             {
                 await ProcessHelper.ExecuteAdminTask(new string[] { "startup", "-disable", ((uint)startupItem.HKey).ToString(), startupItem.RegPath, startupItem.SamDesired.ToString(), startupItem.Name, startupItem.Path });
             }
-            else if(startupItem.StartupItemType == StartupItemType.ShellStartup)
+            else
             {
-                StartupTool.DisableShellStartupItem(startupItem.Name, startupItem.Path);
+                //shell:startup
+                if(startupItem.StartupItemType == StartupItemType.ShellStartup)
+                {
+                    StartupTool.DisableStartupItem(startupItem.HKey, startupItem.Path, startupItem.SamDesired, startupItem.Name, (int)startupItem.StartupItemType);
+                }
+                else  ////HKEY_CURRENT_USER
+                {
+                    StartupTool.DisableStartupItem(startupItem.HKey, startupItem.RegPath, startupItem.SamDesired, startupItem.Name, (int)startupItem.StartupItemType);
+                }
+               
             }
             LoadStartUpItem();
         }

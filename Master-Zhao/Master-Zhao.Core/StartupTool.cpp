@@ -320,28 +320,24 @@ std::vector<STARTUPITEM> InternalGetStartupItemListFromShell(LPTSTR szStartupPat
     return list;
 }
 
-BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath)
+BOOL DisableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName,STARTUPITEM_TYPE type)
 {
-    std::wstring strDisabledPath = szRegPath;
-    strDisabledPath += L"\\Disabled";
-    HKEY hSubKey = NULL;
-    auto lResult = RegOpenKeyEx(hKey, strDisabledPath.data(), 0, samDesired, &hSubKey);
-    RegCloseKey(hSubKey);
-
-    if (lResult == ERROR_FILE_NOT_FOUND)
+    std::wstring strApprovedPath = szRegPath;
+    std::wstring strName = szName;
+    strApprovedPath = strApprovedPath.substr(0, strApprovedPath.find_last_of('\\') + 1);
+    if (type == STARTUPITEM_TYPE::ShellStartup)
     {
-        lResult = RegCreateKey(hKey, strDisabledPath.data(), &hSubKey);
+        hKey = HKEY_CURRENT_USER;
+        strName = szRegPath;
+        strName = strName.substr(strName.find_last_of('\\') + 1);
+        strApprovedPath = LR"(Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\StartupFolder)";
     }
-
-    if (lResult != ERROR_SUCCESS)
-        return FALSE;
-
-    //TODO backup register
-
-    BOOL bCreate = SetSZValue(hKey, strDisabledPath.data(), szName, szPath);
-    BOOL bRemove = RemovRegValue(hKey, szRegPath, szName);
-
-    return bCreate && bRemove;
+    else
+    {
+        strApprovedPath += L"Explorer\\StartupApproved\\Run";
+    }
+    BYTE byteEnable[] = { 03,00,00,00 ,00,00,00,00,00,00,00,00 };
+    return SetByteValue(hKey, strApprovedPath.data(), strName.data(), byteEnable, sizeof(byteEnable));
 }
 
 BOOL DisableShellStartupItem(LPTSTR szName, LPTSTR szPath)
@@ -354,23 +350,24 @@ BOOL DisableShellStartupItem(LPTSTR szName, LPTSTR szPath)
     return MoveFile(szPath, szDisabledPath);
 }
 
-BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName, LPTSTR szPath)
+BOOL EnableStartupItem(HKEY hKey, LPTSTR szRegPath, DWORD samDesired, LPTSTR szName,STARTUPITEM_TYPE type)
 {
-    std::wstring strEnabledPath = szRegPath;
-    strEnabledPath = strEnabledPath.substr(0, strEnabledPath.length() - lstrlen(L"\\Disabled"));
-    HKEY hSubKey = NULL;
-    auto lResult = RegOpenKeyEx(hKey, strEnabledPath.data(), 0, samDesired, &hSubKey);
-    RegCloseKey(hSubKey);
-
-    if (lResult == ERROR_FILE_NOT_FOUND)
+    std::wstring strApprovedPath = szRegPath;
+    std::wstring strName = szName;
+    strApprovedPath = strApprovedPath.substr(0, strApprovedPath.find_last_of('\\') + 1);
+    if (type == STARTUPITEM_TYPE::ShellStartup)
     {
-        return FALSE;
+        strName = szRegPath;
+        strName = strName.substr(strName.find_last_of('\\') + 1);
+        hKey = HKEY_CURRENT_USER;
+        strApprovedPath = LR"(Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\StartupFolder)";
     }
-
-    BOOL bCreate = SetSZValue(hKey, strEnabledPath.data(), szName, szPath);
-    BOOL bRemove = RemovRegValue(hKey, szRegPath, szName);
-
-    return bCreate && bRemove;
+    else
+    {
+        strApprovedPath += L"Explorer\\StartupApproved\\Run";
+    }
+    BYTE byteEnable[] = { 02,00,00,00 ,00,00,00,00,00,00,00,00 }; //or { 06,00,00,00 ,00,00,00,00,00,00,00,00 };
+    return SetByteValue(hKey, strApprovedPath.data(), strName.data(), byteEnable, sizeof(byteEnable));
 }
 
 BOOL EnableShellStartupItem(LPTSTR szName, LPTSTR szPath)
@@ -385,6 +382,7 @@ BOOL EnableShellStartupItem(LPTSTR szName, LPTSTR szPath)
 
 BOOL InternalGetIsEnableItem(BYTE* byteData, DWORD nSize)
 {
-    BYTE bytesEnable[] = { 06 ,00, 00, 00 ,00 ,00 };
-    return memcmp(byteData, bytesEnable, 6) == 0;
+    BYTE bytesEnable_1[] = { 06 ,00, 00, 00 ,00 ,00 };
+    BYTE bytesEnable_2[] = { 02 ,00, 00, 00 ,00 ,00 };
+    return memcmp(byteData, bytesEnable_1, 6) == 0 || memcmp(byteData, bytesEnable_2, 6) == 0;
 }

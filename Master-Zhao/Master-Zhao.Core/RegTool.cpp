@@ -54,6 +54,33 @@ BOOL SetSZValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName,LPCTSTR value)
 	return TRUE;
 }
 
+BOOL SetByteValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName, BYTE* data, DWORD nSize)
+{
+	HKEY hSubKey = NULL;
+	auto lResult = RegOpenKeyEx(hKey, lpSubKey, 0, KEY_WRITE, &hSubKey);
+
+	if (lResult != ERROR_SUCCESS)
+	{
+		return FALSE;
+	}
+
+	lResult = RegSetValueEx(hSubKey, lpValueName, 0, REG_BINARY, data, nSize);
+
+	if (lResult != ERROR_SUCCESS)
+	{
+		return FALSE;
+	}
+
+	if (hSubKey)
+	{
+		lResult = RegCloseKey(hSubKey);
+		if (lResult != ERROR_SUCCESS)
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
 BOOL RemovRegValue(HKEY hKey, LPCTSTR lpSubKey, LPCTSTR lpValueName)
 {
 	HKEY hSubKey = NULL;
