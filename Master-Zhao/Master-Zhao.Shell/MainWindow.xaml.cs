@@ -3,6 +3,7 @@ using Master_Zhao.Shell.Infrastructure.Navigation;
 using Master_Zhao.Shell.Pages;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.StartMenu;
+using Master_Zhao.Shell.Themes;
 using Master_Zhao.Shell.Util;
 using Master_Zhao.Shell.View.Setting;
 using System;
@@ -35,6 +36,7 @@ namespace Master_Zhao.Shell
             InitializeComponent();
             InitializeAnimation();
             InitializeBackground();
+            InitializeTheme();
             DoStartupTasksAsync();
             CreateNotifyIcon();
         }
@@ -50,7 +52,7 @@ namespace Master_Zhao.Shell
         private void InitializeBackground()
         {
             var wallpaperConfig = GlobalConfig.Instance.MainConfig.BackgroundSetting;
-            var index = wallpaperConfig.Index;
+            var index = wallpaperConfig.BackgroundIndex;
             var tempIndex = index;
             var colorsLength = wallpaperConfig.Colors.Count;
             var resourcesLength = wallpaperConfig.ResourceImages.Count;
@@ -78,6 +80,11 @@ namespace Master_Zhao.Shell
             {
 
             }
+        }
+
+        private void InitializeTheme()
+        {
+            ThemeManager.SwitchTheme((LocalTheme)GlobalConfig.Instance.MainConfig.BackgroundSetting.ThemeIndex);
         }
 
         private async void DoStartupTasksAsync()

@@ -1,6 +1,7 @@
 ﻿{
     "BackgroundSetting":{
-        "Index":4,
+        "BackgroundIndex":1,
+        "ThemeIndex":0,
         "Colors":[
             "Transparent",
             "White",

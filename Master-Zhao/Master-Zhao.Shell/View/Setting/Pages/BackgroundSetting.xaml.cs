@@ -145,7 +145,7 @@ namespace Master_Zhao.Shell.View.Setting.Pages
             }
 
             var index = this.wrap.Children.IndexOf(themeControl);
-            GlobalConfig.Instance.MainConfig.BackgroundSetting.Index = index;
+            GlobalConfig.Instance.MainConfig.BackgroundSetting.BackgroundIndex = index;
         }
 
         private void DoubleAnimation_Completed(object sender, EventArgs e)

@@ -7,7 +7,8 @@ namespace Master_Zhao.Config.Model
 {
     public class BackgroundSetting
     {
-        public int Index { get; set; }
+        public int BackgroundIndex { get; set; }
+        public int ThemeIndex { get; set; }
 
         public List<string> Colors { get; set; } = new List<string>();
 
@@ -16,6 +17,11 @@ namespace Master_Zhao.Config.Model
         public List<string> LocalImages { get; set; } = new List<string>();
 
         public float Opacity { get; set; }
+
+        /// <summary>
+        /// reserved
+        /// </summary>
+        public bool IsBlurBackground { get; set; }
     }
 
     public class MainConfig
