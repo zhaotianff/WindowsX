@@ -130,6 +130,10 @@ BOOL GetStartupDisabledItems(byte* buffer, int nSizeTarget, int* count)
     if (lstRun.first == true)
         totalVector.insert(totalVector.end(), lstRun.second.begin(), lstRun.second.end());
 
+    auto lstRunCurrentUser = InternalGetStartupItemList(HKEY_CURRENT_USER, RUN_REGPATH_DISABLE);
+    if (lstRunCurrentUser.first == true)
+        totalVector.insert(totalVector.end(), lstRunCurrentUser.second.begin(), lstRunCurrentUser.second.end());
+
     auto lstRun32 = InternalGetStartupItemList(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE_RUN32);
     if (lstRun32.first == true)
         totalVector.insert(totalVector.end(), lstRun32.second.begin(), lstRun32.second.end());
@@ -137,6 +141,10 @@ BOOL GetStartupDisabledItems(byte* buffer, int nSizeTarget, int* count)
     auto lstRunStartup = InternalGetStartupItemList(HKEY_LOCAL_MACHINE, RUN_REGPATH_DISABLE_STARTUPFOLDER, STARTUPITEM_TYPE::ShellStartup);
     if (lstRunStartup.first == true)
         totalVector.insert(totalVector.end(), lstRunStartup.second.begin(), lstRunStartup.second.end());
+
+    auto lstRunStartupCurrentUser = InternalGetStartupItemList(HKEY_CURRENT_USER, RUN_REGPATH_DISABLE_STARTUPFOLDER, STARTUPITEM_TYPE::ShellStartup);
+    if (lstRunStartupCurrentUser.first == true)
+        totalVector.insert(totalVector.end(), lstRunStartupCurrentUser.second.begin(), lstRunStartupCurrentUser.second.end());
 
     if (*count < totalVector.size())
         return FALSE;

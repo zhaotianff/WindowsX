@@ -57,8 +57,8 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
         private List<StartupItem> LoadRegistryStartupItem(bool isDisable = false)
         {
             var startupItemList = new List<StartupItem>();
-            //temp 10
-            int count = 10;
+            //temp 30
+            int count = 30;
             var itemSize = Marshal.SizeOf<tagSTARTUPITEM>();
             int size = count * itemSize;
             IntPtr buffer = Marshal.AllocHGlobal(size);

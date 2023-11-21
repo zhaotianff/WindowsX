@@ -23,13 +23,14 @@
                 <!--lang resource-->
                 <ResourceDictionary Source="Resources/StringResources/MMC.xaml"/>
 
-                <!--FontAwesome-->
-                <ResourceDictionary Source="FontAwesome/FontAwesomeStyle.xaml"/>
-                
                 <!--Theme-->
                 <ResourceDictionary Source="Themes/Night1.xaml"/>
                 <!--<ResourceDictionary Source="Themes/Default.xaml"/>-->
                 
+                <!--FontAwesome-->
+                <ResourceDictionary Source="FontAwesome/FontAwesomeStyle.xaml"/>
+
+                <!--Control Style-->
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/GroupBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/CheckBoxStyle.xaml"/>
@@ -39,6 +40,7 @@
                 <ResourceDictionary Source="Styles/ImageStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TabControlStyle.xaml"/>
 
+                <!--Resources-->
                 <ResourceDictionary Source="Resources/ContextMenu/NotifyIconContextMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
