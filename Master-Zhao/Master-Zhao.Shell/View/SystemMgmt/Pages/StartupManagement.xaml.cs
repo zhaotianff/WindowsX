@@ -35,12 +35,26 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
         private void LoadStartUpItem()
         {
             var startupItemList = LoadRegistryStartupItem();
+            startupItemDisableList = LoadRegistryStartupItem(true);
+            UpdateStartupItemStatus(startupItemList, startupItemDisableList);
             this.listbox.ItemsSource = startupItemList;
-
-            startupItemDisableList = LoadRegistryStartupDisableItem();
         }
 
-        private List<StartupItem> LoadRegistryStartupItem()
+        private void UpdateStartupItemStatus(List<StartupItem> itemList,List<StartupItem> itemDisableList)
+        {
+            foreach (var item in itemList)
+            {
+                foreach (var itemDisable in itemDisableList)
+                {
+                    if(item.Name == itemDisable.Name)
+                    {
+                        item.IsEnabled = itemDisable.Path == "Enable";
+                    }
+                }
+            }
+        }
+
+        private List<StartupItem> LoadRegistryStartupItem(bool isDisable = false)
         {
             var startupItemList = new List<StartupItem>();
             //temp 10
@@ -48,7 +62,17 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             var itemSize = Marshal.SizeOf<tagSTARTUPITEM>();
             int size = count * itemSize;
             IntPtr buffer = Marshal.AllocHGlobal(size);
-            var result = PInvoke.StartupTool.GetStartupItems(buffer, size, ref count);
+            IntPtr pRaw = buffer;
+            var result = false;
+
+            if(isDisable)
+            {
+                result = PInvoke.StartupTool.GetStartupDisabledItems(buffer, size, ref count);
+            }
+            else
+            {
+                result = PInvoke.StartupTool.GetStartupItems(buffer, size, ref count);
+            }
 
             if (result == false)
                 return startupItemList;
@@ -80,7 +104,11 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 startupItem.StartupItemType = (StartupItemType)tagStartupItem.type;
                 startupItem.Icon = ImageHelper.GetBitmapImageFromLocalFile(IconHelper.GetCachedIconPath(startupItem.Path));
                 startupItemList.Add(startupItem);
+
+                Marshal.FreeHGlobal(newPtr);
             }
+
+            Marshal.FreeHGlobal(pRaw);
 
             return startupItemList;
         }
@@ -94,12 +122,16 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 return path.Substring(startIndex, lastIndex - startIndex);
             }
 
-            return path;
-        }
+            if(path.Contains("%"))
+            {
+                var startIndex = path.IndexOf("%");
+                var endIndex = path.LastIndexOf("%") + 1;
+                var environmentVariaibleName = path.Substring(startIndex, endIndex);
+                var variableValue = Environment.GetEnvironmentVariable(environmentVariaibleName.Replace("%",""));
+                path = path.Replace(environmentVariaibleName, variableValue);
+            }
 
-        private List<StartupItem> LoadRegistryStartupDisableItem()
-        {
-            return new List<StartupItem>();
+            return path;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

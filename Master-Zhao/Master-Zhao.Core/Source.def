@@ -69,6 +69,7 @@ IsExistStartupRun
 CreateStartupRun
 RemoveStartupRun
 GetStartupItems
+GetStartupDisabledItems
 DisableStartupItem
 DisableShellStartupItem
 EnableStartupItem

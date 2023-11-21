@@ -97,13 +97,6 @@ BOOL GetStartupItems(byte* buffer,int nSizeTarget, int* count)
     {
         auto list5 = InternalGetStartupItemListFromShell(szStartupPath,TRUE);
         totalVector.insert(totalVector.end(), list5.begin(), list5.end());
-
-        StringCchCat(szStartupPath, MAX_PATH, L"\\Disabled");
-        auto list6 = InternalGetStartupItemListFromShell(szStartupPath, FALSE);
-        totalVector.insert(totalVector.end(), list6.begin(), list6.end());
-
-        //TODO 
-        //disable & enable shell start up
     }
 
     if (*count < totalVector.size())

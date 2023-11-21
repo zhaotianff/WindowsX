@@ -21,6 +21,18 @@ namespace MasterZhaoCoreTests
 			delete[] buffer;
 		}
 
+		TEST_METHOD(TestGetStartupDisableItemList)
+		{
+			int count = 10;
+			int size = sizeof(tagSTARTUPITEM) * count;
+			byte* buffer = new byte[size]{};
+
+			auto result = GetStartupDisabledItems(buffer, size, &count);
+			Assert::IsTrue(result);
+			delete[] buffer;
+			buffer = nullptr;
+		}
+
 		TEST_METHOD(TestDisableStartupItem)
 		{
 			int count = 10;
@@ -98,5 +110,7 @@ namespace MasterZhaoCoreTests
 
 			Assert::IsTrue(result);
 		}
+
+
 	};
 }
