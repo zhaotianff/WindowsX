@@ -270,6 +270,7 @@ VOID SwitchToDesktop()
 	sc = pShellDisp->ToggleDesktop();
 	sc = pShellDisp->ToggleDesktop();
 	pShellDisp->Release();
+	CoUninitialize();
 }
 
 VOID SwitchToWindow(HWND hwnd)
@@ -324,6 +325,8 @@ HBITMAP GetFileThumbnail(PCWSTR path)
 
 	HBITMAP hbitmap = NULL;
 	hr = shared_bitmap->GetSharedBitmap(&hbitmap);
+	shared_bitmap->Release();
+	cache->Release();
 	CoUninitialize();
 
 	return hbitmap;
