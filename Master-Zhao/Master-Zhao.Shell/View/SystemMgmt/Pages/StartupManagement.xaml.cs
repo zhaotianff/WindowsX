@@ -99,6 +99,11 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 startupItem.RegPath = tagStartupItem.szRegPath;
                 startupItem.SamDesired = tagStartupItem.samDesired;
                 startupItem.Path = FixPath(tagStartupItem.szPath);
+                startupItem.Version = FileExtension.GetFileVersion(startupItem.Path);
+                if(System.IO.File.Exists(startupItem.Path) == false)
+                {
+                    startupItem.ValidString = "(已失效)";
+                }
                 startupItem.Description = tagStartupItem.szDescription;
                 startupItem.IsEnabled = tagStartupItem.bEnabled;
                 startupItem.StartupItemType = (StartupItemType)tagStartupItem.type;
@@ -229,6 +234,20 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                
             }
             LoadStartUpItem();
+        }
+
+        private async void btn_CreateStartupClick(object sender, RoutedEventArgs e)
+        {
+            AppsFolderDialog.AppsFolderDialog appsFolderDialog = new AppsFolderDialog.AppsFolderDialog();
+            var result = await appsFolderDialog.ShowDialog();
+            if(result)
+            {
+                result = StartupTool.CreateStartupRun(appsFolderDialog.SelectedPath[0].Path);
+                if(result)
+                {
+                    LoadStartUpItem();
+                }
+            }
         }
     }
 }

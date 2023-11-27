@@ -26,7 +26,7 @@ namespace Master_Zhao.Shell.Util
             if (string.IsNullOrEmpty(path))
                 return null;
 
-            if (File.Exists(path) == false)
+            if (uriKind == UriKind.Absolute && File.Exists(path) == false)
                 return null;
 
             BitmapImage bi = new BitmapImage();

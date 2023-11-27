@@ -14,8 +14,9 @@ namespace Master_Zhao.Shell.Model.SystemMgmt
         public string Description { get; set; }
         public bool IsEnabled { get; set; }
         public string Path { get; set; }
-        public Version Version { get; set; }
+        public string Version { get; set; }
         public StartupItemType StartupItemType { get; set; }
         public ImageSource Icon { get; set; }
+        public string ValidString { get; set; }
     }
 }

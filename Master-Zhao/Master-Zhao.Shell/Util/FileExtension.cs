@@ -17,5 +17,20 @@ namespace Master_Zhao.Shell.Util
                 return "";
             }
         }
+
+        public static string GetFileVersion(string filePath)
+        {
+            try
+            {
+                if (System.IO.File.Exists(filePath) == false)
+                    return "";
+
+                return System.Diagnostics.FileVersionInfo.GetVersionInfo(filePath).FileVersion;
+            }
+            catch
+            {
+                return "";
+            }
+        }
     }
 }

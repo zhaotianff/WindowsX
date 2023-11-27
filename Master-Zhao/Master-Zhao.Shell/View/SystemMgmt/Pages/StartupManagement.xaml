@@ -13,6 +13,11 @@
         <converters:StartupItemConverter x:Key="StartupItemConverter"/>
     </Page.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
         <ListBox x:Name="listbox" Style="{StaticResource ListBoxStyle}" Margin="0,0,0,20">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -34,7 +39,8 @@
                             <Label Content="{Binding Name,Converter={StaticResource StartupItemConverter},ConverterParameter=Name}" Margin="5,0,0,0"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" 
                                    DockPanel.Dock="Left" FontWeight="Bold" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"></Label>
-                            <Label Content="1.0.0.1" VerticalContentAlignment="Center" FontSize="15" HorizontalAlignment="Left" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
+                            <Label Content="{Binding Version}" VerticalContentAlignment="Center" FontSize="15" HorizontalAlignment="Left" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}"/>
+                            <Label Content="{Binding ValidString}" VerticalContentAlignment="Center" FontSize="15" HorizontalAlignment="Left" Foreground="Red"/>
                         </DockPanel>
                         <Label Content="{Binding Description,Converter={StaticResource StartupItemConverter},ConverterParameter=Description}" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}" Margin="2" />
                         <Label Content="{Binding Path,Converter={StaticResource StartupItemConverter},ConverterParameter=Path}" Grid.Row="2" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=Foreground}" Margin="2"/>
@@ -43,7 +49,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
-           
+
         </ListBox>
+
+        <Button Grid.Row="1" Margin="0,0,10,0" Content="添加新启动项" HorizontalAlignment="Right" VerticalAlignment="Top" Width="88" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_CreateStartupClick"/>
     </Grid>
 </Page>

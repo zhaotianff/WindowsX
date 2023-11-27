@@ -117,5 +117,11 @@ namespace MasterZhaoCoreTests
 		}
 
 
+		TEST_METHOD(TestCreateStartupRun)
+		{
+			auto result = CreateStartupRun(L"shell:appsfolder\\Microsoft.Windows.MediaPlayer32");
+			Assert::IsTrue(result);
+		}
+
 	};
 }
