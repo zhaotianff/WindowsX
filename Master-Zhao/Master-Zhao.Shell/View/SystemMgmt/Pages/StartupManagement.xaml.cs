@@ -24,7 +24,6 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
     /// </summary>
     public partial class StartupManagement : Page
     {
-        List<StartupItem> startupItemList;
         List<StartupItem> startupItemDisableList;
 
         public StartupManagement()

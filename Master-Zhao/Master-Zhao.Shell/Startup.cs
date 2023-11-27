@@ -8,7 +8,6 @@ namespace Master_Zhao.Shell
     class Startup
     {
         private static readonly string MutexName = "MMutex";
-        private static readonly string MasterZhaoProcessName = "Master-Zhao.Shell";
 
         [STAThread]
         static void Main(string[] args)
