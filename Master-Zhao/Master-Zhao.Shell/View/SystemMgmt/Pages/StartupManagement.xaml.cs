@@ -241,7 +241,10 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             var result = await appsFolderDialog.ShowDialog();
             if(result)
             {
-                result = StartupTool.CreateStartupRun(appsFolderDialog.SelectedPath[0].Path);
+                //TODO fix this
+                var name = appsFolderDialog.SelectedPath[0].Name;
+                var path = appsFolderDialog.SelectedPath[0].Path;
+                result = DesktopTool.CreateLink("explorer", Environment.GetFolderPath(Environment.SpecialFolder.Startup) + $"\\{name}.lnk", path, name);
                 if(result)
                 {
                     LoadStartUpItem();
