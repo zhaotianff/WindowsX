@@ -119,7 +119,7 @@ namespace MasterZhaoCoreTests
 
 		TEST_METHOD(TestCreateStartupRun)
 		{
-			auto result = CreateStartupRun(L"shell:appsfolder\\Microsoft.Windows.MediaPlayer32");
+			auto result = CreateStartupRun(LR"(C:\Users\Public\Desktop\RetroBar.lnk)");
 			Assert::IsTrue(result);
 		}
 

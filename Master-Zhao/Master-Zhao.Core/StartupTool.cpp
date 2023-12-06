@@ -4,10 +4,9 @@
 #include "SystemTool.h"
 #include"StringHelper.h"
 
-BOOL IsExistStartupRun(LPTSTR lpszPath, LPTSTR* lpszLnkPath)
+BOOL IsExistStartupRun(LPTSTR lpszPath, LPTSTR lpszLnkPath)
 {
 	//TODO check all registry
-
 	if (lpszPath == NULL)
 		return FALSE;
 
@@ -20,16 +19,14 @@ BOOL IsExistStartupRun(LPTSTR lpszPath, LPTSTR* lpszLnkPath)
         return FALSE;
 	TCHAR szStartupPath[MAX_PATH]{};
 	SHGetPathFromIDList(pIdList, szStartupPath);
-	TCHAR szLnkPath[MAX_PATH]{};
-	wsprintf(szLnkPath, L"%s\\%s.lnk", szStartupPath, lpszPath);
-	*lpszLnkPath = szLnkPath;
-	return PathFileExists(szLnkPath);
+	wsprintf(lpszLnkPath, L"%s\\%s.lnk", szStartupPath, lpszPath);
+	return PathFileExists(lpszLnkPath);
 }
 
 BOOL CreateStartupRun(LPTSTR lpszPath)
 {
-	LPTSTR szLnkPath = NULL;
-	if (IsExistStartupRun(lpszPath, &szLnkPath) == TRUE)
+    TCHAR szLnkPath[1024]{};
+	if (IsExistStartupRun(lpszPath, szLnkPath) == TRUE)
 		return TRUE;
 
 	return CreateLink(lpszPath, szLnkPath, NULL, NULL);
@@ -39,7 +36,7 @@ BOOL RemoveStartupRun(LPTSTR lpszPath)
 {
 	//TODO check all registry
 	LPTSTR szLnkPath = NULL;
-	if (IsExistStartupRun(lpszPath, &szLnkPath))
+	if (IsExistStartupRun(lpszPath, szLnkPath) && NULL != szLnkPath)
 		return DeleteFile(szLnkPath);
 	return FALSE;
 }

@@ -98,5 +98,10 @@ namespace MasterZhaoCoreTests
 		{
 			OpenRunDialog(L"test");
 		}
+
+		TEST_METHOD(TestCreateShortcut)
+		{
+			CreateLink(L"Applications", LR"(C:\Users\user\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\WindowsMediaPlayer.lnk)", L"Microsoft.Windows.MediaPlayer32", L"Windows Media Player");
+		}
 	};
 }
