@@ -42,6 +42,8 @@
     <None Remove="Icon\StartMenu\startmenu_98.png" />
     <None Remove="Icon\StartMenu\startmenu_flat.png" />
     <None Remove="Icon\system.png" />
+    <None Remove="Icon\Utility\pause.png" />
+    <None Remove="Icon\Utility\play.png" />
     <None Remove="Icon\visual studio.png" />
     <None Remove="Icon\Weather\cloud.png" />
     <None Remove="Icon\Weather\dust.png" />
@@ -87,6 +89,8 @@
     <Resource Include="Icon\StartMenu\sleep.png" />
     <Resource Include="Icon\StartMenu\startmenu_98.png" />
     <Resource Include="Icon\StartMenu\startmenu_flat.png" />
+    <Resource Include="Icon\Utility\pause.png" />
+    <Resource Include="Icon\Utility\play.png" />
     <Resource Include="Icon\visual studio.png" />
     <Resource Include="Icon\Weather\cloud.png" />
     <Resource Include="Icon\Weather\dust.png" />

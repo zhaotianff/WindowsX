@@ -28,6 +28,7 @@
                 <ToggleButton Content="快速启动菜单" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_FastRunClick" IsChecked="True"/>
                 <ToggleButton Content="老板键" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_BossKeyClick"/>
                 <ToggleButton Content="快捷启动命令" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_ExecuteToolClick"/>
+                <ToggleButton Content="工作时间统计" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_WorkTimeCountClick"/>
             </StackPanel>
         </Grid>
 

@@ -28,6 +28,7 @@ namespace Master_Zhao.Shell.Pages
         private FastRunSetting fastRunSetting = new FastRunSetting();
         private BossKeySetting bossKeySetting = new BossKeySetting();
         private ExecuteToolSetting executeToolSetting = new ExecuteToolSetting();
+        private WorkTimeCountSetting workTimeCountSetting = new WorkTimeCountSetting();
         private Page defaultPage = null;
 
         public ToolsPage()
@@ -83,6 +84,12 @@ namespace Master_Zhao.Shell.Pages
         {
             frame.Content = executeToolSetting;
             await executeToolSetting.LoadExecuteListAsync();
+        }
+
+        private void btn_WorkTimeCountClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = workTimeCountSetting;
+            defaultPage = workTimeCountSetting;
         }
     }
 }
