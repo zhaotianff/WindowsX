@@ -12,11 +12,23 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
+            <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
             <CheckBox Style="{StaticResource CheckBoxStyle}" Content="启用工作时间统计" VerticalAlignment="Center" Name="cbx_WorkTimeCount" Checked="cbxWorkTimeCount_Checked" Unchecked="cbxWorkTimeCount_Unchecked" Focusable="False"/>
         </Grid>
+
+        <ListBox Grid.Row="1" Name="list_WorkItems" Background="Transparent" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="50">
+                        <Label Content="{Binding Title}" FontWeight="Bold" FontSize="18" FontFamily="Arial" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                        <Label Content="{Binding EllapsedTimeString}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="150,0,0,0" FontSize="20" FontFamily="Arial"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         
     </Grid>
 </Page>

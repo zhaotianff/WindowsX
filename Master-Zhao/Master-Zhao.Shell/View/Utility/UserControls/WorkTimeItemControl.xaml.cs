@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Model.Utility;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -14,13 +15,18 @@ using System.Windows.Shapes;
 namespace Master_Zhao.Shell.View.Utility.UserControls
 {
     /// <summary>
-    /// WorkTimeItem.xaml 的交互逻辑
+    /// WorkTimeItemControl.xaml 的交互逻辑
     /// </summary>
-    public partial class WorkTimeItem : UserControl
+    public partial class WorkTimeItemControl : UserControl
     {
-        public WorkTimeItem()
+        private WorkTimeItem workTimeItem;
+
+        public WorkTimeItemControl(WorkTimeItem workTimeItem)
         {
             InitializeComponent();
+            this.workTimeItem = workTimeItem;
+            this.lbl_Title.Content = workTimeItem.Title;
+            this.lbl_EllapsedTimeString.Content = workTimeItem.EllapsedTimeString;
         }
 
         private void start_MouseDown(object sender, MouseButtonEventArgs e)

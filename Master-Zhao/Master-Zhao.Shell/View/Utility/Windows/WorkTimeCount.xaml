@@ -9,9 +9,7 @@
         mc:Ignorable="d"
         Title="WorkTimeCount" Height="450" Width="300" ResizeMode="NoResize"
         ShowInTaskbar="False" MouseMove="BlurWindow_MouseMove" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
-    <StackPanel>
-        <controls:WorkTimeItem Background="Pink" Margin="5"></controls:WorkTimeItem>
-        <controls:WorkTimeItem Background="LightBlue" Margin="5,0,5,5"></controls:WorkTimeItem>
-        <controls:WorkTimeItem Background="LightGreen" Margin="5,0,5,5"></controls:WorkTimeItem>
+    <StackPanel Name="stack_WorkItems">
+       
     </StackPanel>
 </Window>

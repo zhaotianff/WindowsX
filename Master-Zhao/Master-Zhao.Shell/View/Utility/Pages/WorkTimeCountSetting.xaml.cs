@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Shell.View.Utility.Windows;
+﻿using Master_Zhao.Shell.Model.Utility;
+using Master_Zhao.Shell.View.Utility.Windows;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,21 +21,37 @@ namespace Master_Zhao.Shell.View.Utility.Pages
     public partial class WorkTimeCountSetting : Page
     {
         WorkTimeCount workTimeCount;
+        List<WorkTimeItem> workTimeItems;
 
         public WorkTimeCountSetting()
         {
-            InitializeComponent();
+            InitializeComponent();       
         }
 
         private void cbxWorkTimeCount_Checked(object sender, RoutedEventArgs e)
         {
-            workTimeCount = new WorkTimeCount();
+            workTimeItems = LoadWorkTimeItem();
+            this.list_WorkItems.ItemsSource = workTimeItems;
+
+            workTimeCount = new WorkTimeCount(workTimeItems);
+            workTimeCount.Top = 0;
+            workTimeCount.Left = SystemParameters.PrimaryScreenWidth - workTimeCount.Width;
             workTimeCount.Show();
         }
 
         private void cbxWorkTimeCount_Unchecked(object sender, RoutedEventArgs e)
         {
             workTimeCount.Close();
+        }
+
+        private List<WorkTimeItem> LoadWorkTimeItem()
+        {
+            return new List<WorkTimeItem>() 
+            {
+                new WorkTimeItem() { EllapsedTimeString = "0时0分", Title = "测试工作项" } ,
+                new WorkTimeItem() { EllapsedTimeString = "1时20分", Title = "摸鱼" },
+                new WorkTimeItem() { EllapsedTimeString = "3时10分", Title = "划水" }
+            };
         }
     }
 }
