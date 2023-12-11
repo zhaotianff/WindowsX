@@ -12,7 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
-            <RowDefinition Height="120"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -29,6 +29,14 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+
+        <Grid Grid.Row="2" IsEnabled="{Binding ElementName=cbx_WorkTimeCount,Path=IsChecked}">
+            <CheckBox Style="{StaticResource CheckBoxStyle}" Grid.Row="1" Content="边缘停靠" HorizontalAlignment="Left" VerticalAlignment="Top" Name="cbx_IsDocking" Checked="cbx_IsDocking_Checked" Unchecked="cbx_IsDocking_Unchecked" Focusable="False" Margin="5,5,0,0"/>
+            <CheckBox Style="{StaticResource CheckBoxStyle}" Grid.Row="1" Content="自动吸附" HorizontalAlignment="Left" VerticalAlignment="Top" Name="cbx_IsAdsorption" Checked="cbx_IsAdsorption_Checked" Unchecked="cbx_IsAdsorption_Unchecked" Focusable="False" Margin="100,5,0,0"/>
+            <Label Content="工作项" HorizontalAlignment="Right" Margin="0,0,708,0" Height="30" VerticalAlignment="Top" VerticalContentAlignment="Center"></Label>
+            <TextBox Name="tbox_NewWorkItem" HorizontalAlignment="Right" Margin="0,0,208,0" Width="500" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center"></TextBox>
+            <Button Content="添加" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,108,0" Style="{StaticResource ButtonStyle}" Name="btn_AddWorkTimeItem" Click="btn_AddWorkTimeItem_Click"></Button>
+            <Button Content="移除" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0" Style="{StaticResource ButtonStyle}" Name="btn_RemoveWorkTimeItem" Click="btn_RemoveWorkTimeItem_Click"></Button>
+        </Grid>
     </Grid>
 </Page>

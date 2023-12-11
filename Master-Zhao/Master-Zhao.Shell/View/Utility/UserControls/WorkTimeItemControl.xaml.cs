@@ -1,7 +1,10 @@
-﻿using Master_Zhao.Shell.Model.Utility;
+﻿using Master_Zhao.Shell.Controls;
+using Master_Zhao.Shell.Model.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,24 +22,82 @@ namespace Master_Zhao.Shell.View.Utility.UserControls
     /// </summary>
     public partial class WorkTimeItemControl : UserControl
     {
-        private WorkTimeItem workTimeItem;
+        private Stopwatch stopwatch = new Stopwatch();
+        private bool isStart = false;
 
-        public WorkTimeItemControl(WorkTimeItem workTimeItem)
+        public static readonly DependencyProperty EllapsedTimeStringProperty = DependencyProperty.Register("EllapsedTimeString", typeof(string),typeof(WorkTimeItemControl));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(WorkTimeItemControl));
+        public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(WorkTimeItem), typeof(WorkTimeItemControl),new PropertyMetadata(OnDataChanged));
+
+        static WorkTimeItemControl()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(WorkTimeItemControl),
+                new FrameworkPropertyMetadata(typeof(WorkTimeItemControl)));
+        }
+
+        public string EllapsedTimeString
+        {
+            get => GetValue(EllapsedTimeStringProperty).ToString();
+            set => SetValue(EllapsedTimeStringProperty, value);
+        }
+
+        public string Title
+        {
+            get => GetValue(TitleProperty).ToString();
+            set => SetValue(TitleProperty, value);
+        }
+
+        public WorkTimeItem Data
+        {
+            get => GetValue(DataProperty) as WorkTimeItem;
+            set => SetValue(DataProperty, value);
+        }
+
+        public WorkTimeItemControl()
         {
             InitializeComponent();
-            this.workTimeItem = workTimeItem;
-            this.lbl_Title.Content = workTimeItem.Title;
-            this.lbl_EllapsedTimeString.Content = workTimeItem.EllapsedTimeString;
+        }
+
+        private static void OnDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var workTimeItemControl = d as WorkTimeItemControl;
+            workTimeItemControl.DataContext = e.NewValue as WorkTimeItem;
         }
 
         private void start_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ShowStartButton(false);
+            StartWatcher();
+        }
+
+        private void StartWatcher()
+        {
+            stopwatch.Start();
+            isStart = true;
+
+            Task.Run(async () => { 
+            while(isStart)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Data.EllapsedTime = stopwatch.ElapsedMilliseconds;
+                        EllapsedTimeString = Data.EllapsedTimeString;
+                    });
+                    await Task.Delay(1000);
+                }
+            });
+        }
+
+        private void StopWatcher()
+        {
+            isStart = false;
+            stopwatch.Stop();
         }
 
         private void pause_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ShowStartButton(true);
+            StopWatcher();
         }
 
         private void ShowStartButton(bool isShow)

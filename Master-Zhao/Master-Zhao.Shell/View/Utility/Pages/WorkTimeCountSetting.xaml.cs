@@ -2,6 +2,7 @@
 using Master_Zhao.Shell.View.Utility.Windows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +22,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
     public partial class WorkTimeCountSetting : Page
     {
         WorkTimeCount workTimeCount;
-        List<WorkTimeItem> workTimeItems;
+        ObservableCollection<WorkTimeItem> workTimeItems;
 
         public WorkTimeCountSetting()
         {
@@ -30,7 +31,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
 
         private void cbxWorkTimeCount_Checked(object sender, RoutedEventArgs e)
         {
-            workTimeItems = LoadWorkTimeItem();
+            workTimeItems = new ObservableCollection<WorkTimeItem>(LoadWorkTimeItem());
             this.list_WorkItems.ItemsSource = workTimeItems;
 
             workTimeCount = new WorkTimeCount(workTimeItems);
@@ -52,6 +53,37 @@ namespace Master_Zhao.Shell.View.Utility.Pages
                 new WorkTimeItem() { EllapsedTimeString = "1时20分", Title = "摸鱼" },
                 new WorkTimeItem() { EllapsedTimeString = "3时10分", Title = "划水" }
             };
+        }
+
+        private void btn_AddWorkTimeItem_Click(object sender, RoutedEventArgs e)
+        {
+            workTimeItems.Add(new WorkTimeItem() { EllapsedTimeString = "0时0分", Title = this.tbox_NewWorkItem.Text });
+        }
+
+        private void btn_RemoveWorkTimeItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.list_WorkItems.SelectedIndex != -1)
+                this.workTimeItems.RemoveAt(this.list_WorkItems.SelectedIndex);
+        }
+
+        private void cbx_IsDocking_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbx_IsDocking_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbx_IsAdsorption_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbx_IsAdsorption_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

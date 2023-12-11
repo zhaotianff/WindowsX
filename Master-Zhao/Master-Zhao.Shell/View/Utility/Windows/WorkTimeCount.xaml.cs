@@ -2,6 +2,7 @@
 using Master_Zhao.Shell.View.Utility.UserControls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,33 +20,20 @@ namespace Master_Zhao.Shell.View.Utility.Windows
     /// </summary>
     public partial class WorkTimeCount : System.Windows.Window
     {
-        private List<WorkTimeItem> workTimeItems;
+        private ObservableCollection<WorkTimeItem> workTimeItems;
         private SolidColorBrush[] BackgroundBrushes = { Brushes.Pink, Brushes.LightBlue, Brushes.LightGreen };
 
-        public WorkTimeCount(List<WorkTimeItem> workTimeItems)
+        public WorkTimeCount(ObservableCollection<WorkTimeItem> workTimeItems)
         {
             InitializeComponent();
             this.Owner = Application.Current.MainWindow;
             InitializeWorkItems(workTimeItems);
         }
 
-        private void InitializeWorkItems(List<WorkTimeItem> workTimeItems)
+        private void InitializeWorkItems(ObservableCollection<WorkTimeItem> workTimeItems)
         {
-            this.stack_WorkItems.Children.Clear();
             this.workTimeItems = workTimeItems;
-
-            for (int i = 0; i < workTimeItems.Count; i++)
-            {
-                WorkTimeItemControl workTimeItemControl = new WorkTimeItemControl(workTimeItems[i]);
-                if (i == 0)
-                    workTimeItemControl.Margin = new Thickness(5);
-                else
-                    workTimeItemControl.Margin = new Thickness(5, 0, 5, 5);
-
-                workTimeItemControl.Background = BackgroundBrushes[i % 3];
-
-                this.stack_WorkItems.Children.Add(workTimeItemControl);
-            }
+            this.list_WorkItems.ItemsSource = this.workTimeItems;
         }
 
         private void BlurWindow_MouseMove(object sender, MouseEventArgs e)

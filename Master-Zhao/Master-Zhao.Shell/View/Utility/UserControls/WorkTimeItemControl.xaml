@@ -32,13 +32,13 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Label Name="lbl_Title" Foreground="White" FontSize="18" FontFamily="Arial"></Label>
+            <Label Name="lbl_Title" Foreground="White" FontSize="18" FontFamily="Arial" Content="{Binding Title}"></Label>
 
             <Image Grid.Row="1" HorizontalAlignment="Left" Source="../../../Icon/Utility/play.png" Cursor="Hand" Name="img_start" MouseDown="start_MouseDown"></Image>
             <Image Grid.Row="1" HorizontalAlignment="Left" Source="../../../Icon/Utility/pause.png" Cursor="Hand" Name="img_pause" MouseDown="pause_MouseDown" Visibility="Collapsed"></Image>
             <Label Name="lbl_StopWatchEllapsedTime" Grid.Row="1" HorizontalAlignment="Left" FontSize="15" Margin="40,0,0,0" VerticalAlignment="Center"/>
 
-            <Label Name="lbl_EllapsedTimeString" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" FontFamily="Arial"/>
+            <Label Name="lbl_EllapsedTimeString" Content="{Binding EllapsedTimeString}" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" FontFamily="Arial"/>
         </Grid>    
     </Border>
 </UserControl>
