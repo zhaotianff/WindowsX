@@ -1,5 +1,4 @@
 ﻿using Master_Zhao.Shell.Model.Utility;
-using Master_Zhao.Shell.View.Utility.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +20,6 @@ namespace Master_Zhao.Shell.View.Utility.Windows
     public partial class WorkTimeCount : System.Windows.Window
     {
         private ObservableCollection<WorkTimeItem> workTimeItems;
-        private SolidColorBrush[] BackgroundBrushes = { Brushes.Pink, Brushes.LightBlue, Brushes.LightGreen };
 
         public WorkTimeCount(ObservableCollection<WorkTimeItem> workTimeItems)
         {

@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Master_Zhao.Shell.View.Utility.Windows"
         xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow"
-        xmlns:controls="clr-namespace:Master_Zhao.Shell.View.Utility.UserControls"
+        xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
         mc:Ignorable="d"
-        Title="WorkTimeCount" Height="450" Width="300" ResizeMode="NoResize"
+        Title="WorkTimeCount" Height="900" Width="300" ResizeMode="NoResize"
         ShowInTaskbar="False" MouseMove="BlurWindow_MouseMove" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
-    <ListBox Background="Transparent" Name="list_WorkItems">
+    <ListBox Background="Transparent" Name="list_WorkItems" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <controls:WorkTimeItemControl Margin="5,0,5,5" Data="{Binding}" Height="30"></controls:WorkTimeItemControl>
+                <controls:WorkTimeItemControl Margin="0" Data="{Binding}" Height="30"></controls:WorkTimeItemControl>
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>

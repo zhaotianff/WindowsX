@@ -366,4 +366,54 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type local:WorkTimeItemControl}">
+        <Setter Property="MinHeight" Value="80"></Setter>
+        <Setter Property="Width" Value="290"></Setter>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Black" BlurRadius="5" Opacity=".3"></DropShadowEffect>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:WorkTimeItemControl}">
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="main" Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.3"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="main" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Margin="5" x:Name="main">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Name="lbl_Title" Foreground="White" FontSize="18" FontFamily="Arial" Content="{Binding Data.Title,RelativeSource={RelativeSource TemplatedParent}}"></Label>
+
+                            <Image Grid.Row="1" HorizontalAlignment="Left" Source="../Icon/Utility/play.png" Cursor="Hand" Name="img_start"></Image>
+                            <Image Grid.Row="1" HorizontalAlignment="Left" Source="../Icon/Utility/pause.png" Cursor="Hand" Name="img_pause" Visibility="Collapsed"></Image>
+                            <Label Name="lbl_StopWatchEllapsedTime" Grid.Row="1" HorizontalAlignment="Left" FontSize="15" Margin="40,0,0,0" VerticalAlignment="Center"/>
+
+                            <Label Name="lbl_EllapsedTimeString" Content="{Binding Data.EllapsedTimeString,RelativeSource={RelativeSource TemplatedParent}}" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" FontFamily="Arial"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
