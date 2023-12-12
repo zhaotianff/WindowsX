@@ -46,11 +46,11 @@ namespace Master_Zhao.Shell.Model.Utility
             if (ellapsedTime == 0)
                 return "";
 
-            TimeSpan ts = TimeSpan.FromSeconds(ellapsedTime);
+            TimeSpan ts = TimeSpan.FromMilliseconds(ellapsedTime);
             if (ts.Days > 0)
                 return $"{ts.Days}天 {ts.Hours}时 {ts.Minutes}分";
 
-            return $"{ts.Hours}时 {ts.Minutes}分";
+            return $"{ts.Hours}时 {ts.Minutes}分 {ts.Seconds}秒";
         }
     }
 }

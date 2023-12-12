@@ -136,7 +136,7 @@ namespace Master_Zhao.Shell.Controls
                     {
                         Data.EllapsedTime = stopwatch.ElapsedMilliseconds;
                     });
-                    await Task.Delay(1000);
+                    await Task.Delay(100);
                 }
             });
         }

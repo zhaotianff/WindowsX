@@ -407,9 +407,8 @@
 
                             <Image Grid.Row="1" HorizontalAlignment="Left" Source="../Icon/Utility/play.png" Cursor="Hand" Name="img_start"></Image>
                             <Image Grid.Row="1" HorizontalAlignment="Left" Source="../Icon/Utility/pause.png" Cursor="Hand" Name="img_pause" Visibility="Collapsed"></Image>
-                            <Label Name="lbl_StopWatchEllapsedTime" Grid.Row="1" HorizontalAlignment="Left" FontSize="15" Margin="40,0,0,0" VerticalAlignment="Center"/>
-
-                            <Label Name="lbl_EllapsedTimeString" Content="{Binding Data.EllapsedTimeString,RelativeSource={RelativeSource TemplatedParent}}" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" FontFamily="Arial"/>
+                            <Label Name="lbl_EllapsedTimeString" Content="{Binding Data.EllapsedTimeString,RelativeSource={RelativeSource TemplatedParent}}" Grid.Row="1" HorizontalAlignment="Left" FontSize="15" Margin="50,5,0,0" VerticalAlignment="Top"/>
+                            <Label Name="lbl_StopWatchEllapsedTime" Content="{Binding Data.EllapsedTime,RelativeSource={RelativeSource TemplatedParent}}" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" FontFamily="Arial"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>

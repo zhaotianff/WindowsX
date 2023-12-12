@@ -49,9 +49,9 @@ namespace Master_Zhao.Shell.View.Utility.Pages
         {
             return new List<WorkTimeItem>() 
             {
-                new WorkTimeItem() { EllapsedTimeString = "0时0分", Title = "测试工作项" } ,
-                new WorkTimeItem() { EllapsedTimeString = "1时20分", Title = "摸鱼" },
-                new WorkTimeItem() { EllapsedTimeString = "3时10分", Title = "划水" }
+                new WorkTimeItem() { EllapsedTimeString = "", Title = "测试工作项" } ,
+                new WorkTimeItem() { EllapsedTimeString = "", Title = "摸鱼" },
+                new WorkTimeItem() { EllapsedTimeString = "", Title = "划水" }
             };
         }
 
