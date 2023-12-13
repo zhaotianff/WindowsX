@@ -20,6 +20,7 @@ namespace Master_Zhao.Shell.PInvoke
 
         public const int WM_INPUT = 0x00FF;
         public const int WM_HOTKEY = 0x0312;
+        public const int WM_LBUTTONDOWN = 0x0201;
 
         [DllImport("User32.dll")]
         public static extern int GetWindowLong(IntPtr hwnd, int index);

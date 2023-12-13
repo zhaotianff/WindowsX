@@ -1,13 +1,16 @@
 ﻿using Master_Zhao.Shell.Model.Utility;
+using Master_Zhao.Shell.PInvoke;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -26,9 +29,9 @@ namespace Master_Zhao.Shell.View.Utility.Windows
         private bool isDocking = false;
         private bool isAdsorption = false;
         private bool isAnimation = false;
+        private bool isDraged = false;
         private System.Windows.Media.Animation.Storyboard hiddenAnimation;
         private System.Windows.Media.Animation.Storyboard showAnimation;
-        private bool isPressed = false;
 
         public WorkTimeCount(ObservableCollection<WorkTimeItem> workTimeItems,bool isDocking, bool isAdsorption)
         {
@@ -80,37 +83,35 @@ namespace Master_Zhao.Shell.View.Utility.Windows
                 try
                 {
                     this.DragMove();
-                    isPressed = true;
+                    isDraged = true;
                 }
                 catch
                 {
 
                 }
             }
-            else if(e.LeftButton == MouseButtonState.Released)
+
+            if(e.LeftButton == MouseButtonState.Released && isDocking == true)
             {
-                if (isPressed)
+                POINT point = new POINT();
+                if(User32.GetCursorPos(ref point) == 1)
                 {
-                    HideWindow();
-                    isPressed = false;
+                    var pos = e.GetPosition(this);
+
+                    if (pos.X < 0 && pos.Y < 0)
+                        HideWindow();
                 }
-                
             }
 
             //TODO isAdsorption
-
-            var pos = e.GetPosition(this);
         }
 
-        private async void main_Loaded(object sender, RoutedEventArgs e)
+        private void HideWindow(double left = -1)
         {
-            await System.Threading.Tasks.Task.Delay(3000);
-            HideWindow();
-        }
+            if (left == -1)
+                left = this.Left;
 
-        private void HideWindow()
-        {
-            if (SystemParameters.PrimaryScreenWidth - this.Left - this.Width > 15)
+            if (SystemParameters.PrimaryScreenWidth - left - this.Width > 15)
                 return;
 
             if (isAnimation)
@@ -133,6 +134,46 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             grid_DockArea.Visibility = Visibility.Collapsed;
             isAnimation = true;
             showAnimation.Begin();  
+        }
+
+        private void main_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Released && isDraged)
+            {
+                //window pos has not been updated yet
+                POINT pt = new POINT();
+                User32.GetCursorPos(ref pt);
+                var curPos = e.GetPosition(this);
+                HideWindow(pt.x - curPos.X);
+                isDraged = false;
+            }
+        }
+
+        private void main_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            PInvoke.SystemTool.UnRegisterFastRunHotKey();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            hwndSource.AddHook(HwndProc);
+
+            var result = PInvoke.SystemTool.RegisterFastRunHotKey(new WindowInteropHelper(this).Handle);
+            var errorCode = PInvoke.Kernel32.GetLastError();
+        }
+
+        private IntPtr HwndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch (msg)
+            {
+                //TODO mouse move
+                case PInvoke.User32.WM_LBUTTONDOWN:
+                    break;
+                   
+            }
+            return IntPtr.Zero;
         }
     }
 }

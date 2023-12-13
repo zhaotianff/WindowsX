@@ -8,7 +8,8 @@
         xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
         mc:Ignorable="d"
         Title="WorkTimeCount" Height="900" Width="305" ResizeMode="NoResize" SizeToContent="Height"
-        ShowInTaskbar="False" MouseMove="BlurWindow_MouseMove" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Name="main" Loaded="main_Loaded">
+        ShowInTaskbar="False" MouseMove="BlurWindow_MouseMove" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Name="main" 
+        MouseUp="main_MouseUp" Closing="main_Closing">
     <Window.Resources>
         <Storyboard x:Key="hiddenAnimation">
             <DoubleAnimation Storyboard.TargetName="main" Storyboard.TargetProperty="(Window.Left)" Duration="0:0:0.5" AutoReverse="False">
