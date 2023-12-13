@@ -24,6 +24,9 @@ namespace Master_Zhao.Shell.View.Utility.Pages
         WorkTimeCount workTimeCount;
         ObservableCollection<WorkTimeItem> workTimeItems;
 
+        private bool isDocking = false;
+        private bool isAdsorption = false;
+
         public WorkTimeCountSetting()
         {
             InitializeComponent();       
@@ -34,7 +37,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
             workTimeItems = new ObservableCollection<WorkTimeItem>(LoadWorkTimeItem());
             this.list_WorkItems.ItemsSource = workTimeItems;
 
-            workTimeCount = new WorkTimeCount(workTimeItems);
+            workTimeCount = new WorkTimeCount(workTimeItems, isDocking, isAdsorption);
             workTimeCount.Top = 0;
             workTimeCount.Left = SystemParameters.PrimaryScreenWidth - workTimeCount.Width;
             workTimeCount.Show();
@@ -43,6 +46,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
         private void cbxWorkTimeCount_Unchecked(object sender, RoutedEventArgs e)
         {
             workTimeCount.Close();
+            workTimeCount = null;
         }
 
         private List<WorkTimeItem> LoadWorkTimeItem()
@@ -68,22 +72,28 @@ namespace Master_Zhao.Shell.View.Utility.Pages
 
         private void cbx_IsDocking_Checked(object sender, RoutedEventArgs e)
         {
-
+            isDocking = true;
         }
 
         private void cbx_IsDocking_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            isDocking = false;
         }
 
         private void cbx_IsAdsorption_Checked(object sender, RoutedEventArgs e)
         {
-
+            isAdsorption = true;
         }
 
         private void cbx_IsAdsorption_Unchecked(object sender, RoutedEventArgs e)
         {
+            isAdsorption = false;
+        }
 
+        public void CloseWorkTimeCount()
+        {
+            if (workTimeCount != null)
+                workTimeCount.Close();
         }
     }
 }

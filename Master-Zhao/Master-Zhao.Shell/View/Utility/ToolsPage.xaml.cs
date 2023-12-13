@@ -66,6 +66,7 @@ namespace Master_Zhao.Shell.Pages
         {
             fastRunSetting.CloseFastRun();
             bossKeySetting.CloseBossKey();
+            workTimeCountSetting.CloseWorkTimeCount();
         }
 
         public void ShowDefaultPage()

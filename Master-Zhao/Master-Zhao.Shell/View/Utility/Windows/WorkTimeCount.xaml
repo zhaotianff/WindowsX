@@ -7,13 +7,46 @@
         xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow"
         xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
         mc:Ignorable="d"
-        Title="WorkTimeCount" Height="900" Width="300" ResizeMode="NoResize"
-        ShowInTaskbar="False" MouseMove="BlurWindow_MouseMove" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
-    <ListBox Background="Transparent" Name="list_WorkItems" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <controls:WorkTimeItemControl Margin="0" Data="{Binding}" Height="30"></controls:WorkTimeItemControl>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+        Title="WorkTimeCount" Height="900" Width="305" ResizeMode="NoResize" SizeToContent="Height"
+        ShowInTaskbar="False" MouseMove="BlurWindow_MouseMove" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Name="main" Loaded="main_Loaded">
+    <Window.Resources>
+        <Storyboard x:Key="hiddenAnimation">
+            <DoubleAnimation Storyboard.TargetName="main" Storyboard.TargetProperty="(Window.Left)" Duration="0:0:0.5" AutoReverse="False">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase Amplitude="0.3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="showAnimation">
+            <DoubleAnimation Storyboard.TargetName="main" Storyboard.TargetProperty="(Window.Left)" Duration="0:0:0.5" AutoReverse="False">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase Amplitude="0.3" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="Transparent" MouseEnter="grid_DockArea_MouseEnter" Name="grid_DockArea" Visibility="Collapsed">
+            <Border Height="{Binding ElementName=main,Path=ActualHeight}" VerticalAlignment="Center" Width="2" Background="Silver">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" Opacity=".3"></DropShadowEffect>
+                </Border.Effect>
+            </Border>
+        </Grid>
+
+        <ListBox Grid.Column="1" Background="Transparent" Name="list_WorkItems" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                    Width="{Binding ElementName=canvas,Path=ActualWidth}" Height="{Binding ElementName=canvas,Path=ActualHeight}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <controls:WorkTimeItemControl Margin="0" Data="{Binding}" Height="30"></controls:WorkTimeItemControl>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
 </Window>
