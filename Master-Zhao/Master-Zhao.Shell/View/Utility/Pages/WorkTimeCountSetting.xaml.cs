@@ -24,9 +24,6 @@ namespace Master_Zhao.Shell.View.Utility.Pages
         WorkTimeCount workTimeCount;
         ObservableCollection<WorkTimeItem> workTimeItems;
 
-        private bool isDocking = false;
-        private bool isAdsorption = false;
-
         public WorkTimeCountSetting()
         {
             InitializeComponent();       
@@ -37,7 +34,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
             workTimeItems = new ObservableCollection<WorkTimeItem>(LoadWorkTimeItem());
             this.list_WorkItems.ItemsSource = workTimeItems;
 
-            workTimeCount = new WorkTimeCount(workTimeItems, isDocking, isAdsorption);
+            workTimeCount = new WorkTimeCount(workTimeItems);
             workTimeCount.Top = 0;
             workTimeCount.Left = SystemParameters.PrimaryScreenWidth - workTimeCount.Width;
             workTimeCount.Show();
@@ -72,28 +69,35 @@ namespace Master_Zhao.Shell.View.Utility.Pages
 
         private void cbx_IsDocking_Checked(object sender, RoutedEventArgs e)
         {
-            isDocking = true;
+            if(workTimeCount != null)
+                workTimeCount.IsDocking = true;
         }
 
         private void cbx_IsDocking_Unchecked(object sender, RoutedEventArgs e)
         {
-            isDocking = false;
+            if (workTimeCount != null)
+                workTimeCount.IsDocking = false;
         }
 
         private void cbx_IsAdsorption_Checked(object sender, RoutedEventArgs e)
         {
-            isAdsorption = true;
+            if (workTimeCount != null)
+                workTimeCount.IsAdsorption = true;
         }
 
         private void cbx_IsAdsorption_Unchecked(object sender, RoutedEventArgs e)
         {
-            isAdsorption = false;
+            if (workTimeCount != null)
+                workTimeCount.IsAdsorption = false;
         }
 
         public void CloseWorkTimeCount()
         {
             if (workTimeCount != null)
+            {
                 workTimeCount.Close();
+                workTimeCount = null;
+            }
         }
     }
 }
