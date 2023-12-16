@@ -43,11 +43,12 @@
 
         <ListBox Grid.Column="1" Background="Transparent" Name="list_WorkItems" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
                     Width="{Binding ElementName=canvas,Path=ActualWidth}" Height="{Binding ElementName=canvas,Path=ActualHeight}" PreviewMouseDown="main_MouseDown">
-            <ListBox.ItemTemplate>
+            <!--暂时没有ViewModel 绑定不好操作-->
+            <!--<ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:WorkTimeItemControl Margin="0" Data="{Binding}" Height="30"></controls:WorkTimeItemControl>
+                    <controls:WorkTimeItemControl Margin="0" Data="{Binding}" Height="30" OnStart="WorkTimeItemControl_OnStart"></controls:WorkTimeItemControl>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
+            </ListBox.ItemTemplate>-->
         </ListBox>
     </Grid>
 </Window>

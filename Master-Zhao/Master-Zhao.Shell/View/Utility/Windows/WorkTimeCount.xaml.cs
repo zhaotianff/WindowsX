@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Shell.Model.Utility;
+﻿using Master_Zhao.Shell.Controls;
+using Master_Zhao.Shell.Model.Utility;
 using Master_Zhao.Shell.PInvoke;
 using System;
 using System.Collections.Generic;
@@ -95,7 +96,15 @@ namespace Master_Zhao.Shell.View.Utility.Windows
         private void InitializeWorkItems(ObservableCollection<WorkTimeItem> workTimeItems)
         {
             this.workTimeItems = workTimeItems;
-            this.list_WorkItems.ItemsSource = this.workTimeItems;
+            //this.list_WorkItems.ItemsSource = this.workTimeItems;
+            for(int i = 0;i<workTimeItems.Count;i++)
+            {
+                WorkTimeItemControl workTimeItemControl = new WorkTimeItemControl();
+                workTimeItemControl.Data = workTimeItems[i];
+                workTimeItemControl.OnStart += WorkTimeItemControl_OnStart;
+                workTimeItemControl.Height = 30;
+                this.list_WorkItems.Items.Add(workTimeItemControl);
+            }
         }
 
         private void BlurWindow_MouseMove(object sender, MouseEventArgs e)
@@ -177,6 +186,19 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             var pos = e.GetPosition(this);
             if (pos.X >= 0 && pos.Y >= 0)
                 isDraged = true;
+        }
+
+        private void WorkTimeItemControl_OnStart(object sender, RoutedEventArgs e)
+        {
+            var index = this.list_WorkItems.Items.IndexOf(sender);
+
+            for(int i =0;i<this.list_WorkItems.Items.Count;i++)
+            {
+                if(i != index)
+                {
+                    (this.list_WorkItems.Items[i] as WorkTimeItemControl).IsRunning = false;
+                }
+            }
         }
     }
 }

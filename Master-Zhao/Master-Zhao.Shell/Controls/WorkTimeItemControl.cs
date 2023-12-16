@@ -49,34 +49,26 @@ namespace Master_Zhao.Shell.Controls
     public class WorkTimeItemControl : Control
     {
         private SolidColorBrush[] BackgroundBrushes = ColorManager.WorkTimeCountColors;
-
-        static WorkTimeItemControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(WorkTimeItemControl), new FrameworkPropertyMetadata(typeof(WorkTimeItemControl)));
-        }
-
-        public WorkTimeItemControl()
-        {
-            OnStart += WorkTimeItemControl_OnStart;
-            OnPause += WorkTimeItemControl_OnPause;
-        }
-
-        private void WorkTimeItemControl_OnPause(object sender, RoutedEventArgs e)
-        {
-            StopWatcher();
-            ShowStartButton(true);
-        }
-
-        private void WorkTimeItemControl_OnStart(object sender, RoutedEventArgs e)
-        {
-            StartWatcher();
-            ShowStartButton(false);
-        }
-
+        private Image imgStart;
+        private Image imgPause;
         private Stopwatch stopwatch = new Stopwatch();
         private bool isStart = false;
 
+        public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register("IsRunning", typeof(bool), typeof(WorkTimeItemControl), new PropertyMetadata(OnIsRunningChanged));
+
+        public bool IsRunning
+        {
+            get => (bool)GetValue(IsRunningProperty);
+            set => SetValue(IsRunningProperty, value);
+        }
+
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(WorkTimeItem), typeof(WorkTimeItemControl), new PropertyMetadata(OnDataChanged));
+
+        public WorkTimeItem Data
+        {
+            get => GetValue(DataProperty) as WorkTimeItem;
+            set => SetValue(DataProperty, value);
+        }
 
         public static readonly RoutedEvent OnStartEvent = EventManager.RegisterRoutedEvent("OnStart", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(WorkTimeItemControl));
 
@@ -106,10 +98,25 @@ namespace Master_Zhao.Shell.Controls
             }
         }
 
-        public WorkTimeItem Data
+        static WorkTimeItemControl()
         {
-            get => GetValue(DataProperty) as WorkTimeItem;
-            set => SetValue(DataProperty, value);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(WorkTimeItemControl), new FrameworkPropertyMetadata(typeof(WorkTimeItemControl)));
+        }
+
+        public WorkTimeItemControl()
+        {
+            OnStart += WorkTimeItemControl_OnStart;
+            OnPause += WorkTimeItemControl_OnPause;
+        }
+
+        private void WorkTimeItemControl_OnPause(object sender, RoutedEventArgs e)
+        {
+            IsRunning = false;
+        }
+
+        private void WorkTimeItemControl_OnStart(object sender, RoutedEventArgs e)
+        {
+            IsRunning = true;
         }
 
         private static void OnDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -118,14 +125,24 @@ namespace Master_Zhao.Shell.Controls
             workTimeItemControl.DataContext = e.NewValue as WorkTimeItem;
         }
 
-        private void start_MouseDown(object sender, MouseButtonEventArgs e)
+        private static void OnIsRunningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ShowStartButton(false);
-            StartWatcher();
+            var workTimeItemControl = d as WorkTimeItemControl;
+            
+            if((bool)e.NewValue == true)
+            {
+                workTimeItemControl.StartWatcher();
+            }
+            else
+            {
+                workTimeItemControl.StopWatcher();
+            }
         }
 
         private void StartWatcher()
         {
+            ShowStartButton(false);
+
             stopwatch.Start();
             isStart = true;
 
@@ -143,20 +160,14 @@ namespace Master_Zhao.Shell.Controls
 
         private void StopWatcher()
         {
+            ShowStartButton(true);
+
             isStart = false;
             stopwatch.Stop();
         }
 
-        private void pause_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ShowStartButton(true);
-            StopWatcher();
-        }
-
         private void ShowStartButton(bool isShow)
         {
-            var imgStart = this.GetTemplateChild("img_start") as Image;
-            var imgPause = this.GetTemplateChild("img_pause") as Image;
             imgStart.Visibility = isShow == true ? Visibility.Visible : Visibility.Collapsed;
             imgPause.Visibility = isShow == false ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -167,8 +178,8 @@ namespace Master_Zhao.Shell.Controls
             Random r = new Random();
             this.Background = BackgroundBrushes[r.Next(0, BackgroundBrushes.Length)];
 
-            var imgStart = this.GetTemplateChild("img_start") as Image;
-            var imgPause = this.GetTemplateChild("img_pause") as Image;
+            imgStart = this.GetTemplateChild("img_start") as Image;
+            imgPause = this.GetTemplateChild("img_pause") as Image;
             imgStart.MouseDown += (a, b) => { this.RaiseEvent(new RoutedEventArgs(OnStartEvent)); };
             imgPause.MouseDown += (a, b) => { this.RaiseEvent(new RoutedEventArgs(OnPauseEvent)); };
         }

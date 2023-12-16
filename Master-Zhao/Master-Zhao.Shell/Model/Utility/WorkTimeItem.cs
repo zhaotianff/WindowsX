@@ -32,7 +32,6 @@ namespace Master_Zhao.Shell.Model.Utility
             }
         }
 
-        public bool IsWorking { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
