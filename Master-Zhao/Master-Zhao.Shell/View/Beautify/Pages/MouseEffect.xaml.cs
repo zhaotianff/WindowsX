@@ -36,6 +36,15 @@ namespace Master_Zhao.Shell.Pages
 
         private void mouseEffect_Unchecked(object sender, RoutedEventArgs e)
         {
+            CloseMouseEffectWindow();
+        }
+
+        public void CloseMouseEffectWindow()
+        {
+            if (mouseEffectWindow == null)
+                return;
+
+            mouseEffectWindow.StopMouseEffect();
             mouseEffectWindow?.Close();
             mouseEffectWindow = null;
         }

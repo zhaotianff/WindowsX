@@ -4,6 +4,7 @@ using Master_Zhao.Shell.PInvoke;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -198,6 +199,24 @@ namespace Master_Zhao.Shell.View.Utility.Windows
                 {
                     (this.list_WorkItems.Items[i] as WorkTimeItemControl).IsRunning = false;
                 }
+            }
+        }
+
+        public void StopAllCount()
+        {
+            for (int i = 0; i < this.list_WorkItems.Items.Count; i++)
+            {
+                (this.list_WorkItems.Items[i] as WorkTimeItemControl).IsRunning = false;
+            }
+        }
+
+        public void RemoveWorkTimeCountItem(int index)
+        {
+            //TODO use binding
+            if (index < this.list_WorkItems.Items.Count)
+            {
+                (this.list_WorkItems.Items[index] as WorkTimeItemControl).IsRunning = false;
+                this.list_WorkItems.Items.RemoveAt(index);
             }
         }
     }

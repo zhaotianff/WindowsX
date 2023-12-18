@@ -21,6 +21,7 @@ namespace Master_Zhao.Shell.Windows
     public partial class MouseEffectWindow : Window
     {
         private int fixedCount = 50;
+        private bool isRunning = false;
 
         public MouseEffectWindow()
         {
@@ -37,19 +38,25 @@ namespace Master_Zhao.Shell.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Random r = new Random();
-            new System.Threading.Thread(() =>
+            StartMouseEffect();
+        }
+
+        public void StartMouseEffect()
+        {
+            isRunning = true;
+
+            Task.Factory.StartNew(async () =>
             {
-                while (true)
+                while (isRunning)
                 {
-                    System.Threading.Thread.Sleep(10);
+                    await Task.Delay(10);
 
                     Dispatcher.Invoke(() =>
                     {
                         var point = new PInvoke.POINT();
                         PInvoke.User32.GetCursorPos(ref point);
 
-                        while(canvas.Children.Count >= fixedCount)
+                        while (canvas.Children.Count >= fixedCount)
                         {
                             canvas.Children.RemoveAt(0);
                         }
@@ -57,9 +64,17 @@ namespace Master_Zhao.Shell.Windows
                         this.canvas.Children.Add(new MyVisualHost(new Point(point.x, point.y)));
                     });
                 }
-            }).Start();
+            },TaskCreationOptions.LongRunning);
+
+        }
+
+        public void StopMouseEffect()
+        {
+            isRunning = false;
         }
     }
+
+
 
     public class MyVisualHost : FrameworkElement
     {
@@ -88,11 +103,11 @@ namespace Master_Zhao.Shell.Windows
             for (int i = 0; i < 10; i++)
             {
                 Color color = new Color();
-                color.A = (byte)(50 - (5 * i));
+                color.A = 20;
                 color.R = 0;
                 color.G = 128;
                 color.B = 255;
-                dc.DrawEllipse(new SolidColorBrush(color), null, point, 1 + i, 1 + i);
+                dc.DrawEllipse(new SolidColorBrush(color), null, point, 10 - i, 10 - i);
             }
             dc.Close();
             return drawingVisual;

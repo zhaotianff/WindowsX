@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Master_Zhao.Shell.Infrastructure.Navigation;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.View.Beautify.Pages;
 using Master_Zhao.Shell.View.Pages;
@@ -23,7 +23,7 @@ namespace Master_Zhao.Shell.Pages
     /// <summary>
     /// DesktopSetting.xaml 的交互逻辑
     /// </summary>
-    public partial class DesktopBeautify : Page
+    public partial class DesktopBeautify : Page, IPageAction
     {
         private ToggleButton toggleButton = null;
      
@@ -108,6 +108,16 @@ namespace Master_Zhao.Shell.Pages
         private void btn_StartMenuSettingClick(object sender, RoutedEventArgs e)
         {
             frame.Content = startMenuSetting;
+        }
+
+        public void Terminate()
+        {
+            mouseEffect.CloseMouseEffectWindow();
+        }
+
+        public void ShowDefaultPage()
+        {
+            
         }
     }
 

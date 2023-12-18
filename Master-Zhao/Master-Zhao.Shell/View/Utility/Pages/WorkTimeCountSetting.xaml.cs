@@ -42,8 +42,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
 
         private void cbxWorkTimeCount_Unchecked(object sender, RoutedEventArgs e)
         {
-            workTimeCount.Close();
-            workTimeCount = null;
+            CloseWorkTimeCount();
         }
 
         private List<WorkTimeItem> LoadWorkTimeItem()
@@ -64,7 +63,10 @@ namespace Master_Zhao.Shell.View.Utility.Pages
         private void btn_RemoveWorkTimeItem_Click(object sender, RoutedEventArgs e)
         {
             if (this.list_WorkItems.SelectedIndex != -1)
+            {
+                this.workTimeCount.RemoveWorkTimeCountItem(this.list_WorkItems.SelectedIndex);
                 this.workTimeItems.RemoveAt(this.list_WorkItems.SelectedIndex);
+            }
         }
 
         private void cbx_IsDocking_Checked(object sender, RoutedEventArgs e)
@@ -95,6 +97,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
         {
             if (workTimeCount != null)
             {
+                workTimeCount.StopAllCount();
                 workTimeCount.Close();
                 workTimeCount = null;
             }

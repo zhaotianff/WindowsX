@@ -244,10 +244,15 @@ namespace Master_Zhao.Shell
 
             GlobalConfig.Instance.SaveAllConfig();
 
-            //TODO 
-            toolsPage.Terminate();
+            TerminateAllPage();
             StartMenuManager.UnHookStart();
             NotifyIconHelper.Instance.RemoveNotifyIcon();
+        }
+
+        private void TerminateAllPage()
+        {
+            desktopBeautify.Terminate();
+            toolsPage.Terminate();
         }
 
         private async void BlurWindow_StateChanged(object sender, EventArgs e)
