@@ -100,12 +100,18 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             //this.list_WorkItems.ItemsSource = this.workTimeItems;
             for(int i = 0;i<workTimeItems.Count;i++)
             {
-                WorkTimeItemControl workTimeItemControl = new WorkTimeItemControl();
-                workTimeItemControl.Data = workTimeItems[i];
-                workTimeItemControl.OnStart += WorkTimeItemControl_OnStart;
-                workTimeItemControl.Height = 30;
-                this.list_WorkItems.Items.Add(workTimeItemControl);
+                AddWorkTimeCountItem(workTimeItems[i]);
             }
+        }
+
+        public void AddWorkTimeCountItem(WorkTimeItem workTimeItem)
+        {
+            //TODO use binding
+            WorkTimeItemControl workTimeItemControl = new WorkTimeItemControl();
+            workTimeItemControl.Data = workTimeItem;
+            workTimeItemControl.OnStart += WorkTimeItemControl_OnStart;
+            workTimeItemControl.Height = 30;
+            this.list_WorkItems.Items.Add(workTimeItemControl);
         }
 
         private void BlurWindow_MouseMove(object sender, MouseEventArgs e)

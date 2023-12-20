@@ -393,6 +393,13 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
+                        <DataTrigger Binding="{Binding Data.EnableBackgroundImage,RelativeSource={RelativeSource TemplatedParent}}" Value="true">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="{Binding Data.BackgroundImage,RelativeSource={RelativeSource TemplatedParent}}" Stretch="UniformToFill"></ImageBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"

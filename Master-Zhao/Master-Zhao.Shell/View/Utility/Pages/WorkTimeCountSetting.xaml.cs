@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Master_Zhao.Shell.Util;
 
 namespace Master_Zhao.Shell.View.Utility.Pages
 {
@@ -49,15 +50,16 @@ namespace Master_Zhao.Shell.View.Utility.Pages
         {
             return new List<WorkTimeItem>() 
             {
-                new WorkTimeItem() { EllapsedTimeString = "", Title = "测试工作项" } ,
-                new WorkTimeItem() { EllapsedTimeString = "", Title = "摸鱼" },
-                new WorkTimeItem() { EllapsedTimeString = "", Title = "划水" }
+                new WorkTimeItem() { EllapsedTimeString = "", Title = "工作" } ,
+                new WorkTimeItem() { EllapsedTimeString = "", Title = "摸鱼" }
             };
         }
 
         private void btn_AddWorkTimeItem_Click(object sender, RoutedEventArgs e)
         {
-            workTimeItems.Add(new WorkTimeItem() { EllapsedTimeString = "0时0分", Title = this.tbox_NewWorkItem.Text });
+            var workItemCount = new WorkTimeItem() { EllapsedTimeString = "", Title = this.tbox_NewWorkItem.Text };
+            this.workTimeItems.Add(workItemCount);
+            this.workTimeCount.AddWorkTimeCountItem(workItemCount);
         }
 
         private void btn_RemoveWorkTimeItem_Click(object sender, RoutedEventArgs e)
@@ -101,6 +103,22 @@ namespace Master_Zhao.Shell.View.Utility.Pages
                 workTimeCount.Close();
                 workTimeCount = null;
             }
+        }
+
+        private void btn_BrowseBackgroundImage_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "图片文件|*.jpg;*.png;*.bmp;*.jpeg;*.jiff;*.webp";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if(openFileDialog.ShowDialog() == true)
+            {
+                var btnBrowseBackgroundImage = sender as DependencyObject;
+                var workTimeItem = btnBrowseBackgroundImage.FindParent<ListBoxItem>().Content as WorkTimeItem;
+                var index = this.workTimeItems.IndexOf(workTimeItem);
+                var workCountItem = this.workTimeItems[index];
+                workCountItem.BackgroundImage = openFileDialog.FileName;
+            }
+            
         }
     }
 }
