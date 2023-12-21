@@ -22,7 +22,7 @@
         <ListBox Grid.Row="1" Name="list_WorkItems" Background="Transparent" BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="50" Width="{Binding ElementName=list_WorkItems,Path=ActualWidth}">
+                    <Grid Height="50" Width="900" MaxWidth="{Binding ElementName=list_WorkItems,Path=ActualWidth}">
                         <Label Content="{Binding Title}" FontWeight="Bold" FontSize="18" FontFamily="Arial" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
                         <Label Content="{Binding EllapsedTimeString}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="150,0,0,0" FontSize="20" FontFamily="Arial"/>
                         <Button Content="浏览背景图片" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource ButtonStyle}" Name="btn_BrowseBackgroundImage" Click="btn_BrowseBackgroundImage_Click"></Button>

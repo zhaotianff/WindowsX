@@ -115,8 +115,7 @@ namespace Master_Zhao.Shell.View.Utility.Pages
                 var btnBrowseBackgroundImage = sender as DependencyObject;
                 var workTimeItem = btnBrowseBackgroundImage.FindParent<ListBoxItem>().Content as WorkTimeItem;
                 var index = this.workTimeItems.IndexOf(workTimeItem);
-                var workCountItem = this.workTimeItems[index];
-                workCountItem.BackgroundImage = openFileDialog.FileName;
+                workTimeCount.UpdateBackgroundImage(openFileDialog.FileName, index);
             }
             
         }

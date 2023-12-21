@@ -32,30 +32,6 @@ namespace Master_Zhao.Shell.Model.Utility
             }
         }
 
-        private bool enableBackgroundImage;
-        public bool EnableBackgroundImage
-        { 
-            get => enableBackgroundImage; 
-            set
-            {
-                enableBackgroundImage = value;
-                RaisedChange("BackgroundImage");
-            }
-        }
-
-
-        private string backgroundImage;
-        public string BackgroundImage 
-        {
-            get => backgroundImage; 
-            set
-            {
-                backgroundImage = value;
-                RaisedChange("BackgroundImage");
-                EnableBackgroundImage = true;
-            }
-        }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

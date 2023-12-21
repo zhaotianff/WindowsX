@@ -114,6 +114,19 @@ namespace Master_Zhao.Shell.View.Utility.Windows
             this.list_WorkItems.Items.Add(workTimeItemControl);
         }
 
+        public void UpdateBackgroundImage(string filePath,int index)
+        {
+            var workTimeItemControl =  this.list_WorkItems.Items[index] as WorkTimeItemControl;
+            ImageBrush ib = new ImageBrush();
+            ib.Stretch = Stretch.UniformToFill;
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.UriSource = new Uri(filePath, UriKind.Absolute);
+            bi.EndInit();
+            ib.ImageSource = bi;
+            workTimeItemControl.Background = ib;
+        }
+
         private void BlurWindow_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
