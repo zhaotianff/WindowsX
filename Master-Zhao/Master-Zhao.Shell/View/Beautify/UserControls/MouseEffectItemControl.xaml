@@ -39,7 +39,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="28"/>
                     </Grid.RowDefinitions>
-                    <MediaElement x:Name="image" Source="C:\Users\xi\Desktop\fastrun.mp4"></MediaElement>
+                    <MediaElement x:Name="image" MediaEnded="image_MediaEnded"></MediaElement>
                     <Label Name="title" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                 </Grid>
                 <Grid Grid.Row="1">
