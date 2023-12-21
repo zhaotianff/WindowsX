@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Master_Zhao.Shell.View.Beautify.UserControls"
+             xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -38,12 +39,12 @@
                         <RowDefinition/>
                         <RowDefinition Height="28"/>
                     </Grid.RowDefinitions>
-                    <Image Name="image"></Image>
+                    <MediaElement x:Name="image" Source="C:\Users\xi\Desktop\fastrun.mp4"></MediaElement>
                     <Label Name="title" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <!--<Button Content="设置" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Margin="0,0,55,0" Click="preview_Click" Name="btn_Preview" Style="{StaticResource ButtonStyle}"/>
-                    <Button Content="启用" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Click="set_Click" Style="{StaticResource ButtonStyle}"/>-->
+                    <Button Content="设置" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Margin="0,0,55,0" Click="btn_Setting_Click" Name="btn_Setting" Style="{StaticResource ButtonStyle}"/>
+                    <Button Content="启用" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="20" Click="set_Click" Style="{StaticResource ButtonStyle}"/>
                 </Grid>
             </Grid>
         </Border>
