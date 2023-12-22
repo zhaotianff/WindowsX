@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Infrastructure.MouseEffect;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -56,17 +57,20 @@ namespace Master_Zhao.Shell.View.Beautify.UserControls
         {
             set
             {
-                this.image.Source = new Uri(value);
-                this.image.Play();
+                this.image.Source = new BitmapImage(new Uri(value, UriKind.Relative));
             }
+        }
+
+        private MouseEffectType mouseEffectType = MouseEffectType.FollowingDot;
+        public MouseEffectType MouseEffectType
+        {
+            get => mouseEffectType;
+            set => mouseEffectType = value;
         }
 
         public MouseEffectItemControl()
         {
             InitializeComponent();
-
-            this.image.LoadedBehavior = MediaState.Manual;
-            this.image.Volume = 0;
         }
 
         private void btn_Setting_Click(object sender, RoutedEventArgs e)
@@ -77,11 +81,6 @@ namespace Master_Zhao.Shell.View.Beautify.UserControls
         private void set_Click(object sender, RoutedEventArgs e)
         {
             this.RaiseEvent(new RoutedEventArgs(OnSetEvent));
-        }
-
-        private void image_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.image.Play();
         }
     }
 }

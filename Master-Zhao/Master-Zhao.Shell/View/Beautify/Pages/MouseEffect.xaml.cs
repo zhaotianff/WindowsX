@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Shell.Windows;
+﻿using Master_Zhao.Shell.View.Beautify.UserControls;
+using Master_Zhao.Shell.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,12 @@ namespace Master_Zhao.Shell.Pages
             mouseEffectWindow.StopMouseEffect();
             mouseEffectWindow?.Close();
             mouseEffectWindow = null;
+        }
+
+        private void MouseEffectItemControl_OnSet(object sender, RoutedEventArgs e)
+        {
+            var mouseEffectControl = sender as MouseEffectItemControl;
+            mouseEffectWindow.UpdateMouseEffectType(mouseEffectControl.MouseEffectType);
         }
     }
 }

@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border x:Name="main" CornerRadius="5">
+        <Border x:Name="main" CornerRadius="5" BorderBrush="{DynamicResource AccentBaseColor}" BorderThickness="1">
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </Border.Background>
@@ -39,7 +39,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="28"/>
                     </Grid.RowDefinitions>
-                    <MediaElement x:Name="image" MediaEnded="image_MediaEnded"></MediaElement>
+                    <Image x:Name="image" Stretch="Uniform"></Image>
                     <Label Name="title" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                 </Grid>
                 <Grid Grid.Row="1">

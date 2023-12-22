@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Infrastructure.MouseEffect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -20,8 +21,9 @@ namespace Master_Zhao.Shell.Windows
     /// </summary>
     public partial class MouseEffectWindow : Window
     {
-        private int fixedCount = 50;
         private bool isRunning = false;
+        private int fixedCount = 1;
+        private MouseEffectType currentEffectType = MouseEffectType.FollowingDot;
 
         public MouseEffectWindow()
         {
@@ -61,7 +63,7 @@ namespace Master_Zhao.Shell.Windows
                             canvas.Children.RemoveAt(0);
                         }
 
-                        this.canvas.Children.Add(new MyVisualHost(new Point(point.x, point.y)));
+                        this.canvas.Children.Add(GetMouseCursorEffect(new Point(point.x, point.y)));
                     });
                 }
             },TaskCreationOptions.LongRunning);
@@ -72,45 +74,26 @@ namespace Master_Zhao.Shell.Windows
         {
             isRunning = false;
         }
-    }
 
-
-
-    public class MyVisualHost : FrameworkElement
-    {
-        private readonly VisualCollection children;
-
-        protected override int VisualChildrenCount => children.Count;
-
-        protected override Visual GetVisualChild(int index)
+        public void UpdateMouseEffectType(MouseEffectType mouseEffectType)
         {
-            if (index < 0 || index > children.Count)
-                throw new ArgumentOutOfRangeException();
-
-            return children[index];
+            currentEffectType = mouseEffectType;
         }
 
-        public MyVisualHost(Point point)
+        public MouseCursorEffectAbstract GetMouseCursorEffect(Point point)
         {
-            children = new VisualCollection(this) { CreateDrawingVisualEllipsed(point) };
-            CreateDrawingVisualEllipsed(point);
-        }
-
-        private DrawingVisual CreateDrawingVisualEllipsed(Point point)
-        {
-            DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext dc = drawingVisual.RenderOpen();
-            for (int i = 0; i < 10; i++)
+            switch(currentEffectType)
             {
-                Color color = new Color();
-                color.A = 20;
-                color.R = 0;
-                color.G = 128;
-                color.B = 255;
-                dc.DrawEllipse(new SolidColorBrush(color), null, point, 10 - i, 10 - i);
+                case MouseEffectType.FollowingDot:
+                    fixedCount = FollowingDotEffect.FixedCount;
+                    return new FollowingDotEffect(point);
+                case MouseEffectType.CursorTrail:
+                    fixedCount = CursorTrailEffect.FixedCount;
+                    return new CursorTrailEffect(point);
+                default:
+                    fixedCount = FollowingDotEffect.FixedCount;
+                    return new FollowingDotEffect(point);
             }
-            dc.Close();
-            return drawingVisual;
         }
     }
 }

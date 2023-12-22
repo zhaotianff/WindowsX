@@ -22,7 +22,10 @@
                         <CheckBox Content="启用鼠标特效(beta)" Margin="5" Checked="mouseEffect_Checked" Unchecked="mouseEffect_Unchecked"/>
                     </WrapPanel>
                 </GroupBox>
-                <uc:MouseEffectItemControl Width="300" Height="300" Title="跟随" PreviewImage="C:\Users\xi\Desktop\fastrun.mp4"></uc:MouseEffectItemControl>
+                <WrapPanel>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="跟随" PreviewImage="../../../Icon/MouseEffect/followingdot.png" MouseEffectType="FollowingDot" Margin="10" OnSet="MouseEffectItemControl_OnSet"></uc:MouseEffectItemControl>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="轨迹" PreviewImage="../../../Icon/MouseEffect/cursortrail.png" MouseEffectType="CursorTrail" Margin="10" OnSet="MouseEffectItemControl_OnSet"></uc:MouseEffectItemControl>
+                </WrapPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

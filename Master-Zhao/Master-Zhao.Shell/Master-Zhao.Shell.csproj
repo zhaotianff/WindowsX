@@ -32,6 +32,8 @@
     <None Remove="Icon\fastrun.png" />
     <None Remove="Icon\huashui.jpg" />
     <None Remove="Icon\information.png" />
+    <None Remove="Icon\MouseEffect\cursortrail.png" />
+    <None Remove="Icon\MouseEffect\followingdot.png" />
     <None Remove="Icon\move.jpg" />
     <None Remove="Icon\setting.png" />
     <None Remove="Icon\StartMenu\power.png" />
@@ -80,6 +82,8 @@
     <Resource Include="Icon\explorer.jpg" />
     <Resource Include="Icon\explorer_back.png" />
     <Resource Include="Icon\fastrun.png" />
+    <Resource Include="Icon\MouseEffect\cursortrail.png" />
+    <Resource Include="Icon\MouseEffect\followingdot.png" />
     <Resource Include="Icon\move.jpg" />
     <Resource Include="Icon\setting.png" />
     <Resource Include="Icon\StartMenu\power.png" />
