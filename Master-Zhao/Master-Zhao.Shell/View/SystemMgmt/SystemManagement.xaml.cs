@@ -1,4 +1,5 @@
-﻿using Master_Zhao.Shell.View.SystemMgmt.Pages;
+﻿using Master_Zhao.Shell.Infrastructure.Navigation;
+using Master_Zhao.Shell.View.SystemMgmt.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,12 @@ namespace Master_Zhao.Shell.Pages
     /// <summary>
     /// Interaction logic for SystemManagement.xaml
     /// </summary>
-    public partial class SystemManagement : Page
+    public partial class SystemManagement : Page,IPageAction
     {
         private ToggleButton toggleButton = null;
         private StartupManagement startupManagement = new StartupManagement();
+        private DiskFileManagement diskFileManagement = new DiskFileManagement();
+        private Page defaultPage = null;
 
         public SystemManagement()
         {
@@ -41,11 +44,36 @@ namespace Master_Zhao.Shell.Pages
         private void btn_StartupMgmtClick(object sender, RoutedEventArgs e)
         {
             this.frame.Content = startupManagement;
+            defaultPage = startupManagement;
+        }
+
+        private void btn_DiskFileMgmtClick(object sender, RoutedEventArgs e)
+        {
+            this.frame.Content = diskFileManagement;
+            defaultPage = diskFileManagement;
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
             (System.Windows.Application.Current.MainWindow as MainWindow).EndShowMenuAnimation();
+        }
+
+
+        public void Terminate()
+        {
+            
+        }
+
+        public void ShowDefaultPage()
+        {
+            if (defaultPage == null)
+            {
+                btn_StartupMgmtClick(null, null);
+            }
+            else
+            {
+                frame.Content = defaultPage;
+            }
         }
     }
 }

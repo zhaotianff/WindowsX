@@ -26,11 +26,12 @@
 
             <StackPanel Grid.Row="1">
                 <ToggleButton Content="开机启动项管理" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_StartupMgmtClick" IsChecked="True"/>
+                <ToggleButton Content="磁盘文件管理" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_DiskFileMgmtClick" IsChecked="False"/>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Column="1">
-            <Frame Name="frame" Source="./Pages/StartupManagement.xaml">
+            <Frame Name="frame" Source="./Pages/StartupManagement.xaml" NavigationUIVisibility="Hidden">
 
             </Frame>
         </Grid>
