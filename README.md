@@ -28,7 +28,7 @@ Master-Zhao是Windows的一个工具集软件。 包括了美化、系统管理�
 <h1 align="center">Master-Zhao :hammer_and_wrench: </h1>
 
 # 开发环境
-* ~~.NET5~~ .NET Core 3.1
+* .NET 6 ~~.NET5~~ ~~.NET Core 3.1~~
 * Visual C++ Toolset 142
 * Visual Studio 2019 16.10.4
 

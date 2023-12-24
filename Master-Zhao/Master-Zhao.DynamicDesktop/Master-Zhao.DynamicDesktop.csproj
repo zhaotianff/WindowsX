@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Master_Zhao.DynamicDesktop</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
