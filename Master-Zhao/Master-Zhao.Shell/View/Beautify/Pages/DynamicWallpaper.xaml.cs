@@ -201,7 +201,7 @@ namespace Master_Zhao.Shell.Pages
 
                 var thumbBitmap = DesktopTool.GetFileThumbnail(openFileDialog.FileName);
                 var thumbnailPath = System.IO.Path.Combine(dir, wallpaperName + ".png");
-                System.Drawing.Bitmap.FromHbitmap(thumbBitmap).Save(thumbnailPath);
+                System.Drawing.Image.FromHbitmap(thumbBitmap).Save(thumbnailPath);
                 var targetFilePath = System.IO.Path.Combine(dir, wallpaperFileName);
                 System.IO.File.Copy(openFileDialog.FileName, targetFilePath,true);
                 var dynamicWallpaperItem = new DynamicWallpaperItem()

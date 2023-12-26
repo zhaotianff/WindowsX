@@ -301,35 +301,22 @@ BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
 
 HBITMAP GetFileThumbnail(PCWSTR path)
 {
-	HRESULT hr = CoInitialize(nullptr);
+	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+	HBITMAP hbmp = NULL;
 
-	IShellItem* item = nullptr;
-	hr = SHCreateItemFromParsingName(path, nullptr, IID_PPV_ARGS(&item));
-
-	IThumbnailCache* cache = nullptr;
-	hr = CoCreateInstance(
-		CLSID_LocalThumbnailCache,
-		nullptr,
-		CLSCTX_INPROC,
-		IID_PPV_ARGS(&cache));
-
-	WTS_CACHEFLAGS flags = WTS_LOWQUALITY;
-	ISharedBitmap* shared_bitmap;
-	hr = cache->GetThumbnail(
-		item,
-		12*16,
-		WTS_EXTRACT,
-		&shared_bitmap,
-		nullptr,
-		nullptr);
-
-	HBITMAP hbitmap = NULL;
-	hr = shared_bitmap->GetSharedBitmap(&hbitmap);
-	shared_bitmap->Release();
-	cache->Release();
-	CoUninitialize();
-
-	return hbitmap;
+	if (SUCCEEDED(hr))
+	{
+		IShellItemImageFactory* pImageFactory;
+		hr = SHCreateItemFromParsingName(path, NULL, IID_PPV_ARGS(&pImageFactory));
+		if (SUCCEEDED(hr))
+		{
+			SIZE size = { 256, 256 };
+			hr = pImageFactory->GetImage(size, SIIGBF_THUMBNAILONLY, &hbmp);
+			pImageFactory->Release();
+		}
+		CoUninitialize();
+	}
+	return hbmp;
 }
 
 BOOL FindStartMenu(HWND& startMenuHwnd, HWND& startMenuBtnHwnd)
