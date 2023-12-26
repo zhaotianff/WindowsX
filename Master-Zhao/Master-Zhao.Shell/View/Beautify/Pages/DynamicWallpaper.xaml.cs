@@ -199,9 +199,10 @@ namespace Master_Zhao.Shell.Pages
                 if (System.IO.Directory.Exists(dir) == false)
                     System.IO.Directory.CreateDirectory(dir);
 
-                var thumbBitmap = DesktopTool.GetFileThumbnail(openFileDialog.FileName);
+                var hBitmap = DesktopTool.GetFileThumbnail(openFileDialog.FileName);
                 var thumbnailPath = System.IO.Path.Combine(dir, wallpaperName + ".png");
-                System.Drawing.Image.FromHbitmap(thumbBitmap).Save(thumbnailPath);
+                System.Drawing.Image.FromHbitmap(hBitmap).Save(thumbnailPath);
+                PInvoke.Gdi32.DeleteObject(hBitmap);
                 var targetFilePath = System.IO.Path.Combine(dir, wallpaperFileName);
                 System.IO.File.Copy(openFileDialog.FileName, targetFilePath,true);
                 var dynamicWallpaperItem = new DynamicWallpaperItem()
