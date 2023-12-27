@@ -9,6 +9,25 @@
       Title="DiskFileManagement">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TreeView BorderThickness="0" Background="Transparent" Style="{StaticResource TreeViewStyle}">
+            <TreeViewItem Header="我的电脑">
+                <TreeViewItem Header="C:\"></TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+
+        <GridSplitter Grid.Column="1" Width="3"></GridSplitter>
+
+        <ListView Grid.Column="2" BorderThickness="0" Background="LightGray"></ListView>
+
+        <StackPanel Grid.Column="3">
+            <Button Width="88" Height="28" Content="目录统计" Margin="10" Style="{StaticResource ButtonStyle}"></Button>
+        </StackPanel>
     </Grid>
 </Page>

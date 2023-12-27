@@ -39,6 +39,7 @@
                 <ResourceDictionary Source="Styles/RadioButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ImageStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TabControlStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TreeViewStyle.xaml"/>
 
                 <!--Resources-->
                 <ResourceDictionary Source="Resources/ContextMenu/NotifyIconContextMenu.xaml"/>
