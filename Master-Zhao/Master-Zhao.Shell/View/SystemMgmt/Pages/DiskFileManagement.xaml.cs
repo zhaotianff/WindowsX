@@ -1,5 +1,10 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Model.SystemMgmt;
+using Master_Zhao.Shell.Util;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,9 +23,61 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
     /// </summary>
     public partial class DiskFileManagement : Page
     {
+        private List<DiskPath> root = new List<DiskPath>();
+
         public DiskFileManagement()
         {
             InitializeComponent();
+            InitDiskFileTree();
+        }
+
+        private void InitDiskFileTree()
+        {
+            var computer = new DiskPath() { DisplayName = "我的电脑", Path = "Root", DiskPathType = DiskPathType.Computer };
+            root.Add(computer);
+            this.tree.ItemsSource = root;
+
+            computer.Children = new List<DiskPath>();
+            var driveInfos = System.IO.DriveInfo.GetDrives();
+
+            foreach (var drive in driveInfos)
+            {
+                var disk = new DiskPath() { DisplayName = drive.Name, Path = drive.RootDirectory.FullName, DiskPathType = DiskPathType.Disk };
+                computer.Children.Add(disk);
+                //AppendFolder(disk);
+            }
+
+            AppendFolder(computer.Children[computer.Children.Count - 1]);
+        }
+
+        private void AppendFolder(DiskPath diskPath)
+        {
+            System.IO.DirectoryInfo directoryInfo = new System.IO.DirectoryInfo(diskPath.Path);
+
+            //var accessControl = directoryInfo.GetAccessControl();
+            //var acl = accessControl.GetAccessRules(true, true, typeof(NTAccount));
+
+            if (diskPath.DiskPathType != DiskPathType.Disk && directoryInfo.Attributes.HasFlag(FileAttributes.Hidden))
+                return;
+
+            var subDirs = directoryInfo.GetDirectories();
+
+            if (subDirs.Length > 0)
+                diskPath.Children = new List<DiskPath>();
+
+
+            foreach (var dir in subDirs)
+            {
+                var folder = new DiskPath() { DisplayName = dir.Name, Path = dir.FullName, DiskPathType = DiskPathType.Folder };
+                diskPath.Children.Add(folder);
+                AppendFolder(folder);
+            }
+
+        }
+
+        private void tree_Expanded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

@@ -82,21 +82,23 @@
           Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
           Value="Auto" />
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TreeView">
                     <Border Name="Border"
                 CornerRadius="1"
                 BorderThickness="1">
-                        <Border.BorderBrush>
+                        <!--<Border.BorderBrush>
                             <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
                         </Border.BorderBrush>
                         <Border.Background>
                             <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
-                        </Border.Background>
+                        </Border.Background>-->
                         <ScrollViewer Focusable="False"
                         CanContentScroll="False"
-                        Padding="4">
+                        Padding="2">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </Border>
@@ -213,7 +215,7 @@
                     (SolidColorBrush.Color)"
                                                 >
                                             <EasingColorKeyFrame KeyTime="0"
-                                         Value="{StaticResource SelectedBackgroundColor}" />
+                                         Value="{StaticResource ItemSelectedColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>

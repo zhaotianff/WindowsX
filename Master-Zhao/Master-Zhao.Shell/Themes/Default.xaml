@@ -14,4 +14,6 @@
 
     <Color x:Key="BorderColor">#FF737373</Color>
     <Color x:Key="BorderColorTran" A="120" R="115" G="115" B="115"></Color>
+    <Color x:Key="AccentBaseColorShadowColor">#FFC0C0C0</Color>
+    <Color x:Key="ItemSelectedColor">#FFC0C0C0</Color>
 </ResourceDictionary>

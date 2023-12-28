@@ -16,18 +16,28 @@
             <ColumnDefinition Width="100"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TreeView BorderThickness="0" Background="Transparent" Style="{StaticResource TreeViewStyle}">
-            <TreeViewItem Header="我的电脑">
-                <TreeViewItem Header="C:\"></TreeViewItem>
-            </TreeViewItem>
+        <TreeView Style="{StaticResource TreeViewStyle}" Name="tree" Expander.Expanded="tree_Expanded">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="{Binding Icon}" Width="18" Stretch="Uniform"></Image>
+                        <Label Grid.Column="1" Content="{Binding DisplayName}"></Label>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
 
-        <GridSplitter Grid.Column="1" Width="3"></GridSplitter>
+        <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"></GridSplitter>
 
         <ListView Grid.Column="2" BorderThickness="0" Background="LightGray"></ListView>
 
         <StackPanel Grid.Column="3">
-            <Button Width="88" Height="28" Content="目录统计" Margin="10" Style="{StaticResource ButtonStyle}"></Button>
+            <Button Width="88" Height="28" Content="目录统计" Margin="5,0" Style="{StaticResource ButtonStyle}"></Button>
         </StackPanel>
     </Grid>
 </Page>

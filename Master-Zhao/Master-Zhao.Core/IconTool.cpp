@@ -68,3 +68,12 @@ BOOL ExtractFirstIconFromFile(LPCTSTR lpszExtPath, BOOL isLargeIcon,HICON& icon)
 
     return FALSE;
 }
+
+BOOL ExtractStockIcon(SHSTOCKICONID shIconID, HICON& icon)
+{
+     SHSTOCKICONINFO info{};
+     info.cbSize = sizeof(SHSTOCKICONINFO);
+     HRESULT hr = SHGetStockIconInfo(shIconID, SHGSI_ICON | SHGSI_LARGEICON, &info);
+     icon = info.hIcon;
+     return SUCCEEDED(hr);
+}
