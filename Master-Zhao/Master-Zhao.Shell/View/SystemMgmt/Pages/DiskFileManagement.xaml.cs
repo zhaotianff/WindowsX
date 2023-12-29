@@ -6,6 +6,7 @@ using System.IO;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,30 +25,37 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
     public partial class DiskFileManagement : Page
     {
         private List<DiskPath> root = new List<DiskPath>();
+        private bool isLoaded = false;
 
         public DiskFileManagement()
         {
             InitializeComponent();
-            InitDiskFileTree();
         }
 
-        private void InitDiskFileTree()
+        public async void LoadDiskFileTree()
         {
+            if (isLoaded)
+                return;
+
             var computer = new DiskPath() { DisplayName = "我的电脑", Path = "Root", DiskPathType = DiskPathType.Computer };
             root.Add(computer);
             this.tree.ItemsSource = root;
 
-            computer.Children = new List<DiskPath>();
-            var driveInfos = System.IO.DriveInfo.GetDrives();
+            computer.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
 
-            foreach (var drive in driveInfos)
-            {
-                var disk = new DiskPath() { DisplayName = drive.Name, Path = drive.RootDirectory.FullName, DiskPathType = DiskPathType.Disk };
-                computer.Children.Add(disk);
-                //AppendFolder(disk);
-            }
+            await Task.Run(() => {
+                var driveInfos = System.IO.DriveInfo.GetDrives();
 
-            AppendFolder(computer.Children[computer.Children.Count - 1]);
+                foreach (var drive in driveInfos)
+                {
+                    var disk = new DiskPath() { DisplayName = drive.Name, Path = drive.RootDirectory.FullName, DiskPathType = DiskPathType.Disk };
+                    computer.Children.Add(disk);
+                    //AppendFolder(disk);
+                }
+
+                AppendFolder(computer.Children[computer.Children.Count - 1]);
+                isLoaded = true;
+            });
         }
 
         private void AppendFolder(DiskPath diskPath)
@@ -63,13 +71,15 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             var subDirs = directoryInfo.GetDirectories();
 
             if (subDirs.Length > 0)
-                diskPath.Children = new List<DiskPath>();
+                diskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
 
 
             foreach (var dir in subDirs)
             {
                 var folder = new DiskPath() { DisplayName = dir.Name, Path = dir.FullName, DiskPathType = DiskPathType.Folder };
-                diskPath.Children.Add(folder);
+                this.Dispatcher.Invoke(() => {
+                    diskPath.Children.Add(folder);
+                });
                 AppendFolder(folder);
             }
 

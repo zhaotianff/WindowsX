@@ -51,6 +51,7 @@ namespace Master_Zhao.Shell.Pages
         {
             this.frame.Content = diskFileManagement;
             defaultPage = diskFileManagement;
+            diskFileManagement.LoadDiskFileTree();
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)

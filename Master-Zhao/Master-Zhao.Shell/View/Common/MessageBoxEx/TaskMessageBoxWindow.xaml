@@ -1,0 +1,16 @@
+﻿<tian:BlurWindow x:Class="Master_Zhao.Shell.View.Common.MessageBoxEx.TaskMessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Master_Zhao.Shell.View.Common.MessageBoxEx"
+        mc:Ignorable="d"
+        xmlns:tian="clr-namespace:TianXiaTech;assembly=BlurWindow"
+        Title="TaskMessageBoxWindow" Height="200" WindowStartupLocation="CenterScreen" Topmost="True"  MaxWidth="640" Width="380"  MinWidth="320">
+    <Window.Background>
+        <SolidColorBrush Color="White" Opacity=".6"/>
+    </Window.Background>
+    <Grid>
+        
+    </Grid>
+</tian:BlurWindow>
