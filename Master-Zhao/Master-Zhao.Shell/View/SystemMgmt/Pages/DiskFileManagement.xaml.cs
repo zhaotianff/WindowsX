@@ -48,12 +48,14 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
                 foreach (var drive in driveInfos)
                 {
+                    //Use task.whenall
                     var disk = new DiskPath() { DisplayName = drive.Name, Path = drive.RootDirectory.FullName, DiskPathType = DiskPathType.Disk };
-                    computer.Children.Add(disk);
-                    //AppendFolder(disk);
+                    this.Dispatcher.Invoke(() => {
+                        computer.Children.Add(disk);
+                    }); 
+                    AppendFolder(disk);
                 }
 
-                AppendFolder(computer.Children[computer.Children.Count - 1]);
                 isLoaded = true;
             });
         }
@@ -62,13 +64,19 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
         {
             System.IO.DirectoryInfo directoryInfo = new System.IO.DirectoryInfo(diskPath.Path);
 
-            //var accessControl = directoryInfo.GetAccessControl();
-            //var acl = accessControl.GetAccessRules(true, true, typeof(NTAccount));
-
-            if (diskPath.DiskPathType != DiskPathType.Disk && directoryInfo.Attributes.HasFlag(FileAttributes.Hidden))
+            if (directoryInfo.CanAccess() == false || (directoryInfo.Attributes.HasFlag(FileAttributes.Hidden) && diskPath.DiskPathType != DiskPathType.Disk))
                 return;
 
-            var subDirs = directoryInfo.GetDirectories();
+            DirectoryInfo[] subDirs = new DirectoryInfo[] { };
+
+            try
+            {
+                subDirs = directoryInfo.GetDirectories();
+            }
+            catch
+            {
+                return;
+            }
 
             if (subDirs.Length > 0)
                 diskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
