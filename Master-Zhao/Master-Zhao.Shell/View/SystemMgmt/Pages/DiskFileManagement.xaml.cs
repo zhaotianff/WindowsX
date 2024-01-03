@@ -42,22 +42,19 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             this.tree.ItemsSource = root;
 
             computer.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
+            var driveInfos = System.IO.DriveInfo.GetDrives();
 
-            await Task.Run(() => {
-                var driveInfos = System.IO.DriveInfo.GetDrives();
+            List<Task> taskList = new List<Task>();
 
-                foreach (var drive in driveInfos)
-                {
-                    //Use task.whenall
-                    var disk = new DiskPath() { DisplayName = drive.Name, Path = drive.RootDirectory.FullName, DiskPathType = DiskPathType.Disk };
-                    this.Dispatcher.Invoke(() => {
-                        computer.Children.Add(disk);
-                    }); 
-                    AppendFolder(disk);
-                }
+            foreach (var drive in driveInfos)
+            {
+                var disk = new DiskPath() { DisplayName = drive.Name, Path = drive.RootDirectory.FullName, DiskPathType = DiskPathType.Disk };
+                computer.Children.Add(disk);
+                taskList.Add(Task.Run(() => { AppendFolder(disk); }));
+            }
 
-                isLoaded = true;
-            });
+            await Task.WhenAll(taskList);
+            isLoaded = true;
         }
 
         private void AppendFolder(DiskPath diskPath)
