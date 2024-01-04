@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Master_Zhao.Shell.Util;
+using Microsoft.VisualBasic;
+using static Master_Zhao.Shell.PInvoke.Kernel32;
 
 namespace Master_Zhao.Shell.PInvoke
 {
@@ -15,11 +17,11 @@ namespace Master_Zhao.Shell.PInvoke
         [DllImport("Kernel32.dll")]
         public static extern int GetLastError();
 
-        [DllImport("Kernel32.dll")]
-        public static extern IntPtr FindFirstFile([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, ref WIN32_FIND_DATAA lpFindFileData);
+        [DllImport("Kernel32.dll",CharSet = CharSet.Unicode)]
+        public static extern IntPtr FindFirstFile(string lpFileName, out WIN32_FIND_DATA lpFindFileData);
 
-        [DllImport("Kernel32.dll")]
-        public static extern bool FindNextFile(IntPtr hFindFile, IntPtr lpFindFileData);
+        [DllImport("Kernel32.dll",CharSet= CharSet.Unicode)]
+        public static extern bool FindNextFile(IntPtr hFindFile, out WIN32_FIND_DATA lpFindFileData);
 
         [DllImport("Kernel32.dll")]
         public static extern bool FindClose(IntPtr hFindFile);
@@ -27,23 +29,82 @@ namespace Master_Zhao.Shell.PInvoke
         public static readonly IntPtr INVALID_HANDLE_VALUE = (IntPtr)(-1);
         public static readonly uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
 
-        public struct WIN32_FIND_DATAA
+        public struct FILETIME
         {
-            public uint dwFileAttributes;
-            public IntPtr ftCreationTime;
-            public IntPtr ftLastAccessTime;
-            public IntPtr ftLastWriteTime;
+            public uint dwLowDateTime;
+            public uint dwHighDateTime;
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct WIN32_FIND_DATA
+        {
+            /// <summary>
+            /// The file attributes of a file.
+            /// </summary>
+            /// <remarks>
+            /// Although the enum we bind to here exists in the .NET Framework
+            /// as System.IO.FileAttributes, it is not reliably present.
+            /// Portable profiles don't include it, for example. So we have to define our own.
+            /// </remarks>
+            public System.IO.FileAttributes dwFileAttributes;
+
+            /// <summary>
+            /// A FILETIME structure that specifies when a file or directory was created.
+            /// If the underlying file system does not support creation time, this member is zero.
+            /// </summary>
+            public FILETIME ftCreationTime;
+
+            /// <summary>
+            /// A FILETIME structure.
+            /// For a file, the structure specifies when the file was last read from, written to, or for executable files, run.
+            /// For a directory, the structure specifies when the directory is created.If the underlying file system does not support last access time, this member is zero.
+            /// On the FAT file system, the specified date for both files and directories is correct, but the time of day is always set to midnight.
+            /// </summary>
+            public FILETIME ftLastAccessTime;
+
+            /// <summary>
+            /// A FILETIME structure.
+            /// For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used.The date and time are not updated when file attributes or security descriptors are changed.
+            /// For a directory, the structure specifies when the directory is created.If the underlying file system does not support last write time, this member is zero.
+            /// </summary>
+            public FILETIME ftLastWriteTime;
+
+            /// <summary>
+            /// The high-order DWORD value of the file size, in bytes.
+            /// This value is zero unless the file size is greater than MAXDWORD.
+            /// The size of the file is equal to(nFileSizeHigh* (MAXDWORD+1)) + nFileSizeLow.
+            /// </summary>
             public uint nFileSizeHigh;
+
+            /// <summary>
+            /// The low-order DWORD value of the file size, in bytes.
+            /// </summary>
             public uint nFileSizeLow;
+
+            /// <summary>
+            /// If the dwFileAttributes member includes the FILE_ATTRIBUTE_REPARSE_POINT attribute, this member specifies the reparse point tag.
+            /// Otherwise, this value is undefined and should not be used.
+            /// For more information see Reparse Point Tags.
+            /// </summary>
             public uint dwReserved0;
+
+            /// <summary>
+            /// Reserved for future use.
+            /// </summary>
             public uint dwReserved1;
+
+            /// <summary>
+            /// The name of the file.
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
             public string cFileName;
+
+            /// <summary>
+            /// An alternative name for the file.
+            /// This name is in the classic 8.3 file name format.
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
             public string cAlternateFileName;
-            public uint dwFileType; // Obsolete. Do not use.
-            public uint dwCreatorType; // Obsolete. Do not use
-            public uint wFinderFlags; // Obsolete. Do not use
         }
 
 
@@ -52,15 +113,13 @@ namespace Master_Zhao.Shell.PInvoke
             // 搜索指定类型文件
             string pszFileName;
             string pTempSrc;
-            IntPtr ptrFileData = IntPtr.Zero;
-            WIN32_FIND_DATAA FileData = new WIN32_FIND_DATAA();
+            WIN32_FIND_DATA FileData = new WIN32_FIND_DATA();
 
             // 构造搜索文件类型字符串, *.*表示搜索所有文件类型
             pszFileName = $"{dir}\\*.*";
 
             // 搜索第一个文件
-            IntPtr hFile = FindFirstFile(pszFileName, ref FileData);
-            FileData = ptrFileData.PtrToStructure<WIN32_FIND_DATAA>();
+            IntPtr hFile = FindFirstFile(pszFileName, out FileData);
             if (INVALID_HANDLE_VALUE != hFile)
             {
                 do
@@ -73,7 +132,7 @@ namespace Master_Zhao.Shell.PInvoke
                     // 拼接文件路径	
                     pTempSrc = $"{dir}\\{FileData.cFileName}";
                     // 判断是否是目录还是文件
-                    if ((FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 1)
+                    if (FileData.dwFileAttributes == System.IO.FileAttributes.Directory)
                     {
                         // 目录, 则继续往下递归遍历文件
                         EnumerateSubDirectory(pTempSrc, diskPathList);
@@ -86,7 +145,7 @@ namespace Master_Zhao.Shell.PInvoke
                     }
 
                     // 搜索下一个文件
-                } while (FindNextFile(hFile, ptrFileData));
+                } while (FindNextFile(hFile, out FileData));
             }
 
             // 关闭文件句柄
