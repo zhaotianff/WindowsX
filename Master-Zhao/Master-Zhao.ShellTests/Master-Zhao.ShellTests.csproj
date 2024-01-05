@@ -10,6 +10,11 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
+<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PlatformTarget>x64</PlatformTarget>
+	<OutputPath>..\x64\Debug\</OutputPath>
+</PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />

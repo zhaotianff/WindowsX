@@ -46,12 +46,15 @@ namespace Master_Zhao.Shell.Model.SystemMgmt
         }
 
         public ObservableCollection<DiskPath> Children { get; set; }
+
+        public long Size { get; set; }
     }
 
     public enum DiskPathType
     {
         Computer,
         Disk,
-        Folder
+        Folder,
+        File
     }
 }

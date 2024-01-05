@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Master_Zhao.Shell.Util;
 using Microsoft.VisualBasic;
 using static Master_Zhao.Shell.PInvoke.Kernel32;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace Master_Zhao.Shell.PInvoke
 {
@@ -108,12 +110,13 @@ namespace Master_Zhao.Shell.PInvoke
         }
 
 
-        public static void EnumerateSubDirectory(string dir, List<DiskPath> diskPathList)
+        public static long EnumerateSubDirectory(string dir, ObservableCollection<DiskPath> diskPathList,bool isEnumFile = false)
         {
             // 搜索指定类型文件
             string pszFileName;
             string pTempSrc;
             WIN32_FIND_DATA FileData = new WIN32_FIND_DATA();
+            long dirSize = 0;
 
             // 构造搜索文件类型字符串, *.*表示搜索所有文件类型
             pszFileName = $"{dir}\\*.*";
@@ -134,12 +137,32 @@ namespace Master_Zhao.Shell.PInvoke
                     // 判断是否是目录还是文件
                     if (FileData.dwFileAttributes == System.IO.FileAttributes.Directory)
                     {
+                        DiskPath diskPath = new DiskPath();
+                        diskPath.Children = new ObservableCollection<DiskPath>();
+                        diskPath.DiskPathType = DiskPathType.Folder;
+                        diskPath.DisplayName = FileData.cFileName;
+                        diskPath.Path = pTempSrc;
+                        
                         // 目录, 则继续往下递归遍历文件
-                        EnumerateSubDirectory(pTempSrc, diskPathList);
-                        //printf("%s\n", pTempSrc);
+                        var currentDirSize = EnumerateSubDirectory(pTempSrc, diskPath.Children);
+
+                        diskPath.Size = currentDirSize;
+                        diskPathList.Add(diskPath);
                     }
                     else
                     {
+                        var fileSize = ((long)FileData.nFileSizeHigh) << 32 | ((long)FileData.nFileSizeLow & 0xFFFFFFFFL);
+                        dirSize += fileSize;
+
+                        if (isEnumFile == true)
+                        {
+                            DiskPath diskPath = new DiskPath();
+                            diskPath.DiskPathType = DiskPathType.File;
+                            diskPath.DisplayName = Path.GetFileName(FileData.cFileName);
+                            diskPath.Path = FileData.cFileName;
+                            diskPath.Size = fileSize;
+                            diskPathList.Add(diskPath);
+                        }
                         // 文件
                         //printf("%s\n", pTempSrc);
                     }
@@ -150,6 +173,8 @@ namespace Master_Zhao.Shell.PInvoke
 
             // 关闭文件句柄
             FindClose(hFile);
+
+            return dirSize;
         }
     }
 }
