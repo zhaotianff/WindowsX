@@ -34,7 +34,17 @@
 
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"></GridSplitter>
 
-        <ListView Grid.Column="2" BorderThickness="0" Background="LightGray"></ListView>
+        <TabControl Background="Transparent" Grid.Column="2" >
+            <TabItem Header="目录摘要">
+                <Grid DataContext="{Binding ElementName=tree,Path=SelectedItem}">
+                    <Label x:Name="lbl_LoadingStatus" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+                    <Label Content="{Binding Path}" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+                </Grid>
+            </TabItem>
+            <TabItem Header="目录统计">
+                <ListView BorderThickness="0" Background="Transparent"></ListView>
+            </TabItem>
+        </TabControl>
 
         <StackPanel Grid.Column="3">
             <Button Width="88" Height="28" Content="目录统计" Margin="5,0" Style="{StaticResource ButtonStyle}"></Button>

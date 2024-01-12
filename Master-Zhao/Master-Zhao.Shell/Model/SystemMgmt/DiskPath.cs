@@ -47,7 +47,20 @@ namespace Master_Zhao.Shell.Model.SystemMgmt
 
         public ObservableCollection<DiskPath> Children { get; set; }
 
+        /// <summary>
+        /// current folder size
+        /// </summary>
         public long Size { get; set; }
+
+        /// <summary>
+        /// all files count in current folder
+        /// </summary>
+        public long FileCount { get; set; }
+
+        /// <summary>
+        /// all sub folder count in current folder
+        /// </summary>
+        public long SubDirCount { get; set; }
     }
 
     public enum DiskPathType

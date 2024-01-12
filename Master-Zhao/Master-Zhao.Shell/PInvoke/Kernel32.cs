@@ -145,8 +145,8 @@ namespace Master_Zhao.Shell.PInvoke
                         
                         // 目录, 则继续往下递归遍历文件
                         var currentDirSize = EnumerateSubDirectory(pTempSrc, diskPath.Children);
-
                         diskPath.Size = currentDirSize;
+                        dirSize += currentDirSize;
                         diskPathList.Add(diskPath);
                     }
                     else

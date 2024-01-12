@@ -1,4 +1,5 @@
 ﻿using Master_Zhao.Shell.Model.SystemMgmt;
+using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,12 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
         public async void LoadDiskFileTree()
         {
             if (isLoaded)
+            {
+                lbl_LoadingStatus.Content = "目录信息已经加载完成";
                 return;
+            }
 
+            lbl_LoadingStatus.Content = "正在加载目录信息";
             var computer = new DiskPath() { DisplayName = "我的电脑", Path = "Root", DiskPathType = DiskPathType.Computer };
             root.Add(computer);
             this.tree.ItemsSource = root;
@@ -49,45 +54,14 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             foreach (var drive in driveInfos)
             {
                 var disk = new DiskPath() { DisplayName = drive.Name, Path = drive.RootDirectory.FullName, DiskPathType = DiskPathType.Disk };
+                disk.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
+                await Task.Run(() => { Kernel32.EnumerateSubDirectory(disk.Path, disk.Children); });
                 computer.Children.Add(disk);
-                taskList.Add(Task.Run(() => { AppendFolder(disk); }));
             }
 
             await Task.WhenAll(taskList);
+            lbl_LoadingStatus.Content = "目录信息已经加载完成";
             isLoaded = true;
-        }
-
-        private void AppendFolder(DiskPath diskPath)
-        {
-            System.IO.DirectoryInfo directoryInfo = new System.IO.DirectoryInfo(diskPath.Path);
-
-            if (directoryInfo.CanAccess() == false || (directoryInfo.Attributes.HasFlag(FileAttributes.Hidden) && diskPath.DiskPathType != DiskPathType.Disk))
-                return;
-
-            DirectoryInfo[] subDirs = new DirectoryInfo[] { };
-
-            try
-            {
-                subDirs = directoryInfo.GetDirectories();
-            }
-            catch
-            {
-                return;
-            }
-
-            if (subDirs.Length > 0)
-                diskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
-
-
-            foreach (var dir in subDirs)
-            {
-                var folder = new DiskPath() { DisplayName = dir.Name, Path = dir.FullName, DiskPathType = DiskPathType.Folder };
-                this.Dispatcher.Invoke(() => {
-                    diskPath.Children.Add(folder);
-                });
-                AppendFolder(folder);
-            }
-
         }
 
         private void tree_Expanded(object sender, RoutedEventArgs e)
