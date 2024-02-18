@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Master_Zhao.Shell.Test"
+        xmlns:control="clr-namespace:Master_Zhao.Shell.Controls;assembly=Master-Zhao.Shell"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
@@ -17,6 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -49,5 +51,7 @@
                 </MenuItem>
           
         </Grid>
+
+        <control:PercentageBar Width="500" Height="20" Grid.Row="2" Text="HelloWorld" Value="80" Fill="Green"></control:PercentageBar>
     </Grid>
 </Window>

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Master_Zhao.Shell.View.SystemMgmt.Pages"
+      xmlns:uc="clr-namespace:Master_Zhao.Shell.View.Common.Loading"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DiskFileManagement">
@@ -13,10 +14,9 @@
             <ColumnDefinition Width="250"></ColumnDefinition>
             <ColumnDefinition Width="3"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
-            <ColumnDefinition Width="100"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TreeView Style="{StaticResource TreeViewStyle}" Name="tree" Expander.Expanded="tree_Expanded">
+        <TreeView Style="{StaticResource TreeViewStyle}" Name="tree" SelectedItemChanged="tree_SelectedItemChanged">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <Grid>
@@ -36,18 +36,30 @@
 
         <TabControl Background="Transparent" Grid.Column="2" >
             <TabItem Header="目录摘要">
-                <Grid DataContext="{Binding ElementName=tree,Path=SelectedItem}">
-                    <Label x:Name="lbl_LoadingStatus" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-                    <Label Content="{Binding Path}" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+                <Grid>
+                    <StackPanel DataContext="{Binding ElementName=tree,Path=SelectedItem}" Name="stack_Statistics">
+
+                    </StackPanel>
+                    <Grid>
+                        <uc:CircularLoading HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="uc_Loading"></uc:CircularLoading>
+                    </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="目录统计">
-                <ListView BorderThickness="0" Background="Transparent"></ListView>
+            <TabItem Header="目录大小统计">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="60"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ListView BorderThickness="0" Background="Transparent"></ListView>
+                    
+                    <StackPanel Grid.Row="1">
+                        <Button Width="88" Height="28" Content="生成统计图表" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}"></Button>
+                    </StackPanel>
+                </Grid>
+                
             </TabItem>
         </TabControl>
-
-        <StackPanel Grid.Column="3">
-            <Button Width="88" Height="28" Content="目录统计" Margin="5,0" Style="{StaticResource ButtonStyle}"></Button>
-        </StackPanel>
     </Grid>
 </Page>

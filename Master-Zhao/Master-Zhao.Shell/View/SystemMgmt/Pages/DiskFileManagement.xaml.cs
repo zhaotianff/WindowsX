@@ -37,11 +37,13 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
         {
             if (isLoaded)
             {
-                lbl_LoadingStatus.Content = "目录信息已经加载完成";
+                uc_Loading.SetStatusText("目录信息已经加载完成");
                 return;
             }
 
-            lbl_LoadingStatus.Content = "正在加载目录信息";
+            uc_Loading.Visibility = Visibility.Visible;
+            this.tree.IsEnabled = false;
+            uc_Loading.SetStatusText("正在加载目录信息");
             var computer = new DiskPath() { DisplayName = "我的电脑", Path = "Root", DiskPathType = DiskPathType.Computer };
             root.Add(computer);
             this.tree.ItemsSource = root;
@@ -60,13 +62,63 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             }
 
             await Task.WhenAll(taskList);
-            lbl_LoadingStatus.Content = "目录信息已经加载完成";
+            uc_Loading.SetStatusText("目录信息已经加载完成");
             isLoaded = true;
+
+            await Task.Delay(1000);
+            uc_Loading.Visibility = Visibility.Collapsed;
+            this.tree.IsEnabled = true;
         }
 
-        private void tree_Expanded(object sender, RoutedEventArgs e)
+        private void tree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            
+            var diskPath = this.tree.SelectedItem as DiskPath;
+
+            if(diskPath.DiskPathType == DiskPathType.Computer)
+            {
+                DisplayAllDiskStatistics();
+            }
+            else
+            {
+                DisplayFolderStatistics(diskPath);
+            }
+        }
+
+        private void DisplayAllDiskStatistics()
+        {
+            this.stack_Statistics.Children.Clear();
+
+            System.IO.DriveInfo[] driveInfos = System.IO.DriveInfo.GetDrives();
+
+            foreach (var driver in driveInfos)
+            {
+                Label label = new Label();
+                label.FontSize = 15;
+                label.FontWeight = FontWeights.Bold;
+                label.Foreground = GlobalData.Instance.AccentColorBrush;
+                var volumnLable = string.IsNullOrEmpty(driver.VolumeLabel) ? "本地磁盘" : driver.VolumeLabel;
+                label.Content = volumnLable  + "  " + driver.Name;
+                label.Margin = new Thickness(5,5,10,0);
+                this.stack_Statistics.Children.Add(label);
+                Controls.PercentageBar percentageBar = new Controls.PercentageBar();
+                percentageBar.Width = 300;
+                percentageBar.Height = 20;
+                percentageBar.HorizontalAlignment = HorizontalAlignment.Left;
+                float freeSizeGB = driver.TotalFreeSpace / 1024 / 1024 / 1024;
+                float totalSizeGB = driver.TotalSize / 1024 / 1024 / 1024;
+                percentageBar.Text = $"{freeSizeGB}GB / {totalSizeGB}GB";
+                var percentage = (( totalSizeGB - freeSizeGB) / totalSizeGB) * 100;
+                percentageBar.Value = percentage;
+                if (percentage >= 75)
+                    percentageBar.Fill = Brushes.Red;
+                percentageBar.Margin = new Thickness(10);
+                this.stack_Statistics.Children.Add(percentageBar);
+            }
+        }
+
+        private void DisplayFolderStatistics(DiskPath diskPath)
+        {
+
         }
     }
 }
