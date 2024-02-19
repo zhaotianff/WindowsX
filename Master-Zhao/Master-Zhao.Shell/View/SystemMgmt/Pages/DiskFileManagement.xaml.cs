@@ -1,9 +1,11 @@
-﻿using Master_Zhao.Shell.Model.SystemMgmt;
+﻿using Master_Zhao.Shell.Controls;
+using Master_Zhao.Shell.Model.SystemMgmt;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
@@ -76,7 +78,11 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
             if(diskPath.DiskPathType == DiskPathType.Computer)
             {
-                DisplayAllDiskStatistics();
+                DisplayAllDiskStatistics(diskPath);
+            }
+            else if(diskPath.DiskPathType == DiskPathType.Disk)
+            {
+                DisplayDiskStatistics(diskPath);
             }
             else
             {
@@ -84,41 +90,51 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             }
         }
 
-        private void DisplayAllDiskStatistics()
+        private void DisplayAllDiskStatistics(DiskPath diskPath)
         {
             this.stack_Statistics.Children.Clear();
 
             System.IO.DriveInfo[] driveInfos = System.IO.DriveInfo.GetDrives();
 
-            foreach (var driver in driveInfos)
+            for (int i = 0; i < driveInfos.Length; i++)
             {
-                Label label = new Label();
-                label.FontSize = 15;
-                label.FontWeight = FontWeights.Bold;
-                label.Foreground = GlobalData.Instance.AccentColorBrush;
-                var volumnLable = string.IsNullOrEmpty(driver.VolumeLabel) ? "本地磁盘" : driver.VolumeLabel;
-                label.Content = volumnLable  + "  " + driver.Name;
-                label.Margin = new Thickness(5,5,10,0);
-                this.stack_Statistics.Children.Add(label);
-                Controls.PercentageBar percentageBar = new Controls.PercentageBar();
-                percentageBar.Width = 300;
-                percentageBar.Height = 20;
-                percentageBar.HorizontalAlignment = HorizontalAlignment.Left;
-                float freeSizeGB = driver.TotalFreeSpace / 1024 / 1024 / 1024;
-                float totalSizeGB = driver.TotalSize / 1024 / 1024 / 1024;
-                percentageBar.Text = $"{freeSizeGB}GB / {totalSizeGB}GB";
-                var percentage = (( totalSizeGB - freeSizeGB) / totalSizeGB) * 100;
-                percentageBar.Value = percentage;
-                if (percentage >= 75)
-                    percentageBar.Fill = Brushes.Red;
-                percentageBar.Margin = new Thickness(10);
-                this.stack_Statistics.Children.Add(percentageBar);
+                var driver = driveInfos[i];
+                var subDiskPath = diskPath.Children[i];
+                UserControls.DiskDetailControl diskDetailControl = new UserControls.DiskDetailControl(driver, subDiskPath);
+                this.stack_Statistics.Children.Add(diskDetailControl);
             }
         }
 
+        private void DisplayDiskStatistics(DiskPath diskPath)
+        {
+            var driver = System.IO.DriveInfo.GetDrives().FirstOrDefault(x => x.Name == diskPath.DisplayName);
+
+            if(driver != null)
+            {
+                this.stack_Statistics.Children.Clear();
+                UserControls.DiskDetailControl diskDetailControl = new UserControls.DiskDetailControl(driver, diskPath);
+                this.stack_Statistics.Children.Add(diskDetailControl);
+            }
+        }
+
+
         private void DisplayFolderStatistics(DiskPath diskPath)
         {
+            this.stack_Statistics.Children.Clear();
 
+            var driverInfos = System.IO.DriveInfo.GetDrives();
+            System.IO.DriveInfo driveInfo = null;
+            for (int i = 0; i < driverInfos.Length; i++)
+            {
+                if (diskPath.Path.Contains(driverInfos[i].Name))
+                {
+                    driveInfo = driverInfos[i];
+                    break;
+                }
+            }
+
+            UserControls.FolderDetailControl folderDetailControl = new UserControls.FolderDetailControl(diskPath, driveInfo);
+            this.stack_Statistics.Children.Add(folderDetailControl);
         }
     }
 }

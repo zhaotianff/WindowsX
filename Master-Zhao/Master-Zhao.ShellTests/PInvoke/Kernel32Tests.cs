@@ -16,7 +16,7 @@ namespace Master_Zhao.Shell.PInvoke.Tests
         public void EnumerateSubDirectoryTest()
         {
             var list = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
-            PInvoke.Kernel32.EnumerateSubDirectory("C:\\", list);
+            PInvoke.Kernel32.EnumerateSubDirectory("C:\\", list,true);
 
             Assert.IsTrue(list.Count > 0);
         }
