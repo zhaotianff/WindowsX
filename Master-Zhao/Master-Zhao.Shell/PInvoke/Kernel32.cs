@@ -135,7 +135,7 @@ namespace Master_Zhao.Shell.PInvoke
                     // 拼接文件路径	
                     pTempSrc = $"{dir}\\{FileData.cFileName}";
                     // 判断是否是目录还是文件
-                    if (FileData.dwFileAttributes == System.IO.FileAttributes.Directory)
+                    if ((FileData.dwFileAttributes & System.IO.FileAttributes.Directory) == FileAttributes.Directory)
                     {
                         DiskPath diskPath = new DiskPath();
                         diskPath.Children = new ObservableCollection<DiskPath>();
