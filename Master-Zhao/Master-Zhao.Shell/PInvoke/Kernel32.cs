@@ -28,13 +28,42 @@ namespace Master_Zhao.Shell.PInvoke
         [DllImport("Kernel32.dll")]
         public static extern bool FindClose(IntPtr hFindFile);
 
+        [DllImport("Kernel32.dll")]
+        public static extern bool FileTimeToLocalFileTime(ref FILETIME lpFileTime,out FILETIME lpLocalFileTime);
+
+        [DllImport("Kernel32.dll")]
+        public static extern bool FileTimeToSystemTime(ref FILETIME lpFileTime,out SYSTEMTIME lpSystemTime);
+
         public static readonly IntPtr INVALID_HANDLE_VALUE = (IntPtr)(-1);
         public static readonly uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
+
+        public struct SYSTEMTIME
+        {
+            public ushort wYear;
+            public ushort wMonth;
+            public ushort wDayOfWeek;
+            public ushort wDay;
+            public ushort wHour;
+            public ushort wMinute;
+            public ushort wSecond;
+            public ushort wMilliseconds;
+        }
 
         public struct FILETIME
         {
             public uint dwLowDateTime;
             public uint dwHighDateTime;
+
+            public DateTime ToDatetime()
+            {
+                if (FileTimeToLocalFileTime(ref this, out FILETIME lpLocalFileTime))
+                {
+                    if (FileTimeToSystemTime(ref lpLocalFileTime, out SYSTEMTIME lpSystemTime))
+                        return new DateTime(lpSystemTime.wYear, lpSystemTime.wMonth, lpSystemTime.wDay, lpSystemTime.wHour, lpSystemTime.wMinute, lpSystemTime.wSecond);
+                }
+
+                return DateTime.Now;
+            }
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -110,7 +139,7 @@ namespace Master_Zhao.Shell.PInvoke
         }
 
 
-        public static long EnumerateSubDirectory(string dir, ObservableCollection<DiskPath> diskPathList,bool isEnumFile = false)
+        public static long EnumerateSubDirectory(string dir, ObservableCollection<DiskPath> diskPathList,bool isEnumFile = false,bool isEnumOnce = false)
         {
             // 搜索指定类型文件
             string pszFileName;
@@ -142,11 +171,17 @@ namespace Master_Zhao.Shell.PInvoke
                         diskPath.DiskPathType = DiskPathType.Folder;
                         diskPath.DisplayName = FileData.cFileName;
                         diskPath.Path = pTempSrc;
-                        
+                        diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
+                        diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();
+                        diskPath.LastWriteTime = FileData.ftLastWriteTime.ToDatetime();
+
                         // 目录, 则继续往下递归遍历文件
-                        var currentDirSize = EnumerateSubDirectory(pTempSrc, diskPath.Children);
-                        diskPath.Size = currentDirSize;
-                        dirSize += currentDirSize;
+                        if (isEnumOnce == false)
+                        {
+                            var currentDirSize = EnumerateSubDirectory(pTempSrc, diskPath.Children);
+                            diskPath.Size = currentDirSize;
+                            dirSize += currentDirSize;
+                        }
                         diskPathList.Add(diskPath);
                     }
                     else
@@ -161,6 +196,9 @@ namespace Master_Zhao.Shell.PInvoke
                             diskPath.DisplayName = Path.GetFileName(FileData.cFileName);
                             diskPath.Path = FileData.cFileName;
                             diskPath.Size = fileSize;
+                            diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
+                            diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();
+                            diskPath.LastWriteTime = FileData.ftLastWriteTime.ToDatetime();
                             diskPathList.Add(diskPath);
                         }
                         // 文件

@@ -61,6 +61,12 @@ namespace Master_Zhao.Shell.Model.SystemMgmt
         /// all sub folder count in current folder
         /// </summary>
         public long SubDirCount { get; set; }
+
+        public DateTime CreationTime { get; set; }
+
+        public DateTime LastWriteTime { get; set; }
+
+        public DateTime LastAccessTime { get; set; }
     }
 
     public enum DiskPathType

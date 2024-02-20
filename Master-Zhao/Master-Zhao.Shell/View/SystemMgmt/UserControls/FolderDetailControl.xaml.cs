@@ -34,7 +34,9 @@ namespace Master_Zhao.Shell.View.SystemMgmt.UserControls
             this.percentageBar.Text = this.percentageBar.Value.ToString("0.0") + " %";
             this.lbl_DirCount.Content = diskPath.SubDirCount.ToString();
             this.lbl_FileCount.Content = diskPath.FileCount.ToString();
-            //this.lbl_CreateTime.Content = diskP
+            this.lbl_CreateTime.Content = diskPath.CreationTime.ToString();
+            this.lbl_LastAccessTime.Content = diskPath.LastAccessTime.ToString();
+            this.lbl_LastWriteTime.Content = diskPath.LastWriteTime.ToString();
         }
     }
 }

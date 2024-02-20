@@ -56,5 +56,9 @@
             <Label Content="最后访问时间："></Label>
             <Label Name="lbl_LastAccessTime" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
         </Grid>
+        <Grid>
+            <Label Content="最后写入时间："></Label>
+            <Label Name="lbl_LastWriteTime" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
+        </Grid>
     </StackPanel>
 </UserControl>

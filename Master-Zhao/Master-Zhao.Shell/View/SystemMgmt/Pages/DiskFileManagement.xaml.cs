@@ -59,7 +59,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             {
                 var disk = new DiskPath() { DisplayName = drive.Name, Path = drive.RootDirectory.FullName, DiskPathType = DiskPathType.Disk };
                 disk.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
-                await Task.Run(() => { Kernel32.EnumerateSubDirectory(disk.Path, disk.Children); });
+                await Task.Run(() => { Kernel32.EnumerateSubDirectory(disk.Path, disk.Children,isEnumOnce:true); });
                 computer.Children.Add(disk);
             }
 
