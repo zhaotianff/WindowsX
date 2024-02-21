@@ -5,10 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Master_Zhao.Shell.View.SystemMgmt.Pages"
       xmlns:uc="clr-namespace:Master_Zhao.Shell.View.Common.Loading"
+      xmlns:controls="clr-namespace:Master_Zhao.Shell.Controls"
+      xmlns:converters="clr-namespace:Master_Zhao.Shell.Infrastructure.Converter"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DiskFileManagement">
-
+    <Page.Resources>
+        <converters:DiskSizeToPercentageConverter x:Key="DiskSizeToPercentageConverter"/>
+        <converters:DiskSizeToStringConverter x:Key="DiskSizeToStringConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"></ColumnDefinition>
@@ -16,7 +21,7 @@
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TreeView Style="{StaticResource TreeViewStyle}" Name="tree" SelectedItemChanged="tree_SelectedItemChanged">
+        <TreeView Style="{StaticResource TreeViewStyle}" Name="tree" SelectedItemChanged="tree_SelectedItemChanged" TreeViewItem.Expanded="tree_Expanded">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <Grid>
@@ -52,10 +57,33 @@
                         <RowDefinition Height="60"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <ListView BorderThickness="0" Background="Transparent"></ListView>
-                    
+                    <TreeView Style="{StaticResource TreeViewStyle}" Name="tree_Statistics">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <Grid ToolTip="{Binding Path}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding Icon}" Width="18" Stretch="Uniform"></Image>
+                                    <Label Grid.Column="1" Content="{Binding DisplayName}"></Label>
+                                    <controls:PercentageBar Grid.Column="2" Width="300" Height="20" Maximum="100" Text="{Binding Size,Converter={StaticResource DiskSizeToStringConverter}}">
+                                        <controls:PercentageBar.Value>
+                                            <MultiBinding Converter="{StaticResource DiskSizeToPercentageConverter}">
+                                                <Binding Path="Size"></Binding>
+                                                <Binding Path="Path"></Binding>
+                                            </MultiBinding>
+                                        </controls:PercentageBar.Value>
+                                    </controls:PercentageBar>
+                                </Grid>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
                     <StackPanel Grid.Row="1">
-                        <Button Width="88" Height="28" Content="生成统计图表" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}"></Button>
+                        <Button Width="88" Height="28" Content="生成统计图表" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Name="btn_Statistics" Click="btn_Statistics_Click"></Button>
                     </StackPanel>
                 </Grid>
                 

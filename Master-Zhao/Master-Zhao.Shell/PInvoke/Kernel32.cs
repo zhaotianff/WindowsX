@@ -167,7 +167,6 @@ namespace Master_Zhao.Shell.PInvoke
                     if ((FileData.dwFileAttributes & System.IO.FileAttributes.Directory) == FileAttributes.Directory)
                     {
                         DiskPath diskPath = new DiskPath();
-                        diskPath.Children = new ObservableCollection<DiskPath>();
                         diskPath.DiskPathType = DiskPathType.Folder;
                         diskPath.DisplayName = FileData.cFileName;
                         diskPath.Path = pTempSrc;
@@ -178,6 +177,7 @@ namespace Master_Zhao.Shell.PInvoke
                         // 目录, 则继续往下递归遍历文件
                         if (isEnumOnce == false)
                         {
+                            diskPath.Children = new ObservableCollection<DiskPath>();
                             var currentDirSize = EnumerateSubDirectory(pTempSrc, diskPath.Children);
                             diskPath.Size = currentDirSize;
                             dirSize += currentDirSize;

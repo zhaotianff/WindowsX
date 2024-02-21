@@ -66,8 +66,6 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             await Task.WhenAll(taskList);
             uc_Loading.SetStatusText("目录信息已经加载完成");
             isLoaded = true;
-
-            await Task.Delay(1000);
             uc_Loading.Visibility = Visibility.Collapsed;
             this.tree.IsEnabled = true;
         }
@@ -135,6 +133,42 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
             UserControls.FolderDetailControl folderDetailControl = new UserControls.FolderDetailControl(diskPath, driveInfo);
             this.stack_Statistics.Children.Add(folderDetailControl);
+        }
+
+        private void tree_Expanded(object sender, RoutedEventArgs e)
+        {
+            var diskPath = (e.OriginalSource as TreeViewItem).Header as DiskPath;
+
+            if (diskPath == null)
+                return;
+
+            foreach (var subDiskPath in diskPath.Children)
+            {
+                if (subDiskPath.Children == null)
+                {
+                    subDiskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
+                    Kernel32.EnumerateSubDirectory(subDiskPath.Path, subDiskPath.Children, isEnumOnce: true);
+                }
+            }
+        }
+
+        private void btn_Statistics_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.tree.SelectedItem == null)
+                return;
+
+            var diskPath = this.tree.SelectedItem as DiskPath;
+
+            var statisticsDiskPath = new DiskPath();
+            statisticsDiskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
+            statisticsDiskPath.DiskPathType = DiskPathType.Folder;
+            statisticsDiskPath.Icon = diskPath.Icon;
+            statisticsDiskPath.Path = diskPath.Path;
+            statisticsDiskPath.DisplayName = diskPath.DisplayName;
+
+            Kernel32.EnumerateSubDirectory(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
+
+            this.tree_Statistics.ItemsSource = new List<DiskPath>() { statisticsDiskPath };
         }
     }
 }

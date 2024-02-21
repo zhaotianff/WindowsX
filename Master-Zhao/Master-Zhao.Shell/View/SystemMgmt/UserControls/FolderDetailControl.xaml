@@ -32,19 +32,19 @@
             <Label Content="完整路径："></Label>
             <Label Name="lbl_FullPath" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
         </Grid>
-        <Grid>
+        <Grid Visibility="Collapsed">
             <Label Content="占用空间："></Label>
             <Label Name="lbl_Size" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
         </Grid>
-        <Grid>
+        <Grid Visibility="Collapsed">
             <Label Content="占用空间占比："></Label>
             <controls:PercentageBar x:Name="percentageBar" Width="200" Height="15" VerticalAlignment="Center" Maximum="100" HorizontalAlignment="Left" Margin="105,0,0,0"></controls:PercentageBar>
         </Grid>
-        <Grid>
+        <Grid Visibility="Collapsed">
             <Label Content="文件夹总数："></Label>
             <Label Name="lbl_DirCount" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
         </Grid>
-        <Grid>
+        <Grid Visibility="Collapsed">
             <Label Content="文件总数："></Label>
             <Label Name="lbl_FileCount" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
         </Grid>
