@@ -159,6 +159,11 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
             var diskPath = this.tree.SelectedItem as DiskPath;
 
+            //not support computer temporarily 
+            if (diskPath.Path == "Root")
+                return;
+
+
             var statisticsDiskPath = new DiskPath();
             statisticsDiskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
             statisticsDiskPath.DiskPathType = DiskPathType.Folder;
@@ -167,8 +172,24 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             statisticsDiskPath.DisplayName = diskPath.DisplayName;
 
             Kernel32.EnumerateSubDirectory(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
+            DiskPath.CurrentRootSize = GetRootSize(statisticsDiskPath);
+            statisticsDiskPath.Size = DiskPath.CurrentRootSize;
 
             this.tree_Statistics.ItemsSource = new List<DiskPath>() { statisticsDiskPath };
+        }
+
+        private long GetRootSize(DiskPath diskPath)
+        {
+            if (diskPath.Children.Count == 0)
+                return 0;
+
+            long size = 0;
+            foreach (var subDiskPath in diskPath.Children)
+            {
+                size += subDiskPath.Size;
+            }
+
+            return size;
         }
     }
 }

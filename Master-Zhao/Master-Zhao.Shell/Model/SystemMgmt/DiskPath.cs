@@ -14,6 +14,8 @@ namespace Master_Zhao.Shell.Model.SystemMgmt
         private static readonly ImageSource DiskIcon = PInvoke.IconTool.ExtractStokeIcon(PInvoke.SHSTOCKICONID.SIID_DRIVEFIXED);
         private static readonly ImageSource FolderIcon = PInvoke.IconTool.ExtractStokeIcon(PInvoke.SHSTOCKICONID.SIID_FOLDER);
 
+        public static long CurrentRootSize = 0;
+
         public string DisplayName { get; set; }
 
         public string Path { get; set; }
@@ -67,6 +69,8 @@ namespace Master_Zhao.Shell.Model.SystemMgmt
         public DateTime LastWriteTime { get; set; }
 
         public DateTime LastAccessTime { get; set; }
+
+        public long RootSize { get => CurrentRootSize; }
     }
 
     public enum DiskPathType

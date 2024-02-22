@@ -73,7 +73,7 @@
                                         <controls:PercentageBar.Value>
                                             <MultiBinding Converter="{StaticResource DiskSizeToPercentageConverter}">
                                                 <Binding Path="Size"></Binding>
-                                                <Binding Path="Path"></Binding>
+                                                <Binding Path="RootSize"></Binding>
                                             </MultiBinding>
                                         </controls:PercentageBar.Value>
                                     </controls:PercentageBar>

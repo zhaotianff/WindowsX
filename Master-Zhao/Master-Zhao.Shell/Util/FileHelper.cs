@@ -42,5 +42,21 @@ namespace Master_Zhao.Shell.Util
 
             return 0;
         }
+
+        public static long GetRootSizeFromPath(string path)
+        {
+            if (string.IsNullOrEmpty(path) || path.Length < 3 || path[1] != ':')
+                return 0;
+
+            var diskName = path.Substring(0, 3);
+
+            foreach (var driver in DriveInfo.GetDrives())
+            {
+                if (driver.Name == diskName)
+                    return driver.TotalSize;
+            }
+
+            return 0;
+        }
     }
 }

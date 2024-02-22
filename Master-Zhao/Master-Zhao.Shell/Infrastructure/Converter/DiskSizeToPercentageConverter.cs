@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Controls;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Master_Zhao.Shell.Infrastructure.Converter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return 50f;
+            return ((float)(long)values[0] / (long)values[1]) * 100;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
