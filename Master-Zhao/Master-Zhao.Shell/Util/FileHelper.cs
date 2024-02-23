@@ -58,5 +58,16 @@ namespace Master_Zhao.Shell.Util
 
             return 0;
         }
+
+        public static Tuple<long,long> GetCurrentDirSizeStatistics(DiskPath diskPath)
+        {
+            if (diskPath.Children == null || diskPath.Children.Count == 0)
+                return new Tuple<long, long>(0, 0);
+
+            var dirCount = diskPath.Children.Count(x => x.DiskPathType == DiskPathType.Folder);
+            var fileCount = diskPath.Children.Count(x => x.DiskPathType == DiskPathType.File);
+
+            return new Tuple<long, long>(dirCount, fileCount);
+        }
     }
 }

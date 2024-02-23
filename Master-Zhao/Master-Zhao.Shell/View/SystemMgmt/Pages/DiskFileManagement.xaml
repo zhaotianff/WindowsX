@@ -13,6 +13,8 @@
     <Page.Resources>
         <converters:DiskSizeToPercentageConverter x:Key="DiskSizeToPercentageConverter"/>
         <converters:DiskSizeToStringConverter x:Key="DiskSizeToStringConverter"/>
+        <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
+        <converters:DiskSizeStatisticsConverter x:Key="DiskSizeStatisticsConverter"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -54,6 +56,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
+                        <RowDefinition Height="100"></RowDefinition>
                         <RowDefinition Height="60"></RowDefinition>
                     </Grid.RowDefinitions>
 
@@ -82,7 +85,18 @@
                         </TreeView.ItemTemplate>
                     </TreeView>
 
-                    <StackPanel Grid.Row="1">
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="完整路径:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="{Binding ElementName=tree_Statistics,Path=SelectedItem,Converter={StaticResource ObjectToVisibilityConverter}}"></Label>
+                        <Label Content="{Binding ElementName=tree_Statistics,Path=SelectedItem.Path}" Margin="60,0,0,0" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <Label Grid.Row="1" Content="{Binding ElementName=tree_Statistics,Path=SelectedItem,Converter={StaticResource DiskSizeStatisticsConverter}}"></Label>
+                    </Grid>
+
+                    <StackPanel Grid.Row="2">
                         <Button Width="88" Height="28" Content="生成统计图表" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Name="btn_Statistics" Click="btn_Statistics_Click"></Button>
                     </StackPanel>
                 </Grid>
