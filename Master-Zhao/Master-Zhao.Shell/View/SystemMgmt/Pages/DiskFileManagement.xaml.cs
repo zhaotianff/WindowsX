@@ -2,6 +2,7 @@
 using Master_Zhao.Shell.Model.SystemMgmt;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
+using Master_Zhao.Shell.View.Common.MessageBoxEx;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -152,7 +153,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             }
         }
 
-        private void btn_Statistics_Click(object sender, RoutedEventArgs e)
+        private async void btn_Statistics_Click(object sender, RoutedEventArgs e)
         {
             if (this.tree.SelectedItem == null)
                 return;
@@ -163,6 +164,8 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             if (diskPath.Path == "Root")
                 return;
 
+            WaitingDialog waitingDialog = new WaitingDialog();
+            waitingDialog.Show();
 
             var statisticsDiskPath = new DiskPath();
             statisticsDiskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
@@ -171,11 +174,14 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             statisticsDiskPath.Path = diskPath.Path;
             statisticsDiskPath.DisplayName = diskPath.DisplayName;
 
-            Kernel32.EnumerateSubDirectory(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
+            await Task.Factory.StartNew(() => {
+                Kernel32.EnumerateSubDirectory(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
+            },TaskCreationOptions.LongRunning);
             DiskPath.CurrentRootSize = GetRootSize(statisticsDiskPath);
             statisticsDiskPath.Size = DiskPath.CurrentRootSize;
 
             this.tree_Statistics.ItemsSource = new List<DiskPath>() { statisticsDiskPath };
+            waitingDialog.Close();
         }
 
         private long GetRootSize(DiskPath diskPath)
