@@ -175,10 +175,11 @@ namespace Master_Zhao.Shell.PInvoke
                         diskPath.LastWriteTime = FileData.ftLastWriteTime.ToDatetime();
 
                         // 目录, 则继续往下递归遍历文件
+                        // Use FindExSearchLimitToDirectories instead
                         if (isEnumOnce == false)
                         {
                             diskPath.Children = new ObservableCollection<DiskPath>();
-                            var currentDirSize = EnumerateSubDirectory(pTempSrc, diskPath.Children);
+                            var currentDirSize = EnumerateSubDirectory(pTempSrc, diskPath.Children,true);
                             diskPath.Size = currentDirSize;
                             dirSize += currentDirSize;
                         }
