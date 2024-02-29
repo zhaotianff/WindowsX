@@ -25,6 +25,14 @@ namespace Master_Zhao.Shell.PInvoke
         [DllImport("Kernel32.dll",CharSet= CharSet.Unicode)]
         public static extern bool FindNextFile(IntPtr hFindFile, out WIN32_FIND_DATA lpFindFileData);
 
+        [DllImport("Kernel32.dll", CharSet = CharSet.Unicode)]
+        public static extern IntPtr FindFirstFileEx(string lpFileName, 
+            FINDEX_INFO_LEVELS fInfoLevelId, 
+            out WIN32_FIND_DATA lpFindFileData, 
+            FINDEX_SEARCH_OPS fSearchOp, 
+            IntPtr lpSearchFilter, 
+            uint dwAdditionalFlags);
+
         [DllImport("Kernel32.dll")]
         public static extern bool FindClose(IntPtr hFindFile);
 
@@ -36,6 +44,22 @@ namespace Master_Zhao.Shell.PInvoke
 
         public static readonly IntPtr INVALID_HANDLE_VALUE = (IntPtr)(-1);
         public static readonly uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
+        public static readonly uint FIND_FIRST_EX_LARGE_FETCH = 0x00000002;
+
+        public enum FINDEX_INFO_LEVELS
+        {
+            FindExInfoStandard,
+            FindExInfoBasic,
+            FindExInfoMaxInfoLevel
+        }
+
+        public enum FINDEX_SEARCH_OPS
+        {
+            FindExSearchNameMatch,
+            FindExSearchLimitToDirectories,
+            FindExSearchLimitToDevices,
+            FindExSearchMaxSearchOp
+        }
 
         public struct SYSTEMTIME
         {
@@ -180,6 +204,86 @@ namespace Master_Zhao.Shell.PInvoke
                         {
                             diskPath.Children = new ObservableCollection<DiskPath>();
                             var currentDirSize = EnumerateSubDirectory(pTempSrc, diskPath.Children,true);
+                            diskPath.Size = currentDirSize;
+                            dirSize += currentDirSize;
+                        }
+                        diskPathList.Add(diskPath);
+                    }
+                    else
+                    {
+                        var fileSize = ((long)FileData.nFileSizeHigh) << 32 | ((long)FileData.nFileSizeLow & 0xFFFFFFFFL);
+                        dirSize += fileSize;
+
+                        if (isEnumFile == true)
+                        {
+                            DiskPath diskPath = new DiskPath();
+                            diskPath.DiskPathType = DiskPathType.File;
+                            diskPath.DisplayName = Path.GetFileName(FileData.cFileName);
+                            diskPath.Path = FileData.cFileName;
+                            diskPath.Size = fileSize;
+                            diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
+                            diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();
+                            diskPath.LastWriteTime = FileData.ftLastWriteTime.ToDatetime();
+                            diskPathList.Add(diskPath);
+                        }
+                        // 文件
+                        //printf("%s\n", pTempSrc);
+                    }
+
+                    // 搜索下一个文件
+                } while (FindNextFile(hFile, out FileData));
+            }
+
+            // 关闭文件句柄
+            FindClose(hFile);
+
+            return dirSize;
+        }
+
+        public static long EnumerateSubDirectoryEx(string dir, ObservableCollection<DiskPath> diskPathList, bool isEnumFile = false, bool isEnumOnce = false)
+        {
+            // 搜索指定类型文件
+            string pszFileName;
+            string pTempSrc;
+            WIN32_FIND_DATA FileData = new WIN32_FIND_DATA();
+            long dirSize = 0;
+
+            // 构造搜索文件类型字符串, *.*表示搜索所有文件类型
+            pszFileName = $"{dir}\\*.*";
+
+            // 搜索第一个文件
+            IntPtr hFile = FindFirstFileEx(pszFileName, FINDEX_INFO_LEVELS.FindExInfoBasic, out FileData, FINDEX_SEARCH_OPS.FindExSearchNameMatch, IntPtr.Zero, FIND_FIRST_EX_LARGE_FETCH);
+            if (INVALID_HANDLE_VALUE != hFile)
+            {
+                do
+                {
+                    // 要过滤掉 当前目录"." 和 上一层目录"..", 否则会不断进入死循环遍历
+                    if ('.' == FileData.cFileName[0])
+                    {
+                        if (FileData.cFileName.Length == 1 || FileData.cFileName.Length == 2)
+                        {
+                            continue;
+                        }
+                    }
+                    // 拼接文件路径	
+                    pTempSrc = $"{dir}\\{FileData.cFileName}";
+                    // 判断是否是目录还是文件
+                    if ((FileData.dwFileAttributes & System.IO.FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        DiskPath diskPath = new DiskPath();
+                        diskPath.DiskPathType = DiskPathType.Folder;
+                        diskPath.DisplayName = FileData.cFileName;
+                        diskPath.Path = pTempSrc;
+                        diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
+                        diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();
+                        diskPath.LastWriteTime = FileData.ftLastWriteTime.ToDatetime();
+
+                        // 目录, 则继续往下递归遍历文件
+                        // Use FindExSearchLimitToDirectories instead
+                        if (isEnumOnce == false)
+                        {
+                            diskPath.Children = new ObservableCollection<DiskPath>();
+                            var currentDirSize = EnumerateSubDirectoryEx(pTempSrc, diskPath.Children, true);
                             diskPath.Size = currentDirSize;
                             dirSize += currentDirSize;
                         }

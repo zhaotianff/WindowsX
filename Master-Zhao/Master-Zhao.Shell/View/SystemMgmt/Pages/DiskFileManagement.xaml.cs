@@ -175,7 +175,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             statisticsDiskPath.DisplayName = diskPath.DisplayName;
 
             await Task.Factory.StartNew(() => {
-                Kernel32.EnumerateSubDirectory(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
+                Kernel32.EnumerateSubDirectoryEx(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
             },TaskCreationOptions.LongRunning);
             DiskPath.CurrentRootSize = GetRootSize(statisticsDiskPath);
             statisticsDiskPath.Size = DiskPath.CurrentRootSize;
