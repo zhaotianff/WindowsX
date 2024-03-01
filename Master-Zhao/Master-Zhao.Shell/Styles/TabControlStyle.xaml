@@ -3,4 +3,65 @@
     <Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
+
+    <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}" x:Key="StyleTabItem">
+        <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border  x:Name="bbb" SnapsToDevicePixels="True" ClipToBounds="True" CornerRadius="3" BorderThickness="1" >
+                        <Grid>
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              ContentSource="Header"
+                                              Focusable="False" 
+                                              HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                              Panel.ZIndex="1">
+
+                            </ContentPresenter>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" TargetName="bbb" Value="{DynamicResource AccentBaseColor}"></Setter>
+                            <Setter Property="Opacity" TargetName="bbb" Value=".7"/>
+                        </Trigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="true" />
+                                <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabControl, AncestorLevel=1}}" Value="Top" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" TargetName="bbb" Value="{DynamicResource AccentBaseColor}"></Setter>
+                            <Setter Property="Opacity" TargetName="bbb" Value=".7"/>
+                        </MultiDataTrigger>
+
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <Trigger Property="TabStripPlacement" Value="Right">
+                            <Setter Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

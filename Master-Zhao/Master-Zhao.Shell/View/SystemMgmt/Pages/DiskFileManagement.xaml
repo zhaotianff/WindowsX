@@ -42,7 +42,7 @@
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"></GridSplitter>
 
         <TabControl Background="Transparent" Grid.Column="2" >
-            <TabItem Header="目录摘要">
+            <TabItem Header="目录摘要" Style="{StaticResource StyleTabItem}">
                 <Grid>
                     <StackPanel DataContext="{Binding ElementName=tree,Path=SelectedItem}" Name="stack_Statistics">
 
@@ -52,7 +52,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="目录大小统计">
+            <TabItem Header="目录大小统计" Style="{StaticResource StyleTabItem}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -101,6 +101,46 @@
                     </StackPanel>
                 </Grid>
                 
+            </TabItem>
+
+            <TabItem Header="文件类型统计" Style="{StaticResource StyleTabItem}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="60"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Style="{StaticResource ListBoxStyle}" Name="lst_FileAssoc">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3,20,0" Width="{Binding ElementName=lst_FileAssoc,Path=ActualWidth,UpdateSourceTrigger=PropertyChanged}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="E:\project\LFX-ReportEditor\LFX-ReportEditor\LFX-ReportEditor\Resources\img\icon_logo.png"
+                                           Width="35" Height="35" Stretch="UniformToFill" Grid.RowSpan="2" VerticalAlignment="Center"></Image>
+
+                                    <Label Content="{Binding FriendlyName}" Grid.Column="1" FontWeight="Bold"></Label>
+                                    <Label Content="{Binding Executable}" Grid.Column="1" Grid.Row="1"></Label>
+
+                                    <controls:PercentageBar Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" Text="{Binding PercentageText}" Height="20" Width="450" MinWidth="200" Value="{Binding Percentage}"></controls:PercentageBar>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <StackPanel Grid.Row="1">
+                        <Button Width="108" Height="28" Content="生成文件类型统计" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Name="btn_FileAssoc" Click="btn_FileAssoc_Click"></Button>
+                    </StackPanel>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

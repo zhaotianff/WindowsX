@@ -197,5 +197,85 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
             return size;
         }
+
+        private async void btn_FileAssoc_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.tree.SelectedItem == null)
+                return;
+
+            var diskPath = this.tree.SelectedItem as DiskPath;
+
+            if (diskPath.Path == "Root")
+                return;
+
+            WaitingDialog waitingDialog = new WaitingDialog();
+            waitingDialog.Show();
+
+            var statisticsDiskPath = new DiskPath();
+            statisticsDiskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
+            statisticsDiskPath.DiskPathType = DiskPathType.Folder;
+            statisticsDiskPath.Icon = diskPath.Icon;
+            statisticsDiskPath.Path = diskPath.Path;
+            statisticsDiskPath.DisplayName = diskPath.DisplayName;
+
+            await Task.Factory.StartNew(() => {
+                Kernel32.EnumerateSubDirectoryEx(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
+            }, TaskCreationOptions.LongRunning);
+            DiskPath.CurrentRootSize = GetRootSize(statisticsDiskPath);
+            statisticsDiskPath.Size = DiskPath.CurrentRootSize;
+
+            Dictionary<string, FileAssocItem> assocDic = new Dictionary<string, FileAssocItem>();
+            GetFileAssoc(statisticsDiskPath, assocDic);
+            CalcExtensionPercentage(assocDic);
+
+            this.lst_FileAssoc.ItemsSource = null;
+            this.lst_FileAssoc.ItemsSource = assocDic.Select(x => x.Value);
+
+            waitingDialog.Close();
+        }
+
+        private static void GetFileAssoc(DiskPath diskPath, Dictionary<string,FileAssocItem> assocDic)
+        {
+            if (diskPath.Children == null)
+                return;
+
+            foreach (var file in diskPath.Children)
+            {
+                if(file.DiskPathType == DiskPathType.File)
+                {
+                    var fileExtension = System.IO.Path.GetExtension(file.Path);
+                    FileAssocItem fileAssocItem;
+                    if(assocDic.ContainsKey(fileExtension))
+                    {
+                        fileAssocItem = assocDic[fileExtension];
+                        fileAssocItem.Count += 1;
+                    }
+                    else
+                    {
+                        fileAssocItem = new FileAssocItem();
+                        fileAssocItem.Extension = fileExtension;
+                        fileAssocItem.Count = 1;
+                        fileAssocItem.Executable = "打开方式 : D:\\Software\\Visual Studio 2022\\Common7\\IDE\\devenv.exe";
+                        fileAssocItem.FriendlyName = $"文件类型：{fileExtension} (jpeg image file)";
+                        fileAssocItem.Icon = null;
+                        fileAssocItem.Percentage = 80;
+                        fileAssocItem.PercentageText = "80%";
+                        assocDic[fileExtension] = fileAssocItem;
+                    }
+                }
+
+                if(file.DiskPathType == DiskPathType.Folder)
+                {
+                    GetFileAssoc(file, assocDic);
+                }
+            }
+        }
+
+        private static void CalcExtensionPercentage(Dictionary<string, FileAssocItem> assocDic)
+        {
+            float fileCount = 0;
+            assocDic.Values.ToList().ForEach(x => fileCount += x.Count);
+            assocDic.Values.ToList().ForEach(x => { x.Percentage = (float)(x.Count / fileCount) * 100;x.PercentageText = x.Percentage.ToString() + "%"; });
+        }
     }
 }
