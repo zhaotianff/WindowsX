@@ -117,6 +117,9 @@ namespace Master_Zhao.Shell.PInvoke
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool ExtractStockIcon(SHSTOCKICONID sHSTOCKICONID, ref IntPtr hIcon);
 
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetFileExtensionAssocIcon([MarshalAs(UnmanagedType.LPWStr)] string lpszExtension, ref IntPtr icon);
+
         [DllImport("User32.dll")]
         public static extern bool DestroyIcon(IntPtr hIcon);
 

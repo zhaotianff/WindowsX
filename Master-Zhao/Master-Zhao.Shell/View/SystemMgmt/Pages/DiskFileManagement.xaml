@@ -125,7 +125,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Source="E:\project\LFX-ReportEditor\LFX-ReportEditor\LFX-ReportEditor\Resources\img\icon_logo.png"
+                                    <Image Source="{Binding Icon}"
                                            Width="35" Height="35" Stretch="UniformToFill" Grid.RowSpan="2" VerticalAlignment="Center"></Image>
 
                                     <Label Content="{Binding FriendlyName}" Grid.Column="1" FontWeight="Bold"></Label>

@@ -207,9 +207,10 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
             if (diskPath.Path == "Root")
                 return;
-
+#if RELEASE
             WaitingDialog waitingDialog = new WaitingDialog();
             waitingDialog.Show();
+#endif
 
             var statisticsDiskPath = new DiskPath();
             statisticsDiskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
@@ -231,7 +232,9 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             this.lst_FileAssoc.ItemsSource = null;
             this.lst_FileAssoc.ItemsSource = assocDic.Select(x => x.Value);
 
+#if RELEASE
             waitingDialog.Close();
+#endif
         }
 
         private static void GetFileAssoc(DiskPath diskPath, Dictionary<string,FileAssocItem> assocDic)
@@ -257,7 +260,13 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                         fileAssocItem.Count = 1;
                         fileAssocItem.Executable = "打开方式 : D:\\Software\\Visual Studio 2022\\Common7\\IDE\\devenv.exe";
                         fileAssocItem.FriendlyName = $"文件类型：{fileExtension} (jpeg image file)";
-                        fileAssocItem.Icon = null;
+                        IntPtr hIcon = IntPtr.Zero;
+                        IconTool.GetFileExtensionAssocIcon(fileExtension, ref hIcon);
+                        if (hIcon != IntPtr.Zero)
+                        {
+                            fileAssocItem.Icon = ImageHelper.GetBitmapImageFromHIcon(hIcon);
+                        }
+                        IconTool.DestroyIcon(hIcon);
                         fileAssocItem.Percentage = 80;
                         fileAssocItem.PercentageText = "80%";
                         assocDic[fileExtension] = fileAssocItem;

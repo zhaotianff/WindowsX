@@ -87,6 +87,7 @@ SendSearch
 ExtractIconFromFile
 ExtractFirstIconFromFile
 ExtractStockIcon
+GetFileExtensionAssocIcon
 
 ;powertool.h
 ShowShutDownDialog

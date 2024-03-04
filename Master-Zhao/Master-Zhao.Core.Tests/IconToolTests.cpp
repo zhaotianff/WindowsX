@@ -16,6 +16,13 @@ namespace MasterZhaoCoreTests
 			ExtractFirstIconFromFile(L"C:\\Windows\\notepad.exe", TRUE, icon);
 			Assert::IsNotNull(icon);
 		}
+
+		TEST_METHOD(TestGetFileExtensionAssocIcon)
+		{
+			HICON icon = NULL;
+			GetFileExtensionAssocIcon(L".pdf", icon);
+			Assert::IsNotNull(icon);
+		}
 	};
 }
 		

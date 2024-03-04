@@ -102,6 +102,8 @@ SILVERAROWANACORE_API VOID ActivateTaskBar();
 BOOL GetShowInTaskbar(HWND hwnd, int extendedWindowStyles);
 SILVERAROWANACORE_API BOOL CanAddToTaskBar(HWND hwnd);
 SILVERAROWANACORE_API LPTSTR GetProcessNameFomrHwnd(HWND hWnd);
+SILVERAROWANACORE_API BOOL GetFileExtensionFriendlyName(LPCTSTR szExtension, LPTSTR buffer, DWORD bufferSize);
+
 
 
 SILVERAROWANACORE_API BOOL EmbedWindowToDesktop(LPCTSTR lpWindowName);

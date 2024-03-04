@@ -1,4 +1,5 @@
 #include "IconTool.h"
+#include "RegTool.h"
 
 void SaveIcon(HICON hIconToSave, LPCTSTR sIconFileName)
 {
@@ -76,4 +77,33 @@ BOOL ExtractStockIcon(SHSTOCKICONID shIconID, HICON& icon)
      HRESULT hr = SHGetStockIconInfo(shIconID, SHGSI_ICON | SHGSI_LARGEICON, &info);
      icon = info.hIcon;
      return SUCCEEDED(hr);
+}
+
+SILVERAROWANACORE_API BOOL GetFileExtensionAssocIcon(LPCTSTR lpszExtension, HICON& icon)
+{
+    DWORD dwSize = 128;
+    DWORD dwIconPathSize = MAX_PATH;
+    TCHAR szProgId[128]{};
+    TCHAR szDefaultIconPath[MAX_PATH]{};
+
+    auto result = QuerySZValue(HKEY_CLASSES_ROOT, lpszExtension, NULL, szProgId, &dwSize);
+
+    if (!result)
+        return result;
+
+
+    TCHAR szRegIconPath[128]{};
+    wsprintf(szRegIconPath, L"%s\\DefaultIcon", szProgId);
+
+    result = QuerySZValue(HKEY_CLASSES_ROOT, szRegIconPath, NULL, szDefaultIconPath, &dwIconPathSize);
+
+    if (!result)
+    {
+        return result;
+    }
+
+    int nIndex = PathParseIconLocation(szDefaultIconPath);
+    result = ExtractIconEx(szDefaultIconPath, nIndex, &icon, NULL, 1) > 0;
+
+    return result > 0;
 }
