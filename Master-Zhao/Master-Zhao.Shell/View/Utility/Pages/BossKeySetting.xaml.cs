@@ -166,7 +166,7 @@ namespace Master_Zhao.Shell.View.Pages
             {
                 if (PInvoke.DesktopTool.CanAddToTaskBar(process.MainWindowHandle))
                 {
-                    IntPtr ptr = PInvoke.DesktopTool.GetProcessNameFomrHwnd(process.MainWindowHandle);
+                    IntPtr ptr = PInvoke.DesktopTool.GetProcessNameFromHwnd(process.MainWindowHandle);
 
                     if (ptr == IntPtr.Zero)
                         continue;

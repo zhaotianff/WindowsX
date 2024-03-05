@@ -850,7 +850,7 @@ BOOL CanAddToTaskBar(HWND hwnd)
 	return isWindow && isVisible && (ownerWin == NULL || isAppWindow) && (!isNoActivate || isAppWindow) && !isToolWindow && GetShowInTaskbar(hwnd, extendedWindowStyles);
 }
 
-LPTSTR GetProcessNameFomrHwnd(HWND hWnd)
+LPTSTR GetProcessNameFromHwnd(HWND hWnd)
 {
 	TCHAR* buf = new TCHAR[512];
 
@@ -907,3 +907,14 @@ LPTSTR GetProcessNameFomrHwnd(HWND hWnd)
 	return buf;
 }
 
+BOOL GetFileExtensionFriendlyName(LPCTSTR szExtension, LPTSTR buffer, DWORD bufferSize)
+{
+	HRESULT hr = AssocQueryString(ASSOCF_NONE, ASSOCSTR_FRIENDLYDOCNAME, szExtension, NULL, buffer, &bufferSize);
+	return SUCCEEDED(hr);
+}
+
+BOOL GetFileExtensionExecutablePath(LPCTSTR szExtension, LPTSTR buffer, DWORD bufferSize)
+{
+	HRESULT hr = AssocQueryString(ASSOCF_NONE, ASSOCSTR_EXECUTABLE, szExtension, NULL, buffer, &bufferSize);
+	return SUCCEEDED(hr);
+}

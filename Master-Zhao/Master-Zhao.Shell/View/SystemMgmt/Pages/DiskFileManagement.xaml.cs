@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
@@ -30,6 +31,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
     {
         private List<DiskPath> root = new List<DiskPath>();
         private bool isLoaded = false;
+        private ImageSource defaultIcon;
 
         public DiskFileManagement()
         {
@@ -237,7 +239,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 #endif
         }
 
-        private static void GetFileAssoc(DiskPath diskPath, Dictionary<string,FileAssocItem> assocDic)
+        private void GetFileAssoc(DiskPath diskPath, Dictionary<string,FileAssocItem> assocDic)
         {
             if (diskPath.Children == null)
                 return;
@@ -247,6 +249,10 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 if(file.DiskPathType == DiskPathType.File)
                 {
                     var fileExtension = System.IO.Path.GetExtension(file.Path);
+
+                    if (string.IsNullOrEmpty(fileExtension))
+                        continue;
+
                     FileAssocItem fileAssocItem;
                     if(assocDic.ContainsKey(fileExtension))
                     {
@@ -258,15 +264,11 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                         fileAssocItem = new FileAssocItem();
                         fileAssocItem.Extension = fileExtension;
                         fileAssocItem.Count = 1;
-                        fileAssocItem.Executable = "打开方式 : D:\\Software\\Visual Studio 2022\\Common7\\IDE\\devenv.exe";
-                        fileAssocItem.FriendlyName = $"文件类型：{fileExtension} (jpeg image file)";
-                        IntPtr hIcon = IntPtr.Zero;
-                        IconTool.GetFileExtensionAssocIcon(fileExtension, ref hIcon);
-                        if (hIcon != IntPtr.Zero)
-                        {
-                            fileAssocItem.Icon = ImageHelper.GetBitmapImageFromHIcon(hIcon);
-                        }
-                        IconTool.DestroyIcon(hIcon);
+                        var friendlyName = GetExtensionFriendlyName(fileExtension);
+                        var executablePath = GetExtensionExecutablePath(fileExtension);
+                        fileAssocItem.Executable = executablePath;
+                        fileAssocItem.FriendlyName = $"{fileExtension} ({friendlyName})";
+                        fileAssocItem.Icon = GetExtensionIcon(fileExtension);
                         fileAssocItem.Percentage = 80;
                         fileAssocItem.PercentageText = "80%";
                         assocDic[fileExtension] = fileAssocItem;
@@ -280,11 +282,75 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             }
         }
 
-        private static void CalcExtensionPercentage(Dictionary<string, FileAssocItem> assocDic)
+        private ImageSource GetExtensionIcon(string fileExtension)
+        {
+            IntPtr hIcon = IntPtr.Zero;
+            IconTool.GetFileExtensionAssocIcon(fileExtension, ref hIcon);
+            if (hIcon != IntPtr.Zero)
+            {
+                ImageSource imageSource = ImageHelper.GetBitmapImageFromHIcon(hIcon);
+                IconTool.DestroyIcon(hIcon);
+                return imageSource;
+            }
+            else
+            {
+                if (defaultIcon == null)
+                {
+                    IconTool.GetShell32Icon(0, ref hIcon);
+                    defaultIcon = ImageHelper.GetBitmapImageFromHIcon(hIcon);
+                    IconTool.DestroyIcon(hIcon);
+                }
+
+                return defaultIcon;    
+            }
+        }
+
+        private string GetExtensionFriendlyName(string fileExtension)
+        {
+            IntPtr sb = Marshal.AllocHGlobal(120);
+            DesktopTool.GetFileExtensionFriendlyName(fileExtension, sb, 120);
+            if(sb == IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(sb);
+                return "";
+            }
+            var extension =  Marshal.PtrToStringAuto(sb);
+            Marshal.FreeHGlobal(sb);
+            return extension;
+        }
+
+        private string GetExtensionExecutablePath(string fileExtension)
+        {
+            IntPtr sb = Marshal.AllocHGlobal(DesktopTool.MAX_PATH);
+            DesktopTool.GetFileExtensionExecutablePath(fileExtension, sb, (uint)DesktopTool.MAX_PATH);
+            if (sb == IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(sb);
+                return "";
+            }
+            var extension = Marshal.PtrToStringAuto(sb);
+            Marshal.FreeHGlobal(sb);
+            return extension;
+        }
+
+        private void CalcExtensionPercentage(Dictionary<string, FileAssocItem> assocDic)
         {
             float fileCount = 0;
             assocDic.Values.ToList().ForEach(x => fileCount += x.Count);
             assocDic.Values.ToList().ForEach(x => { x.Percentage = (float)(x.Count / fileCount) * 100;x.PercentageText = x.Percentage.ToString() + "%"; });
+        }
+
+        private void menu_OpenDirLocation_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.tree.SelectedItem == null)
+                return;
+
+            var diskPath = this.tree.SelectedItem as DiskPath;
+
+            if(!string.IsNullOrEmpty(diskPath.Path))
+            {
+                System.Diagnostics.Process.Start("explorer", "/select, " + diskPath.Path.Replace("\\\\","\\"));
+            }
         }
     }
 }

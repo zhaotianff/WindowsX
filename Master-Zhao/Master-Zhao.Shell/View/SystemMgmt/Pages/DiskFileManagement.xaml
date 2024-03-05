@@ -26,7 +26,12 @@
         <TreeView Style="{StaticResource TreeViewStyle}" Name="tree" SelectedItemChanged="tree_SelectedItemChanged" TreeViewItem.Expanded="tree_Expanded">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <Grid>
+                    <Grid Background="Transparent">
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="打开所有位置" Click="menu_OpenDirLocation_Click"></MenuItem>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
@@ -113,25 +118,29 @@
                     <ListBox Style="{StaticResource ListBoxStyle}" Name="lst_FileAssoc">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="0,3,20,0" Width="{Binding ElementName=lst_FileAssoc,Path=ActualWidth,UpdateSourceTrigger=PropertyChanged}">
+                                <Grid Margin="0,3,0,3" Width="{Binding ElementName=lst_FileAssoc,Path=ActualWidth,UpdateSourceTrigger=PropertyChanged}">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
 
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="45"/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="65"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
                                     <Image Source="{Binding Icon}"
-                                           Width="35" Height="35" Stretch="UniformToFill" Grid.RowSpan="2" VerticalAlignment="Center"></Image>
+           Width="38" Height="38" Stretch="UniformToFill" Grid.RowSpan="3" VerticalAlignment="Center"></Image>
 
-                                    <Label Content="{Binding FriendlyName}" Grid.Column="1" FontWeight="Bold"></Label>
-                                    <Label Content="{Binding Executable}" Grid.Column="1" Grid.Row="1"></Label>
+                                    <Label Content="文件类型：" FontWeight="Bold" Grid.Column="1"></Label>
+                                    <Label Content="{Binding FriendlyName}" Grid.Column="2" FontWeight="Bold"></Label>
+                                    <Label Content="打开方式：" Grid.Column="1" Grid.Row="1" FontWeight="Bold"></Label>
+                                    <Label Content="{Binding Executable}" Grid.Column="2" Grid.Row="1"></Label>
 
-                                    <controls:PercentageBar Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" Text="{Binding PercentageText}" Height="20" Width="450" MinWidth="200" Value="{Binding Percentage}"></controls:PercentageBar>
+                                    <Label Content="文件占比：" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold"></Label>
+                                    <controls:PercentageBar Grid.Row="2" Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding PercentageText}" Height="10" MinWidth="200" Width="300" Value="{Binding Percentage}"></controls:PercentageBar>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

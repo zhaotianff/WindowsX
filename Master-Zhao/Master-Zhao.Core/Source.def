@@ -39,11 +39,13 @@ GetTaskbarThumbnailSize
 SetTaskbarThumbnailSize
 ActivateTaskBar
 CanAddToTaskBar
-GetProcessNameFomrHwnd
+GetProcessNameFromHwnd
 SelectFile
 OpenFileProperty
 OpenWindowsHelp
 OpenRunDialog
+GetFileExtensionFriendlyName
+GetFileExtensionExecutablePath
 
 EmbedWindowToDesktop
 RestartExplorer
@@ -88,6 +90,7 @@ ExtractIconFromFile
 ExtractFirstIconFromFile
 ExtractStockIcon
 GetFileExtensionAssocIcon
+GetShell32Icon
 
 ;powertool.h
 ShowShutDownDialog

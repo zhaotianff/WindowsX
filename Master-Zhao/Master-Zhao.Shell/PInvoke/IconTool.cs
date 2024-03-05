@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Media;
 
 namespace Master_Zhao.Shell.PInvoke
 {
@@ -122,6 +123,9 @@ namespace Master_Zhao.Shell.PInvoke
 
         [DllImport("User32.dll")]
         public static extern bool DestroyIcon(IntPtr hIcon);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetShell32Icon(int index, ref IntPtr hIcon);
 
         public static System.Windows.Media.ImageSource ExtractStokeIcon(SHSTOCKICONID sHSTOCKICONID)
         {

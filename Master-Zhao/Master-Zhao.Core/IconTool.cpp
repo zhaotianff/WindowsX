@@ -105,5 +105,13 @@ SILVERAROWANACORE_API BOOL GetFileExtensionAssocIcon(LPCTSTR lpszExtension, HICO
     int nIndex = PathParseIconLocation(szDefaultIconPath);
     result = ExtractIconEx(szDefaultIconPath, nIndex, &icon, NULL, 1) > 0;
 
-    return result > 0;
+    return result;
+}
+
+BOOL GetShell32Icon(int index, HICON& icon)
+{
+    TCHAR szSHELL32FullPath[MAX_PATH]{};
+    SHGetFolderPath(NULL, CSIDL_WINDOWS, NULL, SHGFP_TYPE_CURRENT, szSHELL32FullPath);
+    StringCchCat(szSHELL32FullPath, MAX_PATH, L"\\System32\\SHELL32.dll");
+    return ExtractIconEx(szSHELL32FullPath, 0, &icon, NULL, 1) > 0;
 }

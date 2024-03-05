@@ -108,7 +108,7 @@
                 <ControlTemplate TargetType="{x:Type ListBox}">
                     <Border Name="Border" Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                        <ScrollViewer Template="{DynamicResource  StyleScrollViewerListBox}">
+                        <ScrollViewer Template="{DynamicResource  StyleScrollViewerListBox}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </Border>

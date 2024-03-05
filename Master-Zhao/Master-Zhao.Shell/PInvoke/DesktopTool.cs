@@ -145,6 +145,12 @@ namespace Master_Zhao.Shell.PInvoke
         [DllImport("MasterZhaoCore.dll")]
         public static extern bool CanAddToTaskBar(IntPtr hwnd);
 
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetFileExtensionFriendlyName([MarshalAs(UnmanagedType.LPWStr)]string szExtension, IntPtr buffer, uint bufferSize);
+
+        [DllImport("MasterZhaoCore.dll")]
+        public static extern bool GetFileExtensionExecutablePath([MarshalAs(UnmanagedType.LPWStr)] string szExtension, IntPtr buffer, uint bufferSize);
+
         /// <summary>
         /// get process name
         /// </summary>
@@ -152,7 +158,7 @@ namespace Master_Zhao.Shell.PInvoke
         /// <returns></returns>
         /// <remarks>why not return string ? https://stackoverflow.com/questions/370079/pinvoke-for-c-function-that-returns-char</remarks>
         [DllImport("MasterZhaoCore.dll")]
-        public static extern IntPtr GetProcessNameFomrHwnd(IntPtr hWnd);
+        public static extern IntPtr GetProcessNameFromHwnd(IntPtr hWnd);
 
         [DllImport("MasterZhaoCore.dll")]
         public static extern void RestartExplorer();
