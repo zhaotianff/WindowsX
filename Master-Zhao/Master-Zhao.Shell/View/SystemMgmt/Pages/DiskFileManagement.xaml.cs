@@ -269,8 +269,6 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                         fileAssocItem.Executable = executablePath;
                         fileAssocItem.FriendlyName = $"{fileExtension} ({friendlyName})";
                         fileAssocItem.Icon = GetExtensionIcon(fileExtension);
-                        fileAssocItem.Percentage = 80;
-                        fileAssocItem.PercentageText = "80%";
                         assocDic[fileExtension] = fileAssocItem;
                     }
                 }
@@ -337,7 +335,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
         {
             float fileCount = 0;
             assocDic.Values.ToList().ForEach(x => fileCount += x.Count);
-            assocDic.Values.ToList().ForEach(x => { x.Percentage = (float)(x.Count / fileCount) * 100;x.PercentageText = x.Percentage.ToString() + "%"; });
+            assocDic.Values.ToList().ForEach(x => { x.Percentage = (float)(x.Count / fileCount) * 100;x.PercentageText = x.Percentage.ToString("0.00") + $"% ({x.Count}个文件)"; });
         }
 
         private void menu_OpenDirLocation_Click(object sender, RoutedEventArgs e)
