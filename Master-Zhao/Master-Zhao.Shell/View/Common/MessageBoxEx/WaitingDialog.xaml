@@ -7,7 +7,7 @@
         xmlns:uc="clr-namespace:Master_Zhao.Shell.View.Common.Loading"
         mc:Ignorable="d"
         Title="WaitingDialog" Height="300" Width="300" WindowStyle="None" AllowsTransparency="True" 
-        ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner" Closing="Window_Closing" WindowState="Maximized">
+        ShowInTaskbar="False" Topmost="True" WindowStartupLocation="Manual" Closing="Window_Closing">
     <Window.Background>
         <SolidColorBrush Color="Silver" Opacity=".2"></SolidColorBrush>
     </Window.Background>

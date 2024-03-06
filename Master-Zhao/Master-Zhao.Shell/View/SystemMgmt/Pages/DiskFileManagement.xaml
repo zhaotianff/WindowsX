@@ -105,7 +105,7 @@
                         <Button Width="88" Height="28" Content="生成统计图表" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Name="btn_Statistics" Click="btn_Statistics_Click"></Button>
                     </StackPanel>
                 </Grid>
-                
+
             </TabItem>
 
             <TabItem Header="文件类型统计" Style="{StaticResource StyleTabItem}">
@@ -146,9 +146,18 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <StackPanel Grid.Row="1">
-                        <Button Width="108" Height="28" Content="生成文件类型统计" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Name="btn_FileAssoc" Click="btn_FileAssoc_Click"></Button>
-                    </StackPanel>
+                    <DockPanel Grid.Row="1" LastChildFill="False">
+                        <Button Content="&#xf160;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+                                VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+                                ToolTip="按类型个数降序" Name="btn_ExtensionCountDesc" Click="btn_ExtensionCountDesc_Click"></Button>        
+                        <Button Content="&#xf161;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+                                VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+                                ToolTip="按类型个数升序" Name="btn_ExtensionCountAsc" Click="btn_ExtensionCountAsc_Click"></Button>
+                        <Button Content="&#xf0dc;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+                                VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+                                ToolTip="默认排序" Name="btn_ExtensionCountDefault" Click="btn_ExtensionCountDefault_Click"></Button>
+                        <Button Width="108" Height="28" Content="生成文件类型统计" VerticalAlignment="Top" DockPanel.Dock="Right" Style="{StaticResource ButtonStyle}" Name="btn_FileAssoc" Click="btn_FileAssoc_Click"></Button>
+                    </DockPanel>
                 </Grid>
             </TabItem>
         </TabControl>

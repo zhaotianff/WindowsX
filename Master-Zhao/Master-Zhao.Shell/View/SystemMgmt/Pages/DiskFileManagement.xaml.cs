@@ -30,6 +30,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
     public partial class DiskFileManagement : Page
     {
         private List<DiskPath> root = new List<DiskPath>();
+        private Dictionary<string, FileAssocItem> assocDic;
         private bool isLoaded = false;
         private ImageSource defaultIcon;
 
@@ -166,7 +167,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             if (diskPath.Path == "Root")
                 return;
 
-            WaitingDialog waitingDialog = new WaitingDialog();
+            WaitingDialog waitingDialog = new WaitingDialog(Application.Current.MainWindow);
             waitingDialog.Show();
 
             var statisticsDiskPath = new DiskPath();
@@ -209,10 +210,9 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
             if (diskPath.Path == "Root")
                 return;
-#if RELEASE
-            WaitingDialog waitingDialog = new WaitingDialog();
+
+            WaitingDialog waitingDialog = new WaitingDialog(Application.Current.MainWindow);
             waitingDialog.Show();
-#endif
 
             var statisticsDiskPath = new DiskPath();
             statisticsDiskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
@@ -227,16 +227,14 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             DiskPath.CurrentRootSize = GetRootSize(statisticsDiskPath);
             statisticsDiskPath.Size = DiskPath.CurrentRootSize;
 
-            Dictionary<string, FileAssocItem> assocDic = new Dictionary<string, FileAssocItem>();
+            assocDic = new Dictionary<string, FileAssocItem>();
             GetFileAssoc(statisticsDiskPath, assocDic);
             CalcExtensionPercentage(assocDic);
 
             this.lst_FileAssoc.ItemsSource = null;
             this.lst_FileAssoc.ItemsSource = assocDic.Select(x => x.Value);
 
-#if RELEASE
             waitingDialog.Close();
-#endif
         }
 
         private void GetFileAssoc(DiskPath diskPath, Dictionary<string,FileAssocItem> assocDic)
@@ -258,6 +256,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                     {
                         fileAssocItem = assocDic[fileExtension];
                         fileAssocItem.Count += 1;
+                        fileAssocItem.AllFiles.Add(file.Path);
                     }
                     else
                     {
@@ -269,6 +268,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                         fileAssocItem.Executable = executablePath;
                         fileAssocItem.FriendlyName = $"{fileExtension} ({friendlyName})";
                         fileAssocItem.Icon = GetExtensionIcon(fileExtension);
+                        fileAssocItem.AllFiles.Add(file.Path);
                         assocDic[fileExtension] = fileAssocItem;
                     }
                 }
@@ -349,6 +349,30 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
             {
                 System.Diagnostics.Process.Start("explorer", "/select, " + diskPath.Path.Replace("\\\\","\\"));
             }
+        }
+
+        private void btn_ExtensionCountDesc_Click(object sender, RoutedEventArgs e)
+        {
+            if (assocDic == null)
+                return;
+
+            this.lst_FileAssoc.ItemsSource = assocDic.OrderByDescending(x=>x.Value.Count).Select(x=>x.Value);
+        }
+
+        private void btn_ExtensionCountAsc_Click(object sender, RoutedEventArgs e)
+        {
+            if (assocDic == null)
+                return;
+
+            this.lst_FileAssoc.ItemsSource = assocDic.OrderBy(x => x.Value.Count).Select(x => x.Value);
+        }
+
+        private void btn_ExtensionCountDefault_Click(object sender, RoutedEventArgs e)
+        {
+            if (assocDic == null)
+                return;
+
+            this.lst_FileAssoc.ItemsSource = assocDic.Select(x => x.Value);
         }
     }
 }

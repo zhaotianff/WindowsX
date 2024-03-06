@@ -22,5 +22,7 @@ namespace Master_Zhao.Shell.Model.SystemMgmt
         public string PercentageText { get; set; }
 
         public int Count { get; set; }
+
+        public List<string> AllFiles { get; set; } = new List<string>();
     }
 }

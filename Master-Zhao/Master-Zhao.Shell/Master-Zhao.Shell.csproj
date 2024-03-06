@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <None Remove="flower.jpg" />
+    <None Remove="FontAwesome\Font Awesome 5 Free-Solid-900.otf" />
     <None Remove="Icon\about.png" />
     <None Remove="Icon\about_back.jpeg" />
     <None Remove="Icon\back_1.jpg" />
@@ -79,6 +80,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="FontAwesome\Font Awesome 5 Free-Solid-900.otf" />
     <Resource Include="Icon\back_1.jpg" />
     <Resource Include="Icon\explorer.jpg" />
     <Resource Include="Icon\explorer_back.png" />

@@ -22,11 +22,16 @@ namespace Master_Zhao.Shell.View.Common.MessageBoxEx
     {
         CancellationTokenSource tokenSource = new CancellationTokenSource();
 
-        public WaitingDialog(int waitMillionSeconds = 20000)
+        public WaitingDialog(Window ownerWindow, int waitMillionSeconds = 20000)
         {
             InitializeComponent();
 
             StartWait(waitMillionSeconds);
+
+            this.Width = ownerWindow.Width;
+            this.Height = ownerWindow.Height;
+            this.Left = ownerWindow.Left;
+            this.Top = ownerWindow.Top;
         }
 
         private async void StartWait(int waitMillionSeconds)
