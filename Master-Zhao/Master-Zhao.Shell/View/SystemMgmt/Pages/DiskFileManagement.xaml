@@ -115,7 +115,7 @@
                         <RowDefinition Height="60"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <ListBox Style="{StaticResource ListBoxStyle}" Name="lst_FileAssoc">
+                    <ListBox Style="{StaticResource ListBoxStyle}" Name="lst_FileAssoc" MouseDoubleClick="lst_FileAssoc_MouseDoubleClick">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,3,0,3" Width="{Binding ElementName=lst_FileAssoc,Path=ActualWidth,UpdateSourceTrigger=PropertyChanged}">

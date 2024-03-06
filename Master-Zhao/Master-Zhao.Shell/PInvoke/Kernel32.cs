@@ -219,7 +219,7 @@ namespace Master_Zhao.Shell.PInvoke
                             DiskPath diskPath = new DiskPath();
                             diskPath.DiskPathType = DiskPathType.File;
                             diskPath.DisplayName = Path.GetFileName(FileData.cFileName);
-                            diskPath.Path = FileData.cFileName;
+                            diskPath.Path = pTempSrc;
                             diskPath.Size = fileSize;
                             diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
                             diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();
@@ -299,7 +299,7 @@ namespace Master_Zhao.Shell.PInvoke
                             DiskPath diskPath = new DiskPath();
                             diskPath.DiskPathType = DiskPathType.File;
                             diskPath.DisplayName = Path.GetFileName(FileData.cFileName);
-                            diskPath.Path = FileData.cFileName;
+                            diskPath.Path = pTempSrc;
                             diskPath.Size = fileSize;
                             diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
                             diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();

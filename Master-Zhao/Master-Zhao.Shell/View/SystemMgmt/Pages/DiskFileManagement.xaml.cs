@@ -3,6 +3,7 @@ using Master_Zhao.Shell.Model.SystemMgmt;
 using Master_Zhao.Shell.PInvoke;
 using Master_Zhao.Shell.Util;
 using Master_Zhao.Shell.View.Common.MessageBoxEx;
+using Master_Zhao.Shell.View.SystemMgmt.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -373,6 +374,17 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
                 return;
 
             this.lst_FileAssoc.ItemsSource = assocDic.Select(x => x.Value);
+        }
+
+        private void lst_FileAssoc_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lst_FileAssoc.SelectedItem == null)
+                return;
+
+            FileAssocItem fileAssocItem = lst_FileAssoc.SelectedItem as FileAssocItem;
+
+            ExtensionFileListWindow extensionFileListWindow = new ExtensionFileListWindow(fileAssocItem.AllFiles);
+            extensionFileListWindow.Show();
         }
     }
 }
