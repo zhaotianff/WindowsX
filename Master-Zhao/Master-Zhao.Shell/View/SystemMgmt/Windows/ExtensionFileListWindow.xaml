@@ -13,7 +13,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="1" Style="{StaticResource ListBoxStyle}" Name="lst_File">
+        <ListBox Grid.Row="1" Style="{StaticResource ListBoxStyle}" Name="lst_File" MouseDoubleClick="lst_File_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Height="30">

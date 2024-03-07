@@ -186,6 +186,8 @@ namespace Master_Zhao.Shell.PInvoke
                         continue;
                     }
                     // 拼接文件路径	
+                    if (dir.EndsWith("\\"))
+                        dir = dir.Replace("\\", "");
                     pTempSrc = $"{dir}\\{FileData.cFileName}";
                     // 判断是否是目录还是文件
                     if ((FileData.dwFileAttributes & System.IO.FileAttributes.Directory) == FileAttributes.Directory)
@@ -249,6 +251,8 @@ namespace Master_Zhao.Shell.PInvoke
             long dirSize = 0;
 
             // 构造搜索文件类型字符串, *.*表示搜索所有文件类型
+            if (dir.EndsWith("\\"))
+                dir = dir.Replace("\\", "");
             pszFileName = $"{dir}\\*.*";
 
             // 搜索第一个文件

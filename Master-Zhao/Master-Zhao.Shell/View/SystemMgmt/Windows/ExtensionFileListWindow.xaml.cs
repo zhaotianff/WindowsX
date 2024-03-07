@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.PInvoke;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,14 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Windows
                 this.lst_File.ItemsSource = fileList;
             }
             this.Background = Application.Current.MainWindow.Background;
+        }
+
+        private void lst_File_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lst_File.SelectedItem == null)
+                return;
+
+            DesktopTool.SelectFile(lst_File.SelectedItem.ToString());
         }
     }
 }
