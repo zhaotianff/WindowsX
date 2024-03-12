@@ -32,6 +32,7 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
     {
         private List<DiskPath> root = new List<DiskPath>();
         private Dictionary<string, FileAssocItem> assocDic;
+        private List<BigFileItem> bigFileList;
         private bool isLoaded = false;
         private ImageSource defaultIcon;
 
@@ -385,6 +386,136 @@ namespace Master_Zhao.Shell.View.SystemMgmt.Pages
 
             ExtensionFileListWindow extensionFileListWindow = new ExtensionFileListWindow(fileAssocItem.AllFiles);
             extensionFileListWindow.Show();
+        }
+
+        private void lst_BigFile_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lst_BigFile.SelectedItem == null)
+                return;
+
+            BigFileItem bigFileItem = lst_BigFile.SelectedItem as BigFileItem;
+            DesktopTool.SelectFile(bigFileItem.Path);
+            
+        }
+
+        private async void btn_BigFile_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.tree.SelectedItem == null)
+                return;
+
+            if (long.TryParse(this.tbox_Size.Text, out long size) == false)
+            {
+                MessageBox.Show("请输入正确的大小");
+                return;
+            }
+
+            long maxSize = -1;
+            if (cbx_EnableMaxSize.IsChecked == true && long.TryParse(this.tbox_SizeMax.Text, out maxSize) == false)
+            {
+                MessageBox.Show("请输入正确的大小");
+                return;
+            }
+
+            var diskPath = this.tree.SelectedItem as DiskPath;
+
+            if (diskPath.Path == "Root")
+                return;
+
+            WaitingDialog waitingDialog = new WaitingDialog(Application.Current.MainWindow);
+            waitingDialog.Show();
+
+            var bigFileDiskPath = new DiskPath();
+            bigFileDiskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>();
+            bigFileDiskPath.DiskPathType = DiskPathType.Folder;
+            bigFileDiskPath.Icon = diskPath.Icon;
+            bigFileDiskPath.Path = diskPath.Path;
+            bigFileDiskPath.DisplayName = diskPath.DisplayName;
+
+            await Task.Factory.StartNew(() => {
+                Kernel32.EnumerateSubDirectoryEx(bigFileDiskPath.Path, bigFileDiskPath.Children, true);
+            }, TaskCreationOptions.LongRunning);
+            DiskPath.CurrentRootSize = GetRootSize(bigFileDiskPath);
+            bigFileDiskPath.Size = DiskPath.CurrentRootSize;
+
+            bigFileList = new List<BigFileItem>();
+            GetBigFile(bigFileDiskPath, bigFileList, size, maxSize);
+
+            this.lst_BigFile.ItemsSource = null;
+            this.lst_BigFile.ItemsSource = bigFileList;
+
+            waitingDialog.Close();
+        }
+
+
+        private void GetBigFile(DiskPath diskPath, List<BigFileItem> bigFileItemList, long size, long maxSize)
+        {
+            if (diskPath.Children == null)
+                return;
+
+            foreach (var file in diskPath.Children)
+            {
+                if (file.DiskPathType == DiskPathType.File)
+                {
+                    var fileExtension = System.IO.Path.GetExtension(file.Path);
+
+                    if (string.IsNullOrEmpty(fileExtension))
+                        continue;
+
+                    if(maxSize == -1)
+                    {
+                        if (file.Size < (size * 1024 * 1024))
+                            continue;
+                    }
+                    else
+                    {
+                        if (file.Size < (size * 1024 * 1024) || file.Size > (maxSize * 1024 * 1024))
+                            continue;
+                    }
+
+                    BigFileItem bigFileItem = new BigFileItem();
+                    bigFileItem.Extension = System.IO.Path.GetExtension(file.Path);
+                    bigFileItem.FriendlyName = GetExtensionFriendlyName(bigFileItem.Extension);
+                    bigFileItem.Icon = GetExtensionIcon(bigFileItem.Extension);
+                    bigFileItem.Path = file.Path;
+                    bigFileItem.Size = file.Size;
+
+                    bigFileItemList.Add(bigFileItem);
+                }
+
+                if (file.DiskPathType == DiskPathType.Folder)
+                {
+                    GetBigFile(file, bigFileItemList, size, maxSize);
+                }
+            }
+        }
+
+        private void btn_BigFileSizeDesc_Click(object sender, RoutedEventArgs e)
+        {
+            if (bigFileList == null || bigFileList.Count == 0)
+                return;
+
+            var tempBigFileList = bigFileList.OrderByDescending(x => x.Size);
+            lst_BigFile.ItemsSource = null;
+            lst_BigFile.ItemsSource = tempBigFileList;
+        }
+
+        private void btn_BigFileSizeAsc_Click(object sender, RoutedEventArgs e)
+        {
+            if (bigFileList == null || bigFileList.Count == 0)
+                return;
+
+            var tempBigFileList = bigFileList.OrderBy(x => x.Size);
+            lst_BigFile.ItemsSource = null;
+            lst_BigFile.ItemsSource = tempBigFileList;
+        }
+
+        private void btn_BigFileSizeDefault_Click(object sender, RoutedEventArgs e)
+        {
+            if (bigFileList == null || bigFileList.Count == 0)
+                return;
+
+            lst_BigFile.ItemsSource = null;
+            lst_BigFile.ItemsSource = bigFileList;
         }
     }
 }
