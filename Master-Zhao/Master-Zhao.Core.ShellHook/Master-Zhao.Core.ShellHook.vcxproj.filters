@@ -21,6 +21,15 @@
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\MinHook.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="apihook.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellWindow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
