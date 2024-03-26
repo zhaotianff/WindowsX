@@ -15,33 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MinHook.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="apihook.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ShellWindow.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BitmapImage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BitmapImage.cpp">
+    <ClCompile Include="Master-Zhao.Core.ShellHook.Tests.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

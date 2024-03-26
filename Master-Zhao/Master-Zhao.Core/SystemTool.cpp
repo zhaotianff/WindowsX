@@ -407,7 +407,7 @@ BOOL GetUserProfilePicturePath(LPTSTR buf,DWORD nSize)
 
 LPTSTR GetFileDescrption(LPTSTR pszFilePath)
 {
-	CoInitialize(nullptr);   
+	HRESULT hr = CoInitialize(nullptr);   
 
 	//PKEY_Software_ProductName
 	LPTSTR pszDescription = GetShellPropertyStringFromPath(pszFilePath, PKEY_FileDescription);

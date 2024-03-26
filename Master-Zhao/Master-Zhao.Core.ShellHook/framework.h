@@ -5,6 +5,16 @@
 #include <windows.h>
 #include<comdef.h>
 #include<gdiplus.h>
+#include<shlwapi.h>
+#include<strsafe.h>
+#include<vector>
+#include<map>
+#include<dwmapi.h>
+
+#pragma comment(lib, "GdiPlus.lib")
 
 #include "include/MinHook.h"
 #include"ShellWindow.h"
+
+#pragma comment(lib,"Shlwapi.lib")
+#pragma comment(lib,"Dwmapi.lib")

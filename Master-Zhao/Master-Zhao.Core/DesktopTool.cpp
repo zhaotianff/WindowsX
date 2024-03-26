@@ -417,6 +417,7 @@ BOOL CenterStartMenu(BOOL enable)
 	}
 
 	Sleep(100);
+	//wScan = MapVirtualKey(VK_LWIN, 0);
 	keybd_event(VK_LWIN, 0x45, NULL, NULL);
 	keybd_event(VK_LWIN, 0x45, KEYEVENTF_KEYUP, NULL);
 	return TRUE;
