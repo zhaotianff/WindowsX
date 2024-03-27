@@ -4,7 +4,8 @@
 
 HMODULE g_hDllModule = NULL;
 ULONG_PTR g_lGdiPlusToken;
-std::map<DWORD, ShellWindow> g_lstShellWindow;
+std::unordered_map<DWORD, ShellWindow> g_mapShellWindow;
+BitmapImage* img = NULL;
 
 const HINSTANCE hModule = LoadLibrary(TEXT("user32.dll"));
 
@@ -39,23 +40,6 @@ void SetWindowBlur(HWND hWnd)
         }
 
     }
-}
-
-void EnableWindowBlur(HWND hwnd)
-{
-    DWM_BLURBEHIND bh{};
-    bh.dwFlags = DWM_BB_ENABLE;
-    bh.fEnable = TRUE;
-    bh.hRgnBlur = NULL;
-    bh.fTransitionOnMaximized = TRUE;
-
-    DwmEnableBlurBehindWindow(hwnd, &bh);
-
-
-    //SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) - WS_EX_DLGMODALFRAME);
-    //SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_LAYERED);
-
-    SetLayeredWindowAttributes(hwnd, RGB(128,128,128), 200, LWA_ALPHA);
 }
 
 typedef HWND(WINAPI* Func_CreateWindowExW)(
@@ -130,6 +114,13 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
+
+        if (nullptr != img)
+        {
+            delete img;
+        }
+
+        g_mapShellWindow.clear();
         break;
     }
     return TRUE;
@@ -144,29 +135,24 @@ HWND MyCreateWindowExW(DWORD dwExStyle, LPCWSTR lpClassName, LPCWSTR lpWindowNam
          dwStyle, X, Y, nWidth, nHeight, hWndParent,
          hMenu, hInstance, lpParam);
 
-     TCHAR buf[MAX_PATH]{};
-     GetClassName(hwnd, buf, 260);
+     TCHAR szClassName[260]{};
+     TCHAR szParentClassName[260]{};
+     GetClassName(hwnd, szClassName, 260);
+     GetClassName(hWndParent, szParentClassName, 260);
 
-     if (lstrcmp(buf, L"CabinetWClass") == 0)
+
+     if (lstrcmp(szClassName, L"DirectUIHWND") == 0
+         && lstrcmp(szParentClassName, L"SHELLDLL_DefView") == 0)
      {
-         //SetWindowLong(hwnd, GWL_STYLE, 0x16CF0000);
-         //SetWindowLong(hwnd, GWL_EXSTYLE, 0x00040100);
-         //Sleep(50);
-         EnableWindowBlur(hwnd);
-         SetWindowBlur(hwnd);
-         //MessageBox(NULL, lpWindowName, L"", MB_OK);
-     }
+         HWND hWndGranp = GetParent(hWndParent);
+         TCHAR szGranpClassName[260]{};
+         GetClassName(hWndGranp, szGranpClassName, 260);
 
-     if (lstrcmp(buf, L"NamespaceTreeControl") == 0)
-     {
-         TCHAR parbuf[MAX_PATH]{};
-         GetClassName(GetParent(hwnd), parbuf, 260);
-
-         if (lstrcmp(parbuf, L"CtrlNotifySink") == 0)
+         if (lstrcmp(szGranpClassName, L"ShellTabWindowClass") == 0)
          {
-             EnableWindowBlur(hwnd);
-             SetWindowBlur(hwnd);
-             //MessageBox(NULL, parbuf, L"", MB_OK);
+             ShellWindow shellwindow;
+             shellwindow.hwnd = hwnd;
+             g_mapShellWindow[GetCurrentThreadId()] = shellwindow;
          }
      }
 
@@ -175,22 +161,77 @@ HWND MyCreateWindowExW(DWORD dwExStyle, LPCWSTR lpClassName, LPCWSTR lpWindowNam
 
 BOOL MyDestroyWindow(HWND hwnd)
 {
+    std::unordered_map<DWORD, ShellWindow>::iterator iter = g_mapShellWindow.find(GetCurrentThreadId());
+
+    if (iter != g_mapShellWindow.end() && hwnd == iter->second.hwnd)
+    {
+        g_mapShellWindow.erase(iter);
+    }
+
     return InitDestroyWindow(hwnd);
 }
 
 HDC MyBeginPaint(HWND hWnd, LPPAINTSTRUCT lpPaint)
 {
-    return InitBeginPaint(hWnd, lpPaint);
+    HDC hdc =  InitBeginPaint(hWnd, lpPaint);
+
+    auto iter = g_mapShellWindow.find(GetCurrentThreadId());
+
+    if (iter != g_mapShellWindow.end() && hWnd == iter->second.hwnd)
+    {
+        iter->second.hdc = hdc;
+    }
+
+    return hdc;
 }
 
 int MyFillRect(HDC hDC, RECT* lprc, HBRUSH hbr)
 {
-    return InitFillRect(hDC, lprc, hbr);
+    int ret =  InitFillRect(hDC, lprc, hbr);
+
+    auto iter = g_mapShellWindow.find(GetCurrentThreadId());
+
+    if (iter != g_mapShellWindow.end() && iter->second.hdc == hDC)
+    {
+        ShellWindow shellWindow = iter->second;
+        RECT pRc{};
+        GetWindowRect(shellWindow.hwnd, &pRc);
+        SIZE wndSize = { pRc.right - pRc.left,pRc.bottom - pRc.top };
+
+        if (shellWindow.size.cx != wndSize.cx ||
+            shellWindow.size.cy != wndSize.cy)
+        {
+            InvalidateRect(shellWindow.hwnd, 0, TRUE);
+        }
+
+        SaveDC(hDC);
+        IntersectClipRect(hDC, lprc->left, lprc->top, lprc->right, lprc->bottom);
+
+        POINT pos;
+        SIZE dstSize = { img->size.cx,img->size.cy };
+        pos.x = 0;
+        pos.y = 0;
+
+        BLENDFUNCTION bf = { AC_SRC_OVER, 0, 128, AC_SRC_ALPHA };
+        AlphaBlend(hDC, pos.x, pos.y, dstSize.cx, dstSize.cy, img->hdc, 0, 0, img->size.cx, img->size.cy, bf);
+
+        RestoreDC(hDC, -1);
+
+        iter->second.size = wndSize;
+    }
+    return ret;
 }
 
-HDC MyCreateCompatibleDC(HDC hdc)
+HDC MyCreateCompatibleDC(HDC hDc)
 {
-    return InitCreateCompatibleDC(hdc);
+    HDC retHdc =  InitCreateCompatibleDC(hDc);
+
+    auto iter = g_mapShellWindow.find(GetCurrentThreadId());
+    if (iter != g_mapShellWindow.end() && iter->second.hdc == hDc)
+    {
+        iter->second.hdc = retHdc;
+    }
+    return retHdc;
 }
 
 VOID StartHook()
@@ -203,6 +244,8 @@ VOID StartHook()
 
     if (MH_Initialize() != MH_OK)
         return;
+
+    img = new BitmapImage(L"C:\\Users\\xi\\Pictures\\7580ed8def743ae037688c8a0d757aa0.jpg");
 
     MH_CreateHookEx(&CreateWindowExW, &MyCreateWindowExW, &InitCreateWindowExW);
     MH_CreateHookEx(&DestroyWindow, &MyDestroyWindow, &InitDestroyWindow);

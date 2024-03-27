@@ -8,13 +8,14 @@
 #include<shlwapi.h>
 #include<strsafe.h>
 #include<vector>
-#include<map>
+#include<unordered_map>
 #include<dwmapi.h>
 
 #pragma comment(lib, "GdiPlus.lib")
 
 #include "include/MinHook.h"
 #include"ShellWindow.h"
+#include"BitmapImage.h"
 
 #pragma comment(lib,"Shlwapi.lib")
 #pragma comment(lib,"Dwmapi.lib")
