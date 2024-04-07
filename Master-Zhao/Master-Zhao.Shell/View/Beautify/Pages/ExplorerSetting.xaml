@@ -1,0 +1,48 @@
+﻿<Page x:Class="Master_Zhao.Shell.View.Beautify.Pages.ExplorerSetting"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Master_Zhao.Shell.View.Beautify.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ExplorerSetting">
+
+    <Grid>
+        <TabControl Style="{StaticResource TabControlStyle}">
+            <TabItem Header="资源管理器背景" Style="{StaticResource StyleTabItem}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Grid.Row="0" Content="启用背景设置" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}" Name="cbx_EnableBackground"></CheckBox>
+                    <GroupBox Header="预览" Grid.Row="1" Style="{StaticResource GroupBoxStyle}" IsEnabled="{Binding ElementName=cbx_EnableBackground,Path=IsChecked}">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Stretch="Uniform" Source="../../../Icon/explorer.jpg"></Image>
+                            <Image Stretch="Uniform" Source="../../../Icon/explorer_back.png" Width="150" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <Grid Grid.Row="2" IsEnabled="{Binding ElementName=cbx_EnableBackground,Path=IsChecked}">
+                        <Label Content="选择契合度" HorizontalAlignment="Right" Margin="0,0,300,0"></Label>
+                        <ComboBox Width="80" HorizontalAlignment="Right" Margin="0,3,210,0" VerticalAlignment="Top" SelectedIndex="6">
+                            <ComboBoxItem>左上角</ComboBoxItem>
+                            <!--<ComboBoxItem>右上角</ComboBoxItem>
+                            <ComboBoxItem>左下角</ComboBoxItem>
+                            <ComboBoxItem>右下角</ComboBoxItem>
+                            <ComboBoxItem>居中</ComboBoxItem>
+                            <ComboBoxItem>缩放</ComboBoxItem>
+                            <ComboBoxItem>拉伸</ComboBoxItem>-->
+                        </ComboBox>
+                        <Button Content="浏览" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,105,0"/>
+                        <Button Content="恢复默认" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,5,0"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="效果设置" Style="{StaticResource StyleTabItem}"></TabItem>
+        </TabControl>
+    </Grid>
+</Page>

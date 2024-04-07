@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace Master_Zhao.Shell.View.Beautify.Pages
 {
     /// <summary>
-    /// ExplorerBackgroundSetting.xaml 的交互逻辑
+    /// ExplorerSetting.xaml 的交互逻辑
     /// </summary>
-    public partial class ExplorerBackgroundSetting : Page
+    public partial class ExplorerSetting : Page
     {
-        public ExplorerBackgroundSetting()
+        public ExplorerSetting()
         {
             InitializeComponent();
         }
