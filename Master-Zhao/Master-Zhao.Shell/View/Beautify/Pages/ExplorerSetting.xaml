@@ -27,8 +27,10 @@
                     </GroupBox>
 
                     <Grid Grid.Row="2" IsEnabled="{Binding ElementName=cbx_EnableBackground,Path=IsChecked}">
-                        <Label Content="选择契合度" HorizontalAlignment="Right" Margin="0,0,300,0"></Label>
-                        <ComboBox Width="80" HorizontalAlignment="Right" Margin="0,3,210,0" VerticalAlignment="Top" SelectedIndex="6">
+                        <Label Content="透明度" HorizontalAlignment="Left" ></Label>
+                        <Slider Minimum="0" TickFrequency="1" Maximum="100" Margin="50,5,0,0" HorizontalAlignment="Left" Width="100" Style="{StaticResource SliderStyle}"></Slider>
+                        <Label Content="选择契合度" HorizontalAlignment="Left" Margin="160,0,0,0"></Label>
+                        <ComboBox Width="80" HorizontalAlignment="Left" Margin="230,3,0,0" VerticalAlignment="Top" SelectedIndex="6">
                             <ComboBoxItem>左上角</ComboBoxItem>
                             <!--<ComboBoxItem>右上角</ComboBoxItem>
                             <ComboBoxItem>左下角</ComboBoxItem>
@@ -37,7 +39,8 @@
                             <ComboBoxItem>缩放</ComboBoxItem>
                             <ComboBoxItem>拉伸</ComboBoxItem>-->
                         </ComboBox>
-                        <Button Content="浏览" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,105,0"/>
+                        <Button Content="浏览" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="330,3,0,0"/>
+                        <Button Content="应用" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,105,0"/>
                         <Button Content="恢复默认" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,5,0"/>
                     </Grid>
                 </Grid>

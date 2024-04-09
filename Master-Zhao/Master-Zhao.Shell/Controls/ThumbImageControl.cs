@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ namespace Master_Zhao.Shell.Controls
     {
         public static readonly DependencyProperty ThumbPathProperty = DependencyProperty.Register("ThumbPath", typeof(string),typeof(Button));
         public static readonly DependencyProperty ThumbImageObjProperty = DependencyProperty.Register("ThumbImageObj", typeof(BitmapImage), typeof(Button));
+        public static readonly DependencyProperty ThumbImageWidthProperty = DependencyProperty.Register("ThumbImageWidth", typeof(int), typeof(Button),new PropertyMetadata(0));
+        public static readonly DependencyProperty ThumbImageHeightProperty = DependencyProperty.Register("ThumbImageHeight", typeof(int), typeof(Button),new PropertyMetadata(0));
 
         static ThumbImageControl()
         {
@@ -34,13 +37,17 @@ namespace Master_Zhao.Shell.Controls
 
                 if (!string.IsNullOrEmpty(value))
                 {
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    var buffer = System.IO.File.ReadAllBytes(value);
-                    System.IO.MemoryStream ms = new System.IO.MemoryStream(buffer);
-                    bi.StreamSource = ms;
-                    bi.EndInit();
-                    ThumbImageObj = bi;
+                    ThumbImageObj = ImageHelper.GetBitmapImageFromLocalFile(value, true);
+
+                    if (ThumbImageHeight != 0)
+                    {
+                        ThumbImageObj.DecodePixelHeight = ThumbImageHeight;
+                    }
+
+                    if (ThumbImageWidth != 0)
+                    {
+                        ThumbImageObj.DecodePixelWidth = ThumbImageWidth;
+                    }
                 }
             }
         }
@@ -49,6 +56,18 @@ namespace Master_Zhao.Shell.Controls
         {
             get => (BitmapImage)GetValue(ThumbImageObjProperty);
             private set => SetValue(ThumbImageObjProperty, value);
+        }
+
+        public int ThumbImageWidth
+        {
+            get => (int)GetValue(ThumbImageWidthProperty);
+            set => SetValue(ThumbImageWidthProperty, value);
+        }
+
+        public int ThumbImageHeight
+        {
+            get => (int)GetValue(ThumbImageHeightProperty);
+            set => SetValue(ThumbImageHeightProperty, value);
         }
     }
 }
