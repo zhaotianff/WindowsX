@@ -19,6 +19,7 @@ using Master_Zhao.Web.Model;
 using Master_Zhao.Web.Interface;
 using Master_Zhao.Web.CnBing;
 using Master_Zhao.Shell.Windows;
+using Master_Zhao.Shell.Util;
 
 namespace Master_Zhao.Shell.Pages
 {
@@ -27,6 +28,9 @@ namespace Master_Zhao.Shell.Pages
     /// </summary>
     public partial class StaticWallpaper : Page
     {
+        private const string CacheFolderName = "cache";
+        private const int ThumbnailWidth = 800;
+
         private IEnumerable<string> recentWallpapers;
         private List<ITagImg> list = new List<ITagImg>();
         private IImageSearcher imageSearcher;
@@ -82,7 +86,7 @@ namespace Master_Zhao.Shell.Pages
             if (!System.IO.File.Exists(path))
                 return;
 
-            this.img_background.Source = new BitmapImage(new Uri(path, UriKind.Absolute));
+            this.img_background.Source = ImageHelper.GetBitmapImageFromLocalFile(path, true);
             //this.img_background.ImagePath = path;
         }
 
@@ -101,6 +105,8 @@ namespace Master_Zhao.Shell.Pages
                 recentWallpapers = sb.ToString().Split(";").Take(5);
                 recentWallpapers = RemoveUnavailableWallpaper(recentWallpapers);
 
+                GenerateBackgroundImageThumbnail(recentWallpapers);
+
                 foreach (var wallpaper in recentWallpapers)
                 {
                     ThumbImageControl thumbImageControl = new ThumbImageControl();
@@ -109,6 +115,26 @@ namespace Master_Zhao.Shell.Pages
                     wrap_wallpaper.Children.Add(thumbImageControl);
                 }
             }, new System.Threading.CancellationToken(), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void GenerateBackgroundImageThumbnail(IEnumerable<string> recentWallpapers)
+        {
+            var thumbFolderPath = CreateThumbnailImageCacheFolder();
+           
+            foreach (var wallpaper in recentWallpapers)
+            {
+                var thumbFilePath = System.IO.Path.Combine(thumbFolderPath, System.IO.Path.GetFileName(wallpaper));
+                ImageHelper.GenerateThumbnailFile(wallpaper, ThumbnailWidth, thumbFilePath);
+            } 
+        }
+
+        private string CreateThumbnailImageCacheFolder()
+        {
+            var folderPath = Environment.CurrentDirectory + "\\" + CacheFolderName;
+            if (System.IO.Directory.Exists(folderPath) == false)
+                System.IO.Directory.CreateDirectory(folderPath);
+
+            return folderPath;
         }
 
         private List<string> RemoveUnavailableWallpaper(IEnumerable<string> list)

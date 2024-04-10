@@ -1,11 +1,13 @@
 ﻿using Master_Zhao.Shell.PInvoke;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using static Master_Zhao.Shell.PInvoke.Kernel32;
 
 namespace Master_Zhao.Shell.Util
 {
@@ -98,6 +100,38 @@ namespace Master_Zhao.Shell.Util
             {
                 encoder.Save(stream);
             }
+        }
+
+        public static void GenerateThumbnailFile(string imagePath,int width,string thumbPath)
+        {
+            using(System.Drawing.Bitmap bitmap = (System.Drawing.Bitmap)System.Drawing.Bitmap.FromFile(imagePath))
+            {
+                var ratio = (float)width / bitmap.Width;
+                var height = (int)(bitmap.Height * ratio);
+                using (var thumbBitmap = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero))
+                {
+                    ImageCodecInfo[] encoders = ImageCodecInfo.GetImageEncoders();
+                    ImageCodecInfo jpegEncoder = GetEncoder(ImageFormat.Jpeg);
+                    EncoderParameters prms = new EncoderParameters(1);
+                    prms.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
+                    thumbBitmap.Save(thumbPath, jpegEncoder, prms);
+                }
+            }
+        }
+
+        private static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
         }
     }
 }
