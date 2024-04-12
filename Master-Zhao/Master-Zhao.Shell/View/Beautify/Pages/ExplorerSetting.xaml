@@ -20,17 +20,17 @@
 
                     <CheckBox Grid.Row="0" Content="启用背景设置" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}" Name="cbx_EnableBackground"></CheckBox>
                     <GroupBox Header="预览" Grid.Row="1" Style="{StaticResource GroupBoxStyle}" IsEnabled="{Binding ElementName=cbx_EnableBackground,Path=IsChecked}">
-                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image Stretch="Uniform" Source="../../../Icon/explorer.jpg"></Image>
-                            <Image Stretch="Uniform" Source="../../../Icon/explorer_back.png" Width="150" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                        <Grid Width="900" Height="498">
+                            <Image Name="img_bg" Margin="128,60,0,0" Width="878" Height="438" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="{Binding ElementName=slider_Opacity,Path=Value,UpdateSourceTrigger=PropertyChanged}"/>
+                            <Image Width="900" Height="498" Stretch="Uniform" Source="../../../Icon/explorer.png" Name="img_explorer"></Image>
                         </Grid>
                     </GroupBox>
 
                     <Grid Grid.Row="2" IsEnabled="{Binding ElementName=cbx_EnableBackground,Path=IsChecked}">
                         <Label Content="透明度" HorizontalAlignment="Left" ></Label>
-                        <Slider Minimum="0" TickFrequency="1" Maximum="100" Margin="50,5,0,0" HorizontalAlignment="Left" Width="100" Style="{StaticResource SliderStyle}"></Slider>
+                        <Slider Name="slider_Opacity" Minimum="0" TickFrequency="0.01" Value="1" Maximum="1" Margin="50,5,0,0" HorizontalAlignment="Left" Width="100" Style="{StaticResource SliderStyle}"></Slider>
                         <Label Content="选择契合度" HorizontalAlignment="Left" Margin="160,0,0,0"></Label>
-                        <ComboBox Width="80" HorizontalAlignment="Left" Margin="230,3,0,0" VerticalAlignment="Top" SelectedIndex="6">
+                        <ComboBox Width="80" HorizontalAlignment="Left" Margin="230,3,0,0" VerticalAlignment="Top" SelectedIndex="0">
                             <ComboBoxItem>左上角</ComboBoxItem>
                             <!--<ComboBoxItem>右上角</ComboBoxItem>
                             <ComboBoxItem>左下角</ComboBoxItem>
@@ -39,7 +39,7 @@
                             <ComboBoxItem>缩放</ComboBoxItem>
                             <ComboBoxItem>拉伸</ComboBoxItem>-->
                         </ComboBox>
-                        <Button Content="浏览" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="330,3,0,0"/>
+                        <Button Content="浏览" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="330,3,0,0" Click="btnBrowseBgImage_Click"/>
                         <Button Content="应用" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,105,0"/>
                         <Button Content="恢复默认" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,5,0"/>
                     </Grid>

@@ -29,6 +29,7 @@
     <None Remove="Icon\back_1.jpg" />
     <None Remove="Icon\desktop.png" />
     <None Remove="Icon\explorer.jpg" />
+    <None Remove="Icon\explorer.png" />
     <None Remove="Icon\explorer_back.png" />
     <None Remove="Icon\fastrun.png" />
     <None Remove="Icon\huashui.jpg" />
@@ -83,6 +84,7 @@
     <Resource Include="FontAwesome\Font Awesome 5 Free-Solid-900.otf" />
     <Resource Include="Icon\back_1.jpg" />
     <Resource Include="Icon\explorer.jpg" />
+    <Resource Include="Icon\explorer.png" />
     <Resource Include="Icon\explorer_back.png" />
     <Resource Include="Icon\fastrun.png" />
     <Resource Include="Icon\MouseEffect\cursortrail.png" />

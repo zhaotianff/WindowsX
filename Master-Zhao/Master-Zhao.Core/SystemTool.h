@@ -59,3 +59,6 @@ SILVERAROWANACORE_API LPTSTR GetFileDescrption(LPTSTR pszFilePath);
 SILVERAROWANACORE_API HRESULT GetShortcutPath(LPTSTR szLnkPath, LPTSTR szAbsoluatePath, DWORD nBufferSize);
 SILVERAROWANACORE_API BOOL GetSpeicalFolder(DWORD csidl, LPTSTR szBuffer);
 
+SILVERAROWANACORE_API BOOL IsProcessContainModule(LPCTSTR lpszProcessName, LPCTSTR lpszModuleName);
+SILVERAROWANACORE_API BOOL IsProcessIdContainModule(DWORD dwProcessId, LPCTSTR lpszModuleName);
+

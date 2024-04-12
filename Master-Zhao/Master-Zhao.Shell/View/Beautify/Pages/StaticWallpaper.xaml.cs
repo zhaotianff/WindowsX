@@ -110,7 +110,8 @@ namespace Master_Zhao.Shell.Pages
                 foreach (var wallpaper in recentWallpapers)
                 {
                     ThumbImageControl thumbImageControl = new ThumbImageControl();
-                    thumbImageControl.ThumbPath = wallpaper;
+                    thumbImageControl.ThumbPath = GetThumbnailPathFromFilePath(wallpaper);
+                    thumbImageControl.FilePath = wallpaper;
                     thumbImageControl.Click += OnChangeBackground;
                     wrap_wallpaper.Children.Add(thumbImageControl);
                 }
@@ -119,16 +120,25 @@ namespace Master_Zhao.Shell.Pages
 
         private void GenerateBackgroundImageThumbnail(IEnumerable<string> recentWallpapers)
         {
-            var thumbFolderPath = CreateThumbnailImageCacheFolder();
+            var thumbFolderPath = GetOrCreateThumbnailImageCacheFolder();
            
             foreach (var wallpaper in recentWallpapers)
             {
                 var thumbFilePath = System.IO.Path.Combine(thumbFolderPath, System.IO.Path.GetFileName(wallpaper));
-                ImageHelper.GenerateThumbnailFile(wallpaper, ThumbnailWidth, thumbFilePath);
+                if (System.IO.File.Exists(thumbFilePath) == false)
+                {
+                    ImageHelper.GenerateThumbnailFile(wallpaper, ThumbnailWidth, thumbFilePath);
+                }
             } 
         }
 
-        private string CreateThumbnailImageCacheFolder()
+        private string GetThumbnailPathFromFilePath(string wallpaper)
+        {
+            var thumbnailFolderPath = GetOrCreateThumbnailImageCacheFolder();
+            return System.IO.Path.Combine(thumbnailFolderPath, System.IO.Path.GetFileName(wallpaper));
+        }
+
+        private string GetOrCreateThumbnailImageCacheFolder()
         {
             var folderPath = Environment.CurrentDirectory + "\\" + CacheFolderName;
             if (System.IO.Directory.Exists(folderPath) == false)
@@ -156,7 +166,7 @@ namespace Master_Zhao.Shell.Pages
 
         private void OnChangeBackground(object sender,EventArgs args)
         {
-            var path = (sender as ThumbImageControl)?.ThumbPath;
+            var path = (sender as ThumbImageControl)?.FilePath;
 
             if (System.IO.File.Exists(path) == false)
                 return;

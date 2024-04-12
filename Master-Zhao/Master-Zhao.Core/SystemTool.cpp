@@ -6,6 +6,7 @@
 #include<Winternl.h>
 #include<powrprof.h>
 #include<wtsapi32.h>
+#include<TlHelp32.h>
 
 #pragma comment(lib,"PowrProf.lib")
 #pragma comment(lib,"wtsapi32.lib")
@@ -449,6 +450,71 @@ BOOL GetSpeicalFolder(DWORD csidl, LPTSTR szBuffer)
 	if (FAILED(hr))
 		return FALSE;
 	return SHGetPathFromIDList(pIdList, szBuffer);
+}
+
+BOOL IsProcessContainModule(LPCTSTR lpszProcessName, LPCTSTR lpszModuleName)
+{
+	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+
+	PROCESSENTRY32 pe32{};
+	pe32.dwSize = sizeof(PROCESSENTRY32);
+
+	if (INVALID_HANDLE_VALUE == hSnap)
+		return FALSE;
+
+	BOOL bRet = Process32First(hSnap, &pe32);
+
+	while (bRet)
+	{
+		if (lstrcmp(lpszProcessName, pe32.szExeFile) == 0)
+		{
+			CloseHandle(hSnap);
+			return IsProcessIdContainModule(pe32.th32ProcessID, lpszModuleName);
+		}
+
+		bRet = Process32Next(hSnap, &pe32);
+	}
+
+	CloseHandle(hSnap);
+	return FALSE;
+}
+
+BOOL IsProcessIdContainModule(DWORD dwProcessId, LPCTSTR lpszModuleName)
+{
+	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, dwProcessId);
+
+	if (INVALID_HANDLE_VALUE == hSnap)
+		return FALSE;
+
+	MODULEENTRY32 me32{};
+	me32.dwSize = sizeof(MODULEENTRY32);
+	BOOL bRet = Module32First(hSnap, &me32);
+
+	while (bRet)
+	{
+		//to upper
+		std::wstring strSrc = me32.szModule;
+		for (auto& c : strSrc)
+		{
+			c = std::toupper(c);
+		}
+
+		std::wstring strDest = lpszModuleName;
+		for (auto& c : strDest)
+		{
+			c = std::toupper(c);
+		}
+
+		if (strSrc == strDest)
+		{
+			CloseHandle(hSnap);
+			return TRUE;
+		}
+		bRet = Module32Next(hSnap, &me32);
+	}
+
+	CloseHandle(hSnap);
+	return FALSE;
 }
 
 

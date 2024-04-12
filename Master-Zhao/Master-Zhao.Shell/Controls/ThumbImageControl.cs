@@ -50,5 +50,7 @@ namespace Master_Zhao.Shell.Controls
             get => (BitmapImage)GetValue(ThumbImageObjProperty);
             private set => SetValue(ThumbImageObjProperty, value);
         }
+
+        public string FilePath { get; set; }
     }
 }

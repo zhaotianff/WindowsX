@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Master_Zhao.Shell.Util;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,14 @@ namespace Master_Zhao.Shell.View.Beautify.Pages
         public ExplorerSetting()
         {
             InitializeComponent();
+        }
+
+        private void btnBrowseBgImage_Click(object sender, RoutedEventArgs e)
+        {
+            var imgPath = DialogHelper.BrowserSingleFile("图片文件|*.jpg;*.png;*.bmp;*.jpeg", "浏览背景图片", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
+
+            if (!string.IsNullOrEmpty(imgPath))
+                this.img_bg.Source = ImageHelper.GetBitmapImageFromLocalFile(imgPath);
         }
     }
 }
