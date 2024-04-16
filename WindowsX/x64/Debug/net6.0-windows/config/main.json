@@ -1,0 +1,88 @@
+﻿{
+  "BackgroundSetting": {
+    "BackgroundIndex": 1,
+    "ThemeIndex": 0,
+    "Colors": [
+      "Transparent",
+      "White",
+      "Silver"
+    ],
+    "ResourceImages": [
+      "Icon/about_back.jpeg",
+      "Icon/back_1.jpg"
+    ],
+    "LocalImages": [
+    ],
+    "Opacity": 0.9,
+    "IsBlurBackground": false
+  },
+  "FlatStartMenuGroupedItems": [
+    {
+      "GroupName": "系统",
+      "MenuItems": [
+        {
+          "Name": "cmd",
+          "Path": "C:\\Windows\\System32\\cmd.exe"
+        },
+        {
+          "Name": "calc",
+          "Path": "C:\\Windows\\System32\\calc.exe"
+        },
+        {
+          "Name": "control",
+          "Path": "C:\\Windows\\System32\\control.exe"
+        }
+      ]
+    },
+    {
+      "GroupName": "开发",
+      "MenuItems": [
+        {
+          "Name": "notepad",
+          "Path": "C:\\Windows\\System32\\notepad.exe"
+        }
+      ]
+    }
+  ],
+  "FlatStartMenuToDoList": [
+    {
+      "Date": "2022-11-03T00:00:00",
+      "TodoList": [
+        {
+          "Description": "去西湾红树林公园写代码",
+          "FinishStatus": false
+        },
+        {
+          "Description": "去召唤师峡谷练习跑步",
+          "FinishStatus": false
+        }
+      ]
+    },
+    {
+      "Date": "2022-11-04T00:00:00",
+      "TodoList": [
+        {
+          "Description": "去白嫖",
+          "FinishStatus": false
+        },
+        {
+          "Description": "去撩妹",
+          "FinishStatus": false
+        }
+      ]
+    },
+    {
+      "Date": "2022-11-05T00:00:00",
+      "TodoList": [
+        {
+          "Description": "去给妹子拍照",
+          "FinishStatus": false
+        },
+        {
+          "Description": "摆烂",
+          "FinishStatus": false
+        }
+      ]
+    }
+  ]
+}
