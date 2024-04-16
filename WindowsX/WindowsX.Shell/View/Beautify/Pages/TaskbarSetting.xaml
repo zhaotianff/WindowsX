@@ -1,0 +1,93 @@
+﻿<Page x:Class="WindowsX.Shell.Pages.TaskbarSetting"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:converter="clr-namespace:WindowsX.Shell.Infrastructure.Converter"
+      xmlns:local="clr-namespace:WindowsX.Shell.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TaskbarSetting">
+    <Page.Resources>
+        <converter:VisibilityConverter x:Key="visibilityConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0">
+            <GroupBox.Header>
+                <Label Content="任务栏风格" FontSize="14"></Label>
+            </GroupBox.Header>
+
+            <StackPanel>
+                <CheckBox Content="Windows 11风格任务栏" Name="cbx_Windows11Taskbar" IsEnabled="False" Checked="cbx_Windows11Taskbar_Checked" Unchecked="cbx_Windows11Taskbar_Unchecked" Style="{StaticResource CheckBoxStyle}">
+                    <CheckBox.ToolTip>
+                        <ToolTip>Windows 11风格任务栏包含开始菜单图标、开始菜单位置和任务列表位置的改变</ToolTip>
+                    </CheckBox.ToolTip>
+                </CheckBox>
+                <Grid Height="60">
+                    <!--<Image  Source="../../Icon/windows10_taskbar.png" Height="40" Stretch="UniformToFill"></Image>-->
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Name="group_TaskbarBlur" IsEnabled="False">
+            <GroupBox.Header>
+                <Label Content="任务栏透明效果" FontSize="14"></Label>
+            </GroupBox.Header>
+
+            <StackPanel>
+                <WrapPanel>
+                    <Label Content="模式" Margin="5" Visibility="Collapsed"></Label>
+                    <ComboBox Width="180" Margin="5" SelectedIndex="3" Visibility="Collapsed">
+                        <ComboBoxItem>ACCENT_DISABLED</ComboBoxItem>
+                        <ComboBoxItem>ACCENT_ENABLE_GRADIENT</ComboBoxItem>
+                        <ComboBoxItem>ACCENT_ENABLE_TRANSPARENTGRADIENT</ComboBoxItem>
+                        <ComboBoxItem>ACCENT_ENABLE_BLURBEHIND</ComboBoxItem>
+                        <ComboBoxItem>ACCENT_ENABLE_ACRYLICBLURBEHIND</ComboBoxItem>
+                    </ComboBox>
+                    <CheckBox Content="启用任务栏透明效果" Name="cbx_BlurTaskbar" Checked="btn_EnableBlurTaskbar_Click" Unchecked="btn_DisableBlurTaskbar_Click" Style="{StaticResource CheckBoxStyle}"></CheckBox>
+                </WrapPanel>
+
+                <Grid Height="80" IsEnabled="{Binding ElementName=cbx_BlurTaskbar,Path=IsChecked}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <RadioButton Content="毛玻璃效果" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" GroupName="blur" IsChecked="True" Checked="blur_Checked" Name="radio_blur"/>
+                    <RadioButton Content="全透明效果" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="100,0,0,0" GroupName="blur" Checked="transparent_Checked" Name="radio_transparent"/>
+
+                    <Image Grid.Row="1"  Source="../../../Icon/windows10_blur_taskbar.png" Stretch="Uniform" Margin="5" Visibility="{Binding ElementName=radio_blur,Path=IsChecked,Converter={StaticResource visibilityConverter}}"></Image>
+                    <Image Grid.Row="1"  Source="../../../Icon/windows10_transparent_taskbar.png" Stretch="Uniform" Margin="5" Visibility="{Binding ElementName=radio_transparent,Path=IsChecked,Converter={StaticResource visibilityConverter}}"></Image>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2">
+            <GroupBox.Header>
+                <Label Content="开始菜单(开发中)" FontSize="14"></Label>
+            </GroupBox.Header>
+
+            <StackPanel>
+                <StackPanel>
+                    <CheckBox Content="使用Windows 11风格开始按钮" Style="{StaticResource CheckBoxStyle}" Name="cbx_Windows11StartButton" IsEnabled="False"></CheckBox>
+                    <!--Windows 10开始菜单是一个全屏的窗口，绘制区域无法使用SetWindowCompositionAttribute函数进行透明处理-->
+                    <!--空白区域可以使用SetWindowCompositionAttribute进行透明处理，但这没啥意义。-->
+                    <!--如果要实现开始菜单透明，需要重做一个开始菜单，这个功能开发的时间比较长，留到后面的版本去实现-->
+                    <CheckBox Content="开始菜单透明" Style="{DynamicResource CheckBoxStyle}" Name="cbx_TransparencyStart" Visibility="Collapsed"></CheckBox>
+                    <DockPanel IsEnabled="{Binding ElementName=cbx_TransparencyStart,Path=IsChecked}" Visibility="Collapsed">
+                        <Label Content="透明度" DockPanel.Dock="Left" Margin="5"/>
+                        <Slider Value="50" Minimum="0" Maximum="100" DockPanel.Dock="Left" MaxWidth="800" Margin="10,5" Style="{DynamicResource SliderStyle}"/>
+                    </DockPanel>
+                </StackPanel>
+    
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Page>

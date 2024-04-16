@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="WindowsX.Shell.View.SystemMgmt.UserControls.FolderDetailControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WindowsX.Shell.View.SystemMgmt.UserControls"
+             xmlns:controls="clr-namespace:WindowsX.Shell.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Name="stack" Background="Transparent">
+        <StackPanel.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard Storyboard.TargetName="stack" Storyboard.TargetProperty="(StackPanel.Background).(SolidColorBrush.Color)">
+                        <ColorAnimation To="{StaticResource BorderColorTran}" Duration="0:0:0.5"></ColorAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard Storyboard.TargetName="stack" Storyboard.TargetProperty="(StackPanel.Background).(SolidColorBrush.Color)">
+                        <ColorAnimation To="Transparent" Duration="0:0:0.5"></ColorAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </StackPanel.Triggers>
+        <Grid>
+            <Image Height="40" Width="40" Name="img_Icon" Stretch="UniformToFill" HorizontalAlignment="Left" Margin="5"></Image>
+            <Label Name="lbl_Name" Content="C:\\" HorizontalAlignment="Left" FontWeight="Bold" Margin="50,0,0,0" VerticalAlignment="Center"></Label>
+        </Grid>
+        <Grid>
+            <Label Content="完整路径："></Label>
+            <Label Name="lbl_FullPath" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
+        </Grid>
+        <Grid Visibility="Collapsed">
+            <Label Content="占用空间："></Label>
+            <Label Name="lbl_Size" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
+        </Grid>
+        <Grid Visibility="Collapsed">
+            <Label Content="占用空间占比："></Label>
+            <controls:PercentageBar x:Name="percentageBar" Width="200" Height="15" VerticalAlignment="Center" Maximum="100" HorizontalAlignment="Left" Margin="105,0,0,0"></controls:PercentageBar>
+        </Grid>
+        <Grid Visibility="Collapsed">
+            <Label Content="文件夹总数："></Label>
+            <Label Name="lbl_DirCount" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
+        </Grid>
+        <Grid Visibility="Collapsed">
+            <Label Content="文件总数："></Label>
+            <Label Name="lbl_FileCount" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
+        </Grid>
+        <Grid>
+            <Label Content="创建时间："></Label>
+            <Label Name="lbl_CreateTime" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
+        </Grid>
+        <Grid>
+            <Label Content="最后访问时间："></Label>
+            <Label Name="lbl_LastAccessTime" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
+        </Grid>
+        <Grid>
+            <Label Content="最后写入时间："></Label>
+            <Label Name="lbl_LastWriteTime" HorizontalAlignment="Left" Margin="100,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"></Label>
+        </Grid>
+    </StackPanel>
+</UserControl>

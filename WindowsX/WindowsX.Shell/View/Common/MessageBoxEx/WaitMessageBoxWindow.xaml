@@ -1,0 +1,36 @@
+﻿<tian:BlurWindow x:Class="WindowsX.Shell.MessageBoxEx.WaitMessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow"
+        xmlns:local="clr-namespace:WindowsX.Shell.MessageBoxEx"
+        mc:Ignorable="d" MaxWidth="640" Width="380"  MinWidth="320"
+        xmlns:tian="clr-namespace:TianXiaTech;assembly=BlurWindow"
+        Title="WaitMessageBoxWindow" Closing="BlurWindow_Closing" Height="200" WindowStartupLocation="CenterScreen" Topmost="True">
+    <Window.Background>
+        <SolidColorBrush Color="White" Opacity=".6"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27.6"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBlock TextWrapping="WrapWithOverflow" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" Name="tbk_Content"></TextBlock>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Button Content="确定" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,110,0" Name="btn_Ok" Click="btn_Ok_Click"></Button>
+                <Button Content="取消" Width="88" Height="28" HorizontalAlignment="Right" Margin="0,0,10,0" Name="btn_Cancel" Click="btn_Cancel_Click"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</tian:BlurWindow>

@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "WindowsX.DynamicDesktop": {
+      "commandName": "Project"
+    }
+  }
+}

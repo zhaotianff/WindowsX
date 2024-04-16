@@ -1,0 +1,33 @@
+﻿<blur:BlurWindow x:Class="WindowsX.Shell.StartMenu.WinFlat.AddTodoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsX.Shell.StartMenu.WinFlat"
+        xmlns:blur="clr-namespace:TianXiaTech;assembly=BlurWindow" ControlBoxVisibility="Collapsed" WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d"
+        Title="添加Todo" Height="150" Width="300">
+    <blur:BlurWindow.Background>
+        <SolidColorBrush Color="White" Opacity=".8"/>
+    </blur:BlurWindow.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27.6"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <RichTextBox Grid.Row="0" Margin="10" Name="tbox_Todo" Background="Transparent"/>
+
+            <Grid Grid.Row="1">
+                <Button Content="确认" HorizontalAlignment="Right" VerticalAlignment="Center" Width="58" Margin="0,0,75,0" Style="{StaticResource ButtonStyle}" IsDefault="True" Click="ok_Click"/>
+                <Button Content="取消" HorizontalAlignment="Right" VerticalAlignment="Center" Width="58" Margin="0,0,5,0" Style="{StaticResource ButtonStyle}" IsCancel="True"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</blur:BlurWindow>

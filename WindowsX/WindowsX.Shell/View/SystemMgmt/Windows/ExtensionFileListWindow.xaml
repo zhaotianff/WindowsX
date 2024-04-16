@@ -1,0 +1,26 @@
+﻿<tianxia:BlurWindow x:Class="WindowsX.Shell.View.SystemMgmt.Windows.ExtensionFileListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsX.Shell.View.SystemMgmt.Windows"
+        xmlns:tianxia="clr-namespace:TianXiaTech;assembly=BlurWindow"
+        mc:Ignorable="d"
+        Title="文件列表" Height="850" Width="400" WindowStartupLocation="CenterScreen" IconVisibility="Collapsed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27.6"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ListBox Grid.Row="1" Style="{StaticResource ListBoxStyle}" Name="lst_File" MouseDoubleClick="lst_File_MouseDoubleClick">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="30">
+                        <Label Content="{Binding}" Grid.Column="1"></Label>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</tianxia:BlurWindow>

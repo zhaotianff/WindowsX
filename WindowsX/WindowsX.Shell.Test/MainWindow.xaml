@@ -1,0 +1,57 @@
+﻿<Window x:Class="WindowsX.Shell.Test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsX.Shell.Test"
+        xmlns:control="clr-namespace:WindowsX.Shell.Controls;assembly=WindowsX.Shell"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="TestButtonStyle">
+            <Setter Property="Width" Value="88"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel>
+            <Button Content="测试WaitMessageBox" Style="{StaticResource TestButtonStyle}" Click="Button_Click"/>
+            <Button Content="测试视频窗口" Style="{StaticResource TestButtonStyle}" Click="Button_Click_1"/>
+        </WrapPanel>
+
+        <Grid Grid.Row="1">
+           
+                <MenuItem Header="Root" Width="150">
+                    <MenuItem.Icon>
+                        <Image Source="./Icon/windows_update.png"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Items>
+                        <MenuItem Header="Child1"/>
+                    <MenuItem Header="hello world(S)" Height="37">
+                        <MenuItem.Icon>
+                            <Image Source="./Icon/windows_update.png" Stretch="Uniform" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Child1"/>
+                        <MenuItem Header="Child1"/>
+                        <MenuItem Header="Child1">
+                            <MenuItem.Items>
+                                <MenuItem Header="Child2"/>
+                            </MenuItem.Items>
+                        </MenuItem>
+                    </MenuItem.Items>
+                </MenuItem>
+          
+        </Grid>
+
+        <control:PercentageBar Width="500" Height="20" Grid.Row="2" Text="HelloWorld" Value="80" Fill="Green"></control:PercentageBar>
+    </Grid>
+</Window>

@@ -1,0 +1,225 @@
+﻿<Page x:Class="WindowsX.Shell.View.SystemMgmt.Pages.DiskFileManagement"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WindowsX.Shell.View.SystemMgmt.Pages"
+      xmlns:uc="clr-namespace:WindowsX.Shell.View.Common.Loading"
+      xmlns:controls="clr-namespace:WindowsX.Shell.Controls"
+      xmlns:converters="clr-namespace:WindowsX.Shell.Infrastructure.Converter"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DiskFileManagement">
+    <Page.Resources>
+        <converters:DiskSizeToPercentageConverter x:Key="DiskSizeToPercentageConverter"/>
+        <converters:DiskSizeToStringConverter x:Key="DiskSizeToStringConverter"/>
+        <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
+        <converters:DiskSizeStatisticsConverter x:Key="DiskSizeStatisticsConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TreeView Style="{StaticResource TreeViewStyle}" Name="tree" SelectedItemChanged="tree_SelectedItemChanged" TreeViewItem.Expanded="tree_Expanded">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <Grid Background="Transparent">
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="打开所有位置" Click="menu_OpenDirLocation_Click"></MenuItem>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="{Binding Icon}" Width="18" Stretch="Uniform"></Image>
+                        <Label Grid.Column="1" Content="{Binding DisplayName}"></Label>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+
+        <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"></GridSplitter>
+
+        <TabControl Background="Transparent" Grid.Column="2" >
+            <TabItem Header="目录摘要" Style="{StaticResource StyleTabItem}">
+                <Grid>
+                    <StackPanel DataContext="{Binding ElementName=tree,Path=SelectedItem}" Name="stack_Statistics">
+
+                    </StackPanel>
+                    <Grid>
+                        <uc:CircularLoading HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="uc_Loading"></uc:CircularLoading>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="目录大小统计" Style="{StaticResource StyleTabItem}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="100"></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TreeView Style="{StaticResource TreeViewStyle}" Name="tree_Statistics">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <Grid ToolTip="{Binding Path}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding Icon}" Width="18" Stretch="Uniform"></Image>
+                                    <Label Grid.Column="1" Content="{Binding DisplayName}"></Label>
+                                    <controls:PercentageBar Grid.Column="2" Width="300" Height="20" Maximum="100" Text="{Binding Size,Converter={StaticResource DiskSizeToStringConverter}}">
+                                        <controls:PercentageBar.Value>
+                                            <MultiBinding Converter="{StaticResource DiskSizeToPercentageConverter}">
+                                                <Binding Path="Size"></Binding>
+                                                <Binding Path="RootSize"></Binding>
+                                            </MultiBinding>
+                                        </controls:PercentageBar.Value>
+                                    </controls:PercentageBar>
+                                </Grid>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="完整路径:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="{Binding ElementName=tree_Statistics,Path=SelectedItem,Converter={StaticResource ObjectToVisibilityConverter}}"></Label>
+                        <Label Content="{Binding ElementName=tree_Statistics,Path=SelectedItem.Path}" Margin="60,0,0,0" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <Label Grid.Row="1" Content="{Binding ElementName=tree_Statistics,Path=SelectedItem,Converter={StaticResource DiskSizeStatisticsConverter}}"></Label>
+                    </Grid>
+
+                    <StackPanel Grid.Row="2">
+                        <Button Width="88" Height="28" Content="生成统计图表" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Name="btn_Statistics" Click="btn_Statistics_Click"></Button>
+                    </StackPanel>
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="文件类型统计" Style="{StaticResource StyleTabItem}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="60"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Style="{StaticResource ListBoxStyle}" Name="lst_FileAssoc" MouseDoubleClick="lst_FileAssoc_MouseDoubleClick">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3,0,3" Width="{Binding ElementName=lst_FileAssoc,Path=ActualWidth,UpdateSourceTrigger=PropertyChanged}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition Width="65"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding Icon}"
+           Width="38" Height="38" Stretch="UniformToFill" Grid.RowSpan="3" VerticalAlignment="Center"></Image>
+
+                                    <Label Content="文件类型：" FontWeight="Bold" Grid.Column="1"></Label>
+                                    <Label Content="{Binding FriendlyName}" Grid.Column="2" FontWeight="Bold"></Label>
+                                    <Label Content="打开方式：" Grid.Column="1" Grid.Row="1" FontWeight="Bold"></Label>
+                                    <Label Content="{Binding Executable}" Grid.Column="2" Grid.Row="1"></Label>
+
+                                    <Label Content="文件占比：" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold"></Label>
+                                    <controls:PercentageBar Grid.Row="2" Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding PercentageText}" Height="10" MinWidth="200" Width="300" Value="{Binding Percentage}"></controls:PercentageBar>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <DockPanel Grid.Row="1" LastChildFill="False">
+                        <Button Content="&#xf160;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+                                VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+                                ToolTip="按类型个数降序" Name="btn_ExtensionCountDesc" Click="btn_ExtensionCountDesc_Click"></Button>        
+                        <Button Content="&#xf161;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+                                VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+                                ToolTip="按类型个数升序" Name="btn_ExtensionCountAsc" Click="btn_ExtensionCountAsc_Click"></Button>
+                        <Button Content="&#xf0dc;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+                                VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+                                ToolTip="默认排序" Name="btn_ExtensionCountDefault" Click="btn_ExtensionCountDefault_Click"></Button>
+                        <Button Width="108" Height="28" Content="生成文件类型统计" VerticalAlignment="Top" DockPanel.Dock="Right" Style="{StaticResource ButtonStyle}" Name="btn_FileAssoc" Click="btn_FileAssoc_Click"></Button>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="大文件统计" Style="{StaticResource StyleTabItem}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="60"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Style="{StaticResource ListBoxStyle}" Name="lst_BigFile" MouseDoubleClick="lst_BigFile_MouseDoubleClick">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3,0,3" Width="{Binding ElementName=lst_BigFile,Path=ActualWidth,UpdateSourceTrigger=PropertyChanged}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition Width="65"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding Icon}"
+                                    Width="38" Height="38" Stretch="UniformToFill" Grid.RowSpan="3" VerticalAlignment="Center"></Image>
+
+                                    <Label Content="文件类型：" FontWeight="Bold" Grid.Column="1"></Label>
+                                    <Label Content="{Binding FriendlyName}" Grid.Column="2" FontWeight="Bold"></Label>
+                                    <Label Content="文件路径：" Grid.Column="1" Grid.Row="1" FontWeight="Bold"></Label>
+                                    <Label Content="{Binding Path}" Grid.Column="2" Grid.Row="1"></Label>
+
+                                    <Label Content="文件大小：" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold"></Label>
+                                    <Label Content="{Binding Size,Converter={StaticResource DiskSizeToStringConverter}}" Grid.Row="2" Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <DockPanel Grid.Row="1" LastChildFill="False">
+                        <Button Content="&#xf160;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+         VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+         ToolTip="按类型个数降序" Name="btn_BigFileSizeDesc" Click="btn_BigFileSizeDesc_Click"></Button>
+                        <Button Content="&#xf161;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+         VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+         ToolTip="按类型个数升序" Name="btn_BigFileSizeAsc" Click="btn_BigFileSizeAsc_Click"></Button>
+                        <Button Content="&#xf0dc;" Width="30" Height="30" FontSize="20" Margin="3,3,0,0"
+         VerticalAlignment="Top" DockPanel.Dock="Left" FontFamily="{StaticResource FontAwesomeFontFamily}" Style="{StaticResource ButtonStyle}"
+         ToolTip="默认排序" Name="btn_BigFileSizeDefault" Click="btn_BigFileSizeDefault_Click"></Button>
+                               
+                        <Label Content="大于" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"></Label>
+                        <TextBox Width="50" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Margin="0,8,0,0" Text="100" Name="tbox_Size"></TextBox>
+                        <Label Content="MB" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"></Label>
+                        <CheckBox Content="小于" HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Top" Margin="20,8,3,0" Name="cbx_EnableMaxSize"></CheckBox>
+                        <TextBox Width="50" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Margin="0,8,0,0" Text="100" Name="tbox_SizeMax" IsEnabled="{Binding ElementName=cbx_EnableMaxSize,Path=IsChecked}"></TextBox>
+                        <Label Content="MB" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="{Binding ElementName=cbx_EnableMaxSize,Path=IsChecked}" Margin="0,5,0,0"></Label>
+
+                        <Button Width="108" Height="28" Content="生成大文件统计" VerticalAlignment="Top" DockPanel.Dock="Right" Style="{StaticResource ButtonStyle}" Name="btn_BigFile" Click="btn_BigFile_Click"></Button>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

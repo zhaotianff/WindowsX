@@ -1,0 +1,43 @@
+﻿<Page x:Class="WindowsX.Shell.View.Utility.Pages.WorkTimeCountSetting"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WindowsX.Shell.View.Utility.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="WorkTimeCountSetting">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <CheckBox Style="{StaticResource CheckBoxStyle}" Content="启用工作时间统计" VerticalAlignment="Center" Name="cbx_WorkTimeCount" Checked="cbxWorkTimeCount_Checked" Unchecked="cbxWorkTimeCount_Unchecked" Focusable="False"/>
+        </Grid>
+
+        <ListBox Grid.Row="1" Name="list_WorkItems" Background="Transparent" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="50" Width="900" MaxWidth="{Binding ElementName=list_WorkItems,Path=ActualWidth}">
+                        <Label Content="{Binding Title}" FontWeight="Bold" FontSize="18" FontFamily="Arial" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                        <Label Content="{Binding EllapsedTimeString}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="150,0,0,0" FontSize="20" FontFamily="Arial"/>
+                        <Button Content="浏览背景图片" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource ButtonStyle}" Name="btn_BrowseBackgroundImage" Click="btn_BrowseBackgroundImage_Click"></Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Grid.Row="2" IsEnabled="{Binding ElementName=cbx_WorkTimeCount,Path=IsChecked}">
+            <CheckBox Style="{StaticResource CheckBoxStyle}" Grid.Row="1" Content="边缘停靠" HorizontalAlignment="Left" VerticalAlignment="Top" Name="cbx_IsDocking" Checked="cbx_IsDocking_Checked" Unchecked="cbx_IsDocking_Unchecked" Focusable="False" Margin="5,5,0,0"/>
+            <CheckBox Style="{StaticResource CheckBoxStyle}" Grid.Row="1" Content="自动吸附" HorizontalAlignment="Left" VerticalAlignment="Top" Name="cbx_IsAdsorption" Checked="cbx_IsAdsorption_Checked" Unchecked="cbx_IsAdsorption_Unchecked" Focusable="False" Margin="100,5,0,0"/>
+            <Label Content="工作项" HorizontalAlignment="Right" Margin="0,0,708,0" Height="30" VerticalAlignment="Top" VerticalContentAlignment="Center"></Label>
+            <TextBox Name="tbox_NewWorkItem" HorizontalAlignment="Right" Margin="0,0,208,0" Width="500" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center"></TextBox>
+            <Button Content="添加" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,108,0" Style="{StaticResource ButtonStyle}" Name="btn_AddWorkTimeItem" Click="btn_AddWorkTimeItem_Click"></Button>
+            <Button Content="移除" Width="88" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0" Style="{StaticResource ButtonStyle}" Name="btn_RemoveWorkTimeItem" Click="btn_RemoveWorkTimeItem_Click"></Button>
+        </Grid>
+    </Grid>
+</Page>

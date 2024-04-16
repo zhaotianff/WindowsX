@@ -1,0 +1,55 @@
+﻿<blurwindow:BlurWindow x:Class="WindowsX.Shell.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsX.Shell"
+        xmlns:controls="clr-namespace:WindowsX.Shell.Controls"
+        xmlns:blurwindow="clr-namespace:TianXiaTech;assembly=BlurWindow" SizeChanged="BlurWindow_SizeChanged"
+        mc:Ignorable="d"
+        Height="720" Width="1320" WindowStartupLocation="CenterScreen" Closing="BlurWindow_Closing" StateChanged="BlurWindow_StateChanged" MinWidth="800">
+        <!--Title="Silver-Arowana" TitleForeground="Purple" Icon="logo.png"-->
+    <Window.Resources>
+        <Storyboard x:Key="start">
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="(Grid.Width)"
+                             Duration="0:0:0.4" From="100" To="200"/>
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="(Grid.Height)"
+                             Duration="0:0:0.5" From="100" To="200"/>
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="Opacity"
+                             Duration="0:0:0.2" From="0" To="1"/>
+        </Storyboard>
+        <Storyboard x:Key="end">
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="(Grid.Width)"
+                             Duration="0:0:0.5" To="100"/>
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="(Grid.Height)"
+                             Duration="0:0:0.5" To="100"/>
+            <DoubleAnimation Storyboard.TargetName="content" Storyboard.TargetProperty="Opacity"
+                             Duration="0:0:0.5" From="1" To="0"/>
+        </Storyboard>
+    </Window.Resources>
+    <Grid>
+        <Grid Width="720" Height="520"  Name="main" Panel.ZIndex="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="WindowsX" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Foreground="Silver" FontWeight="Bold"/>
+
+            <WrapPanel Grid.Row="1">
+                <controls:ImageButton Title="美化" Subtitle="静态壁纸、动态壁纸、任务栏设置" ImagePath="Icon/desktop.png" Click="btnDesktop_Click"/>
+                <controls:ImageButton Title="系统" Subtitle="开机启动项、后台服务、网络监控" ImagePath="Icon/system.png" Click="btnSystem_Click"/>
+                <controls:ImageButton Title="工具" Subtitle="硬件信息、开机助手、快速启动" ImagePath="Icon/information.png" Click="btnUtility_Click" Visibility="Visible"/>
+                <controls:ImageButton Title="划水" Subtitle="愉快的划水" ImagePath="Icon/huashui.jpg" Visibility="Collapsed"/>
+                <controls:ImageButton Title="设置" Subtitle="软件设置" ImagePath="Icon/setting.png" Click="btnSetting_Click"/>
+                <controls:ImageButton Title="关于" Subtitle="关于本软件" ImagePath="Icon/about.png" Click="btnAbout_Click"/>
+            </WrapPanel>
+        </Grid>
+
+        <Grid Panel.ZIndex="1" Name="content" Margin="0,26.4,0,0">
+            <Frame NavigationUIVisibility="Hidden" BorderBrush="Transparent" Name="frame">
+
+            </Frame>
+        </Grid>
+    </Grid>
+</blurwindow:BlurWindow>
