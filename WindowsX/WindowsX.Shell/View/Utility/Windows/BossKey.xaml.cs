@@ -95,9 +95,9 @@ namespace WindowsX.Shell.View.Utility.Windows
                 {
                     ProcessHelper.Execute(ExecPath);
                 }
-                catch(Exception ex)
+                catch
                 {
-
+                    //log
                 }
             }
         }

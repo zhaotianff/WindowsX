@@ -181,8 +181,8 @@ std::vector<STARTUPITEM> InternalGetStartupItemList(HKEY hKeyStartupKey, HKEY hK
     std::vector<STARTUPITEM> lstStartup;
     TCHAR  achValue[MAX_VALUE_NAME];
     DWORD cchValue = MAX_VALUE_NAME;
-    TCHAR    achKey[MAX_KEY_LENGTH];   
-    DWORD    cbName;                 
+    //TCHAR    achKey[MAX_KEY_LENGTH];   
+    //DWORD    cbName;                 
     TCHAR    achClass[MAX_PATH] = TEXT("");   
     DWORD    cchClassName = MAX_PATH;  
     DWORD    cSubKeys = 0;             

@@ -98,7 +98,7 @@ VOID AutoCode(LPTSTR code)
 
     for (int i = 0; i < nLen; i++)
     {
-        srand(time(NULL));
+        srand((UINT)time(NULL));
         Sleep(rand() % 100);
 
         TCHAR c = code[i];
