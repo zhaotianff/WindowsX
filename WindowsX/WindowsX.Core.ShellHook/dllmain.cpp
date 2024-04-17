@@ -2,7 +2,7 @@
 #include "pch.h"
 #include "shellhook.h"
 
-HMODULE g_hDllModule = NULL;
+extern HMODULE g_hShellHookDllModule;
 ULONG_PTR g_lGdiPlusToken;
 std::unordered_map<DWORD, ShellWindow> g_mapShellWindow;
 BitmapImage* img = NULL;
@@ -95,9 +95,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-        if (NULL == g_hDllModule)
+        if (NULL == g_hShellHookDllModule)
         {
-            g_hDllModule = hModule;
+            g_hShellHookDllModule = hModule;
             DisableThreadLibraryCalls(hModule);
 
             TCHAR szModulePath[MAX_PATH];
@@ -245,7 +245,7 @@ VOID StartHook()
     if (MH_Initialize() != MH_OK)
         return;
 
-    img = new BitmapImage(L"C:\\Users\\xi\\Pictures\\7580ed8def743ae037688c8a0d757aa0.jpg");
+    img = new BitmapImage(L"res\\explorerbg.jpg");
 
     MH_CreateHookEx(&CreateWindowExW, &MyCreateWindowExW, &InitCreateWindowExW);
     MH_CreateHookEx(&DestroyWindow, &MyDestroyWindow, &InitDestroyWindow);

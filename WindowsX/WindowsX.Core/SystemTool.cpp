@@ -517,6 +517,47 @@ BOOL IsProcessIdContainModule(DWORD dwProcessId, LPCTSTR lpszModuleName)
 	return FALSE;
 }
 
+BOOL CreateRemoteThreadInject(DWORD dwProcessId, LPCTSTR lpszModulePath)
+{
+	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwProcessId);
+
+	if (NULL == hProcess)
+		return FALSE;
+
+	SIZE_T dwSize = (1 + lstrlen(lpszModulePath)) * sizeof(TCHAR);
+	LPVOID lpDllAddr = VirtualAllocEx(hProcess, NULL, dwSize, MEM_COMMIT, PAGE_READWRITE);
+
+	if (NULL == lpDllAddr)
+	{
+		CloseHandle(hProcess);
+		return FALSE;
+	}
+
+	BOOL bRet = WriteProcessMemory(hProcess, lpDllAddr, lpszModulePath, dwSize, NULL);
+
+	if (!bRet)
+	{
+		CloseHandle(hProcess);
+		return FALSE;
+	}
+
+	LPVOID lpLoadLibraryFunc = LoadLibraryW;
+
+	HANDLE hRemoteThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)lpLoadLibraryFunc, (LPVOID)lpDllAddr, 0, NULL);
+
+	if (NULL == hRemoteThread)
+	{
+		CloseHandle(hProcess);
+		return FALSE;
+	}
+
+	//WaitForSingleObject(hRemoteThread, INFINITE);
+
+	CloseHandle(hProcess);
+	CloseHandle(hRemoteThread);
+	return TRUE;
+}
+
 
 LPTSTR GetShellPropertyStringFromPath(LPCWSTR pszPath, PROPERTYKEY const& key)
 {

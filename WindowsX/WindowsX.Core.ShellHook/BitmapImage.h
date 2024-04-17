@@ -7,6 +7,7 @@ class BitmapImage
 public:
 	BitmapImage(LPCTSTR szPath);
 	~BitmapImage();
+	std::wstring GetAbsoluteImagePath(LPCTSTR szPath);
 
 	HDC hdc;
 	HBITMAP hBitmap;

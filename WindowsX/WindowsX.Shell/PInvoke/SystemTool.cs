@@ -50,5 +50,14 @@ namespace WindowsX.Shell.PInvoke
 
         [DllImport("WindowsXCore.dll")]
         public static extern bool GetUserProfilePicturePath(IntPtr buf, uint nSize);
+
+        [DllImport("WindowsXCore.dll")]
+        public static extern bool CreateRemoteThreadInject(uint dwProcessId, [MarshalAs(UnmanagedType.LPWStr)]string lpszModulePath);
+
+        [DllImport("WindowsXCore.dll")]
+        public static extern bool IsProcessContainModule([MarshalAs(UnmanagedType.LPWStr)]string lpszProcessName, [MarshalAs(UnmanagedType.LPWStr)] string lpszModuleName);
+
+        [DllImport("WindowsXCore.dll")]
+        public static extern bool IsProcessIdContainModule(uint dwProcessId, [MarshalAs(UnmanagedType.LPWStr)]string lpszModuleName);
     }
 }

@@ -61,6 +61,16 @@ namespace WindowsX.Shell.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap explorerbg {
+            get {
+                object obj = ResourceManager.GetObject("explorerbg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 ms-settings:workplace
         ///ms-settings:workplace
         ///访问工作单位或学校

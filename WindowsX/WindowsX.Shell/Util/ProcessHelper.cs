@@ -9,6 +9,8 @@ namespace WindowsX.Shell.Util
 {
     public class ProcessHelper
     {
+        public static readonly int INVALID_PROCESS_ID = -1;
+
         public static void OpenUrl(string url)
         {
             var processStartInfo = new ProcessStartInfo(url) { UseShellExecute = true, Verb = "open" };
@@ -84,6 +86,21 @@ namespace WindowsX.Shell.Util
                     process.Kill();
                 }
             }
+        }
+
+        public static int GetProcessId(string processName)
+        {
+            var findProcess = Process.GetProcesses().FirstOrDefault(x => x.ProcessName.ToUpper() == processName.ToUpper());
+            if (findProcess != null)
+                return findProcess.Id;
+
+            return INVALID_PROCESS_ID;
+        }
+
+        public static int GetExplorerProcessId()
+        {
+            var explorerProcessName = "explorer";
+            return GetProcessId(explorerProcessName);
         }
     }
 }

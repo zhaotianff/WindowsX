@@ -18,7 +18,8 @@
                         <RowDefinition Height="60"/>
                     </Grid.RowDefinitions>
 
-                    <CheckBox Grid.Row="0" Content="启用背景设置" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}" Name="cbx_EnableBackground"></CheckBox>
+                    <CheckBox Grid.Row="0" Content="启用背景设置" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}" Name="cbx_EnableBackground"
+                              Checked="cbx_EnableBackground_Checked" Unchecked="cbx_EnableBackground_Unchecked"></CheckBox>
                     <GroupBox Header="预览" Grid.Row="1" Style="{StaticResource GroupBoxStyle}" IsEnabled="{Binding ElementName=cbx_EnableBackground,Path=IsChecked}">
                         <Grid Width="900" Height="498">
                             <Image Name="img_bg" Margin="128,60,0,0" Width="878" Height="438" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="{Binding ElementName=slider_Opacity,Path=Value,UpdateSourceTrigger=PropertyChanged}"/>
@@ -40,8 +41,8 @@
                             <ComboBoxItem>拉伸</ComboBoxItem>-->
                         </ComboBox>
                         <Button Content="浏览" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="330,3,0,0" Click="btnBrowseBgImage_Click"/>
-                        <Button Content="应用" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,105,0"/>
-                        <Button Content="恢复默认" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,5,0"/>
+                        <Button Content="应用" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,105,0" Click="btnApplyBgImage_Click"/>
+                        <Button Content="恢复默认" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Width="88" Height="23" Margin="0,3,5,0" Click="btnResetBgImage_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>

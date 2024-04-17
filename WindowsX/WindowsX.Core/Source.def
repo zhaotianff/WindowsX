@@ -65,6 +65,9 @@ CloseCustomStart
 RegisterBossKeyHotKey
 UnRegisterBossKeyHotKey
 GetUserProfilePicturePath
+IsProcessContainModule
+IsProcessIdContainModule
+CreateRemoteThreadInject
 
 ;startuptool.h
 IsExistStartupRun

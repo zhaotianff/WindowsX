@@ -29,5 +29,11 @@ namespace WindowsXCoreTests
 
 			Assert::IsTrue(bRet);
 		}
+
+		TEST_METHOD(TestCreateRemoteThreadInject)
+		{
+			BOOL bRet = CreateRemoteThreadInject(28664, L"E:\\project\\github\\WindowsX\\WindowsX\\x64\\Debug\\net6.0-windows\\WindowsXCoreShellHook.dll");
+			Assert::IsTrue(bRet);
+		}
 	};
 }

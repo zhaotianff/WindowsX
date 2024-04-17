@@ -63,6 +63,7 @@
     <None Remove="Icon\Weather\snow_storm.png" />
     <None Remove="Icon\Weather\storm.png" />
     <None Remove="Icon\Weather\sun.png" />
+    <None Remove="Icon\white.png" />
     <None Remove="Icon\windows10_blur_taskbar.png" />
     <None Remove="Icon\windows10_taskbar.png" />
     <None Remove="Icon\windows10_transparent_taskbar.png" />
@@ -115,6 +116,7 @@
     <Resource Include="Icon\Weather\snow_storm.png" />
     <Resource Include="Icon\Weather\storm.png" />
     <Resource Include="Icon\Weather\sun.png" />
+    <Resource Include="Icon\white.png" />
     <Resource Include="Icon\windows10_blur_taskbar.png" />
     <Resource Include="Icon\windows10_transparent_taskbar.png" />
     <Resource Include="logo.ico" />

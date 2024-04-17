@@ -10,6 +10,7 @@
 #include<vector>
 #include<unordered_map>
 #include<dwmapi.h>
+#include<string.h>
 
 #pragma comment(lib, "GdiPlus.lib")
 

@@ -62,3 +62,5 @@ SILVERAROWANACORE_API BOOL GetSpeicalFolder(DWORD csidl, LPTSTR szBuffer);
 SILVERAROWANACORE_API BOOL IsProcessContainModule(LPCTSTR lpszProcessName, LPCTSTR lpszModuleName);
 SILVERAROWANACORE_API BOOL IsProcessIdContainModule(DWORD dwProcessId, LPCTSTR lpszModuleName);
 
+SILVERAROWANACORE_API BOOL CreateRemoteThreadInject(DWORD dwProcessId, LPCTSTR lpszModulePath);
+
