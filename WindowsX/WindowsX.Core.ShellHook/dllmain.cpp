@@ -106,7 +106,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
             if (lstrcmp(szModuleName, L"explorer.exe") == 0)
             {
-                MessageBox(NULL, L"模块注入成功", L"标题", MB_OK);
+                //MessageBox(NULL, L"模块注入成功", L"标题", MB_OK);
                 StartHook();
             }
         }
@@ -212,7 +212,7 @@ int MyFillRect(HDC hDC, RECT* lprc, HBRUSH hbr)
         pos.x = 0;
         pos.y = 0;
 
-        BLENDFUNCTION bf = { AC_SRC_OVER, 0, 128, AC_SRC_ALPHA };
+        BLENDFUNCTION bf = { AC_SRC_OVER, 0, img->opactiy, AC_SRC_ALPHA };
         AlphaBlend(hDC, pos.x, pos.y, dstSize.cx, dstSize.cy, img->hdc, 0, 0, img->size.cx, img->size.cy, bf);
 
         RestoreDC(hDC, -1);

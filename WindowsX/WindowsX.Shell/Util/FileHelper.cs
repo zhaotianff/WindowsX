@@ -70,7 +70,7 @@ namespace WindowsX.Shell.Util
             return new Tuple<long, long>(dirCount, fileCount);
         }
 
-        public static void CopyFileToCurrentExecutablePath(string srcFileName,string destDir)
+        public static string CopyFileToCurrentExecutablePath(string srcFileName,string destDir)
         {
             destDir = Path.Combine(Environment.CurrentDirectory, destDir);
 
@@ -79,6 +79,7 @@ namespace WindowsX.Shell.Util
 
             var destFileName = Path.Combine(destDir, "explorerbg.jpg");
             File.Copy(srcFileName, destFileName,true);
+            return destFileName;
         }
     }
 }

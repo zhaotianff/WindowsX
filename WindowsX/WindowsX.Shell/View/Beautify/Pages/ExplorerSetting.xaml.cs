@@ -57,7 +57,7 @@ namespace WindowsX.Shell.View.Beautify.Pages
 
         private void btnBrowseBgImage_Click(object sender, RoutedEventArgs e)
         {
-            var imgPath = DialogHelper.BrowserSingleFile("图片文件|*.jpg;*.png;*.bmp;*.jpeg", "浏览背景图片", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
+            var imgPath = DialogHelper.BrowserSingleFile("图片文件|*.jpg;*.jpeg", "浏览背景图片", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
 
             if (!string.IsNullOrEmpty(imgPath))
             {
@@ -73,7 +73,8 @@ namespace WindowsX.Shell.View.Beautify.Pages
 
             if(!string.IsNullOrEmpty(currentSelectedImagePath))
             {
-                FileHelper.CopyFileToCurrentExecutablePath(currentSelectedImagePath, "res");
+                var destFileName = FileHelper.CopyFileToCurrentExecutablePath(currentSelectedImagePath, "res");
+                WriteImageInfoToFile(destFileName, slider_Opacity.Value, this.combox_StretchMode.SelectedIndex);
                 currentSelectedImagePath = "";
             }    
 
@@ -84,12 +85,35 @@ namespace WindowsX.Shell.View.Beautify.Pages
                 ProcessHelper.Execute("explorer.exe");
         }
 
+        private void WriteImageInfoToFile(string filePath,double opacity,int stretch)
+        {
+            double opacityRatio = 0.003921568627451d;
+            int nOpacity = (int)(opacity / opacityRatio);
+
+            var buffer = System.IO.File.ReadAllBytes(filePath);
+
+            if (buffer[0] == 0xFF && buffer[1] == 0xD8)
+            {
+                var newBuffer = new byte[buffer.Length + 5];
+                Array.Copy(buffer, 0, newBuffer, 0, 2);
+                newBuffer[2] = 0xFF;
+                newBuffer[3] = 0x00;
+                newBuffer[4] = 0x02;
+                newBuffer[5] = (byte)nOpacity;
+                newBuffer[6] = (byte)stretch;
+                Array.Copy(buffer, 2, newBuffer, 7, buffer.Length - 2);
+                System.IO.File.WriteAllBytes(filePath, newBuffer);
+            }  
+        }
+
         private void btnResetBgImage_Click(object sender, RoutedEventArgs e)
         {
             if(MessageBox.Show("恢复默认时会关闭所有资源管理器窗口，是否确认？","提示信息",MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 DesktopTool.RestartExplorer();
                 LoadDefaultExplorerBg();
+                isPatched = false;
+                cbx_EnableBackground.IsChecked = false;
             }
         }
 

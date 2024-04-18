@@ -11,6 +11,7 @@
 #include<unordered_map>
 #include<dwmapi.h>
 #include<string.h>
+#include<tuple>
 
 #pragma comment(lib, "GdiPlus.lib")
 

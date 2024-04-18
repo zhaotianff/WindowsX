@@ -9,8 +9,27 @@ BitmapImage::BitmapImage(LPCTSTR szPath)
 	hBitmap = NULL;
 	memset(&size, 0, sizeof(size));
 	bitmap = NULL;
-	
+	opactiy = 255;
+	stretchMode = 0;
+
 	std::wstring strAbsolutePath = GetAbsoluteImagePath(szPath);
+
+	FILE* fp = NULL;
+	_wfopen_s(&fp, strAbsolutePath.data(), L"rb");
+	if (fp)
+	{
+		fseek(fp, 2, 0);
+		BYTE* readBuffer = new BYTE[5];
+		fread(readBuffer, 1, 5, fp);
+
+		if (readBuffer[0] == 0xFF && readBuffer[2] == 0x02)
+		{
+			opactiy = readBuffer[3];
+			stretchMode = (int)readBuffer[4];
+		}
+		delete[] readBuffer;
+	}
+
 	bitmap = new Gdiplus::Bitmap(strAbsolutePath.data());
 
 	if (bitmap)
@@ -45,7 +64,5 @@ std::wstring BitmapImage::GetAbsoluteImagePath(LPCTSTR szPath)
 	size_t index = str.find_last_of('\\');
 	str = str.substr(0, index + 1);
 	str += szPath;
-
-	//MessageBox(NULL, str.data(), L"", MB_OK);
 	return str;
 }

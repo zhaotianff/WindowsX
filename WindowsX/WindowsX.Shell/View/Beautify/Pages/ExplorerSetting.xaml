@@ -31,7 +31,7 @@
                         <Label Content="透明度" HorizontalAlignment="Left" ></Label>
                         <Slider Name="slider_Opacity" Minimum="0" TickFrequency="0.01" Value="1" Maximum="1" Margin="50,5,0,0" HorizontalAlignment="Left" Width="100" Style="{StaticResource SliderStyle}"></Slider>
                         <Label Content="选择契合度" HorizontalAlignment="Left" Margin="160,0,0,0"></Label>
-                        <ComboBox Width="80" HorizontalAlignment="Left" Margin="230,3,0,0" VerticalAlignment="Top" SelectedIndex="0">
+                        <ComboBox Width="80" HorizontalAlignment="Left" Margin="230,3,0,0" VerticalAlignment="Top" SelectedIndex="0" Name="combox_StretchMode">
                             <ComboBoxItem>左上角</ComboBoxItem>
                             <!--<ComboBoxItem>右上角</ComboBoxItem>
                             <ComboBoxItem>左下角</ComboBoxItem>

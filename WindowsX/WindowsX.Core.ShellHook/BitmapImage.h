@@ -13,4 +13,6 @@ public:
 	HBITMAP hBitmap;
 	SIZE size;
 	Gdiplus::Bitmap* bitmap;
+	BYTE opactiy;
+	int stretchMode;
 };
