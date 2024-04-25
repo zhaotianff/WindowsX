@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WindowsX.Shell.PInvoke;
+using System.Threading.Tasks;
 
 namespace WindowsX.Shell.View.Beautify.Pages
 {
@@ -66,7 +67,7 @@ namespace WindowsX.Shell.View.Beautify.Pages
             }
         }
 
-        private void btnApplyBgImage_Click(object sender, RoutedEventArgs e)
+        private async void btnApplyBgImage_Click(object sender, RoutedEventArgs e)
         {
             if (isPatched == true)
             {
@@ -76,7 +77,8 @@ namespace WindowsX.Shell.View.Beautify.Pages
                 }
                 else
                 {
-                    btnResetBgImage_Click(null, null);
+                    ResetImage(true);
+                    await Task.Delay(500);
                 }
             }
 
@@ -123,13 +125,22 @@ namespace WindowsX.Shell.View.Beautify.Pages
 
         private void btnResetBgImage_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("恢复默认时会关闭所有资源管理器窗口，是否确认？","提示信息",MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("恢复默认时会关闭所有资源管理器窗口，是否确认？", "提示信息", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                DesktopTool.RestartExplorer();
+                ResetImage(false);
+            }
+        }
+
+        private void ResetImage(bool isKeepState)
+        {
+            DesktopTool.RestartExplorer();
+            
+            if (isKeepState == false)
+            {
                 LoadDefaultExplorerBg();
                 isPatched = false;
                 cbx_EnableBackground.IsChecked = false;
-            }
+            }         
         }
 
         private void LoadDefaultExplorerBg()
