@@ -69,20 +69,35 @@ namespace WindowsX.Shell.View.Beautify.Pages
         private void btnApplyBgImage_Click(object sender, RoutedEventArgs e)
         {
             if (isPatched == true)
-                return;
+            {
+                if (string.IsNullOrEmpty(currentSelectedImagePath))
+                {
+                    return;
+                }
+                else
+                {
+                    btnResetBgImage_Click(null, null);
+                }
+            }
 
-            if(!string.IsNullOrEmpty(currentSelectedImagePath))
+            CopyImageFileToLocalAndReset();
+
+            var pid = ProcessHelper.GetExplorerProcessId();
+            var result = SystemTool.CreateRemoteThreadInject((uint)pid, ShellHookLibraryPath);
+            isPatched = result;
+
+            if (result)
+                ProcessHelper.Execute("explorer.exe");
+        }
+
+        private void CopyImageFileToLocalAndReset()
+        {
+            if (!string.IsNullOrEmpty(currentSelectedImagePath))
             {
                 var destFileName = FileHelper.CopyFileToCurrentExecutablePath(currentSelectedImagePath, "res");
                 WriteImageInfoToFile(destFileName, slider_Opacity.Value, this.combox_StretchMode.SelectedIndex);
                 currentSelectedImagePath = "";
-            }    
-
-            var pid = ProcessHelper.GetExplorerProcessId();
-            var result = SystemTool.CreateRemoteThreadInject((uint)pid, ShellHookLibraryPath);
-
-            if (result)
-                ProcessHelper.Execute("explorer.exe");
+            }
         }
 
         private void WriteImageInfoToFile(string filePath,double opacity,int stretch)

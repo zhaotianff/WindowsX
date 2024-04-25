@@ -107,3 +107,6 @@ ShowRunDialog
 
 ;apptool.h
 GetAppPath
+
+;Mailslot.h
+WriteToMailslot

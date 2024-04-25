@@ -1,6 +1,7 @@
 ﻿// dllmain.cpp : 定义 DLL 应用程序的入口点。
 #include "pch.h"
 #include "shellhook.h"
+#include"logger.h"
 
 #define SHELLHOOK_MAILSLOT_NAME L"\\\\.\\mailslot\\shellhook_slot"
 
@@ -9,6 +10,7 @@ ULONG_PTR g_lGdiPlusToken;
 std::unordered_map<DWORD, ShellWindow> g_mapShellWindow;
 BitmapImage* img = NULL;
 BOOL g_bMonitor = TRUE;
+shellhook::logger* logger = nullptr;
 
 const HINSTANCE hModule = LoadLibrary(TEXT("user32.dll"));
 
@@ -89,8 +91,6 @@ HDC MyBeginPaint(HWND hWnd, LPPAINTSTRUCT lpPaint);
 int MyFillRect(HDC hDC, RECT* lprc, HBRUSH hbr);
 HDC MyCreateCompatibleDC(HDC hdc);
 VOID StartHook();
-VOID StartReceiveMessage();
-DWORD WINAPI ReceiveMessage(LPVOID);
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -113,7 +113,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             {
                 //MessageBox(NULL, L"模块注入成功", L"标题", MB_OK);
                 StartHook();
-                StartReceiveMessage();
             }
         }
         break;
@@ -124,6 +123,11 @@ BOOL APIENTRY DllMain( HMODULE hModule,
         if (nullptr != img)
         {
             delete img;
+        }
+
+        if (nullptr != logger)
+        {
+            delete logger;
         }
 
         g_mapShellWindow.clear();
@@ -252,6 +256,11 @@ VOID StartHook()
     if (MH_Initialize() != MH_OK)
         return;
 
+    logger = new shellhook::logger();
+    logger->SetEnable(true);
+    logger->SetLogFilePath("D:\\shellhook.log");
+    logger->WriteLog("start hook......");
+
     img = new BitmapImage(L"res\\explorerbg.jpg");
 
     MH_CreateHookEx(&CreateWindowExW, &MyCreateWindowExW, &InitCreateWindowExW);
@@ -261,95 +270,6 @@ VOID StartHook()
     MH_CreateHookEx(&CreateCompatibleDC, &MyCreateCompatibleDC, &InitCreateCompatibleDC);
 
     MH_EnableHook(MH_ALL_HOOKS);
-}
-
-VOID StartReceiveMessage()
-{
-    CreateThread(NULL, 0, ReceiveMessage, NULL, 0, NULL);
-}
-
-DWORD ReceiveMessage(LPVOID lpData)
-{
-    DWORD cbMessage, cMessage, cbRead;
-    BOOL bResult;
-    LPTSTR lpszBuffer;
-    HANDLE hEvent = NULL;
-    OVERLAPPED ov;
-
-    while (g_bMonitor)
-    {
-        HANDLE hSlot = CreateMailslot(SHELLHOOK_MAILSLOT_NAME,
-            0,
-            MAILSLOT_WAIT_FOREVER,
-            NULL);
-
-        if (hSlot == INVALID_HANDLE_VALUE)
-        {
-            break;
-        }
-
-        cbMessage = cMessage = cbRead = 0;
-
-        hEvent = CreateEvent(NULL, FALSE, FALSE, L"ShellHookSlotEvent");
-        if (hEvent == NULL)
-            return FALSE;
-
-        ov.Offset = 0;
-        ov.OffsetHigh = 0;
-        ov.hEvent = hEvent;
-
-        if (hSlot == NULL)
-            return FALSE;
-
-        bResult = GetMailslotInfo(hSlot,     
-            NULL,                            
-            &cbMessage,                      
-            &cMessage,                       
-            NULL);                           
-
-        if (!bResult)
-        {
-            break;
-        }
-
-        if (cbMessage == MAILSLOT_NO_MESSAGE)
-        {
-            break;
-        }
-
-        while (cMessage != 0)
-        {
-            lpszBuffer = (LPTSTR)GlobalAlloc(GPTR, cbMessage);
-
-            if (NULL == lpszBuffer)
-                return FALSE;
-
-            lpszBuffer[0] = '\0';
-
-            bResult = ReadFile(hSlot, lpszBuffer, cbMessage, &cbRead, &ov);
-
-            if (!bResult)
-            {
-               
-                GlobalFree((HGLOBAL)lpszBuffer);
-                CloseHandle(hEvent);
-                break;
-            }
-
-            GlobalFree((HGLOBAL)lpszBuffer);
-
-            bResult = GetMailslotInfo(hSlot, NULL, &cbMessage, &cMessage, NULL);
-
-            if (!bResult)
-            {
-                CloseHandle(hEvent);
-                break;
-            }
-        }
-
-        CloseHandle(hEvent);
-        return TRUE;
-    }
 }
 
 

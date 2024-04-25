@@ -57,6 +57,9 @@
     <ClInclude Include="StringHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Mailslot.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -93,6 +96,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="StringHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Mailslot.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
