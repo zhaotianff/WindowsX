@@ -86,8 +86,7 @@ namespace WindowsX.Shell.StartMenu.Win98
             //Find
             Win98StartMenuItem findItem = new Win98StartMenuItem();
             findItem.Name = "查找";
-            //TODO win+q
-            findItem.Exec = "";
+            findItem.Handler = Search;
             findItem.FilePathIcon = "./Icon/find.png";
             list.Add(findItem);
 

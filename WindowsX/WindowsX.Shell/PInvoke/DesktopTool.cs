@@ -174,5 +174,8 @@ namespace WindowsX.Shell.PInvoke
 
         [DllImport("WindowsXCore.dll")]
         public static extern void OpenRunDialog([MarshalAs(UnmanagedType.LPWStr)]string command);
+
+        [DllImport("WindowsXCore.dll")]
+        public static extern void OpenSearchWindow([MarshalAs(UnmanagedType.LPWStr)] string inputs);
     }
 }

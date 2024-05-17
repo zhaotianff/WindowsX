@@ -146,5 +146,10 @@ namespace WindowsX.Shell.StartMenu
         {
             PowerTool.SleepComputer();
         }
+
+        public void Search(object sender,RoutedEventArgs e)
+        {
+            DesktopTool.OpenSearchWindow("");
+        }
     }
 }

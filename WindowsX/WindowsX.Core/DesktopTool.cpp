@@ -231,6 +231,11 @@ VOID OpenRunDialog(LPTSTR command)
 	}
 }
 
+VOID OpenSearchWindow(LPCTSTR inputs)
+{
+	SendMultiAsciiInput(2, VK_LWIN, 'Q');	
+}
+
 BOOL CloseEmbedWindow()
 {
 	if (hEmbedHwnd)
