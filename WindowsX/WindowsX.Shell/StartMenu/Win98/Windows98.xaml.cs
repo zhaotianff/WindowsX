@@ -198,6 +198,13 @@ namespace WindowsX.Shell.StartMenu.Win98
             if(menuItem.Name == "程序")
             {
                 item.MouseEnter += (a, b) => { item.IsSubmenuOpen = true; };
+
+                item.PreviewMouseDown += async (sender, e) =>
+                {
+                    await Task.Delay(10);
+                    item.IsSubmenuOpen = true;
+
+                };
             }
 
             return item;

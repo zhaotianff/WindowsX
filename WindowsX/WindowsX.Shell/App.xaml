@@ -40,6 +40,7 @@
                 <ResourceDictionary Source="Styles/ImageStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TabControlStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TreeViewStyle.xaml"/>
+                <ResourceDictionary Source="Styles/MenuStyle.xaml"/>
 
                 <!--Resources-->
                 <ResourceDictionary Source="Resources/ContextMenu/NotifyIconContextMenu.xaml"/>
