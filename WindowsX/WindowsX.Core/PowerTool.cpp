@@ -26,8 +26,8 @@ VOID SwitchUser()
 
 VOID LockComputer()
 {
-    SendMultiAsciiInput(2, VK_LWIN, 'L');
-    //LockWorkStation();
+    //SendMultiAsciiInput(2, VK_LWIN, 'L');
+    LockWorkStation();
 }
 
 VOID RestartComputer()

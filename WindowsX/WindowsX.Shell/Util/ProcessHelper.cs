@@ -17,6 +17,12 @@ namespace WindowsX.Shell.Util
             System.Diagnostics.Process.Start(processStartInfo);
         }
 
+        public static void OpenWindowsHelp()
+        {
+            var url = "https://go.microsoft.com/fwlink/?LinkId=528884";
+            OpenUrl(url);
+        }
+
         public static Process Execute(string path,bool useShellExecute = true)
         {
             return ExecuteInternal(path, null, useShellExecute);

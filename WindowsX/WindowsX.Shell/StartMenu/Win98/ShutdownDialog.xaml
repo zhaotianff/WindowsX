@@ -1,0 +1,64 @@
+﻿<Window x:Class="WindowsX.Shell.StartMenu.Win98.ShutdownDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsX.Shell.StartMenu.Win98"
+        mc:Ignorable="d"
+        Title="ShutdownDialog" Height="450" Width="800" WindowStyle="None" AllowsTransparency="True" WindowState="Maximized">
+    <Window.Background>
+        <SolidColorBrush Color="Black" Opacity=".15"></SolidColorBrush>
+    </Window.Background>
+    <Grid>
+        <Border Width="374" Height="217" BorderThickness="1,1,0,0" BorderBrush="{DynamicResource WhiteColor}" Panel.ZIndex="1"></Border>
+        <Border Width="374" Height="217" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource BlackColor}" Panel.ZIndex="1"></Border>
+        <Grid Width="372" Height="215" Background="{DynamicResource ActiveBorder}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0.5,0.5">
+                        <GradientStop Color="#0e77c8" Offset="0.659"/>
+                        <GradientStop Color="#0e77c8" Offset="1"/>
+                        <GradientStop Color="#042797" Offset="0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Label Foreground="{DynamicResource WhiteColor}" Content="关闭 Windows" VerticalAlignment="Center" FontFamily="宋体"></Label>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="78"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Image Source="Icon/shutdown.png" Width="37" Height="37" VerticalAlignment="Top" Margin="0,20,0,0"></Image>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="38"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="43"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="确实要:" VerticalAlignment="Center" FontFamily="宋体"></Label>
+                    <StackPanel Grid.Row="1" Name="stack_Shutdown">
+                        <RadioButton Content="将您的计算机转入睡眠状态" IsChecked="True" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,6" FontFamily="宋体" GroupName="shutdown" Checked="shutdownType_Checked"></RadioButton>
+                        <RadioButton Content="关闭计算机"  VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,6" FontFamily="宋体" GroupName="shutdown" Checked="shutdownType_Checked"></RadioButton>
+                        <RadioButton Content="重新启动计算机"  VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,6" FontFamily="宋体" GroupName="shutdown" Checked="shutdownType_Checked"></RadioButton>
+                        <RadioButton Content="锁定计算机"  VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,6" FontFamily="宋体" GroupName="shutdown" Checked="shutdownType_Checked"></RadioButton>
+                    </StackPanel>
+
+                    <DockPanel Grid.Row="2" LastChildFill="False">
+                        <Button Width="85" Height="22" Content="是" Style="{DynamicResource Windows98ButtonStyle}" Margin="5,0,0,0" FontFamily="宋体" IsDefault="True" Click="btnConfirm_Click"></Button>
+                        <Button Width="85" Height="22" Content="否" Style="{DynamicResource Windows98ButtonStyle}" Margin="10,0,0,0" FontFamily="宋体" IsCancel="True" Click="btnCancel_Click"></Button>
+                        <Button Width="85" Height="22" Content="帮助" Style="{DynamicResource Windows98ButtonStyle}" Margin="10,0,0,0" FontFamily="宋体" Click="btnHelp_Click"></Button>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

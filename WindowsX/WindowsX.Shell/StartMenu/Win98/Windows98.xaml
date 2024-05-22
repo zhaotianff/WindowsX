@@ -45,31 +45,38 @@
     </start:StartMenuWindowBase.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        <Border Margin="-3,-3,0,0" BorderThickness="2,2,0,0" BorderBrush="White" Panel.ZIndex="1"></Border>
+        <Border Margin="0,0,-3,-3" BorderThickness="0,0,1,1" BorderBrush="#808080" Panel.ZIndex="1"></Border>
+        <Grid>
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="3" Opacity=".8" ShadowDepth="3"></DropShadowEffect>
+            </Grid.Effect>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Name="grid_title">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF0000BF" Offset="0.659"/>
-                    <GradientStop Color="Blue" Offset="1"/>
-                    <GradientStop Color="#FF00007F" Offset="0"/>
-                </LinearGradientBrush>
-            </Grid.Background>
+            <Grid Grid.Column="0" Name="grid_title">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF0000BF" Offset="0.659"/>
+                        <GradientStop Color="Blue" Offset="1"/>
+                        <GradientStop Color="#FF00007F" Offset="0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
 
-            <Label VerticalAlignment="Bottom" VerticalContentAlignment="Center" Foreground="White" Content="Windows 98" Height="40" FontSize="25" Margin="-6,0,-124,-42">
-                <Label.RenderTransform>
-                    <RotateTransform Angle="-90" />
-                </Label.RenderTransform>
-            </Label>
+                <Label VerticalAlignment="Bottom" VerticalContentAlignment="Center" Foreground="White" Content="Windows 98" Height="40" FontSize="25" Margin="-6,0,-124,-42">
+                    <Label.RenderTransform>
+                        <RotateTransform Angle="-90" />
+                    </Label.RenderTransform>
+                </Label>
 
-        </Grid>
+            </Grid>
 
-        <Grid Grid.Column="1" Name="grid_menu">
-            <Menu Name="menu" Background="{DynamicResource ActiveBorder}">
-            </Menu>
+            <Grid Grid.Column="1" Name="grid_menu">
+                <Menu Name="menu" Background="{DynamicResource ActiveBorder}">
+                </Menu>
+            </Grid>
         </Grid>
     </Grid>
 </start:StartMenuWindowBase>

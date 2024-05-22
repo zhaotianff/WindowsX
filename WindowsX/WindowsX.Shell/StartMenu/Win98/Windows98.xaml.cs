@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using WindowsX.Shell.Util;
 using System.Linq;
 using WindowsX.Shell.StartMenu.Data;
+using WindowsX.Shell.PInvoke;
 
 namespace WindowsX.Shell.StartMenu.Win98
 {
@@ -116,7 +117,7 @@ namespace WindowsX.Shell.StartMenu.Win98
 
             //Shutdown
             Win98StartMenuItem shutdownItem = new Win98StartMenuItem();
-            shutdownItem.Name = "关机";
+            shutdownItem.Name = "关闭系统";
             shutdownItem.Handler = ShowShutDownDialog;
             shutdownItem.FilePathIcon = "./Icon/shutdown.png";
             list.Add(shutdownItem);
@@ -247,6 +248,32 @@ namespace WindowsX.Shell.StartMenu.Win98
         private void StartMenuWindowBase_LostFocus(object sender, RoutedEventArgs e)
         {
             //StartMenuManager.HideStartMenu();
+        }
+
+        public override void ShowShutDownDialog(object sender, RoutedEventArgs e)
+        {
+            ShutdownDialog shutdownDialog = new ShutdownDialog();
+            if(shutdownDialog.ShowDialog() == true)
+            {
+                switch (shutdownDialog.ShutdownType)
+                {
+                    case Windows98ShutdownType.Help:
+                        ProcessHelper.OpenWindowsHelp();
+                        break;
+                    case Windows98ShutdownType.Lock:
+                        PowerTool.LockComputer();
+                        break;
+                    case Windows98ShutdownType.Restart:
+                        PowerTool.RestartComputer();
+                        break;
+                    case Windows98ShutdownType.Shutdown:
+                        PowerTool.ShutdownComputer();
+                        break;
+                    case Windows98ShutdownType.Sleep:
+                        PowerTool.SleepComputer();
+                        break;
+                }
+            }
         }
     }
 }

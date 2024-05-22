@@ -107,7 +107,7 @@ namespace WindowsX.Shell.StartMenu
             PowerTool.ShutdownComputer();
         }
 
-        public void ShowShutDownDialog(object sender,RoutedEventArgs e)
+        public virtual void ShowShutDownDialog(object sender,RoutedEventArgs e)
         {
             PowerTool.ShowShutDownDialog();
         }
