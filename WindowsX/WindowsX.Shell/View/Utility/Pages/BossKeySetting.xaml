@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <Label Content="老板键(Ctrl + I 或 Alt + Q)(从明天起，做一个幸福的人)" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" Foreground="{DynamicResource AccentBaseColor}" ToolTip="临时快捷键"/>
+                <Label Content="老板键" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" Foreground="{DynamicResource AccentBaseColor}" ToolTip="临时快捷键"/>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -79,8 +79,8 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Border CornerRadius="5" Grid.RowSpan="2" BorderBrush="{DynamicResource BlackColor}" BorderThickness="1"></Border>
-                <RadioButton Content="帮我写代码(该选项仅支持Ctrl + I)" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_AutoCoding" Checked="cbx_AutoCoding_Checked" Style="{StaticResource RadioButtonStyle}" />
-                <GroupBox Header="指定源码" Grid.Row="1" Margin="0,5,0,20" IsEnabled="{Binding ElementName=cbx_AutoCoding,Path=IsChecked}" BorderThickness="0">
+                <RadioButton Content="屏幕模拟输入(该选项仅支持Ctrl + I)" HorizontalAlignment="Left" VerticalAlignment="Center" GroupName="bosskey" Name="cbx_AutoCoding" Checked="cbx_AutoCoding_Checked" Style="{StaticResource RadioButtonStyle}" />
+                <GroupBox Header="指定文本" Grid.Row="1" Margin="0,5,0,20" IsEnabled="{Binding ElementName=cbx_AutoCoding,Path=IsChecked}" BorderThickness="0">
                     <Grid>
                         <RichTextBox  Name="rtbox" Background="Transparent" MinHeight="80" LostFocus="rtbox_LostFocus" KeyUp="rtbox_KeyUp"/>
                     </Grid>
