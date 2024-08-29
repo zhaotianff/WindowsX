@@ -85,6 +85,7 @@ namespace WindowsX.Shell.View.Beautify.Pages
             CopyImageFileToLocalAndReset();
 
             DesktopTool.RestartExplorer();
+            await Task.Delay(1000);
 
             var pid = ProcessHelper.GetExplorerProcessId();
             var result = SystemTool.CreateRemoteThreadInject((uint)pid, ShellHookLibraryPath);
