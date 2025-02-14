@@ -298,6 +298,7 @@ BOOL HookStart(HWND hwnd)
 	if (hStart)
 	{
 		ShowWindow(hStart, SW_HIDE);
+		RegisterStartRawInput(hwnd);
 	}
 
 	g_hHookKb = SetWindowsHookEx(WH_KEYBOARD_LL, KbLLProc, g_hDllModule, 0);
@@ -369,8 +370,29 @@ VOID CloseCustomStart()
 {
 	if (hStartMenuWindow)
 	{
+		UnRegisterStartRawInput(hStartMenuWindow);
 		SendMessage(hStartMenuWindow, WM_CLOSE, NULL, NULL);
 	}
+}
+
+VOID RegisterStartRawInput(HWND hwnd)
+{
+	RAWINPUTDEVICE rawInputDevice{};
+	rawInputDevice.usUsagePage = 0x01;
+	rawInputDevice.usUsage = 0x02;
+	rawInputDevice.dwFlags = RIDEV_INPUTSINK;
+	rawInputDevice.hwndTarget = hwnd;
+    RegisterRawInputDevices(&rawInputDevice, 1, sizeof(rawInputDevice));
+}
+
+VOID UnRegisterStartRawInput(HWND hwnd)
+{
+	RAWINPUTDEVICE rawInputDevice{};
+	rawInputDevice.usUsagePage = 0x01;
+	rawInputDevice.usUsage = 0x02;
+	rawInputDevice.dwFlags = RIDEV_REMOVE;
+	rawInputDevice.hwndTarget = hwnd;
+	RegisterRawInputDevices(&rawInputDevice, 1, sizeof(rawInputDevice));
 }
 
 BOOL RegisterBossKeyHotKey(HWND hwnd, UINT modifier,UINT vkCode,UINT nHotKeyId)
