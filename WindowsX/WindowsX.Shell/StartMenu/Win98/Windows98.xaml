@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:start="clr-namespace:WindowsX.Shell.StartMenu"
         mc:Ignorable="d"
-        Title="Win98" Width="260" SizeToContent="Height" MaxWidth="185" BorderThickness="3" BorderBrush="{DynamicResource ActiveBorder}" LostFocus="StartMenuWindowBase_LostFocus" Topmost="True">
+        Title="Win98" Width="260" SizeToContent="Height" MaxWidth="185" BorderThickness="3" BorderBrush="{DynamicResource ActiveBorder}" LostFocus="StartMenuWindowBase_LostFocus" Topmost="True" Loaded="StartMenuWindowBase_Loaded">
     <start:StartMenuWindowBase.Resources>
         <!-- active border: 192 192 192-->
         <SolidColorBrush x:Key="ActiveBorder" Color="#c0c0c0"/>

@@ -14,6 +14,8 @@ using WindowsX.Shell.Util;
 using System.Linq;
 using WindowsX.Shell.StartMenu.Data;
 using WindowsX.Shell.PInvoke;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace WindowsX.Shell.StartMenu.Win98
 {
@@ -274,6 +276,55 @@ namespace WindowsX.Shell.StartMenu.Win98
                         break;
                 }
             }
+        }
+
+        private void StartMenuWindowBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            HwndSource.FromHwnd(new WindowInteropHelper(sender as Windows98).Handle).AddHook(Window98Hook);
+        }
+
+        private IntPtr Window98Hook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch (msg)
+            {
+                case PInvoke.User32.WM_INPUT:
+                    {
+                        int dwSize = 0;
+                        User32.GetRawInputData(lParam, User32.RID_INPUT, null, ref dwSize, Marshal.SizeOf(typeof(User32.RAWINPUTHEADER)));
+                        byte[] buffer = new byte[dwSize];
+                        if (User32.GetRawInputData(lParam, User32.RID_INPUT, buffer, ref dwSize, Marshal.SizeOf(typeof(User32.RAWINPUTHEADER))) == dwSize)
+                        {
+                            User32.RAWINPUT raw = User32.GetRawInputFromBuffer(buffer);
+
+                            if (raw.header.dwType == User32.RIM_TYPEMOUSE)
+                            {
+                                if ((raw.mouse.ulButtons & 0x0001) == 0x0001)
+                                {
+                                    PInvoke.POINT pOINT = new POINT();
+                                    User32.GetCursorPos(ref pOINT);
+
+                                    PInvoke.RECT rECT = new RECT();
+                                    User32.GetWindowRect(hwnd, ref rECT);
+
+                                    if (pOINT.x < rECT.left || pOINT.x > rECT.left + rECT.right
+                                        || pOINT.y < rECT.top || pOINT.y > rECT.top + rECT.bottom)
+                                    {
+                                        if ((User32.GetWindowLong(hwnd, User32.GWL_STYLE) & User32.WS_VISIBLE) != 0)
+                                        {
+                                            SystemTool.HideCustomStart();
+                                            this.menu.IsEnabled = false;
+                                            this.menu.IsEnabled = true;
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+            }
+            return IntPtr.Zero;
         }
     }
 }
