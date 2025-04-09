@@ -301,9 +301,9 @@ namespace WindowsX.Shell.PInvoke
                         if (isEnumFile == true)
                         {
                             DiskPath diskPath = new DiskPath();
-                            diskPath.DiskPathType = DiskPathType.File;
                             diskPath.DisplayName = Path.GetFileName(FileData.cFileName);
                             diskPath.Path = pTempSrc;
+                            diskPath.DiskPathType = DiskPathType.File;
                             diskPath.Size = fileSize;
                             diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
                             diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();

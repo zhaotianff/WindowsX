@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using WindowsX.Shell.PInvoke;
+using WindowsX.Shell.Util;
 
 namespace WindowsX.Shell.Model.SystemMgmt
 {
@@ -40,6 +42,13 @@ namespace WindowsX.Shell.Model.SystemMgmt
                         break;
                     case DiskPathType.Folder:
                         Icon = FolderIcon;
+                        break;
+                    case DiskPathType.File:
+                        ImageSource tempIcon = null;
+                        System.Windows.Application.Current.Dispatcher.Invoke(() => {
+                            tempIcon = IconHelper.GetExtensionIcon(System.IO.Path.GetExtension(Path));
+                        });
+                        Icon = tempIcon;
                         break;
                     default:
                         break;

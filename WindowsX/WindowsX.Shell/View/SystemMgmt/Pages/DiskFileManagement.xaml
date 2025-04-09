@@ -97,7 +97,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Content="完整路径:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="{Binding ElementName=tree_Statistics,Path=SelectedItem,Converter={StaticResource ObjectToVisibilityConverter}}"></Label>
-                        <Label Content="{Binding ElementName=tree_Statistics,Path=SelectedItem.Path}" Margin="60,0,0,0" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <Label Content="{Binding ElementName=tree_Statistics,Path=SelectedItem.Path}" Margin="60,0,0,0" FontWeight="Bold" VerticalAlignment="Center" Cursor="Hand" MouseDown="tbk_BrowseSelectedPath_Click"></Label>
                         <Label Grid.Row="1" Content="{Binding ElementName=tree_Statistics,Path=SelectedItem,Converter={StaticResource DiskSizeStatisticsConverter}}"></Label>
                     </Grid>
 

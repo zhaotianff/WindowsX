@@ -108,5 +108,10 @@ namespace WindowsX.Shell.Util
             var explorerProcessName = "explorer";
             return GetProcessId(explorerProcessName);
         }
+
+        public static void ExplorerForPath(string path)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", $"/select, {path}");
+        }
     }
 }

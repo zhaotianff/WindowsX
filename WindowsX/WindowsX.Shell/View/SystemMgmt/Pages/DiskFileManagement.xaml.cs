@@ -34,7 +34,6 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
         private Dictionary<string, FileAssocItem> assocDic;
         private List<BigFileItem> bigFileList;
         private bool isLoaded = false;
-        private ImageSource defaultIcon;
 
         public DiskFileManagement()
         {
@@ -269,7 +268,7 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
                         var executablePath = GetExtensionExecutablePath(fileExtension);
                         fileAssocItem.Executable = executablePath;
                         fileAssocItem.FriendlyName = $"{fileExtension} ({friendlyName})";
-                        fileAssocItem.Icon = GetExtensionIcon(fileExtension);
+                        fileAssocItem.Icon = IconHelper.GetExtensionIcon(fileExtension);
                         fileAssocItem.AllFiles.Add(file.Path);
                         assocDic[fileExtension] = fileAssocItem;
                     }
@@ -279,29 +278,6 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
                 {
                     GetFileAssoc(file, assocDic);
                 }
-            }
-        }
-
-        private ImageSource GetExtensionIcon(string fileExtension)
-        {
-            IntPtr hIcon = IntPtr.Zero;
-            IconTool.GetFileExtensionAssocIcon(fileExtension, ref hIcon);
-            if (hIcon != IntPtr.Zero)
-            {
-                ImageSource imageSource = ImageHelper.GetBitmapImageFromHIcon(hIcon);
-                IconTool.DestroyIcon(hIcon);
-                return imageSource;
-            }
-            else
-            {
-                if (defaultIcon == null)
-                {
-                    IconTool.GetShell32Icon(0, ref hIcon);
-                    defaultIcon = ImageHelper.GetBitmapImageFromHIcon(hIcon);
-                    IconTool.DestroyIcon(hIcon);
-                }
-
-                return defaultIcon;    
             }
         }
 
@@ -475,7 +451,7 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
                     BigFileItem bigFileItem = new BigFileItem();
                     bigFileItem.Extension = System.IO.Path.GetExtension(file.Path);
                     bigFileItem.FriendlyName = GetExtensionFriendlyName(bigFileItem.Extension);
-                    bigFileItem.Icon = GetExtensionIcon(bigFileItem.Extension);
+                    bigFileItem.Icon = IconHelper.GetExtensionIcon(bigFileItem.Extension);
                     bigFileItem.Path = file.Path;
                     bigFileItem.Size = file.Size;
 
@@ -516,6 +492,19 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
 
             lst_BigFile.ItemsSource = null;
             lst_BigFile.ItemsSource = bigFileList;
+        }
+
+        private void tbk_BrowseSelectedPath_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (this.tree_Statistics.SelectedItem == null)
+                return;
+
+            var diskPath = this.tree_Statistics.SelectedItem as DiskPath;
+
+            if (diskPath == null)
+                return;
+
+            ProcessHelper.ExplorerForPath(diskPath.Path);
         }
     }
 }
