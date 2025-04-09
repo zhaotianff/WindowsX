@@ -138,6 +138,7 @@ namespace WindowsX.Shell.View.Utility.Pages
                     name = System.IO.Path.GetFileNameWithoutExtension(currentSelectedItem.Name);
                     break;
                 case ExecuteItemType.DLL:
+                case ExecuteItemType.SHELL:
                     name = currentSelectedItem.Path;
                     break;
                 default:
