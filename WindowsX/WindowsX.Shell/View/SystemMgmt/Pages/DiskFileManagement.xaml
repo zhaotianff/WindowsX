@@ -77,14 +77,9 @@
 
                                     <Image Source="{Binding Icon}" Width="18" Stretch="Uniform"></Image>
                                     <Label Grid.Column="1" Content="{Binding DisplayName}"></Label>
-                                    <controls:PercentageBar Grid.Column="2" Width="300" Height="20" Maximum="100" Text="{Binding Size,Converter={StaticResource DiskSizeToStringConverter}}">
-                                        <controls:PercentageBar.Value>
-                                            <MultiBinding Converter="{StaticResource DiskSizeToPercentageConverter}">
-                                                <Binding Path="Size"></Binding>
-                                                <Binding Path="RootSize"></Binding>
-                                            </MultiBinding>
-                                        </controls:PercentageBar.Value>
-                                    </controls:PercentageBar>
+                                    <controls:PercentageBar Grid.Column="2" Width="300" Height="20" Maximum="100" Fill="{DynamicResource AccentBaseColor}"
+                                                            Text="{Binding Size,Converter={StaticResource DiskSizeToStringConverter}}"
+                                                            Value="{Binding .,Converter={StaticResource DiskSizeToPercentageConverter}}"></controls:PercentageBar>
                                 </Grid>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>

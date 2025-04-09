@@ -242,8 +242,10 @@ namespace WindowsX.Shell.PInvoke
             return dirSize;
         }
 
-        public static long EnumerateSubDirectoryEx(string dir, ObservableCollection<DiskPath> diskPathList, bool isEnumFile = false, bool isEnumOnce = false)
+        public static long EnumerateSubDirectoryEx(DiskPath parentDiskPath, ObservableCollection<DiskPath> diskPathList, bool isEnumFile = false, bool isEnumOnce = false)
         {
+            var dir = parentDiskPath.Path;
+
             // 搜索指定类型文件
             string pszFileName;
             string pTempSrc;
@@ -281,13 +283,14 @@ namespace WindowsX.Shell.PInvoke
                         diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
                         diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();
                         diskPath.LastWriteTime = FileData.ftLastWriteTime.ToDatetime();
+                        diskPath.Parent = parentDiskPath;
 
                         // 目录, 则继续往下递归遍历文件
                         // Use FindExSearchLimitToDirectories instead
                         if (isEnumOnce == false)
                         {
                             diskPath.Children = new ObservableCollection<DiskPath>();
-                            var currentDirSize = EnumerateSubDirectoryEx(pTempSrc, diskPath.Children, true);
+                            var currentDirSize = EnumerateSubDirectoryEx(diskPath, diskPath.Children, true);
                             diskPath.Size = currentDirSize;
                             dirSize += currentDirSize;
                         }
@@ -308,6 +311,7 @@ namespace WindowsX.Shell.PInvoke
                             diskPath.CreationTime = FileData.ftCreationTime.ToDatetime();
                             diskPath.LastAccessTime = FileData.ftLastAccessTime.ToDatetime();
                             diskPath.LastWriteTime = FileData.ftLastWriteTime.ToDatetime();
+                            diskPath.Parent = parentDiskPath;
                             diskPathList.Add(diskPath);
                         }
                         // 文件

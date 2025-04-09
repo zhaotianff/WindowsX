@@ -179,11 +179,10 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             statisticsDiskPath.DisplayName = diskPath.DisplayName;
 
             await Task.Factory.StartNew(() => {
-                Kernel32.EnumerateSubDirectoryEx(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
+                Kernel32.EnumerateSubDirectoryEx(statisticsDiskPath, statisticsDiskPath.Children, true);
             },TaskCreationOptions.LongRunning);
-            DiskPath.CurrentRootSize = GetRootSize(statisticsDiskPath);
-            statisticsDiskPath.Size = DiskPath.CurrentRootSize;
 
+            statisticsDiskPath.Size = GetRootSize(statisticsDiskPath);
             this.tree_Statistics.ItemsSource = new List<DiskPath>() { statisticsDiskPath };
             waitingDialog.Close();
         }
@@ -223,10 +222,10 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             statisticsDiskPath.DisplayName = diskPath.DisplayName;
 
             await Task.Factory.StartNew(() => {
-                Kernel32.EnumerateSubDirectoryEx(statisticsDiskPath.Path, statisticsDiskPath.Children, true);
+                Kernel32.EnumerateSubDirectoryEx(statisticsDiskPath, statisticsDiskPath.Children, true);
             }, TaskCreationOptions.LongRunning);
-            DiskPath.CurrentRootSize = GetRootSize(statisticsDiskPath);
-            statisticsDiskPath.Size = DiskPath.CurrentRootSize;
+
+            statisticsDiskPath.Size = GetRootSize(statisticsDiskPath);
 
             assocDic = new Dictionary<string, FileAssocItem>();
             GetFileAssoc(statisticsDiskPath, assocDic);
@@ -408,10 +407,10 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             bigFileDiskPath.DisplayName = diskPath.DisplayName;
 
             await Task.Factory.StartNew(() => {
-                Kernel32.EnumerateSubDirectoryEx(bigFileDiskPath.Path, bigFileDiskPath.Children, true);
+                Kernel32.EnumerateSubDirectoryEx(bigFileDiskPath, bigFileDiskPath.Children, true);
             }, TaskCreationOptions.LongRunning);
-            DiskPath.CurrentRootSize = GetRootSize(bigFileDiskPath);
-            bigFileDiskPath.Size = DiskPath.CurrentRootSize;
+
+            bigFileDiskPath.Size = GetRootSize(bigFileDiskPath);
 
             bigFileList = new List<BigFileItem>();
             GetBigFile(bigFileDiskPath, bigFileList, size, maxSize);
