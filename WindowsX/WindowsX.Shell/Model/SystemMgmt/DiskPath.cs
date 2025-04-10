@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using WindowsX.Shell.Util;
 
 namespace WindowsX.Shell.Model.SystemMgmt
 {
-    public class DiskPath
+    public class DiskPath : INotifyPropertyChanged
     {
         private static readonly ImageSource RootIcon = PInvoke.IconTool.ExtractStokeIcon(PInvoke.SHSTOCKICONID.SIID_DESKTOPPC);
         private static readonly ImageSource DiskIcon = PInvoke.IconTool.ExtractStokeIcon(PInvoke.SHSTOCKICONID.SIID_DRIVEFIXED);
@@ -23,6 +24,7 @@ namespace WindowsX.Shell.Model.SystemMgmt
         public ImageSource Icon { get; set; }
 
         private DiskPathType diskPathType;
+
         public DiskPathType DiskPathType 
         {
             get => diskPathType;
@@ -56,7 +58,17 @@ namespace WindowsX.Shell.Model.SystemMgmt
 
         public DiskPath Parent { get; set; }
 
-        public ObservableCollection<DiskPath> Children { get; set; }
+        private ObservableCollection<DiskPath> children;
+
+        public ObservableCollection<DiskPath> Children 
+        {
+            get => children;
+            set
+            {
+                children = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Children"));
+            }
+        }
 
         /// <summary>
         /// current folder size
@@ -78,6 +90,8 @@ namespace WindowsX.Shell.Model.SystemMgmt
         public DateTime LastWriteTime { get; set; }
 
         public DateTime LastAccessTime { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
     }
 

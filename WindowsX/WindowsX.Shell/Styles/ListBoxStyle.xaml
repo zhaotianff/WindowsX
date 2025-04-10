@@ -80,13 +80,21 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentBaseColor}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource Items.Selected.Background}" />
                             <Setter Property="Foreground" Value="{DynamicResource Items.Selected.Foreground}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentBaseColor}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource Items.Selected.Background}" />
                             <Setter Property="Foreground" Value="{DynamicResource Items.Selected.Foreground}" />
                         </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="Background.Opacity" 
+                            From=".8" To="1" Duration="0:0:0.3"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Border" Property="Opacity" Value="0.3" />
                         </Trigger>

@@ -69,7 +69,7 @@ namespace WindowsX.Shell.Controls
             drawingContext.DrawRoundedRectangle(Brushes.Transparent, new Pen(Stroke, 1), new Rect(0, 0, barWidth, this.Height), 5, 5);
             //drawingContext.DrawGeometry(Fill, new Pen(Stroke, 0), new RectangleGeometry() { Rect = new Rect(0, 0, fillWidth, this.Height) });
             drawingContext.DrawRoundedRectangle(Fill, new Pen(Stroke, 0), new Rect(0, 0, fillWidth, this.Height), 5, 5);
-            FormattedText formattedText = new FormattedText(Text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface("Verdana"), 12, Brushes.Black, 1);
+            FormattedText formattedText = new FormattedText(Text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface("Verdana"), 12, this.Foreground, 1);
             drawingContext.DrawText(formattedText, new Point(this.Width - 55, (this.Height - formattedText.Height) / 2));
         }
     }

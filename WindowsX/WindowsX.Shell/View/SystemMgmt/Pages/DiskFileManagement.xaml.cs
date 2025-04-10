@@ -22,6 +22,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WindowsX.Shell.Infrastructure.Enums;
 
 namespace WindowsX.Shell.View.SystemMgmt.Pages
 {
@@ -34,6 +35,9 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
         private Dictionary<string, FileAssocItem> assocDic;
         private List<BigFileItem> bigFileList;
         private bool isLoaded = false;
+
+        private DiskFileOrder diskFileOrder = DiskFileOrder.Default;
+        private bool isDiskFileOrderGlobal = false;
 
         public DiskFileManagement()
         {
@@ -504,6 +508,66 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
                 return;
 
             ProcessHelper.ExplorerForPath(diskPath.Path);
+        }
+
+        private void btn_SpaceDesc_Click(object sender, RoutedEventArgs e)
+        {
+            diskFileOrder = DiskFileOrder.Desc;
+            RefreshCurrentDirectoryFileOrder(diskFileOrder);
+        }
+
+        private void btn_SpaceAsc_Click(object sender, RoutedEventArgs e)
+        {
+            diskFileOrder = DiskFileOrder.Asc;
+            RefreshCurrentDirectoryFileOrder(diskFileOrder);
+        }
+
+        private void btn_SpaceDefault_Click(object sender, RoutedEventArgs e)
+        {
+            diskFileOrder = DiskFileOrder.Default;
+            RefreshCurrentDirectoryFileOrder(diskFileOrder);
+        }
+
+        private void RefreshCurrentDirectoryFileOrder(DiskFileOrder diskFileOrder)
+        {
+            if (tree_Statistics.SelectedItem == null)
+                return;
+
+            var diskPath = this.tree_Statistics.SelectedItem as DiskPath;
+
+            if (diskPath == null)
+                return;
+
+            if (diskPath.DiskPathType == DiskPathType.File)
+                diskPath = diskPath.Parent;
+
+            if (diskPath == null)
+                return;
+
+            switch(diskFileOrder)
+            {
+                case DiskFileOrder.Default:
+                    diskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>(diskPath.Children.OrderBy(x => x.DisplayName));
+                    break;
+                case DiskFileOrder.Asc:
+                    diskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>(diskPath.Children.OrderBy(x => x.Size));
+                    break;
+                case DiskFileOrder.Desc:
+                    diskPath.Children = new System.Collections.ObjectModel.ObservableCollection<DiskPath>(diskPath.Children.OrderByDescending(x => x.Size));
+                    break;
+            }
+        }
+
+        private void cbx_SpaceOrderGlobal_Checked(object sender, RoutedEventArgs e)
+        {
+            //TODO
+            isDiskFileOrderGlobal = true;
+        }
+
+        private void cbx_SpaceOrderGlobal_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //TODO
+            isDiskFileOrderGlobal = false;
         }
     }
 }

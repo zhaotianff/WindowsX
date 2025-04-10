@@ -16,9 +16,11 @@
     <SolidColorBrush x:Key="ButtonDisabledBorderColor" Color="#FFADB2B5"/>
     <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="#FF838383"/>
     <SolidColorBrush x:Key="Items.Selected.Foreground" Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="Items.Selected.Background" Color="#FF605E8A"></SolidColorBrush>
 
     <Color x:Key="BorderColor">#FF737373</Color>
     <Color x:Key="BorderColorTran" A="120" R="115" G="115" B="115"></Color>
     <Color x:Key="AccentBaseColorShadowColor">#D597CE</Color>
     <Color x:Key="ItemSelectedColor">#D597CE</Color>
+    <Color x:Key="AccentColor">#39375B</Color>
 </ResourceDictionary>
