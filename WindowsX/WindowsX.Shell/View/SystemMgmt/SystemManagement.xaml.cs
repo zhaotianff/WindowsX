@@ -26,6 +26,7 @@ namespace WindowsX.Shell.Pages
         private ToggleButton toggleButton = null;
         private StartupManagement startupManagement = new StartupManagement();
         private DiskFileManagement diskFileManagement = new DiskFileManagement();
+        private SystemInfo systemInfo = new SystemInfo();
         private Page defaultPage = null;
 
         public SystemManagement()
@@ -52,6 +53,12 @@ namespace WindowsX.Shell.Pages
             this.frame.Content = diskFileManagement;
             defaultPage = diskFileManagement;
             diskFileManagement.LoadDiskFileTree();
+        }
+
+        private void btn_SystemInfoClick(object sender, RoutedEventArgs e)
+        {
+            this.frame.Content = systemInfo;
+            defaultPage = systemInfo;
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)

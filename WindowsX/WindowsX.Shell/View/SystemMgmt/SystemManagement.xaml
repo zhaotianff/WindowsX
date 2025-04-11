@@ -27,6 +27,7 @@
             <StackPanel Grid.Row="1">
                 <ToggleButton Content="开机启动项管理" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_StartupMgmtClick" IsChecked="True"/>
                 <ToggleButton Content="磁盘文件管理" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_DiskFileMgmtClick" IsChecked="False"/>
+                <ToggleButton Content="系统信息" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_SystemInfoClick" IsChecked="False"/>
             </StackPanel>
         </Grid>
 

@@ -54,7 +54,7 @@ namespace WindowsX.Shell.Pages
 
         private void LoadDesktopSettings()
         {
-            cbx_Shortcut.IsChecked = DesktopTool.GetShortcutArrowState();
+            //cbx_Shortcut.IsChecked = DesktopTool.GetShortcutArrowState();
             cbx_PhotoViewer.IsChecked = DesktopTool.GetWindowsPhotoViewerState();
             cbx_Version.IsChecked = DesktopTool.GetPaintVersionState();
             var size = 0;
@@ -67,8 +67,8 @@ namespace WindowsX.Shell.Pages
                 tbox_TaskbarThunbSize.Text = "系统默认";
             }
 
-            cbx_Shortcut.Checked += (sender, e) => { DesktopTool.RemoveShortcutArrow(); };
-            cbx_Shortcut.Unchecked += (sender, e) => { DesktopTool.RestoreShortcutArrow(); };
+            //cbx_Shortcut.Checked += (sender, e) => { DesktopTool.RemoveShortcutArrow(); };
+            //cbx_Shortcut.Unchecked += (sender, e) => { DesktopTool.RestoreShortcutArrow(); };
             cbx_PhotoViewer.Checked += (sender, e) => { RegisterWindowsPhotoViewer(); };
             cbx_PhotoViewer.Unchecked += (sender, e) => { UnRegisterWindowsPhotoViewer(); };
             cbx_Version.Checked += (sender, e) => { DesktopTool.PaintVersionInfo(true); };

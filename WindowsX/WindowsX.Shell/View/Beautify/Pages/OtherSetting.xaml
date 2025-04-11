@@ -18,12 +18,12 @@
                 </GroupBox.Header>
 
                 <WrapPanel Margin="0,35,0,0">
-                    <CheckBox Content="计算机" Margin="10" Name="cbx_Computer"/>
-                    <CheckBox Content="用户的文件" Margin="10" Name="cbx_User"/>
-                    <CheckBox Content="回收站" Margin="10" Name="cbx_Recycle"/>
-                    <CheckBox Content="控制面板" Margin="10" Name="cbx_ControlPanel"/>
-                    <CheckBox Content="网络" Margin="10" Name="cbx_Network"/>
-                    <CheckBox Content="god mode" Margin="10" Name="cbx_GodMode"/>
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Content="计算机" Margin="10" Name="cbx_Computer"/>
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Content="用户的文件" Margin="10" Name="cbx_User"/>
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Content="回收站" Margin="10" Name="cbx_Recycle"/>
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Content="控制面板" Margin="10" Name="cbx_ControlPanel"/>
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Content="网络" Margin="10" Name="cbx_Network"/>
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Content="god mode" Margin="10" Name="cbx_GodMode"/>
                 </WrapPanel>
             </GroupBox>
 
@@ -43,10 +43,10 @@
                 <StackPanel Margin="0,35,0,0">
                     <StackPanel>
                         <WrapPanel>
-                            <CheckBox Content="移除快捷方式箭头" Margin="10" Name="cbx_Shortcut"/>
+                            <!--<CheckBox Content="移除快捷方式箭头" Margin="10" Name="cbx_Shortcut"/>-->
 
-                            <CheckBox Content="使用Windows Photo Viewer作为默认图片查看器" Margin="10" Name="cbx_PhotoViewer"></CheckBox>
-                            <CheckBox Content="桌面显示Windows版本信息" Margin="10" Name="cbx_Version"></CheckBox>
+                            <CheckBox Style="{StaticResource CheckBoxStyle}" Content="使用Windows Photo Viewer作为默认图片查看器" Margin="10" Name="cbx_PhotoViewer"></CheckBox>
+                            <CheckBox Style="{StaticResource CheckBoxStyle}" Content="桌面显示Windows版本信息" Margin="10" Name="cbx_Version"></CheckBox>
 
                             <!--禁止系统记录使用历史记录-->
                             <CheckBox Content="禁止系统记录使用历史记录" Margin="10" Visibility="Collapsed" Name="cbx_DisableHistory"></CheckBox>
