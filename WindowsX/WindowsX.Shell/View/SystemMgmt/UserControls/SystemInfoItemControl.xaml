@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WindowsX.Shell.View.SystemMgmt.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentBaseColor}" CornerRadius="5">
+    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentBaseColor}" CornerRadius="5" Background="Transparent">
         <Grid>
             <Border>
                 <Border.Effect>
@@ -16,15 +16,12 @@
                 </Border.Effect>
             </Border>
 
-            <StackPanel>
+            <StackPanel Name="stack">
                 <DockPanel Height="35" Margin="5,0,0,0">
-                    <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:SystemInfoItemControl},Path=Icon}"></Image>
-                    <TextBlock VerticalAlignment="Center" Name="tbk_Title" Margin="5,3,0,0" FontSize="18" FontFamily="黑体" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:SystemInfoItemControl},Path=Title}"></TextBlock>
+                    <Label VerticalAlignment="Center" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:SystemInfoItemControl},Path=Icon}"></Label>
+                    <TextBlock VerticalAlignment="Center" Name="tbk_Title" Margin="5,3,0,0" FontSize="18" FontFamily="Arial" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:SystemInfoItemControl},Path=Title}"></TextBlock>
                 </DockPanel>
 
-                <DockPanel>
-                    <Label Content="系统版本: Windows 10 1903"></Label>
-                </DockPanel>
             </StackPanel>
         </Grid>
 

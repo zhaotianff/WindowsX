@@ -26,7 +26,7 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
         }
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(SystemInfoItemControl),new PropertyMetadata());
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(ImageSource), typeof(SystemInfoItemControl), new PropertyMetadata());
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(SystemInfoItemControl), new PropertyMetadata());
 
         public string Title
         {
@@ -34,15 +34,51 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
             set => SetValue(TitleProperty, value);
         }
 
-        public ImageSource Icon
+        public string Icon
         {
-            get => (ImageSource)GetValue(IconProperty);
+            get => GetValue(IconProperty).ToString();
             set => SetValue(IconProperty, value);
+        }
+
+        private Dictionary<string, string> systemInfoCollection = new Dictionary<string, string>();
+
+        public Dictionary<string, string> SystemInfoCollection
+        {
+            get => systemInfoCollection;
+            set
+            {
+                systemInfoCollection = value;
+                UpdateSystemInfo();
+            }
         }
 
         public static void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
+        }
+
+        private void UpdateSystemInfo()
+        {
+            foreach (var item in systemInfoCollection)
+            {
+                Grid grid = new Grid();
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1,GridUnitType.Star)});
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                grid.Margin = new Thickness(5, 0, 0, 5);
+                TextBlock textBlock = new TextBlock();
+                textBlock.FontSize = 13;
+                textBlock.Text = item.Key;
+                Grid.SetColumn(textBlock, 0);
+                TextBox textBox = new TextBox();
+                textBox.Text = item.Value;
+                textBox.IsReadOnly = true;
+                textBox.Background = Brushes.Transparent;
+                textBox.BorderThickness = new Thickness(0);
+                Grid.SetColumn(textBox, 1);
+                grid.Children.Add(textBlock);
+                grid.Children.Add(textBox);
+                stack.Children.Add(grid);
+            }
         }
     }
 }

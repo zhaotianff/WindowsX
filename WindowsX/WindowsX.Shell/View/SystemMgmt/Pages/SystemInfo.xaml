@@ -9,7 +9,24 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SystemInfo">
 
-    <Grid>
-        <uc:SystemInfoItemControl Width="300" Height="200" Title="操作系统" Icon="/WindowsX.Shell;component/Icon/desktop.png"></uc:SystemInfoItemControl>
-    </Grid>
+    <TabControl Style="{StaticResource TabControlStyle}">
+        <TabItem Header="硬件信息"  Style="{StaticResource StyleTabItem}">
+            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <uc:SystemInfoItemControl Title="操作系统" Icon="&#xE7F8;" x:Name="Panel_Sys"></uc:SystemInfoItemControl>
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="软件信息" Style="{StaticResource StyleTabItem}"></TabItem>
+    </TabControl>
 </Page>
