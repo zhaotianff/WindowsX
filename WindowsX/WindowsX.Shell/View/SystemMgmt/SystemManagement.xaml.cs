@@ -55,9 +55,10 @@ namespace WindowsX.Shell.Pages
             diskFileManagement.LoadDiskFileTree();
         }
 
-        private void btn_SystemInfoClick(object sender, RoutedEventArgs e)
+        private async void btn_SystemInfoClick(object sender, RoutedEventArgs e)
         {
             this.frame.Content = systemInfo;
+            await systemInfo.LoadSystemInfoAsync();
             defaultPage = systemInfo;
         }
 

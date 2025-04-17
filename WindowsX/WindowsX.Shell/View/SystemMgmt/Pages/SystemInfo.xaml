@@ -19,11 +19,27 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
 
-                    <uc:SystemInfoItemControl Title="操作系统" Icon="&#xE7F8;" x:Name="Panel_Sys"></uc:SystemInfoItemControl>
+                    <uc:SystemInfoItemControl Title="操作系统" Icon="&#xE7F8;" x:Name="Panel_Sys" Foreground="Black" Margin="10"></uc:SystemInfoItemControl>
+
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <uc:SystemInfoItemControl Title="主板" Icon="&#xEC0A;" x:Name="Panel_MotherBoard" Foreground="Black" Margin="10"></uc:SystemInfoItemControl>
+                        <uc:SystemInfoItemControl Title="处理器" Icon="&#xEC48;" x:Name="Panel_Cpu" Foreground="Black" Margin="10" Grid.Column="1"></uc:SystemInfoItemControl>
+                        <uc:SystemInfoItemControl Title="内存" Icon="&#xE950;" x:Name="Panel_Memory" Foreground="Black" Margin="10" Grid.Row="1" Grid.Column="0"></uc:SystemInfoItemControl>
+                    </Grid>
                 </Grid>
             </ScrollViewer>
         </TabItem>

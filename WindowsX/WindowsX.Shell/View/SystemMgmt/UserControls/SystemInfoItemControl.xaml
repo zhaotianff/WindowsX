@@ -17,7 +17,7 @@
             </Border>
 
             <StackPanel Name="stack">
-                <DockPanel Height="35" Margin="5,0,0,0">
+                <DockPanel Height="35" Margin="5,0,0,0" Name="dock">
                     <Label VerticalAlignment="Center" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:SystemInfoItemControl},Path=Icon}"></Label>
                     <TextBlock VerticalAlignment="Center" Name="tbk_Title" Margin="5,3,0,0" FontSize="18" FontFamily="Arial" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:SystemInfoItemControl},Path=Title}"></TextBlock>
                 </DockPanel>

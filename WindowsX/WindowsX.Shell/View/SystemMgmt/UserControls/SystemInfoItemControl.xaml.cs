@@ -40,15 +40,15 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
             set => SetValue(IconProperty, value);
         }
 
-        private Dictionary<string, string> systemInfoCollection = new Dictionary<string, string>();
+        private Model.SystemMgmt.SystemInformation systemInformation = new Model.SystemMgmt.SystemInformation();
 
-        public Dictionary<string, string> SystemInfoCollection
+        public Model.SystemMgmt.SystemInformation SystemInformation
         {
-            get => systemInfoCollection;
+            get => systemInformation;
             set
             {
-                systemInfoCollection = value;
-                UpdateSystemInfo();
+                systemInformation = value;
+                UpdateSystemInfoToUi();
             }
         }
 
@@ -57,12 +57,37 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
 
         }
 
-        private void UpdateSystemInfo()
+        private void UpdateSystemInfoToUi()
         {
-            foreach (var item in systemInfoCollection)
+            LoadSystemInformationTypeList();
+            RefreshSystemInformation();
+        }
+
+        private void LoadSystemInformationTypeList()
+        {
+            if (SystemInformation.SystemInformationTypeList != null && SystemInformation.SystemInformationTypeList.Count > 1)
+            {
+                ComboBox comboBox = new ComboBox();
+                comboBox.Margin = new Thickness(10, 0, 30, 0);
+                comboBox.VerticalAlignment = VerticalAlignment.Center;
+                comboBox.ItemsSource = SystemInformation.SystemInformationTypeList;
+                comboBox.SelectedIndex = 0;
+                comboBox.SelectionChanged += cbx_TypeList_SelectionChanged;
+                this.dock.Children.Add(comboBox);
+            }
+        }
+
+        private void RefreshSystemInformation(int index = 0)
+        {
+            for (int i = this.stack.Children.Count - 1; i >= 1; i--)
+            {
+                this.stack.Children.RemoveAt(i);
+            }
+
+            foreach (var item in SystemInformation.SystemInformationKeyValueList[index])
             {
                 Grid grid = new Grid();
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1,GridUnitType.Star)});
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
                 grid.Margin = new Thickness(5, 0, 0, 5);
                 TextBlock textBlock = new TextBlock();
@@ -72,6 +97,7 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
                 TextBox textBox = new TextBox();
                 textBox.Text = item.Value;
                 textBox.IsReadOnly = true;
+                textBox.TextWrapping = TextWrapping.WrapWithOverflow;
                 textBox.Background = Brushes.Transparent;
                 textBox.BorderThickness = new Thickness(0);
                 Grid.SetColumn(textBox, 1);
@@ -79,6 +105,12 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
                 grid.Children.Add(textBox);
                 stack.Children.Add(grid);
             }
+        }
+
+        private void cbx_TypeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var combox = sender as ComboBox;
+            RefreshSystemInformation(combox.SelectedIndex);
         }
     }
 }

@@ -23,8 +23,16 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
         public SystemInfo()
         {
             InitializeComponent();
+        }
+
+        public async Task LoadSystemInfoAsync()
+        {
+            await Task.Delay(50);
 
             LoadSystem();
+            LoadCPU();
+            LoadMotherBoard();
+            LoadMemory();
         }
 
         private void LoadSystem()
@@ -44,7 +52,7 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             dic["上次开机时间"] = "2025年10月3日 24:00:00";
             dic["上次关机时间"] = "2025年10月2日 24:00:00";
 
-            this.Panel_Sys.SystemInfoCollection = dic;
+            this.Panel_Sys.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic }};
         }
 
         private void LoadMotherBoard()
@@ -56,6 +64,8 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             dic["BIOS日期"] = "2023年10月3日";
             dic["序列号"] = "24323N";
             dic["唤醒方式"] = "电源";
+
+            this.Panel_MotherBoard.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
         }
 
         private void LoadCPU()
@@ -70,16 +80,31 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             dic["L1缓存"] = "480KB";
             dic["L2缓存"] = "7.5MB";
             dic["L3缓存"] = "18.0MB";
+
+            this.Panel_Cpu.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
         }
 
         private void LoadMemory()
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
+            Dictionary<string, string> dic1 = new Dictionary<string, string>();
 
-            dic["容量"] = "64GB";
-            dic["制造商"] = "Kingston";
-            dic["速度"] = "3200 MHz";
-            dic["电压"] = "1200";
+            dic1["容量"] = "64GB";
+            dic1["制造商"] = "Kingston";
+            dic1["速度"] = "3200 MHz";
+            dic1["电压"] = "1200";
+
+            Dictionary<string, string> dic2 = new Dictionary<string, string>();
+
+            dic2["容量"] = "64GB";
+            dic2["制造商"] = "Sandisk";
+            dic2["速度"] = "3200 MHz";
+            dic2["电压"] = "1200";
+
+            this.Panel_Memory.SystemInformation = new Model.SystemMgmt.SystemInformation() 
+            { 
+                SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic1,dic2 },
+                SystemInformationTypeList = new List<string>() { "内存1 - Kingston 64GB", "内存2 - Sandisk 8GB" }
+            };
         }
 
         private void LoadGraphics()
@@ -104,6 +129,29 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             dic["可用空间"] = "100GB";
             dic["使用次数"] = "837次";
 
+        }
+
+        private void LoadMonitor()
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+
+            dic["名称"] = "Dell";
+            dic["分辨率"] = "Dell";
+            dic["屏幕尺寸"] = "Dell";
+            dic["固件程序日期"] = "Dell";
+        }
+
+        private void LoadNetworkAdapter()
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+
+            dic["名称"] = "Realtk PCIe Network Adapter";
+            dic["MAC地址"] = "Dell";
+            dic["子网掩码"] = "Dell";
+            dic["DNS"] = "Dell";
+            dic["网卡类型"] = "无线网卡";
+            dic["连接速度"] = "1Gbit/秒";
+            dic["Ip地址"] = "102.23.234.8";
         }
     }
 }
