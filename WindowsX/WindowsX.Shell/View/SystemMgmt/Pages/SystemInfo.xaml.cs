@@ -33,6 +33,8 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             LoadCPU();
             LoadMotherBoard();
             LoadMemory();
+            LoadDisk();
+            LoadGraphics();
         }
 
         private void LoadSystem()
@@ -117,6 +119,8 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             dic["驱动版本"] = "368.86349";
             dic["DX版本"] = "12.1";
             dic["位宽"] = "256Bit";
+
+            this.Panel_Graphics.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
         }
 
         private void LoadDisk()
@@ -128,6 +132,20 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             dic["容量"] = "1920GB";
             dic["可用空间"] = "100GB";
             dic["使用次数"] = "837次";
+
+            Dictionary<string, string> dic2 = new Dictionary<string, string>();
+
+            dic2["型号"] = "Green";
+            dic2["制造商"] = "Seagate";
+            dic2["容量"] = "3920GB";
+            dic2["可用空间"] = "2100GB";
+            dic2["使用次数"] = "17次";
+
+            this.Panel_Disk.SystemInformation = new Model.SystemMgmt.SystemInformation()
+            {
+                SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic, dic2 },
+                SystemInformationTypeList = new List<string>() { "磁盘1 - 西数", "磁盘2 - 希捷" }
+            };
 
         }
 

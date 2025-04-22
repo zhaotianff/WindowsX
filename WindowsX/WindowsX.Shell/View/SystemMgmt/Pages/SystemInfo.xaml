@@ -39,7 +39,10 @@
                         <uc:SystemInfoItemControl Title="主板" Icon="&#xEC0A;" x:Name="Panel_MotherBoard" Foreground="Black" Margin="10"></uc:SystemInfoItemControl>
                         <uc:SystemInfoItemControl Title="处理器" Icon="&#xEC48;" x:Name="Panel_Cpu" Foreground="Black" Margin="10" Grid.Column="1"></uc:SystemInfoItemControl>
                         <uc:SystemInfoItemControl Title="内存" Icon="&#xE950;" x:Name="Panel_Memory" Foreground="Black" Margin="10" Grid.Row="1" Grid.Column="0"></uc:SystemInfoItemControl>
+                        <uc:SystemInfoItemControl Title="磁盘" Icon="&#xEDA2;" x:Name="Panel_Disk" Foreground="Black" Margin="10" Grid.Row="1" Grid.Column="1"></uc:SystemInfoItemControl>
                     </Grid>
+
+                    <uc:SystemInfoItemControl Title="显卡" Icon="&#xE963;" x:Name="Panel_Graphics" Foreground="Black" Grid.Row="2" Grid.Column="0" Margin="10,5,10,45"></uc:SystemInfoItemControl>
                 </Grid>
             </ScrollViewer>
         </TabItem>
