@@ -43,6 +43,16 @@
                     </Grid>
 
                     <uc:SystemInfoItemControl Title="显卡" Icon="&#xE963;" x:Name="Panel_Graphics" Foreground="Black" Grid.Row="2" Grid.Column="0" Margin="10,5,10,45"></uc:SystemInfoItemControl>
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <uc:SystemInfoItemControl Title="显示器" Icon="&#xE7F4;" x:Name="Panel_Monitor" Foreground="Black" Grid.Row="2" Grid.Column="0" Margin="10,5,10,45"></uc:SystemInfoItemControl>
+                        <uc:SystemInfoItemControl Title="网络适配器" Icon="&#xEDA3;" x:Name="Panel_Network" Foreground="Black" Grid.Row="2" Grid.Column="1" Margin="10,5,10,45"></uc:SystemInfoItemControl>
+                    </Grid>
                 </Grid>
             </ScrollViewer>
         </TabItem>

@@ -35,6 +35,8 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             LoadMemory();
             LoadDisk();
             LoadGraphics();
+            LoadMonitor();
+            LoadNetworkAdapter();
         }
 
         private void LoadSystem()
@@ -157,6 +159,8 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             dic["分辨率"] = "Dell";
             dic["屏幕尺寸"] = "Dell";
             dic["固件程序日期"] = "Dell";
+
+            this.Panel_Monitor.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
         }
 
         private void LoadNetworkAdapter()
@@ -170,6 +174,8 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
             dic["网卡类型"] = "无线网卡";
             dic["连接速度"] = "1Gbit/秒";
             dic["Ip地址"] = "102.23.234.8";
+
+            this.Panel_Network.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
         }
     }
 }
