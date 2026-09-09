@@ -102,4 +102,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CpuHardware.h"><Filter>头文件</Filter></ClInclude>
+    <ClCompile Include="CpuHardware.cpp"><Filter>源文件</Filter></ClCompile>
+    <MASM Include="CpuId.asm"><Filter>源文件</Filter></MASM>
+  </ItemGroup>
 </Project>

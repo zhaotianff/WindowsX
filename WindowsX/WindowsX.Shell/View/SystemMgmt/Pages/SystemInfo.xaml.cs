@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WindowsX.Shell.Model.SystemMgmt;
+using WindowsX.Shell.Services.SystemMgmt;
+using WindowsX.Shell.View.SystemMgmt.UserControls;
 
 namespace WindowsX.Shell.View.SystemMgmt.Pages
 {
@@ -20,162 +18,157 @@ namespace WindowsX.Shell.View.SystemMgmt.Pages
     /// </summary>
     public partial class SystemInfo : Page
     {
+        private readonly SystemInformationService hardwareService = new SystemInformationService();
+        private readonly InstalledSoftwareService softwareService = new InstalledSoftwareService();
+        private readonly Dictionary<string, SystemInfoItemControl> panels;
+        private CancellationTokenSource loadCancellation;
+        private Task loadTask;
+        private bool hasLoaded;
+        private ICollectionView softwareView;
+        private List<InstalledSoftware> software = new List<InstalledSoftware>();
+
         public SystemInfo()
         {
             InitializeComponent();
-        }
-
-        public async Task LoadSystemInfoAsync()
-        {
-            await Task.Delay(50);
-
-            LoadSystem();
-            LoadCPU();
-            LoadMotherBoard();
-            LoadMemory();
-            LoadDisk();
-            LoadGraphics();
-            LoadMonitor();
-            LoadNetworkAdapter();
-        }
-
-        private void LoadSystem()
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            dic["系统"] = "Windows 10 专业版";
-            dic["版本"] = "1903";
-            dic["版本号"] = "18362.295";
-            dic["系统类型"] = "64位操作系统";
-            dic["安装内存"] = "64GB";
-            dic["处理器"] = "Intel(R) Core(TM) i5-12400";
-            dic["系统名称"] = "Vostro 3777";
-            dic["系统制造商"] = "Dell Inc.";
-            dic["安装目录"] = "C:\\Windows";
-            dic["安装日期"] = "2025年10月3日";
-            dic["上次开机时间"] = "2025年10月3日 24:00:00";
-            dic["上次关机时间"] = "2025年10月2日 24:00:00";
-
-            this.Panel_Sys.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic }};
-        }
-
-        private void LoadMotherBoard()
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            dic["BIOS模式"] = "UEFI";
-            dic["BIOS版本"] = "1.0";
-            dic["BIOS日期"] = "2023年10月3日";
-            dic["序列号"] = "24323N";
-            dic["唤醒方式"] = "电源";
-
-            this.Panel_MotherBoard.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
-        }
-
-        private void LoadCPU()
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            dic["制造商"] = "Intel";
-            dic["型号"] = "12th Gen Intel(R) Core(TM) i5-12400";
-            dic["基准速度"] = "2.5 GHz";
-            dic["核心数"] = "6核";
-            dic["线程数"] = "12线程";
-            dic["L1缓存"] = "480KB";
-            dic["L2缓存"] = "7.5MB";
-            dic["L3缓存"] = "18.0MB";
-
-            this.Panel_Cpu.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
-        }
-
-        private void LoadMemory()
-        {
-            Dictionary<string, string> dic1 = new Dictionary<string, string>();
-
-            dic1["容量"] = "64GB";
-            dic1["制造商"] = "Kingston";
-            dic1["速度"] = "3200 MHz";
-            dic1["电压"] = "1200";
-
-            Dictionary<string, string> dic2 = new Dictionary<string, string>();
-
-            dic2["容量"] = "64GB";
-            dic2["制造商"] = "Sandisk";
-            dic2["速度"] = "3200 MHz";
-            dic2["电压"] = "1200";
-
-            this.Panel_Memory.SystemInformation = new Model.SystemMgmt.SystemInformation() 
-            { 
-                SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic1,dic2 },
-                SystemInformationTypeList = new List<string>() { "内存1 - Kingston 64GB", "内存2 - Sandisk 8GB" }
-            };
-        }
-
-        private void LoadGraphics()
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            dic["型号"] = "RTX 4080";
-            dic["制造商"] = "Nvidia";
-            dic["显存"] = "16GB";
-            dic["驱动版本"] = "368.86349";
-            dic["DX版本"] = "12.1";
-            dic["位宽"] = "256Bit";
-
-            this.Panel_Graphics.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
-        }
-
-        private void LoadDisk()
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            dic["型号"] = "Blue";
-            dic["制造商"] = "WestData";
-            dic["容量"] = "1920GB";
-            dic["可用空间"] = "100GB";
-            dic["使用次数"] = "837次";
-
-            Dictionary<string, string> dic2 = new Dictionary<string, string>();
-
-            dic2["型号"] = "Green";
-            dic2["制造商"] = "Seagate";
-            dic2["容量"] = "3920GB";
-            dic2["可用空间"] = "2100GB";
-            dic2["使用次数"] = "17次";
-
-            this.Panel_Disk.SystemInformation = new Model.SystemMgmt.SystemInformation()
+            panels = new Dictionary<string, SystemInfoItemControl>
             {
-                SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic, dic2 },
-                SystemInformationTypeList = new List<string>() { "磁盘1 - 西数", "磁盘2 - 希捷" }
+                ["System"] = Panel_Sys, ["MotherBoard"] = Panel_MotherBoard,
+                ["Cpu"] = Panel_Cpu, ["Memory"] = Panel_Memory, ["Disk"] = Panel_Disk,
+                ["Graphics"] = Panel_Graphics, ["Monitor"] = Panel_Monitor, ["Network"] = Panel_Network
             };
-
+            SetPanelStatus("尚未读取本机信息");
+            Loaded += Page_Loaded;
+            Unloaded += Page_Unloaded;
         }
 
-        private void LoadMonitor()
+        public Task LoadSystemInfoAsync()
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            dic["名称"] = "Dell";
-            dic["分辨率"] = "Dell";
-            dic["屏幕尺寸"] = "Dell";
-            dic["固件程序日期"] = "Dell";
-
-            this.Panel_Monitor.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
+            if (hasLoaded)
+                return Task.CompletedTask;
+            if (loadTask != null && !loadTask.IsCompleted)
+                return loadTask;
+            loadTask = LoadCoreAsync();
+            return loadTask;
         }
 
-        private void LoadNetworkAdapter()
+        private async Task LoadCoreAsync()
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
+            var cancellation = new CancellationTokenSource();
+            loadCancellation = cancellation;
+            var token = cancellation.Token;
+            SetBusy(true);
+            SetPanelStatus("正在读取…");
+            software.Clear();
+            softwareView = null;
+            grid_Software.ItemsSource = null;
+            tbk_SoftwareCount.Text = string.Empty;
+            tbk_SoftwareEmpty.Text = "正在读取软件清单…";
+            tbk_SoftwareEmpty.Visibility = Visibility.Visible;
+            tbk_Status.Text = "正在读取本机信息…";
+            tbk_Status.ToolTip = null;
+            var progress = new Progress<string>(message =>
+            {
+                if (ReferenceEquals(loadCancellation, cancellation) && !token.IsCancellationRequested)
+                    tbk_Status.Text = message;
+            });
+            try
+            {
+                var hardwareTask = Task.Run(() => hardwareService.GetHardwareInformation(token, progress), token);
+                var softwareTask = Task.Run(() => softwareService.GetInstalledSoftware(token), token);
+                await Task.WhenAll(hardwareTask, softwareTask);
+                token.ThrowIfCancellationRequested();
+                if (!ReferenceEquals(loadCancellation, cancellation))
+                    return;
 
-            dic["名称"] = "Realtk PCIe Network Adapter";
-            dic["MAC地址"] = "Dell";
-            dic["子网掩码"] = "Dell";
-            dic["DNS"] = "Dell";
-            dic["网卡类型"] = "无线网卡";
-            dic["连接速度"] = "1Gbit/秒";
-            dic["Ip地址"] = "102.23.234.8";
+                var hardware = await hardwareTask;
+                var installed = await softwareTask;
+                foreach (var panel in panels)
+                    panel.Value.SystemInformation = hardware.Categories[panel.Key];
+                software = installed.Items;
+                softwareView = CollectionViewSource.GetDefaultView(software);
+                softwareView.Filter = item => item is InstalledSoftware entry && InstalledSoftwareService.Matches(entry, tbox_SoftwareSearch.Text);
+                grid_Software.ItemsSource = softwareView;
+                RefreshSoftwareFilter();
+                var warnings = hardware.Warnings.Concat(installed.Warnings).ToList();
+                tbk_Status.Text = $"已更新 {DateTime.Now:HH:mm:ss}" + (warnings.Count > 0 ? $"；{warnings.Count} 项提示（悬停查看）" : "；读取完成");
+                tbk_Status.ToolTip = warnings.Count == 0 ? "本页显示最近一次采集的快照，可点击刷新重新读取。" : string.Join(Environment.NewLine, warnings.Take(20));
+                hasLoaded = true;
+            }
+            catch (OperationCanceledException)
+            {
+                if (ReferenceEquals(loadCancellation, cancellation))
+                {
+                    SetPanelStatus("读取已取消，请刷新重试");
+                    tbk_Status.Text = "读取已取消";
+                    tbk_SoftwareEmpty.Text = "读取已取消，请刷新重试";
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ReferenceEquals(loadCancellation, cancellation))
+                {
+                    SetPanelStatus("读取失败，请刷新重试");
+                    tbk_Status.Text = "读取失败：" + ex.Message;
+                    tbk_SoftwareEmpty.Text = "读取失败，请刷新重试";
+                }
+            }
+            finally
+            {
+                if (ReferenceEquals(loadCancellation, cancellation))
+                {
+                    loadCancellation = null;
+                    SetBusy(false);
+                }
+                cancellation.Dispose();
+            }
+        }
 
-            this.Panel_Network.SystemInformation = new Model.SystemMgmt.SystemInformation() { SystemInformationKeyValueList = new List<Dictionary<string, string>>() { dic } };
+        private void SetPanelStatus(string message)
+        {
+            foreach (var panel in panels.Values)
+                panel.SystemInformation = SystemInformationService.Message(message);
+        }
+
+        private void SetBusy(bool busy)
+        {
+            btn_Refresh.IsEnabled = !busy;
+            btn_Cancel.IsEnabled = busy;
+            progress_Loading.Visibility = busy ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e) => await LoadSystemInfoAsync();
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            loadCancellation?.Cancel();
+            loadCancellation = null;
+            loadTask = null;
+        }
+
+        private async void btn_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            hasLoaded = false;
+            await LoadSystemInfoAsync();
+        }
+
+        private void btn_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            loadCancellation?.Cancel();
+            btn_Cancel.IsEnabled = false;
+            tbk_Status.Text = "正在取消，等待当前系统查询返回…";
+        }
+
+        private void tbox_SoftwareSearch_TextChanged(object sender, TextChangedEventArgs e) => RefreshSoftwareFilter();
+
+        private void RefreshSoftwareFilter()
+        {
+            if (softwareView == null)
+                return;
+            softwareView.Refresh();
+            var count = softwareView.Cast<object>().Count();
+            tbk_SoftwareCount.Text = $"显示 {count} / {software.Count} 个软件（可点击列标题排序）";
+            tbk_SoftwareEmpty.Text = software.Count == 0 ? "未发现已登记的桌面程序" : "没有匹配的软件";
+            tbk_SoftwareEmpty.Visibility = count == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
