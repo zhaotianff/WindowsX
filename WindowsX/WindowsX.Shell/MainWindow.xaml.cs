@@ -39,6 +39,13 @@ namespace WindowsX.Shell
             InitializeTheme();
             DoStartupTasksAsync();
             CreateNotifyIcon();
+            Loaded += RestoreMouseEffectOnLoaded;
+        }
+
+        private void RestoreMouseEffectOnLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= RestoreMouseEffectOnLoaded;
+            desktopBeautify.RestoreMouseEffect();
         }
 
         private void InitializeAnimation()

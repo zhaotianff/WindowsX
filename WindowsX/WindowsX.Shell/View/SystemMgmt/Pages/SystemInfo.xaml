@@ -23,7 +23,7 @@
             <StackPanel VerticalAlignment="Center" Margin="0,0,10,0">
                 <TextBlock x:Name="tbk_Status" Text="尚未读取本机信息" TextWrapping="Wrap"/>
                 <TextBlock Text="硬件采集无需管理员权限；处理器下拉框可切换 CPUID 与 WMI 数据。" FontSize="11" Opacity="0.7" TextWrapping="Wrap"/>
-                <ProgressBar x:Name="progress_Loading" Height="3" Margin="0,4,0,0" IsIndeterminate="True" Visibility="Collapsed"/>
+                <ProgressBar x:Name="progress_Loading" Height="10" Margin="0,4,0,0" IsIndeterminate="True" Visibility="Collapsed" Style="{StaticResource ProgressBarStyle}"/>
             </StackPanel>
             <Button x:Name="btn_Refresh" Grid.Column="1" Content="刷新信息" Width="85" Height="28" Margin="0,0,8,0"
                     Style="{StaticResource ButtonStyle}" Click="btn_Refresh_Click"/>

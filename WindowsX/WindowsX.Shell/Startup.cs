@@ -12,6 +12,9 @@ namespace WindowsX.Shell
         [STAThread]
         static void Main(string[] args)
         {
+            if (Array.Exists(args, arg => string.Equals(arg, "--autostart", StringComparison.OrdinalIgnoreCase)))
+                Environment.CurrentDirectory = AppContext.BaseDirectory;
+
             bool createdNew;
             System.Threading.Mutex mutex = new System.Threading.Mutex(true, MutexName, out createdNew);
             if (createdNew)

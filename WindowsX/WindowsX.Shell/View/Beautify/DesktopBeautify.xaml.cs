@@ -115,6 +115,11 @@ namespace WindowsX.Shell.Pages
             mouseEffect.CloseMouseEffectWindow();
         }
 
+        public void RestoreMouseEffect()
+        {
+            mouseEffect.RestoreMouseEffect();
+        }
+
         public void ShowDefaultPage()
         {
             

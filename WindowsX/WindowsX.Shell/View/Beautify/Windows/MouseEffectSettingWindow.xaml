@@ -1,0 +1,352 @@
+<Window x:Class="WindowsX.Shell.Windows.MouseEffectSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="鼠标特效设置" Width="440" SizeToContent="Height"
+        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource WhiteColor}" Foreground="{DynamicResource BlackColor}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Margin="24">
+        <StackPanel x:Name="panel_Following" Visibility="Collapsed">
+            <TextBlock Text="颜色（#RRGGBB）" FontSize="14" Margin="0,0,0,12"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="text_FollowingColor" Width="120" Height="28" Margin="0,0,12,0"
+                         VerticalContentAlignment="Center" TextChanged="FollowingColor_TextChanged"
+                         AutomationProperties.Name="跟随颜色"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#0080FF" Tag="#0080FF"
+                        ToolTip="蓝色" AutomationProperties.Name="蓝色" Click="PresetColor_Click"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#32CD32" Tag="#32CD32"
+                        ToolTip="绿色" AutomationProperties.Name="绿色" Click="PresetColor_Click"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#FF4545" Tag="#FF4545"
+                        ToolTip="红色" AutomationProperties.Name="红色" Click="PresetColor_Click"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#FFD700" Tag="#FFD700"
+                        ToolTip="金色" AutomationProperties.Name="金色" Click="PresetColor_Click"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#BA55D3" Tag="#BA55D3"
+                        ToolTip="紫色" AutomationProperties.Name="紫色" Click="PresetColor_Click"/>
+                <Button Width="26" Height="26" Background="#FFFFFF" Tag="#FFFFFF"
+                        ToolTip="白色" AutomationProperties.Name="白色" Click="PresetColor_Click"/>
+            </StackPanel>
+            <TextBlock x:Name="text_ColorError" Text="请输入有效的 #RRGGBB 颜色，例如 #0080FF。"
+                       Foreground="Crimson" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="中心透明度" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_FollowingCenterOpacity" Minimum="0" Maximum="100" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="10"
+                        ValueChanged="FollowingOpacity_ValueChanged" VerticalAlignment="Center"
+                        AutomationProperties.Name="中心透明度"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_FollowingCenterOpacity, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="边缘透明度" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_FollowingEdgeOpacity" Minimum="0" Maximum="100" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="10"
+                        ValueChanged="FollowingOpacity_ValueChanged" VerticalAlignment="Center"
+                        AutomationProperties.Name="边缘透明度"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_FollowingEdgeOpacity, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="0% 完全透明，100% 完全不透明；中心到边缘平滑渐变。" Margin="0,8,0,0"/>
+            <TextBlock Text="大小（直径）" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_FollowingSize" Minimum="10" Maximum="120" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="10"
+                        VerticalAlignment="Center" AutomationProperties.Name="跟随圆点直径"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_FollowingSize, Path=Value, StringFormat={}{0:0} DIP}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="DIP 为逻辑像素，默认直径为 30。" Margin="0,8,0,0"/>
+            <TextBlock Text="鼠标跟随延迟" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_FollowingDelay" Minimum="0" Maximum="1000" TickFrequency="10"
+                        IsSnapToTickEnabled="True" SmallChange="10" LargeChange="100"
+                        VerticalAlignment="Center" AutomationProperties.Name="鼠标跟随延迟毫秒"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_FollowingDelay, Path=Value, StringFormat={}{0:0} ms}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="0 ms 立即跟随；延迟仅影响实际鼠标跟随，保存后生效。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+            <TextBlock Text="预览（实际逻辑尺寸，浅色 / 深色背景）" Margin="0,20,0,8"/>
+            <Grid Height="140">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Background="#F4F4F4">
+                    <Ellipse x:Name="ellipse_FollowingPreview"
+                             Width="{Binding ElementName=slider_FollowingSize, Path=Value}"
+                             Height="{Binding ElementName=slider_FollowingSize, Path=Value}"/>
+                </Border>
+                <Border Grid.Column="1" Background="#303030">
+                    <Ellipse Width="{Binding ElementName=slider_FollowingSize, Path=Value}"
+                             Height="{Binding ElementName=slider_FollowingSize, Path=Value}"
+                             Fill="{Binding ElementName=ellipse_FollowingPreview, Path=Fill}"/>
+                </Border>
+            </Grid>
+        </StackPanel>
+        <StackPanel x:Name="panel_Trail" Visibility="Collapsed">
+            <TextBlock Text="轨迹颜色（#RRGGBB）" FontSize="14" Margin="0,0,0,12"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="text_TrailColor" Width="120" Height="28" Margin="0,0,12,0"
+                         VerticalContentAlignment="Center" TextChanged="TrailColor_TextChanged"
+                         AutomationProperties.Name="轨迹颜色"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#0080FF" Tag="#0080FF"
+                        ToolTip="蓝色" AutomationProperties.Name="蓝色" Click="TrailPresetColor_Click"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#32CD32" Tag="#32CD32"
+                        ToolTip="绿色" AutomationProperties.Name="绿色" Click="TrailPresetColor_Click"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#FF4545" Tag="#FF4545"
+                        ToolTip="红色" AutomationProperties.Name="红色" Click="TrailPresetColor_Click"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#FFD700" Tag="#FFD700"
+                        ToolTip="金色" AutomationProperties.Name="金色" Click="TrailPresetColor_Click"/>
+                <Button Width="26" Height="26" Margin="0,0,6,0" Background="#BA55D3" Tag="#BA55D3"
+                        ToolTip="紫色" AutomationProperties.Name="紫色" Click="TrailPresetColor_Click"/>
+                <Button Width="26" Height="26" Background="#FFFFFF" Tag="#FFFFFF"
+                        ToolTip="白色" AutomationProperties.Name="白色" Click="TrailPresetColor_Click"/>
+            </StackPanel>
+            <TextBlock x:Name="text_TrailColorError" Text="请输入有效的 #RRGGBB 颜色，例如 #0080FF。"
+                       Foreground="Crimson" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="头部透明度（当前鼠标端）" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_TrailHeadOpacity" Minimum="0" Maximum="100" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="10"
+                        ValueChanged="TrailSetting_ValueChanged" VerticalAlignment="Center"
+                        AutomationProperties.Name="轨迹头部透明度"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_TrailHeadOpacity, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="尾部透明度（最早轨迹端）" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_TrailTailOpacity" Minimum="0" Maximum="100" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="10"
+                        ValueChanged="TrailSetting_ValueChanged" VerticalAlignment="Center"
+                        AutomationProperties.Name="轨迹尾部透明度"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_TrailTailOpacity, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="0% 完全透明，100% 完全不透明；首尾之间平滑过渡。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+            <TextBlock Text="大小（轨迹宽度）" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_TrailSize" Minimum="4" Maximum="120" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="10"
+                        ValueChanged="TrailSetting_ValueChanged" VerticalAlignment="Center"
+                        AutomationProperties.Name="轨迹宽度"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_TrailSize, Path=Value, StringFormat={}{0:0} DIP}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="DIP 为逻辑像素，默认宽度为 20。" Margin="0,8,0,0"/>
+            <TextBlock Text="预览（缩放显示）：左侧为尾部，右侧为头部" Margin="0,20,0,8"/>
+            <Border Background="#303030" Padding="12">
+                <Image x:Name="image_TrailPreview" Height="120" Stretch="Uniform"/>
+            </Border>
+            <TextBlock Text="轨迹连续平滑连接，停止移动后约 0.5 秒消散。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_InkFluid" Visibility="Collapsed" Margin="0,0,0,24">
+            <TextBlock Text="墨水混合颜色（#RRGGBB）" FontSize="14" Margin="0,0,0,12"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="颜色一" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_InkFluidColor1" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="InkFluidColor_TextChanged" AutomationProperties.Name="墨水颜色一"/>
+                <Border x:Name="preview_InkFluidColor1" Width="28" Height="28" Margin="12,0,0,0"
+                        BorderBrush="Gray" BorderThickness="1"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="颜色二" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_InkFluidColor2" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="InkFluidColor_TextChanged" AutomationProperties.Name="墨水颜色二"/>
+                <Border x:Name="preview_InkFluidColor2" Width="28" Height="28" Margin="12,0,0,0"
+                        BorderBrush="Gray" BorderThickness="1"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="颜色三" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_InkFluidColor3" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="InkFluidColor_TextChanged" AutomationProperties.Name="墨水颜色三"/>
+                <Border x:Name="preview_InkFluidColor3" Width="28" Height="28" Margin="12,0,0,0"
+                        BorderBrush="Gray" BorderThickness="1"/>
+            </StackPanel>
+            <TextBlock x:Name="text_InkFluidColorError" Text="请输入有效的 #RRGGBB 颜色，例如 #18416E。"
+                       Foreground="Crimson" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="三种颜色交织混合；设置为相同颜色可获得单色墨迹。保存后生效。"
+                       Margin="0,8,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_NeonRibbon" Visibility="Collapsed" Margin="0,0,0,24">
+            <TextBlock Text="霓虹渐变颜色（#RRGGBB）" FontSize="14" Margin="0,0,0,12"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="颜色一" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_NeonRibbonColor1" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="NeonRibbonColor_TextChanged" AutomationProperties.Name="霓虹颜色一"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="颜色二" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_NeonRibbonColor2" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="NeonRibbonColor_TextChanged" AutomationProperties.Name="霓虹颜色二"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="颜色三" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_NeonRibbonColor3" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="NeonRibbonColor_TextChanged" AutomationProperties.Name="霓虹颜色三"/>
+            </StackPanel>
+            <TextBlock x:Name="text_NeonRibbonColorError" Text="请输入有效的 #RRGGBB 颜色，例如 #00F0FF。"
+                       Foreground="Crimson" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="渐变预览；三种颜色相同可获得单色缎带。保存后生效。" Margin="0,8,0,8" TextWrapping="Wrap"/>
+            <Image x:Name="image_NeonRibbonPreview" Height="140" Stretch="Uniform"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_ParticleOpacity">
+            <TextBlock Text="透明度" FontSize="14" Margin="0,0,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_Opacity" Minimum="0" Maximum="100" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="10"
+                        ValueChanged="NeonRibbonOpacity_ValueChanged"
+                        VerticalAlignment="Center" AutomationProperties.Name="透明度"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_Opacity, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="0% 完全透明，100% 完全不透明" Margin="0,8,0,0"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_HaloRing" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="光晕圈大小" FontSize="14" Margin="0,0,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_HaloRingSize" Minimum="50" Maximum="300" TickFrequency="5"
+                        IsSnapToTickEnabled="True" SmallChange="5" LargeChange="25"
+                        VerticalAlignment="Center" AutomationProperties.Name="光晕圈大小比例"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_HaloRingSize, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为默认大小；圆环和光晕同步缩放。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+            <TextBlock Text="光晕渐变颜色（#RRGGBB）" FontSize="14" Margin="0,20,0,12"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="颜色一" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_HaloRingColor1" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="HaloRingColor_TextChanged" AutomationProperties.Name="光晕颜色一"/>
+                <Border x:Name="preview_HaloRingColor1" Width="28" Height="28" Margin="12,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="颜色二" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_HaloRingColor2" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="HaloRingColor_TextChanged" AutomationProperties.Name="光晕颜色二"/>
+                <Border x:Name="preview_HaloRingColor2" Width="28" Height="28" Margin="12,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="颜色三" Width="64" VerticalAlignment="Center"/>
+                <TextBox x:Name="text_HaloRingColor3" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="HaloRingColor_TextChanged" AutomationProperties.Name="光晕颜色三"/>
+                <Border x:Name="preview_HaloRingColor3" Width="28" Height="28" Margin="12,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+            </StackPanel>
+            <TextBlock x:Name="text_HaloRingColorError" Text="请输入有效的 #RRGGBB 颜色，例如 #41E1FF。"
+                       Foreground="Crimson" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="三种颜色相同可获得单色光晕。" Margin="0,8,0,0"/>
+            <TextBlock Text="呼吸频率" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_HaloRingBreathingFrequency" Minimum="0.1" Maximum="2" TickFrequency="0.1"
+                        SmallChange="0.1" LargeChange="0.5" VerticalAlignment="Center"
+                        AutomationProperties.Name="光晕圈呼吸频率赫兹"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_HaloRingBreathingFrequency, Path=Value, StringFormat={}{0:0.###} Hz}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="Hz 为每秒完整呼吸次数，数值越大越快；默认每 2.4 秒一次。保存后生效。"
+                       Margin="0,8,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_Catkins" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="柳絮颜色（#RRGGBB）" FontSize="14" Margin="0,0,0,12"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="text_CatkinsColor" Width="120" Height="28" VerticalContentAlignment="Center"
+                         TextChanged="CatkinsColor_TextChanged" AutomationProperties.Name="柳絮颜色"/>
+                <Border x:Name="preview_CatkinsColor" Width="28" Height="28" Margin="12,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+            </StackPanel>
+            <TextBlock x:Name="text_CatkinsColorError" Text="请输入有效的 #RRGGBB 颜色。" Foreground="Red" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="柳絮大小" FontSize="14" Margin="0,20,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_CatkinsSize" Minimum="50" Maximum="300" TickFrequency="5"
+                        IsSnapToTickEnabled="True" SmallChange="5" LargeChange="25"
+                        VerticalAlignment="Center" AutomationProperties.Name="柳絮大小比例"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_CatkinsSize, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为原有大小，绒丝和光晕同步缩放；保存后生效。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_StardustSize" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="粒子大小" FontSize="14" Margin="0,0,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_StardustSize" Minimum="50" Maximum="300" TickFrequency="5"
+                        IsSnapToTickEnabled="True" SmallChange="5" LargeChange="25"
+                        VerticalAlignment="Center" AutomationProperties.Name="星尘粒子大小比例"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_StardustSize, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为默认大小；星点、光晕和星芒同步缩放，保存后生效。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_Expansion" Margin="0,24,0,0">
+            <TextBlock Text="扩展范围" FontSize="14" Margin="0,0,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_Expansion" Minimum="25" Maximum="300" TickFrequency="5"
+                        IsSnapToTickEnabled="True" SmallChange="5" LargeChange="25"
+                        VerticalAlignment="Center" AutomationProperties.Name="烟花扩展范围"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_Expansion, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为默认范围，保存后新绽放的烟花生效" Margin="0,8,0,0"/>
+        </StackPanel>
+        <TextBlock x:Name="text_SharedSettings" Text="普通版与 GDI+ 版共用同类特效设置。" Margin="0,24,0,0"/>
+        <Grid Margin="0,24,0,0">
+            <Button x:Name="btn_Reset" Content="恢复默认" Width="88" Height="28" HorizontalAlignment="Left"
+                    Style="{DynamicResource ButtonStyle}" Click="Reset_Click"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btn_Save" Content="保存" Width="72" Height="28" Margin="0,0,12,0" IsDefault="True"
+                        Style="{DynamicResource ButtonStyle}" Click="Save_Click"/>
+                <Button Content="取消" Width="72" Height="28" IsCancel="True"
+                        Style="{DynamicResource ButtonStyle}"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+    </ScrollViewer>
+</Window>

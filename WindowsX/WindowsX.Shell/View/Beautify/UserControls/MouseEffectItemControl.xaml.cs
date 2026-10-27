@@ -61,6 +61,12 @@ namespace WindowsX.Shell.View.Beautify.UserControls
             }
         }
 
+        public ImageSource PreviewImageSource
+        {
+            get => this.image.Source;
+            set => this.image.Source = value;
+        }
+
         private MouseEffectType mouseEffectType = MouseEffectType.FollowingDot;
         public MouseEffectType MouseEffectType
         {

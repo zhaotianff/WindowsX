@@ -5,9 +5,170 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WindowsX.Shell.Pages"
       xmlns:uc="clr-namespace:WindowsX.Shell.View.Beautify.UserControls"
+      xmlns:effects="clr-namespace:WindowsX.Shell.Infrastructure.MouseEffect"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MouseEffect">
+
+    <Page.Resources>
+        <DrawingImage x:Key="InkFluidPreview">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#E3EDF1">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,260,170" RadiusX="10" RadiusY="10"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Brush>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#E018416E" Offset="0"/>
+                                <GradientStop Color="#A0293168" Offset="0.45"/>
+                                <GradientStop Color="#00187085" Offset="1"/>
+                            </RadialGradientBrush>
+                        </GeometryDrawing.Brush>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup FillRule="Nonzero">
+                                <EllipseGeometry Center="63,105" RadiusX="37" RadiusY="28"/>
+                                <EllipseGeometry Center="100,89" RadiusX="46" RadiusY="42"/>
+                                <EllipseGeometry Center="148,90" RadiusX="48" RadiusY="45"/>
+                                <EllipseGeometry Center="185,65" RadiusX="35" RadiusY="32"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="M 44,115 C 77,138 85,73 128,66 C 169,59 184,96 158,109 C 138,119 122,105 137,92 C 157,76 189,82 213,51">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#8018416E" Thickness="7" StartLineCap="Round" EndLineCap="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="M 59,118 C 89,140 105,107 97,91 C 88,70 112,45 140,54">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#60187085" Thickness="4" StartLineCap="Round" EndLineCap="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="SnowflakesPreview">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#233F61">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,260,170" RadiusX="10" RadiusY="10"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="M 95,40 L 95,130 M 56,62.5 L 134,107.5 M 56,107.5 L 134,62.5 M 84,69 L 95,58 L 106,69 M 84,101 L 95,112 L 106,101 M 106,67 L 122,69 L 118,83 M 118,87 L 122,101 L 106,103 M 84,67 L 68,69 L 72,83 M 72,87 L 68,101 L 84,103">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#E1F5FF" Thickness="3" StartLineCap="Round" EndLineCap="Round" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="M 195,30 L 195,80 M 173,42 L 217,68 M 173,68 L 217,42 M 187,46 L 195,39 L 203,46 M 187,64 L 195,71 L 203,64">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#BCE8FF" Thickness="2" StartLineCap="Round" EndLineCap="Round" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#E1F5FF">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <EllipseGeometry Center="35,35" RadiusX="2" RadiusY="2"/>
+                                <EllipseGeometry Center="178,128" RadiusX="3" RadiusY="3"/>
+                                <EllipseGeometry Center="222,108" RadiusX="2" RadiusY="2"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="FivePointedStarsPreview">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#28233F">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,260,170" RadiusX="10" RadiusY="10"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFD700" Geometry="M 100,38 L 112,72 L 148,73 L 119,95 L 130,130 L 100,110 L 70,130 L 81,95 L 52,73 L 88,72 Z"/>
+                    <GeometryDrawing Brush="#FF69B4" Geometry="M 195,25 L 202,46 L 225,47 L 207,61 L 214,82 L 195,69 L 176,82 L 183,61 L 165,47 L 188,46 Z"/>
+                    <GeometryDrawing Brush="#87CEFA" Geometry="M 204,112 L 208,123 L 220,123 L 210,131 L 214,142 L 204,135 L 194,142 L 198,131 L 188,123 L 200,123 Z"/>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="FireworksPreview">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#172039">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,260,170" RadiusX="10" RadiusY="10"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="M 103,68 L 103,30 M 116,74 L 144,47 M 120,87 L 158,87 M 115,99 L 142,125 M 103,105 L 103,143 M 91,99 L 63,126 M 86,87 L 48,87 M 91,74 L 64,47">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFD45B" Thickness="3" StartLineCap="Round" EndLineCap="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="M 96,69 L 88,49 M 110,69 L 119,48 M 121,81 L 139,73 M 120,95 L 140,104 M 110,104 L 118,123 M 95,104 L 87,124 M 85,95 L 68,102 M 85,80 L 66,72">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF74B5" Thickness="2.5" StartLineCap="Round" EndLineCap="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="M 191,45 L 191,20 M 200,49 L 217,32 M 204,58 L 230,58 M 200,67 L 217,85 M 191,71 L 191,97 M 182,67 L 164,85 M 178,58 L 152,58 M 182,49 L 164,32">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#7EDFFF" Thickness="2" StartLineCap="Round" EndLineCap="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFF8D6">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <EllipseGeometry Center="103,87" RadiusX="4" RadiusY="4"/>
+                                <EllipseGeometry Center="191,58" RadiusX="3" RadiusY="3"/>
+                                <EllipseGeometry Center="44,36" RadiusX="2" RadiusY="2"/>
+                                <EllipseGeometry Center="221,125" RadiusX="2" RadiusY="2"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="WillowCatkinsPreview">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Brush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#648A70" Offset="0"/>
+                                <GradientStop Color="#B1C98B" Offset="1"/>
+                            </LinearGradientBrush>
+                        </GeometryDrawing.Brush>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,260,170" RadiusX="10" RadiusY="10"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="M 25,0 Q 30,68 12,132 M 58,0 Q 76,50 64,100 M 98,0 Q 112,26 104,61">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#446B48" Thickness="1.5"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#A8D57C" Geometry="M 27,26 Q 48,34 28,55 Q 33,35 27,26 M 25,62 Q 39,78 21,98 Q 28,78 25,62 M 64,20 Q 87,30 69,54 Q 74,33 64,20 M 69,59 Q 87,73 66,93 Q 74,71 69,59 M 105,24 Q 125,33 107,51 Q 113,34 105,24"/>
+                    <GeometryDrawing Geometry="M 102,108 L 126,116 M 110,100 L 118,124 M 103,120 L 125,104 M 103,103 L 125,122 M 162,68 L 186,76 M 170,60 L 178,84 M 163,80 L 185,64 M 163,63 L 185,82 M 206,126 L 230,134 M 214,118 L 222,142 M 207,138 L 229,122 M 207,121 L 229,140">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#EFFFF5" Thickness="1" StartLineCap="Round" EndLineCap="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFF0">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <EllipseGeometry Center="114,112" RadiusX="4" RadiusY="2.5"/>
+                                <EllipseGeometry Center="174,72" RadiusX="4" RadiusY="2.5"/>
+                                <EllipseGeometry Center="218,130" RadiusX="4" RadiusY="2.5"/>
+                                <EllipseGeometry Center="146,146" RadiusX="2" RadiusY="1.5"/>
+                                <EllipseGeometry Center="230,43" RadiusX="2" RadiusY="1.5"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </Page.Resources>
 
     <Grid>
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -23,8 +184,26 @@
                     </WrapPanel>
                 </GroupBox>
                 <WrapPanel IsEnabled="{Binding ElementName=cbx_EnableMouseEffect,Path=IsChecked}">
-                    <uc:MouseEffectItemControl Width="300" Height="300" Title="跟随" PreviewImage="../../../Icon/MouseEffect/followingdot.png" MouseEffectType="FollowingDot" Margin="10" OnSet="MouseEffectItemControl_OnSet"></uc:MouseEffectItemControl>
-                    <uc:MouseEffectItemControl Width="300" Height="300" Title="轨迹" PreviewImage="../../../Icon/MouseEffect/cursortrail.png" MouseEffectType="CursorTrail" Margin="10" OnSet="MouseEffectItemControl_OnSet"></uc:MouseEffectItemControl>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="跟随" PreviewImageSource="{x:Static effects:FollowingDotEffect.PreviewImage}" MouseEffectType="FollowingDot" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="跟随鼠标的渐变光晕，可设置颜色及中心、边缘透明度"></uc:MouseEffectItemControl>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="轨迹" PreviewImageSource="{x:Static effects:CursorTrailEffect.PreviewImage}" MouseEffectType="CursorTrail" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="连续平滑的鼠标轨迹，可设置颜色、大小及头尾透明度"></uc:MouseEffectItemControl>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="烟花" PreviewImageSource="{StaticResource FireworksPreview}" MouseEffectType="Fireworks" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，彩色烟花绽放并渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="春日柳絮" PreviewImageSource="{StaticResource WillowCatkinsPreview}" MouseEffectType="WillowCatkins" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，轻盈柳絮随风摇曳、缓缓飘落"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="雪花" PreviewImageSource="{StaticResource SnowflakesPreview}" MouseEffectType="Snowflakes" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，六角雪花缓慢旋转、摇曳飘落"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="五角星" PreviewImageSource="{StaticResource FivePointedStarsPreview}" MouseEffectType="FivePointedStars" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，彩色五角星轻轻扩散、旋转并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="墨水流体" PreviewImageSource="{StaticResource InkFluidPreview}" MouseEffectType="InkFluid" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，墨迹连续流动、卷动扩散并渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="霓虹缎带" PreviewImageSource="{x:Static effects:NeonRibbonCursorEffect.PreviewImage}" MouseEffectType="NeonRibbon" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，青紫粉渐变缎带流动发光，停止后渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="水波涟漪" PreviewImageSource="{x:Static effects:WaterRippleCursorEffect.PreviewImage}" MouseEffectType="WaterRipple" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，浅蓝色水波从落点向外扩散，多重涟漪渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="星尘粒子" PreviewImageSource="{x:Static effects:StardustCursorEffect.PreviewImage}" MouseEffectType="Stardust" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过留下细小星点，轻微闪烁、漂移并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="花瓣飘落" PreviewImageSource="{x:Static effects:FallingPetalsCursorEffect.PreviewImage}" MouseEffectType="FallingPetals" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过洒落粉红花瓣，轻轻旋转、摇摆下落并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="彩色雾" PreviewImageSource="{x:Static effects:ColorfulMistCursorEffect.PreviewImage}" MouseEffectType="ColorfulMist" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过留下柔和彩色雾气，缓缓扩散、漂移并渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="烟花尾迹" PreviewImageSource="{x:Static effects:FireworksTrailCursorEffect.PreviewImage}" MouseEffectType="FireworksTrail" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标移动时彩色粒子向四周爆出，拖着渐隐尾迹受重力下坠"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="落叶" PreviewImageSource="{x:Static effects:FallingLeavesCursorEffect.PreviewImage}" MouseEffectType="FallingLeaves" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过留下秋色叶片，轻轻旋转、摇摆下落并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="图标雨" PreviewImageSource="{x:Static effects:IconRainCursorEffect.PreviewImage}" MouseEffectType="IconRain" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过冒出星星、爱心和猫爪，轻轻弹起、旋转下落并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="光晕圈" PreviewImageSource="{x:Static effects:HaloRingCursorEffect.PreviewImage}" MouseEffectType="HaloRing" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="光标外围的中空渐变圆环，大小与亮度轻柔呼吸变化，静止时持续呼吸"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="跟随小动物" PreviewImageSource="{x:Static effects:FollowingAnimalCursorEffect.PreviewImage}" MouseEffectType="FollowingAnimal" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="橘色小猫轻轻追随光标，移动时转向迈步，静止时在光标旁摆尾"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="棉花糖粒子" PreviewImageSource="{x:Static effects:CottonCandyCursorEffect.PreviewImage}" MouseEffectType="CottonCandy" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标拖出粉白蓬松云团，像棉花糖和奶油泡沫，轻轻上浮、膨胀并消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="烟花（GDI+）" PreviewImageSource="{StaticResource FireworksPreview}" MouseEffectType="FireworksGdiPlus" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="GDI+ 绘制：移动鼠标，彩色烟花绽放并渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="春日柳絮（GDI+）" PreviewImageSource="{StaticResource WillowCatkinsPreview}" MouseEffectType="WillowCatkinsGdiPlus" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="GDI+ 绘制：移动鼠标，轻盈柳絮随风摇曳、缓缓飘落"/>
                 </WrapPanel>
             </StackPanel>
         </ScrollViewer>

@@ -35,6 +35,7 @@
                 <ResourceDictionary Source="Styles/GroupBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/CheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/SliderStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ProgressBarStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ListBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/RadioButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ImageStyle.xaml"/>
