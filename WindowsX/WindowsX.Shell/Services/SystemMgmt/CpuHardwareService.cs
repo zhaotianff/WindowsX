@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using WindowsX.Shell.Model.SystemMgmt;
 using WindowsX.Shell.PInvoke;
-using WindowsX.Shell.Services.SystemMgmt.Contract;
+using WindowsX.Shell.Services.SystemMgmt.Contracts;
 
 namespace WindowsX.Shell.Services.SystemMgmt
 {

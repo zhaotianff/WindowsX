@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WindowsX.Shell.Model.SystemMgmt;
 
-namespace WindowsX.Shell.Services.SystemMgmt.Contract
+namespace WindowsX.Shell.Services.SystemMgmt.Contracts
 {
     public interface ICpuHardwareReader
     {

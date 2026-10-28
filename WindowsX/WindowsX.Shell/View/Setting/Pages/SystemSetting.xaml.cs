@@ -3,7 +3,8 @@ using System.IO;
 using System.Security;
 using System.Windows;
 using System.Windows.Controls;
-using WindowsX.Shell.Infrastructure;
+using WindowsX.Shell.Services.Application;
+using WindowsX.Shell.Services.Application.Contracts;
 
 namespace WindowsX.Shell.View.Setting.Pages
 {

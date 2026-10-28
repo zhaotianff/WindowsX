@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Globalization;
 using WindowsX.Shell.Model.SystemMgmt;
 using WindowsX.Shell.Services.SystemMgmt;
-using WindowsX.Shell.Services.SystemMgmt.Contract;
+using WindowsX.Shell.Services.SystemMgmt.Contracts;
 
 namespace WindowsX.ShellTests.Services
 {

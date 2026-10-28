@@ -3,7 +3,7 @@ using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using WindowsX.Shell.Infrastructure;
+using WindowsX.Shell.Services.Application;
 using WindowsX.Shell.View.Setting.Pages;
 
 namespace WindowsX.ShellTests.Infrastructure
@@ -26,7 +26,7 @@ namespace WindowsX.ShellTests.Infrastructure
                 Assert.IsTrue(service.IsEnabled());
                 using (var key = Registry.CurrentUser.OpenSubKey(path, true)!)
                 {
-                    Assert.AreEqual("\"D:\\Apps With Spaces\\中文\\WindowsX.Shell.exe\" --autostart", key.GetValue(ApplicationStartupService.ValueName));
+                    Assert.AreEqual("\"D:\\Apps With Spaces\\中文\\WindowsX.Shell.exe\" --autostart", key.GetValue(ApplicationStartupService.ApplicationName));
                     key.SetValue("OtherApp", "unchanged");
                 }
                 service.SetEnabled(false);

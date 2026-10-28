@@ -30,88 +30,89 @@
             <Button x:Name="btn_Cancel" Grid.Column="2" Content="取消" Width="60" Height="28" IsEnabled="False"
                     Style="{StaticResource ButtonStyle}" Click="btn_Cancel_Click"/>
         </Grid>
-    <TabControl Grid.Row="1" Style="{StaticResource TabControlStyle}">
-        <TabItem Header="硬件信息"  Style="{StaticResource StyleTabItem}">
-            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <uc:SystemInfoItemControl Title="操作系统" Icon="&#xE7F8;" x:Name="Panel_Sys" Margin="10"></uc:SystemInfoItemControl>
-
-                    <Grid Grid.Row="0" Grid.Column="1">
+        <TabControl Grid.Row="1" Style="{StaticResource TabControlStyle}">
+            <TabItem Header="硬件信息"  Style="{StaticResource StyleTabItem}">
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
 
-                        <uc:SystemInfoItemControl Title="主板" Icon="&#xEC0A;" x:Name="Panel_MotherBoard" Margin="10"></uc:SystemInfoItemControl>
-                        <uc:SystemInfoItemControl Title="处理器" Icon="&#xEC48;" x:Name="Panel_Cpu" Margin="10" Grid.Column="1"></uc:SystemInfoItemControl>
-                        <uc:SystemInfoItemControl Title="内存" Icon="&#xE950;" x:Name="Panel_Memory" Margin="10" Grid.Row="1" Grid.Column="0"></uc:SystemInfoItemControl>
-                        <uc:SystemInfoItemControl Title="磁盘" Icon="&#xEDA2;" x:Name="Panel_Disk" Margin="10" Grid.Row="1" Grid.Column="1"></uc:SystemInfoItemControl>
+                        <uc:SystemInfoItemControl Title="操作系统" Icon="&#xE7F8;" x:Name="Panel_Sys" Margin="10"></uc:SystemInfoItemControl>
+
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <uc:SystemInfoItemControl Title="主板" Icon="&#xEC0A;" x:Name="Panel_MotherBoard" Margin="10"></uc:SystemInfoItemControl>
+                            <uc:SystemInfoItemControl Title="处理器" Icon="&#xEC48;" x:Name="Panel_Cpu" Margin="10" Grid.Column="1"></uc:SystemInfoItemControl>
+                            <uc:SystemInfoItemControl Title="内存" Icon="&#xE950;" x:Name="Panel_Memory" Margin="10" Grid.Row="1" Grid.Column="0"></uc:SystemInfoItemControl>
+                            <uc:SystemInfoItemControl Title="磁盘" Icon="&#xEDA2;" x:Name="Panel_Disk" Margin="10" Grid.Row="1" Grid.Column="1"></uc:SystemInfoItemControl>
+                        </Grid>
+
+                        <uc:SystemInfoItemControl Title="显卡" Icon="&#xE963;" x:Name="Panel_Graphics" Grid.Row="1" Grid.Column="0" Margin="10,5,10,45"></uc:SystemInfoItemControl>
+
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <uc:SystemInfoItemControl Title="显示器" Icon="&#xE7F4;" x:Name="Panel_Monitor" Grid.Column="0" Margin="10,5,10,45"></uc:SystemInfoItemControl>
+                            <uc:SystemInfoItemControl Title="网络适配器" Icon="&#xEDA3;" x:Name="Panel_Network" Grid.Column="1" Margin="10,5,10,45"></uc:SystemInfoItemControl>
+                        </Grid>
                     </Grid>
-
-                    <uc:SystemInfoItemControl Title="显卡" Icon="&#xE963;" x:Name="Panel_Graphics" Grid.Row="1" Grid.Column="0" Margin="10,5,10,45"></uc:SystemInfoItemControl>
-
-                    <Grid Grid.Row="1" Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <uc:SystemInfoItemControl Title="显示器" Icon="&#xE7F4;" x:Name="Panel_Monitor" Grid.Column="0" Margin="10,5,10,45"></uc:SystemInfoItemControl>
-                        <uc:SystemInfoItemControl Title="网络适配器" Icon="&#xEDA3;" x:Name="Panel_Network" Grid.Column="1" Margin="10,5,10,45"></uc:SystemInfoItemControl>
-                    </Grid>
-                </Grid>
-            </ScrollViewer>
-        </TabItem>
-        <TabItem Header="软件信息" Style="{StaticResource StyleTabItem}">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <DockPanel Margin="0,0,0,8">
-                    <TextBlock Text="搜索软件：" VerticalAlignment="Center"/>
-                    <TextBox x:Name="tbox_SoftwareSearch" MinWidth="160" VerticalContentAlignment="Center"
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="软件信息" Style="{StaticResource StyleTabItem}">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Margin="0,0,0,8">
+                        <TextBlock Text="搜索软件：" VerticalAlignment="Center"/>
+                        <TextBox x:Name="tbox_SoftwareSearch" MinWidth="160" VerticalContentAlignment="Center"
                              ToolTip="按名称、发布者或版本搜索" TextChanged="tbox_SoftwareSearch_TextChanged"/>
-                </DockPanel>
-                <DataGrid x:Name="grid_Software" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
+                    </DockPanel>
+                    <DataGrid x:Name="grid_Software" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
                           CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="True"
                           EnableRowVirtualization="True" EnableColumnVirtualization="True" HeadersVisibility="Column"
                           RowHeaderWidth="0" Background="Transparent">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="名称" Binding="{Binding Name}" Width="2*" MinWidth="150"/>
-                        <DataGridTextColumn Header="版本" Binding="{Binding Version}" Width="*" MinWidth="90"/>
-                        <DataGridTextColumn Header="发布者" Binding="{Binding Publisher}" Width="*" MinWidth="100"/>
-                        <DataGridTextColumn Header="安装日期" Binding="{Binding InstallDate}" Width="100"/>
-                        <DataGridTextColumn Header="安装位置" Binding="{Binding InstallLocation}" Width="2*" MinWidth="120"/>
-                        <DataGridTextColumn Header="范围" Binding="{Binding Scope}" Width="75"/>
-                        <DataGridTextColumn Header="注册表视图" Binding="{Binding RegistryView}" Width="100"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <TextBlock x:Name="tbk_SoftwareEmpty" Grid.Row="1" Text="尚未读取软件清单" IsHitTestVisible="False"
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="名称" Binding="{Binding Name}" Width="2*" MinWidth="150"/>
+                            <DataGridTextColumn Header="版本" Binding="{Binding Version}" Width="*" MinWidth="90"/>
+                            <DataGridTextColumn Header="发布者" Binding="{Binding Publisher}" Width="*" MinWidth="100"/>
+                            <DataGridTextColumn Header="大小" Binding="{Binding EstimatedSize}" Width="*" MinWidth="90"/>
+                            <DataGridTextColumn Header="安装日期" Binding="{Binding InstallDate}" Width="100"/>
+                            <DataGridTextColumn Header="安装位置" Binding="{Binding InstallLocation}" Width="2*" MinWidth="120"/>
+                            <DataGridTextColumn Header="范围" Binding="{Binding Scope}" Width="75"/>
+                            <DataGridTextColumn Header="注册表视图" Binding="{Binding RegistryView}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock x:Name="tbk_SoftwareEmpty" Grid.Row="1" Text="尚未读取软件清单" IsHitTestVisible="False"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <StackPanel Grid.Row="2" Margin="0,8,0,0">
-                    <TextBlock x:Name="tbk_SoftwareCount"/>
-                    <TextBlock Text="仅列出本机及当前用户注册的桌面程序，不含系统组件、更新、未登记的便携软件及商店应用。空字段表示注册表未提供。"
+                    <StackPanel Grid.Row="2" Margin="0,8,0,0">
+                        <TextBlock x:Name="tbk_SoftwareCount"/>
+                        <TextBlock Text="仅列出本机及当前用户注册的桌面程序，不含系统组件、更新、未登记的便携软件及商店应用。空字段表示注册表未提供。"
                                TextWrapping="Wrap" Opacity="0.7"/>
-                </StackPanel>
-            </Grid>
-        </TabItem>
-    </TabControl>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Page>

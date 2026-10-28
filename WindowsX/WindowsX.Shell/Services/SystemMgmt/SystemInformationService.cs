@@ -9,7 +9,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
 using WindowsX.Shell.Model.SystemMgmt;
-using WindowsX.Shell.Services.SystemMgmt.Contract;
+using WindowsX.Shell.Services.SystemMgmt.Contracts;
 
 namespace WindowsX.Shell.Services.SystemMgmt
 {
