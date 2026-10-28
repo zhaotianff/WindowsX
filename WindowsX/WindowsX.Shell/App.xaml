@@ -45,6 +45,7 @@
 
                 <!--Resources-->
                 <ResourceDictionary Source="Resources/ContextMenu/NotifyIconContextMenu.xaml"/>
+                <ResourceDictionary Source="Resources/ImageResources/DrawingImage.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

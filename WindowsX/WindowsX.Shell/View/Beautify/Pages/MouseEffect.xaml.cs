@@ -56,9 +56,13 @@ namespace WindowsX.Shell.Pages
         {
             SynchronizeCheckBox();
             if (mainConfig.MouseEffectSetting.IsEnabled)
+            {
                 ShowMouseEffectWindow();
+            }
             else
+            {
                 CloseMouseEffectWindow();
+            }
         }
 
         private void SynchronizeCheckBox()
