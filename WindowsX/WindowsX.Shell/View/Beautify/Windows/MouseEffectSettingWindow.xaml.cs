@@ -72,6 +72,8 @@ namespace WindowsX.Shell.Windows
             text_CatkinsColor.Text = settings.WillowCatkinsColor;
             slider_CatkinsSize.Value = settings.WillowCatkinsSizeScale * 100;
             panel_Catkins.Visibility = catkins ? Visibility.Visible : Visibility.Collapsed;
+            slider_SnowflakesSize.Value = settings.SnowflakesSizeScale * 100;
+            panel_SnowflakesSize.Visibility = effectType == MouseEffectType.Snowflakes ? Visibility.Visible : Visibility.Collapsed;
             slider_StardustSize.Value = settings.StardustSizeScale * 100;
             panel_StardustSize.Visibility = effectType == MouseEffectType.Stardust ? Visibility.Visible : Visibility.Collapsed;
             slider_HaloRingSize.Value = settings.HaloRingSizeScale * 100;
@@ -318,6 +320,8 @@ namespace WindowsX.Shell.Windows
             }
             if (effectType == MouseEffectType.Stardust)
                 slider_StardustSize.Value = MouseEffectSetting.DefaultStardustSizeScale * 100;
+            if (effectType == MouseEffectType.Snowflakes)
+                slider_SnowflakesSize.Value = MouseEffectSetting.DefaultSnowflakesSizeScale * 100;
             if (effectType == MouseEffectType.HaloRing)
             {
                 slider_HaloRingSize.Value = MouseEffectSetting.DefaultHaloRingSizeScale * 100;
@@ -393,6 +397,7 @@ namespace WindowsX.Shell.Windows
             var previousCatkinsColor = settings.WillowCatkinsColor;
             var previousCatkinsSize = settings.WillowCatkinsSizeScale;
             var previousSnowflakesOpacity = settings.SnowflakesOpacity;
+            var previousSnowflakesSize = settings.SnowflakesSizeScale;
             var previousStarsOpacity = settings.FivePointedStarsOpacity;
             var previousInkFluidOpacity = settings.InkFluidOpacity;
             var previousNeonRibbonOpacity = settings.NeonRibbonOpacity;
@@ -451,6 +456,7 @@ namespace WindowsX.Shell.Windows
             else if (effectType == MouseEffectType.Snowflakes)
             {
                 settings.SnowflakesOpacity = slider_Opacity.Value / 100;
+                settings.SnowflakesSizeScale = slider_SnowflakesSize.Value / 100;
             }
             else if (effectType == MouseEffectType.FivePointedStars)
             {
@@ -540,6 +546,7 @@ namespace WindowsX.Shell.Windows
                 settings.WillowCatkinsColor = previousCatkinsColor;
                 settings.WillowCatkinsSizeScale = previousCatkinsSize;
                 settings.SnowflakesOpacity = previousSnowflakesOpacity;
+                settings.SnowflakesSizeScale = previousSnowflakesSize;
                 settings.FivePointedStarsOpacity = previousStarsOpacity;
                 settings.InkFluidOpacity = previousInkFluidOpacity;
                 settings.NeonRibbonOpacity = previousNeonRibbonOpacity;

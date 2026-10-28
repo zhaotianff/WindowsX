@@ -185,7 +185,10 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                 else if (effectType == MouseEffectType.Snowflakes)
                 {
                     context.PushOpacity(opacity * Math.Min(1, particle.Age / 0.15));
+                    var scale = settings.SnowflakesSizeScale;
+                    context.PushTransform(new ScaleTransform(scale, scale, particle.Position.X, particle.Position.Y));
                     DrawSnowflake(context, particle);
+                    context.Pop();
                 }
                 else if (effectType == MouseEffectType.FivePointedStars)
                 {

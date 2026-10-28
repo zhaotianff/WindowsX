@@ -306,6 +306,22 @@
             </Grid>
             <TextBlock Text="100% 为原有大小，绒丝和光晕同步缩放；保存后生效。" Margin="0,8,0,0" TextWrapping="Wrap"/>
         </StackPanel>
+        <StackPanel x:Name="panel_SnowflakesSize" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="雪花大小" FontSize="14" Margin="0,0,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_SnowflakesSize" Minimum="50" Maximum="300" TickFrequency="5"
+                        IsSnapToTickEnabled="True" SmallChange="5" LargeChange="25"
+                        VerticalAlignment="Center" AutomationProperties.Name="雪花大小比例"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_SnowflakesSize, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为默认大小；枝干和线宽同步缩放，保留每片雪花的大小差异，保存后生效。"
+                       Margin="0,8,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
         <StackPanel x:Name="panel_StardustSize" Visibility="Collapsed" Margin="0,24,0,0">
             <TextBlock Text="粒子大小" FontSize="14" Margin="0,0,0,12"/>
             <Grid>
