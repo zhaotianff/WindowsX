@@ -208,7 +208,6 @@ namespace WindowsX.Shell.Windows
         protected override void OnClosed(EventArgs e)
         {
             isClosed = true;
-            StopMouseEffect();
             base.OnClosed(e);
         }
 
