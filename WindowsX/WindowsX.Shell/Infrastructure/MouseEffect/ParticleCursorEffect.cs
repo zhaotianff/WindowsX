@@ -22,6 +22,8 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
         private Pen catkinPen;
         private Pen catkinStem;
         private string catkinColor;
+        private Brush starBrush;
+        private string starColor;
         private static readonly Pen SnowflakePen = CreatePen(CreateBrush(Color.FromRgb(225, 245, 255)), 1);
         private static readonly Geometry StarGeometry = CreateStarGeometry();
 
@@ -165,6 +167,12 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
         {
             if (effectType == MouseEffectType.WillowCatkins)
                 UpdateCatkinBrushes();
+            if (effectType == MouseEffectType.FivePointedStars && !settings.FivePointedStarsUseRandomColors
+                && starColor != settings.FivePointedStarsColor)
+            {
+                starColor = settings.FivePointedStarsColor;
+                starBrush = CreateBrush((Color)ColorConverter.ConvertFromString(starColor));
+            }
             using var context = visual.RenderOpen();
             foreach (var particle in particles)
             {
@@ -194,11 +202,12 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                 {
                     context.PushOpacity(opacity * Math.Min(1, particle.Age / 0.08));
                     var transform = Matrix.Identity;
-                    transform.Scale(particle.Size, particle.Size);
+                    var size = particle.Size * settings.FivePointedStarsSizeScale;
+                    transform.Scale(size, size);
                     transform.Rotate(particle.Phase * 180 / Math.PI + particle.Age * 75);
                     transform.Translate(particle.Position.X, particle.Position.Y);
                     context.PushTransform(new MatrixTransform(transform));
-                    context.DrawGeometry(SparkBrushes[particle.ColorIndex], null, StarGeometry);
+                    context.DrawGeometry(settings.FivePointedStarsUseRandomColors ? SparkBrushes[particle.ColorIndex] : starBrush, null, StarGeometry);
                     context.Pop();
                 }
                 else

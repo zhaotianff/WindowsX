@@ -74,6 +74,10 @@ namespace WindowsX.Shell.Windows
             panel_Catkins.Visibility = catkins ? Visibility.Visible : Visibility.Collapsed;
             slider_SnowflakesSize.Value = settings.SnowflakesSizeScale * 100;
             panel_SnowflakesSize.Visibility = effectType == MouseEffectType.Snowflakes ? Visibility.Visible : Visibility.Collapsed;
+            slider_FivePointedStarsSize.Value = settings.FivePointedStarsSizeScale * 100;
+            text_FivePointedStarsColor.Text = settings.FivePointedStarsColor;
+            check_FivePointedStarsRandomColors.IsChecked = settings.FivePointedStarsUseRandomColors;
+            panel_FivePointedStars.Visibility = effectType == MouseEffectType.FivePointedStars ? Visibility.Visible : Visibility.Collapsed;
             slider_StardustSize.Value = settings.StardustSizeScale * 100;
             panel_StardustSize.Visibility = effectType == MouseEffectType.Stardust ? Visibility.Visible : Visibility.Collapsed;
             slider_HaloRingSize.Value = settings.HaloRingSizeScale * 100;
@@ -112,6 +116,31 @@ namespace WindowsX.Shell.Windows
             UpdateInkFluidPreview();
             UpdateNeonRibbonPreview();
             UpdateHaloRingPreview();
+            UpdateFivePointedStarsPreview();
+        }
+
+        private void FivePointedStarsColor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateFivePointedStarsPreview();
+        }
+
+        private void FivePointedStarsColorMode_Changed(object sender, RoutedEventArgs e)
+        {
+            UpdateFivePointedStarsPreview();
+        }
+
+        private void UpdateFivePointedStarsPreview()
+        {
+            if (!isInitialized || effectType != MouseEffectType.FivePointedStars)
+                return;
+
+            var randomColors = check_FivePointedStarsRandomColors.IsChecked == true;
+            var valid = randomColors || MouseEffectSetting.IsValidColor(text_FivePointedStarsColor.Text);
+            text_FivePointedStarsColor.IsEnabled = !randomColors;
+            preview_FivePointedStarsColor.Opacity = randomColors ? 0.4 : 1;
+            text_FivePointedStarsColorError.Visibility = valid ? Visibility.Collapsed : Visibility.Visible;
+            btn_Save.IsEnabled = valid;
+            UpdateColorSwatch(preview_FivePointedStarsColor, text_FivePointedStarsColor.Text);
         }
 
         private void HaloRingColor_TextChanged(object sender, TextChangedEventArgs e)
@@ -322,6 +351,12 @@ namespace WindowsX.Shell.Windows
                 slider_StardustSize.Value = MouseEffectSetting.DefaultStardustSizeScale * 100;
             if (effectType == MouseEffectType.Snowflakes)
                 slider_SnowflakesSize.Value = MouseEffectSetting.DefaultSnowflakesSizeScale * 100;
+            if (effectType == MouseEffectType.FivePointedStars)
+            {
+                slider_FivePointedStarsSize.Value = MouseEffectSetting.DefaultFivePointedStarsSizeScale * 100;
+                text_FivePointedStarsColor.Text = MouseEffectSetting.DefaultFivePointedStarsColor;
+                check_FivePointedStarsRandomColors.IsChecked = MouseEffectSetting.DefaultFivePointedStarsUseRandomColors;
+            }
             if (effectType == MouseEffectType.HaloRing)
             {
                 slider_HaloRingSize.Value = MouseEffectSetting.DefaultHaloRingSizeScale * 100;
@@ -346,6 +381,13 @@ namespace WindowsX.Shell.Windows
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            if (effectType == MouseEffectType.FivePointedStars && check_FivePointedStarsRandomColors.IsChecked != true
+                && !MouseEffectSetting.IsValidColor(text_FivePointedStarsColor.Text))
+            {
+                UpdateFivePointedStarsPreview();
+                text_FivePointedStarsColor.Focus();
+                return;
+            }
             if (effectType == MouseEffectType.HaloRing && !HasValidHaloRingColors())
             {
                 UpdateHaloRingPreview();
@@ -399,6 +441,9 @@ namespace WindowsX.Shell.Windows
             var previousSnowflakesOpacity = settings.SnowflakesOpacity;
             var previousSnowflakesSize = settings.SnowflakesSizeScale;
             var previousStarsOpacity = settings.FivePointedStarsOpacity;
+            var previousStarsSize = settings.FivePointedStarsSizeScale;
+            var previousStarsColor = settings.FivePointedStarsColor;
+            var previousStarsRandomColors = settings.FivePointedStarsUseRandomColors;
             var previousInkFluidOpacity = settings.InkFluidOpacity;
             var previousNeonRibbonOpacity = settings.NeonRibbonOpacity;
             var previousWaterRippleOpacity = settings.WaterRippleOpacity;
@@ -461,6 +506,10 @@ namespace WindowsX.Shell.Windows
             else if (effectType == MouseEffectType.FivePointedStars)
             {
                 settings.FivePointedStarsOpacity = slider_Opacity.Value / 100;
+                settings.FivePointedStarsSizeScale = slider_FivePointedStarsSize.Value / 100;
+                settings.FivePointedStarsUseRandomColors = check_FivePointedStarsRandomColors.IsChecked == true;
+                if (MouseEffectSetting.IsValidColor(text_FivePointedStarsColor.Text))
+                    settings.FivePointedStarsColor = text_FivePointedStarsColor.Text;
             }
             else if (effectType == MouseEffectType.NeonRibbon)
             {
@@ -548,6 +597,9 @@ namespace WindowsX.Shell.Windows
                 settings.SnowflakesOpacity = previousSnowflakesOpacity;
                 settings.SnowflakesSizeScale = previousSnowflakesSize;
                 settings.FivePointedStarsOpacity = previousStarsOpacity;
+                settings.FivePointedStarsSizeScale = previousStarsSize;
+                settings.FivePointedStarsColor = previousStarsColor;
+                settings.FivePointedStarsUseRandomColors = previousStarsRandomColors;
                 settings.InkFluidOpacity = previousInkFluidOpacity;
                 settings.NeonRibbonOpacity = previousNeonRibbonOpacity;
                 settings.WaterRippleOpacity = previousWaterRippleOpacity;

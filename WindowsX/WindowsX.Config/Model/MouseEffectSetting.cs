@@ -25,6 +25,9 @@ namespace WindowsX.Config.Model
         public const string DefaultNeonRibbonColor3 = "#FF37B4";
         public const double DefaultStardustSizeScale = 1;
         public const double DefaultSnowflakesSizeScale = 1;
+        public const double DefaultFivePointedStarsSizeScale = 1;
+        public const string DefaultFivePointedStarsColor = "#FFD700";
+        public const bool DefaultFivePointedStarsUseRandomColors = true;
         public const double DefaultHaloRingSizeScale = 1;
         public const double DefaultHaloRingBreathingFrequency = 1.0 / 2.4;
         public const string DefaultHaloRingColor1 = "#41E1FF";
@@ -41,6 +44,8 @@ namespace WindowsX.Config.Model
         private double snowflakesOpacity = 1;
         private double snowflakesSizeScale = DefaultSnowflakesSizeScale;
         private double fivePointedStarsOpacity = 1;
+        private double fivePointedStarsSizeScale = DefaultFivePointedStarsSizeScale;
+        private string fivePointedStarsColor = DefaultFivePointedStarsColor;
         private double inkFluidOpacity = 1;
         private double neonRibbonOpacity = 1;
         private double waterRippleOpacity = 1;
@@ -176,6 +181,20 @@ namespace WindowsX.Config.Model
             get => fivePointedStarsOpacity;
             set => fivePointedStarsOpacity = Normalize(value, 0, 1);
         }
+
+        public double FivePointedStarsSizeScale
+        {
+            get => fivePointedStarsSizeScale;
+            set => fivePointedStarsSizeScale = Normalize(value, 0.5, 3, DefaultFivePointedStarsSizeScale);
+        }
+
+        public string FivePointedStarsColor
+        {
+            get => fivePointedStarsColor;
+            set => fivePointedStarsColor = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultFivePointedStarsColor;
+        }
+
+        public bool FivePointedStarsUseRandomColors { get; set; } = DefaultFivePointedStarsUseRandomColors;
 
         public double InkFluidOpacity
         {
