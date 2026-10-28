@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using WindowsX.Config.Model;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Infrastructure.MouseEffect
 {
-    public sealed class StardustCursorEffect : UIElement
+    public sealed class StardustCursorEffect : UIElement,ICursorEffect
     {
         public const int MaxParticles = 256;
         public const int MaxEmissionPerUpdate = 24;

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using WindowsX.Config.Model;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Infrastructure.MouseEffect
 {
-    public sealed class WaterRippleCursorEffect : UIElement
+    public sealed class WaterRippleCursorEffect : UIElement,ICursorEffect
     {
         public const int MaxRipples = 24;
         public const double RingLifetime = 1.2;

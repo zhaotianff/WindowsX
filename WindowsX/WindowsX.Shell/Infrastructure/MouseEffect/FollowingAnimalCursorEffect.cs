@@ -2,10 +2,11 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using WindowsX.Config.Model;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Infrastructure.MouseEffect
 {
-    public sealed class FollowingAnimalCursorEffect : UIElement
+    public sealed class FollowingAnimalCursorEffect : UIElement,ICursorEffect
     {
         private static readonly Brush Fur = CreateBrush(Color.FromRgb(244, 172, 82));
         private static readonly Brush Cream = CreateBrush(Color.FromRgb(255, 234, 194));

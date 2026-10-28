@@ -2,10 +2,11 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using WindowsX.Config.Model;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Infrastructure.MouseEffect
 {
-    public sealed class HaloRingCursorEffect : UIElement
+    public sealed class HaloRingCursorEffect : UIElement,ICursorEffect
     {
         private static readonly double[] LayerOpacities = { 0.05, 0.09, 0.16, 1 };
         private readonly MouseEffectSetting settings;

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using WindowsX.Config.Model;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Infrastructure.MouseEffect
 {
-    public sealed class InkFluidCursorEffect : UIElement
+    public sealed class InkFluidCursorEffect : UIElement,ICursorEffect
     {
         public const int MaxParticles = 192;
         public const int MaxEmissionPerUpdate = 32;

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using WindowsX.Config.Model;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Infrastructure.MouseEffect
 {
-    public sealed class NeonRibbonCursorEffect : UIElement
+    public sealed class NeonRibbonCursorEffect : UIElement,ICursorEffect
     {
         public const int MaxNodes = 192;
         public const double Lifetime = 0.8;

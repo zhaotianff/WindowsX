@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows;
 using WindowsX.Config.Model;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Infrastructure.MouseEffect
 {
-    public class CursorTrailEffect : MouseCursorEffectAbstract
+    public class CursorTrailEffect : MouseCursorEffectAbstract,ICursorEffect
     {
         public const int MaxNodes = 256;
         public const double Lifetime = 0.5;

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using WindowsX.Config.Model;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Infrastructure.MouseEffect
 {
-    public sealed class FireworksTrailCursorEffect : UIElement
+    public sealed class FireworksTrailCursorEffect : UIElement,ICursorEffect
     {
         public const int MaxParticles = 240;
         public const int ParticlesPerBurst = 20;
