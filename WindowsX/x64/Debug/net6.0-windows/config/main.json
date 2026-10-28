@@ -1,1 +1,135 @@
-﻿{"MouseEffectSetting":{"IsEnabled":true,"SelectedEffectType":17,"TrailColor":"#BA55D3","TrailSize":18.0,"TrailHeadOpacity":0.69,"TrailTailOpacity":0.0,"FollowingSize":82.0,"FollowingDelayMilliseconds":90.0,"FollowingColor":"#32CD32","FollowingCenterOpacity":0.4,"FollowingEdgeOpacity":0.0,"FireworksOpacity":1.0,"WillowCatkinsOpacity":0.3,"WillowCatkinsColor":"#FFFAF0","WillowCatkinsSizeScale":1.85,"FireworksExpansion":1.0,"SnowflakesOpacity":1.0,"SnowflakesSizeScale":1.65,"FivePointedStarsOpacity":1.0,"FivePointedStarsSizeScale":1.0,"FivePointedStarsColor":"#FFD700","FivePointedStarsUseRandomColors":true,"InkFluidOpacity":1.0,"ColorfulMistOpacity":1.0,"FireworksTrailOpacity":1.0,"FallingLeavesOpacity":1.0,"IconRainOpacity":1.0,"HaloRingOpacity":1.0,"HaloRingSizeScale":0.75,"HaloRingBreathingFrequency":0.4166666666666667,"HaloRingColor1":"#41E1FF","HaloRingColor2":"#9B6EFF","HaloRingColor3":"#FF78C8","FollowingAnimalOpacity":1.0,"CottonCandyOpacity":1.0,"NeonRibbonOpacity":1.0,"WaterRippleOpacity":1.0,"StardustOpacity":1.0,"FallingPetalsOpacity":0.89,"StardustSizeScale":2.5,"NeonRibbonColor1":"#00F0FF","NeonRibbonColor2":"#9E44FF","NeonRibbonColor3":"#FF37B4","InkFluidColor1":"#18416E","InkFluidColor2":"#293168","InkFluidColor3":"#187085"},"BackgroundSetting":{"BackgroundIndex":1,"ThemeIndex":0,"Colors":["Transparent","White","Silver"],"ResourceImages":["Icon/about_back.jpeg","Icon/back_1.jpg"],"LocalImages":[],"Opacity":0.9,"IsBlurBackground":false},"FlatStartMenuGroupedItems":[{"GroupName":"系统","MenuItems":[{"Name":"cmd","Path":"C:\\Windows\\System32\\cmd.exe"},{"Name":"calc","Path":"C:\\Windows\\System32\\calc.exe"},{"Name":"control","Path":"C:\\Windows\\System32\\control.exe"}]},{"GroupName":"开发","MenuItems":[{"Name":"notepad","Path":"C:\\Windows\\System32\\notepad.exe"}]}],"FlatStartMenuToDoList":[{"Date":"2022-11-03T00:00:00","TodoList":[{"Description":"去西湾红树林公园写代码","FinishStatus":false},{"Description":"去召唤师峡谷练习跑步","FinishStatus":false}]},{"Date":"2022-11-04T00:00:00","TodoList":[{"Description":"去白嫖","FinishStatus":false},{"Description":"去撩妹","FinishStatus":false}]},{"Date":"2022-11-05T00:00:00","TodoList":[{"Description":"去给妹子拍照","FinishStatus":false},{"Description":"摆烂","FinishStatus":false}]}]}
+﻿{
+  "MouseEffectSetting": {
+    "IsEnabled": true,
+    "SelectedEffectType": 17,
+    "TrailColor": "#BA55D3",
+    "TrailSize": 18.0,
+    "TrailHeadOpacity": 0.69,
+    "TrailTailOpacity": 0.0,
+    "FollowingSize": 82.0,
+    "FollowingDelayMilliseconds": 90.0,
+    "FollowingColor": "#32CD32",
+    "FollowingCenterOpacity": 0.4,
+    "FollowingEdgeOpacity": 0.0,
+    "FireworksOpacity": 1.0,
+    "WillowCatkinsOpacity": 0.3,
+    "WillowCatkinsColor": "#FFFAF0",
+    "WillowCatkinsSizeScale": 1.85,
+    "FireworksExpansion": 1.0,
+    "SnowflakesOpacity": 1.0,
+    "SnowflakesSizeScale": 1.65,
+    "FivePointedStarsOpacity": 1.0,
+    "FivePointedStarsSizeScale": 1.0,
+    "FivePointedStarsColor": "#FFD700",
+    "FivePointedStarsUseRandomColors": true,
+    "InkFluidOpacity": 1.0,
+    "ColorfulMistOpacity": 1.0,
+    "FireworksTrailOpacity": 1.0,
+    "FallingLeavesOpacity": 1.0,
+    "IconRainOpacity": 1.0,
+    "HaloRingOpacity": 1.0,
+    "HaloRingSizeScale": 0.75,
+    "HaloRingBreathingFrequency": 0.4166666666666667,
+    "HaloRingColor1": "#41E1FF",
+    "HaloRingColor2": "#9B6EFF",
+    "HaloRingColor3": "#FF78C8",
+    "FollowingAnimalOpacity": 1.0,
+    "CottonCandyOpacity": 1.0,
+    "NeonRibbonOpacity": 1.0,
+    "WaterRippleOpacity": 1.0,
+    "StardustOpacity": 1.0,
+    "FallingPetalsOpacity": 0.89,
+    "StardustSizeScale": 2.5,
+    "NeonRibbonColor1": "#00F0FF",
+    "NeonRibbonColor2": "#9E44FF",
+    "NeonRibbonColor3": "#FF37B4",
+    "InkFluidColor1": "#18416E",
+    "InkFluidColor2": "#293168",
+    "InkFluidColor3": "#187085"
+  },
+  "BackgroundSetting": {
+    "BackgroundIndex": 1,
+    "ThemeIndex": 0,
+    "Colors": [
+      "Transparent",
+      "White",
+      "Silver"
+    ],
+    "ResourceImages": [
+      "Icon/about_back.jpeg",
+      "Icon/back_1.jpg"
+    ],
+    "LocalImages": [],
+    "Opacity": 0.9,
+    "IsBlurBackground": false
+  },
+  "FlatStartMenuGroupedItems": [
+    {
+      "GroupName": "系统",
+      "MenuItems": [
+        {
+          "Name": "cmd",
+          "Path": "C:\\Windows\\System32\\cmd.exe"
+        },
+        {
+          "Name": "calc",
+          "Path": "C:\\Windows\\System32\\calc.exe"
+        },
+        {
+          "Name": "control",
+          "Path": "C:\\Windows\\System32\\control.exe"
+        }
+      ]
+    },
+    {
+      "GroupName": "开发",
+      "MenuItems": [
+        {
+          "Name": "notepad",
+          "Path": "C:\\Windows\\System32\\notepad.exe"
+        }
+      ]
+    }
+  ],
+  "FlatStartMenuToDoList": [
+    {
+      "Date": "2022-11-03T00:00:00",
+      "TodoList": [
+        {
+          "Description": "去西湾红树林公园写代码",
+          "FinishStatus": false
+        },
+        {
+          "Description": "去召唤师峡谷练习跑步",
+          "FinishStatus": false
+        }
+      ]
+    },
+    {
+      "Date": "2022-11-04T00:00:00",
+      "TodoList": [
+        {
+          "Description": "去白嫖",
+          "FinishStatus": false
+        },
+        {
+          "Description": "去撩妹",
+          "FinishStatus": false
+        }
+      ]
+    },
+    {
+      "Date": "2022-11-05T00:00:00",
+      "TodoList": [
+        {
+          "Description": "去给妹子拍照",
+          "FinishStatus": false
+        },
+        {
+          "Description": "摆烂",
+          "FinishStatus": false
+        }
+      ]
+    }
+  ]
+}

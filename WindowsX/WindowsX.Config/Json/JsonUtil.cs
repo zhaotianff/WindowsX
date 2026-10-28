@@ -17,7 +17,7 @@ namespace WindowsX.Config.Json
 
         public static void Serialize(object o,string file)
         {
-            var json = JsonConvert.SerializeObject(o);
+            var json = JsonConvert.SerializeObject(o,Formatting.Indented);
             System.IO.File.WriteAllText(file, json,System.Text.Encoding.UTF8);
         }
     }
