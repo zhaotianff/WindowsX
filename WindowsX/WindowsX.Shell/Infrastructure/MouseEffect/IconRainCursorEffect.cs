@@ -70,7 +70,10 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             }
             using var context = visual.RenderOpen();
             context.PushOpacity(settings.IconRainOpacity);
-            foreach (var particle in particles) DrawIcon(context, particle);
+            foreach (var particle in particles)
+            {
+                DrawIcon(context, particle);
+            }
             context.Pop();
         }
 

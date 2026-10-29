@@ -37,7 +37,10 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
         protected override Visual GetVisualChild(int index)
         {
-            if (index != 0) throw new ArgumentOutOfRangeException(nameof(index));
+            if (index != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
             return visual;
         }
 
@@ -74,7 +77,10 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             }
             using var context = visual.RenderOpen();
             context.PushOpacity(settings.CottonCandyOpacity);
-            foreach (var puff in particles) DrawPuff(context, puff);
+            foreach (var puff in particles)
+            {
+                DrawPuff(context, puff);
+            }
             context.Pop();
         }
 
@@ -89,7 +95,11 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
         private void Emit(Point point)
         {
-            if (particles.Count == MaxParticles) particles.RemoveAt(0);
+            if (particles.Count == MaxParticles)
+            {
+                particles.RemoveAt(0);
+            }
+
             particles.Add(new Puff
             {
                 Origin = point,

@@ -33,7 +33,8 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
         protected override Visual GetVisualChild(int index)
         {
-            if (index != 0) throw new ArgumentOutOfRangeException(nameof(index));
+            if (index != 0) 
+                throw new ArgumentOutOfRangeException(nameof(index));
             return visual;
         }
 
@@ -49,7 +50,9 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                 if (leaf.Age >= leaf.Lifetime) particles.RemoveAt(i);
                 else particles[i] = leaf;
             }
+
             elapsedSinceEmission = Math.Min(1, elapsedSinceEmission + elapsedSeconds);
+
             if (!lastEmissionPoint.HasValue)
             {
                 Emit(cursor);
@@ -68,6 +71,7 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                     elapsedSinceEmission = 0;
                 }
             }
+
             using var context = visual.RenderOpen();
             context.PushOpacity(settings.FallingLeavesOpacity);
             foreach (var leaf in particles) DrawLeaf(context, leaf);
@@ -84,7 +88,11 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
         private void Emit(Point point)
         {
-            if (particles.Count == MaxParticles) particles.RemoveAt(0);
+            if (particles.Count == MaxParticles)
+            {
+                particles.RemoveAt(0);
+            }
+
             particles.Add(new Leaf
             {
                 Origin = point,

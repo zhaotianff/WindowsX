@@ -35,7 +35,8 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
         protected override Visual GetVisualChild(int index)
         {
-            if (index != 0) throw new ArgumentOutOfRangeException(nameof(index));
+            if (index != 0) 
+                throw new ArgumentOutOfRangeException(nameof(index));
             return visual;
         }
 
@@ -51,7 +52,9 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                 if (petal.Age >= petal.Lifetime) particles.RemoveAt(i);
                 else particles[i] = petal;
             }
+
             elapsedSinceEmission = Math.Min(1, elapsedSinceEmission + elapsedSeconds);
+
             if (!lastEmissionPoint.HasValue)
             {
                 Emit(cursor);

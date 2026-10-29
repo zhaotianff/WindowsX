@@ -174,6 +174,7 @@ namespace WindowsX.Shell.Windows
                     return;
             }
 
+            //GDI+
             if (currentEffectType == MouseEffectType.FireworksGdiPlus || currentEffectType == MouseEffectType.WillowCatkinsGdiPlus)
             {
                 if (gdiParticleEffect == null)
@@ -186,6 +187,8 @@ namespace WindowsX.Shell.Windows
                 return;
             }
 
+            //FollowingDotEffect(use ICursorEffect instead)
+            //only following dot
             legacyElapsed += elapsed;
             if (legacyElapsed < 0.01)
                 return;
@@ -240,7 +243,7 @@ namespace WindowsX.Shell.Windows
             switch(currentEffectType)
             {
                 case MouseEffectType.FollowingDot:
-                    fixedCount = 1;
+                    fixedCount = 20;
                     return new FollowingDotEffect(point, settings);
                 case MouseEffectType.CursorTrail:
                     fixedCount = 1;

@@ -30,7 +30,8 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
         protected override Visual GetVisualChild(int index)
         {
-            if (index != 0) throw new ArgumentOutOfRangeException(nameof(index));
+            if (index != 0) 
+                throw new ArgumentOutOfRangeException(nameof(index));
             return visual;
         }
 
@@ -95,7 +96,8 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
         private static void DrawRibbon(DrawingContext context, IReadOnlyList<RibbonNode> nodes, MouseEffectSetting settings)
         {
-            if (nodes.Count < 2) return;
+            if (nodes.Count < 2) 
+                return;
             var geometry = new StreamGeometry();
             using (var path = geometry.Open())
             {

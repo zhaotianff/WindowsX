@@ -48,8 +48,14 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             {
                 var ripple = ripples[i];
                 ripple.Age += elapsedSeconds;
-                if (ripple.Age >= Lifetime) ripples.RemoveAt(i);
-                else ripples[i] = ripple;
+                if (ripple.Age >= Lifetime)
+                {
+                    ripples.RemoveAt(i);
+                }
+                else
+                {
+                    ripples[i] = ripple;
+                }
             }
 
             elapsedSinceEmission = Math.Min(EmissionInterval, elapsedSinceEmission + elapsedSeconds);

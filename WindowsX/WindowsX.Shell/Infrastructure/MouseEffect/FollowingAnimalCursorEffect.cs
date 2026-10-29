@@ -31,7 +31,8 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
         protected override Visual GetVisualChild(int index)
         {
-            if (index != 0) throw new ArgumentOutOfRangeException(nameof(index));
+            if (index != 0) 
+                throw new ArgumentOutOfRangeException(nameof(index));
             return visual;
         }
 
