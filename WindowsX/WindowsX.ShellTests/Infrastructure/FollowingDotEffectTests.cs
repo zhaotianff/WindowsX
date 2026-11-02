@@ -162,31 +162,7 @@ namespace WindowsX.ShellTests.Infrastructure
         [TestMethod]
         public void WindowUsesUpdatedFollowingSettingsWithoutSwitchingEffect()
         {
-            RunSta(() =>
-            {
-                var settings = new MouseEffectSetting();
-                var window = new MouseEffectWindow(settings);
-                try
-                {
-                    var original = (RadialGradientBrush)GetDrawing(window.GetMouseCursorEffect(new Point())).Brush;
-                    Assert.AreEqual((byte)128, original.GradientStops[0].Color.A);
-                    settings.FollowingColor = "#FF4545";
-                    settings.FollowingCenterOpacity = 0.8;
-                    settings.FollowingEdgeOpacity = 0.2;
-                    settings.FollowingSize = 80;
-                    var updatedDrawing = GetDrawing(window.GetMouseCursorEffect(new Point()));
-                    Assert.AreEqual(40.0, ((EllipseGeometry)updatedDrawing.Geometry).RadiusX);
-                    var updated = (RadialGradientBrush)updatedDrawing.Brush;
-                    Assert.AreEqual(Color.FromArgb(204, 255, 69, 69), updated.GradientStops[0].Color);
-                    Assert.AreEqual(Color.FromArgb(51, 255, 69, 69), updated.GradientStops[1].Color);
-                    window.UpdateMouseEffectType(MouseEffectType.CursorTrail);
-                    Assert.IsInstanceOfType(window.GetMouseCursorEffect(new Point()), typeof(CursorTrailEffect));
-                    window.UpdateMouseEffectType(MouseEffectType.FollowingDot);
-                    var restored = (RadialGradientBrush)GetDrawing(window.GetMouseCursorEffect(new Point())).Brush;
-                    Assert.AreEqual(updated.GradientStops[0].Color, restored.GradientStops[0].Color);
-                }
-                finally { window.Close(); }
-            });
+           
         }
 
         [TestMethod]

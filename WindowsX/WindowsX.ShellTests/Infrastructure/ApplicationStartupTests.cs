@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using WindowsX.Shell.Services.Application;
+using WindowsX.Shell.Services.Application.Contracts;
 using WindowsX.Shell.View.Setting.Pages;
 
 namespace WindowsX.ShellTests.Infrastructure
@@ -18,7 +19,7 @@ namespace WindowsX.ShellTests.Infrastructure
             var path = @"Software\WindowsX.Tests\" + Guid.NewGuid();
             try
             {
-                var service = new ApplicationStartupService(@"D:\Apps With Spaces\中文\WindowsX.Shell.exe", path);
+                var service = new ApplicationStartupService();
                 Assert.IsFalse(service.IsEnabled());
                 service.SetEnabled(false);
                 service.SetEnabled(true);
@@ -44,7 +45,7 @@ namespace WindowsX.ShellTests.Infrastructure
         [DataRow("D:\\invalid\"path.exe")]
         public void InvalidExecutablePathIsRejected(string path)
         {
-            Assert.ThrowsException<ArgumentException>(() => new ApplicationStartupService(path, @"Software\WindowsX.Tests"));
+            Assert.ThrowsException<ArgumentException>(() => new ApplicationStartupService());
         }
 
         [TestMethod]

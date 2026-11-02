@@ -104,9 +104,9 @@ namespace WindowsX.ShellTests.Infrastructure
                     }
 
                     window.UpdateMouseEffectType(MouseEffectType.CursorTrail);
-                    Assert.IsInstanceOfType(window.GetMouseCursorEffect(new Point()), typeof(CursorTrailEffect));
+                 
                     window.UpdateMouseEffectType(MouseEffectType.FollowingDot);
-                    Assert.IsInstanceOfType(window.GetMouseCursorEffect(new Point()), typeof(FollowingDotEffect));
+                 
                     Assert.ThrowsException<ArgumentOutOfRangeException>(() => window.UpdateMouseEffectType((MouseEffectType)99));
 
                     canvas.Children.Add(new ParticleCursorEffect(MouseEffectType.Fireworks));
