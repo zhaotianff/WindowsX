@@ -179,7 +179,7 @@ namespace WindowsX.ShellTests.Infrastructure
                 try
                 {
                     window.UpdateMouseEffectType(MouseEffectType.CursorTrail);
-                    var field = typeof(MouseEffectWindow).GetField("trailEffect", BindingFlags.Instance | BindingFlags.NonPublic)!;
+                    var field = typeof(MouseEffectWindow).GetField("cursorEffect", BindingFlags.Instance | BindingFlags.NonPublic)!;
                     field.SetValue(window, effect);
                     var canvas = (Canvas)window.FindName("canvas");
                     canvas.Children.Add(effect);

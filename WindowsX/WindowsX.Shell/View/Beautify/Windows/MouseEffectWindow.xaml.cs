@@ -27,12 +27,10 @@ namespace WindowsX.Shell.Windows
         private readonly FollowingPositionHistory followingPositionHistory = new FollowingPositionHistory();
         private bool isRunning = false;
         private bool isClosed = false;
-        private int fixedCount = 1;
         private MouseEffectType currentEffectType = MouseEffectType.FollowingDot;
         private GdiParticleCursorEffect gdiParticleEffect;
         private ICursorEffect cursorEffect;
         private TimeSpan? lastRenderingTime;
-        private double legacyElapsed;
 
         public MouseEffectWindow() : this(null)
         {
@@ -74,6 +72,9 @@ namespace WindowsX.Shell.Windows
 
             switch(currentEffectType)
             {
+                case MouseEffectType.FollowingDot:
+                    cursorEffect = new FollowingDotEffect(settings);
+                    break;
                 case MouseEffectType.NeonRibbon:
                     cursorEffect = new NeonRibbonCursorEffect(settings);
                     break;
@@ -146,8 +147,6 @@ namespace WindowsX.Shell.Windows
                 return;
 
             var point = canvas.PointFromScreen(new Point(screenPoint.x, screenPoint.y));
-            if (currentEffectType == MouseEffectType.FollowingDot)
-                point = followingPositionHistory.Update(point, renderingTime, settings.FollowingDelayMilliseconds);
 
             CreateEffects();
 
@@ -172,6 +171,10 @@ namespace WindowsX.Shell.Windows
                 case MouseEffectType.FivePointedStars:
                     cursorEffect?.Update(point, elapsed);
                     return;
+                case MouseEffectType.FollowingDot:
+                    point = followingPositionHistory.Update(point, renderingTime, settings.FollowingDelayMilliseconds);
+                    cursorEffect?.Update(point, elapsed);
+                    break;
             }
 
             //GDI+
@@ -187,18 +190,6 @@ namespace WindowsX.Shell.Windows
                 return;
             }
 
-            //FollowingDotEffect(use ICursorEffect instead)
-            //only following dot
-            legacyElapsed += elapsed;
-            if (legacyElapsed < 0.01)
-                return;
-
-            legacyElapsed = 0;
-            var effect = GetMouseCursorEffect(point);
-            while (canvas.Children.Count >= fixedCount)
-                canvas.Children.RemoveAt(0);
-
-            canvas.Children.Add(effect);
         }
 
         public void StopMouseEffect()
@@ -223,7 +214,6 @@ namespace WindowsX.Shell.Windows
             gdiParticleEffect = null;
             canvas.Children.Clear();
             lastRenderingTime = null;
-            legacyElapsed = 0;
         }
 
         public void UpdateMouseEffectType(MouseEffectType mouseEffectType)
@@ -238,20 +228,5 @@ namespace WindowsX.Shell.Windows
             currentEffectType = mouseEffectType;
         }
 
-        public MouseCursorEffectAbstract GetMouseCursorEffect(Point point)
-        {
-            switch(currentEffectType)
-            {
-                case MouseEffectType.FollowingDot:
-                    fixedCount = 20;
-                    return new FollowingDotEffect(point, settings);
-                case MouseEffectType.CursorTrail:
-                    fixedCount = 1;
-                    return new CursorTrailEffect(point, settings);
-                default:
-                    fixedCount = 1;
-                    return new FollowingDotEffect(point, settings);
-            }
-        }
     }
 }

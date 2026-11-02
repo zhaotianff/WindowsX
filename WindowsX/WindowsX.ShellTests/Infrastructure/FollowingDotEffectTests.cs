@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,6 +10,7 @@ using System.Windows.Threading;
 using WindowsX.Config.Helper;
 using WindowsX.Config.Model;
 using WindowsX.Shell.Infrastructure.MouseEffect;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 using WindowsX.Shell.Windows;
 
 namespace WindowsX.ShellTests.Infrastructure
@@ -162,7 +164,113 @@ namespace WindowsX.ShellTests.Infrastructure
         [TestMethod]
         public void WindowUsesUpdatedFollowingSettingsWithoutSwitchingEffect()
         {
-           
+            RunSta(() =>
+            {
+                var settings = new MouseEffectSetting();
+                var window = new MouseEffectWindow(settings);
+                try
+                {
+                    window.StartMouseEffect();
+                    var create = typeof(MouseEffectWindow).GetMethod("CreateEffects", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                    create.Invoke(window, null);
+                    var canvas = (Canvas)window.FindName("canvas");
+                    var effect = (FollowingDotEffect)canvas.Children[0];
+                    ICursorEffect cursorEffect = effect;
+                    cursorEffect.Update(new Point(20, 30), 0.016);
+                    var visual = VisualTreeHelper.GetChild(effect, 0);
+                    var brush = GetDrawing(effect).Brush;
+                    for (var i = 0; i < 100; i++)
+                    {
+                        create.Invoke(window, null);
+                        cursorEffect.Update(new Point(i, i), 0.016);
+                    }
+                    Assert.AreEqual(1, canvas.Children.Count);
+                    Assert.AreSame(effect, canvas.Children[0]);
+                    Assert.AreSame(visual, VisualTreeHelper.GetChild(effect, 0));
+                    Assert.AreSame(brush, GetDrawing(effect).Brush);
+                    settings.FollowingColor = "#32CD32";
+                    settings.FollowingCenterOpacity = 0.8;
+                    settings.FollowingEdgeOpacity = 0.2;
+                    settings.FollowingSize = 80;
+                    cursorEffect.Update(new Point(120, 140), 0.016);
+                    var drawing = GetDrawing(effect);
+                    var ellipse = (EllipseGeometry)drawing.Geometry;
+                    Assert.AreEqual(new Point(120, 140), ellipse.Center);
+                    Assert.AreEqual(40.0, ellipse.RadiusX);
+                    var gradient = (RadialGradientBrush)drawing.Brush;
+                    Assert.IsTrue(gradient.IsFrozen);
+                    Assert.AreEqual(Color.FromArgb(204, 50, 205, 50), gradient.GradientStops[0].Color);
+                    Assert.AreEqual(Color.FromArgb(51, 50, 205, 50), gradient.GradientStops[1].Color);
+                    Assert.AreSame(visual, VisualTreeHelper.GetChild(effect, 0));
+                }
+                finally { window.Close(); }
+            });
+        }
+
+        [TestMethod]
+        public void ClearKeepsVisualAndAllowsRestart()
+        {
+            RunSta(() =>
+            {
+                var effect = new FollowingDotEffect();
+                ICursorEffect cursorEffect = effect;
+                var visual = (DrawingVisual)VisualTreeHelper.GetChild(effect, 0);
+                Assert.IsTrue(visual.Drawing == null || visual.Drawing.Bounds.IsEmpty);
+                cursorEffect.Update(new Point(20, 30), 0.016);
+                Assert.IsFalse(visual.Drawing.Bounds.IsEmpty);
+                cursorEffect.Clear();
+                cursorEffect.Clear();
+                Assert.IsTrue(visual.Drawing == null || visual.Drawing.Bounds.IsEmpty);
+                cursorEffect.Update(new Point(40, 50), 0.016);
+                Assert.AreEqual(new Point(40, 50), ((EllipseGeometry)GetDrawing(effect).Geometry).Center);
+                Assert.AreEqual(1, VisualTreeHelper.GetChildrenCount(effect));
+                Assert.AreSame(visual, VisualTreeHelper.GetChild(effect, 0));
+            });
+        }
+
+        [TestMethod]
+        public void InvalidUpdatesPreserveLastDrawing()
+        {
+            RunSta(() =>
+            {
+                var effect = new FollowingDotEffect(new Point(20, 30));
+                foreach (var elapsed in new[] { 0.0, -1.0, double.NaN, double.PositiveInfinity, double.NegativeInfinity })
+                    effect.Update(new Point(100, 100), elapsed);
+                foreach (var coordinate in new[] { double.NaN, double.PositiveInfinity, double.NegativeInfinity })
+                {
+                    effect.Update(new Point(coordinate, 100), 0.016);
+                    effect.Update(new Point(100, coordinate), 0.016);
+                }
+                Assert.AreEqual(new Point(20, 30), ((EllipseGeometry)GetDrawing(effect).Geometry).Center);
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow("switch")]
+        [DataRow("stop")]
+        [DataRow("close")]
+        public void WindowLifecycleClearsFollowingInstance(string action)
+        {
+            RunSta(() =>
+            {
+                var window = new MouseEffectWindow();
+                try
+                {
+                    window.StartMouseEffect();
+                    typeof(MouseEffectWindow).GetMethod("CreateEffects", BindingFlags.NonPublic | BindingFlags.Instance)!.Invoke(window, null);
+                    var canvas = (Canvas)window.FindName("canvas");
+                    var effect = (FollowingDotEffect)canvas.Children[0];
+                    effect.Update(new Point(20, 30), 0.016);
+                    var visual = (DrawingVisual)VisualTreeHelper.GetChild(effect, 0);
+                    if (action == "switch") window.UpdateMouseEffectType(MouseEffectType.NeonRibbon);
+                    else if (action == "stop") window.StopMouseEffect();
+                    else window.Close();
+                    Assert.AreEqual(0, canvas.Children.Count);
+                    Assert.IsTrue(visual.Drawing == null || visual.Drawing.Bounds.IsEmpty);
+                    Assert.IsNull(typeof(MouseEffectWindow).GetField("cursorEffect", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(window));
+                }
+                finally { window.Close(); }
+            });
         }
 
         [TestMethod]
@@ -290,7 +398,7 @@ namespace WindowsX.ShellTests.Infrastructure
             });
         }
 
-        private static GeometryDrawing GetDrawing(MouseCursorEffectAbstract effect)
+        private static GeometryDrawing GetDrawing(FollowingDotEffect effect)
         {
             var visual = (DrawingVisual)VisualTreeHelper.GetChild(effect, 0);
             return visual.Drawing.Children.OfType<GeometryDrawing>().Single();
