@@ -30,6 +30,7 @@ namespace WindowsX.Shell.Pages
         public DynamicWallpaper dynamicWallpaper = new DynamicWallpaper();
         private StaticWallpaper staticWallpaper = new StaticWallpaper();
         private MouseEffect mouseEffect = new MouseEffect();
+        private DesktopEffect desktopEffect = new DesktopEffect();
         private StartMenuSetting startMenuSetting = new StartMenuSetting();
         private TaskbarSetting taskbarSetting = new TaskbarSetting();
         private ExplorerSetting explorerSetting = new ExplorerSetting();
@@ -72,6 +73,12 @@ namespace WindowsX.Shell.Pages
         private void btn_MouseEffectClick(object sender, RoutedEventArgs e)
         {
             frame.Content = mouseEffect;
+        }
+
+        private void btn_DesktopEffectClick(object sender, RoutedEventArgs e)
+        {
+            frame.Content = desktopEffect;
+            desktopEffect.Init();
         }
 
         public void CloseAnonymousPipe()
