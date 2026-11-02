@@ -8,8 +8,8 @@ namespace WindowsX.Shell.Model.SystemMgmt
 {
     public class SystemInformation
     {
-        public List<string> SystemInformationTypeList { get; set; }
+        public List<string> SystemInformationTypeList { get; set; } = new List<string>();
 
-        public List<Dictionary<string,string>> SystemInformationKeyValueList { get; set; }
+        public List<Dictionary<string,string>> SystemInformationKeyValueList { get; set; } = new List<Dictionary<string, string>>();
     }
 }

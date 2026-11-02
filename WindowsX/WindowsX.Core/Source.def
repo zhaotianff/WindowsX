@@ -53,6 +53,7 @@ RestartExplorer
 
 ;systemtool.h
 GetUserLoginTime
+ReadCpuHardwareSnapshot
 IsWindows10
 IsWindows10OrHigher
 IsWindows11

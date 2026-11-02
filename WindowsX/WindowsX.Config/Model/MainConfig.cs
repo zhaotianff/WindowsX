@@ -26,6 +26,14 @@ namespace WindowsX.Config.Model
 
     public class MainConfig
     {
+        private MouseEffectSetting mouseEffectSetting = new MouseEffectSetting();
+
+        public MouseEffectSetting MouseEffectSetting
+        {
+            get => mouseEffectSetting;
+            set => mouseEffectSetting = value ?? new MouseEffectSetting();
+        }
+
         public BackgroundSetting BackgroundSetting { get; set; }
 
         public List<FlatStartMenuGroupedItem> FlatStartMenuGroupedItems { get; set; }

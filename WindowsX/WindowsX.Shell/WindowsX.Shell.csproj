@@ -8,6 +8,7 @@
     <Authors>ZTI</Authors>
     <Company>https://github.com/zhaotianff</Company>
     <ApplicationIcon>logo.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <StartupObject>WindowsX.Shell.Startup</StartupObject>
   </PropertyGroup>
 
@@ -129,6 +130,7 @@
   <ItemGroup>
     <PackageReference Include="AppsFolderDialog" Version="0.0.1.1" />
     <PackageReference Include="BlurWindow" Version="4.0.0" />
+    <PackageReference Include="System.Management" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

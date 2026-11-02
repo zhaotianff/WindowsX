@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -55,6 +55,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppTool.h" />
+    <ClInclude Include="CpuHardware.h" />
     <ClInclude Include="CoreUtil.h" />
     <ClInclude Include="DesktopTool.h" />
     <ClInclude Include="framework.h" />
@@ -176,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppTool.cpp" />
+    <ClCompile Include="CpuHardware.cpp" />
     <ClCompile Include="CoreUtil.cpp" />
     <ClCompile Include="DesktopTool.cpp" />
     <ClCompile Include="dllmain.cpp" />
@@ -189,7 +192,13 @@
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="SystemTool.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="CpuId.asm">
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
+    </MASM>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
   </ImportGroup>
 </Project>

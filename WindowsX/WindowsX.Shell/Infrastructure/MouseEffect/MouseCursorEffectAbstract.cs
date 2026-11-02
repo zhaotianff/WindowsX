@@ -24,7 +24,11 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
         public MouseCursorEffectAbstract(Point point)
         {
             children = new VisualCollection(this) { CreateDrawingVisualEllipsed(point) };
-            CreateDrawingVisualEllipsed(point);
+        }
+
+        protected MouseCursorEffectAbstract(DrawingVisual drawingVisual)
+        {
+            children = new VisualCollection(this) { drawingVisual };
         }
 
         public abstract DrawingVisual CreateDrawingVisualEllipsed(Point point);

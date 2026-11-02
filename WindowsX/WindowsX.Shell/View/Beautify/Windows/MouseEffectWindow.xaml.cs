@@ -1,4 +1,5 @@
 ﻿using WindowsX.Shell.Infrastructure.MouseEffect;
+using WindowsX.Config.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WindowsX.Shell.Infrastructure.MouseEffect.Contracts;
 
 namespace WindowsX.Shell.Windows
 {
@@ -21,12 +23,22 @@ namespace WindowsX.Shell.Windows
     /// </summary>
     public partial class MouseEffectWindow : Window
     {
+        private readonly MouseEffectSetting settings;
+        private readonly FollowingPositionHistory followingPositionHistory = new FollowingPositionHistory();
         private bool isRunning = false;
-        private int fixedCount = 1;
+        private bool isClosed = false;
         private MouseEffectType currentEffectType = MouseEffectType.FollowingDot;
+        private GdiParticleCursorEffect gdiParticleEffect;
+        private ICursorEffect cursorEffect;
+        private TimeSpan? lastRenderingTime;
 
-        public MouseEffectWindow()
+        public MouseEffectWindow() : this(null)
         {
+        }
+
+        public MouseEffectWindow(MouseEffectSetting settings)
+        {
+            this.settings = settings ?? new MouseEffectSetting();
             InitializeComponent();
         }
 
@@ -45,55 +57,176 @@ namespace WindowsX.Shell.Windows
 
         public void StartMouseEffect()
         {
+            if (isRunning || isClosed)
+                return;
+
             isRunning = true;
+            ClearEffects();
+            CompositionTarget.Rendering += RenderMouseEffect;
+        }
 
-            Task.Factory.StartNew(async () =>
+        private void CreateEffects()
+        {
+            if (cursorEffect != null)
+                return;
+
+            switch(currentEffectType)
             {
-                while (isRunning)
+                case MouseEffectType.FollowingDot:
+                    cursorEffect = new FollowingDotEffect(settings);
+                    break;
+                case MouseEffectType.NeonRibbon:
+                    cursorEffect = new NeonRibbonCursorEffect(settings);
+                    break;
+                case MouseEffectType.WaterRipple:
+                    cursorEffect = new WaterRippleCursorEffect(settings);
+                    break;
+                case MouseEffectType.Stardust:
+                    cursorEffect = new StardustCursorEffect(settings);
+                    break;
+                case MouseEffectType.FallingPetals:
+                    cursorEffect = new FallingPetalsCursorEffect(settings);
+                    break;
+                case MouseEffectType.ColorfulMist:
+                    cursorEffect = new ColorfulMistCursorEffect(settings);
+                    break;
+                case MouseEffectType.FireworksTrail:
+                    cursorEffect = new FireworksTrailCursorEffect(settings);
+                    break;
+                case MouseEffectType.FallingLeaves:
+                    cursorEffect = new FallingLeavesCursorEffect(settings);
+                    break;
+                case MouseEffectType.IconRain:
+                    cursorEffect = new IconRainCursorEffect(settings);
+                    break;
+                case MouseEffectType.HaloRing:
+                    cursorEffect = new HaloRingCursorEffect(settings);
+                    break;
+                case MouseEffectType.FollowingAnimal:
+                    cursorEffect = new FollowingAnimalCursorEffect(settings);
+                    break;
+                case MouseEffectType.CottonCandy:
+                    cursorEffect = new CottonCandyCursorEffect(settings);
+                    break;
+                case MouseEffectType.InkFluid:
+                    cursorEffect = new InkFluidCursorEffect(settings);
+                    break;
+                case MouseEffectType.CursorTrail:
+                    var screenPoint = new PInvoke.POINT();
+                    PInvoke.User32.GetCursorPos(ref screenPoint);
+                    var point = canvas.PointFromScreen(new Point(screenPoint.x, screenPoint.y));
+                    cursorEffect = new CursorTrailEffect(point,settings);
+                    break;
+                case MouseEffectType.Fireworks:
+                case MouseEffectType.WillowCatkins:
+                case MouseEffectType.Snowflakes:
+                case MouseEffectType.FivePointedStars:
+                    cursorEffect = new ParticleCursorEffect(currentEffectType, settings);
+                    break;
+            }
+
+            if(cursorEffect !=  null)
+            {
+                canvas.Children.Add((UIElement)cursorEffect);
+            }
+        }
+
+        private void RenderMouseEffect(object sender, EventArgs e)
+        {
+            if (!isRunning || !IsVisible)
+                return;
+
+            var renderingTime = ((RenderingEventArgs)e).RenderingTime;
+            if (lastRenderingTime == renderingTime)
+                return;
+
+            var elapsed = lastRenderingTime.HasValue ? (renderingTime - lastRenderingTime.Value).TotalSeconds : 1.0 / 60;
+            lastRenderingTime = renderingTime;
+            var screenPoint = new PInvoke.POINT();
+            if (PInvoke.User32.GetCursorPos(ref screenPoint) == 0)
+                return;
+
+            var point = canvas.PointFromScreen(new Point(screenPoint.x, screenPoint.y));
+
+            CreateEffects();
+
+            switch(currentEffectType)
+            {
+                case MouseEffectType.NeonRibbon:
+                case MouseEffectType.WaterRipple:
+                case MouseEffectType.Stardust:
+                case MouseEffectType.FallingPetals:
+                case MouseEffectType.ColorfulMist:
+                case MouseEffectType.FireworksTrail:
+                case MouseEffectType.FallingLeaves:
+                case MouseEffectType.IconRain:
+                case MouseEffectType.HaloRing:
+                case MouseEffectType.FollowingAnimal:
+                case MouseEffectType.CottonCandy:
+                case MouseEffectType.InkFluid:
+                case MouseEffectType.CursorTrail:
+                case MouseEffectType.Fireworks:
+                case MouseEffectType.WillowCatkins:
+                case MouseEffectType.Snowflakes:
+                case MouseEffectType.FivePointedStars:
+                    cursorEffect?.Update(point, elapsed);
+                    return;
+                case MouseEffectType.FollowingDot:
+                    point = followingPositionHistory.Update(point, renderingTime, settings.FollowingDelayMilliseconds);
+                    cursorEffect?.Update(point, elapsed);
+                    break;
+            }
+
+            //GDI+
+            if (currentEffectType == MouseEffectType.FireworksGdiPlus || currentEffectType == MouseEffectType.WillowCatkinsGdiPlus)
+            {
+                if (gdiParticleEffect == null)
                 {
-                    await Task.Delay(10);
-
-                    Dispatcher.Invoke(() =>
-                    {
-                        var point = new PInvoke.POINT();
-                        PInvoke.User32.GetCursorPos(ref point);
-
-                        while (canvas.Children.Count >= fixedCount)
-                        {
-                            canvas.Children.RemoveAt(0);
-                        }
-
-                        this.canvas.Children.Add(GetMouseCursorEffect(new Point(point.x, point.y)));
-                    });
+                    gdiParticleEffect = new GdiParticleCursorEffect(currentEffectType, settings);
+                    canvas.Children.Add(gdiParticleEffect);
                 }
-            },TaskCreationOptions.LongRunning);
+
+                gdiParticleEffect.Update(point, elapsed, new Size(canvas.ActualWidth, canvas.ActualHeight), VisualTreeHelper.GetDpi(canvas));
+                return;
+            }
 
         }
 
         public void StopMouseEffect()
         {
             isRunning = false;
+            CompositionTarget.Rendering -= RenderMouseEffect;
+            ClearEffects();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            isClosed = true;
+            base.OnClosed(e);
+        }
+
+        private void ClearEffects()
+        {
+            cursorEffect?.Clear();
+            cursorEffect = null;
+            followingPositionHistory.Clear();
+            gdiParticleEffect?.Dispose();
+            gdiParticleEffect = null;
+            canvas.Children.Clear();
+            lastRenderingTime = null;
         }
 
         public void UpdateMouseEffectType(MouseEffectType mouseEffectType)
         {
+            if (!Enum.IsDefined(typeof(MouseEffectType), mouseEffectType))
+                throw new ArgumentOutOfRangeException(nameof(mouseEffectType));
+
+            if (currentEffectType == mouseEffectType)
+                return;
+
+            ClearEffects();
             currentEffectType = mouseEffectType;
         }
 
-        public MouseCursorEffectAbstract GetMouseCursorEffect(Point point)
-        {
-            switch(currentEffectType)
-            {
-                case MouseEffectType.FollowingDot:
-                    fixedCount = FollowingDotEffect.FixedCount;
-                    return new FollowingDotEffect(point);
-                case MouseEffectType.CursorTrail:
-                    fixedCount = CursorTrailEffect.FixedCount;
-                    return new CursorTrailEffect(point);
-                default:
-                    fixedCount = FollowingDotEffect.FixedCount;
-                    return new FollowingDotEffect(point);
-            }
-        }
     }
 }

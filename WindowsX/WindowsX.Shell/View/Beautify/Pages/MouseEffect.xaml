@@ -5,11 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WindowsX.Shell.Pages"
       xmlns:uc="clr-namespace:WindowsX.Shell.View.Beautify.UserControls"
+      xmlns:effects="clr-namespace:WindowsX.Shell.Infrastructure.MouseEffect"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MouseEffect">
-
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="26.4"/>
+        </Grid.RowDefinitions>
+        
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <GroupBox Style="{StaticResource GroupBoxStyle}">
@@ -19,12 +24,30 @@
                     </GroupBox.Header>
 
                     <WrapPanel Margin="0,35,0,0">
-                        <CheckBox Content="启用鼠标特效(beta)" Margin="5" Checked="mouseEffect_Checked" Unchecked="mouseEffect_Unchecked" Name="cbx_EnableMouseEffect"/>
+                        <CheckBox Content="启用鼠标特效" Margin="5" Checked="mouseEffect_Checked" Unchecked="mouseEffect_Unchecked" Style="{StaticResource CheckBoxStyle}" Name="cbx_EnableMouseEffect"/>
                     </WrapPanel>
                 </GroupBox>
                 <WrapPanel IsEnabled="{Binding ElementName=cbx_EnableMouseEffect,Path=IsChecked}">
-                    <uc:MouseEffectItemControl Width="300" Height="300" Title="跟随" PreviewImage="../../../Icon/MouseEffect/followingdot.png" MouseEffectType="FollowingDot" Margin="10" OnSet="MouseEffectItemControl_OnSet"></uc:MouseEffectItemControl>
-                    <uc:MouseEffectItemControl Width="300" Height="300" Title="轨迹" PreviewImage="../../../Icon/MouseEffect/cursortrail.png" MouseEffectType="CursorTrail" Margin="10" OnSet="MouseEffectItemControl_OnSet"></uc:MouseEffectItemControl>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="跟随" PreviewImageSource="{x:Static effects:FollowingDotEffect.PreviewImage}" MouseEffectType="FollowingDot" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="跟随鼠标的渐变光晕，可设置颜色及中心、边缘透明度"></uc:MouseEffectItemControl>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="轨迹" PreviewImageSource="{x:Static effects:CursorTrailEffect.PreviewImage}" MouseEffectType="CursorTrail" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="连续平滑的鼠标轨迹，可设置颜色、大小及头尾透明度"></uc:MouseEffectItemControl>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="烟花" PreviewImageSource="{StaticResource FireworksPreview}" MouseEffectType="Fireworks" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，彩色烟花绽放并渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="春日柳絮" PreviewImageSource="{StaticResource WillowCatkinsPreview}" MouseEffectType="WillowCatkins" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，轻盈柳絮随风摇曳、缓缓飘落"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="雪花" PreviewImageSource="{StaticResource SnowflakesPreview}" MouseEffectType="Snowflakes" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，六角雪花缓慢旋转、摇曳飘落"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="五角星" PreviewImageSource="{StaticResource FivePointedStarsPreview}" MouseEffectType="FivePointedStars" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，彩色五角星轻轻扩散、旋转并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="墨水流体" PreviewImageSource="{StaticResource InkFluidPreview}" MouseEffectType="InkFluid" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，墨迹连续流动、卷动扩散并渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="霓虹缎带" PreviewImageSource="{x:Static effects:NeonRibbonCursorEffect.PreviewImage}" MouseEffectType="NeonRibbon" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，青紫粉渐变缎带流动发光，停止后渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="水波涟漪" PreviewImageSource="{x:Static effects:WaterRippleCursorEffect.PreviewImage}" MouseEffectType="WaterRipple" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="移动鼠标，浅蓝色水波从落点向外扩散，多重涟漪渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="星尘粒子" PreviewImageSource="{x:Static effects:StardustCursorEffect.PreviewImage}" MouseEffectType="Stardust" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过留下细小星点，轻微闪烁、漂移并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="花瓣飘落" PreviewImageSource="{x:Static effects:FallingPetalsCursorEffect.PreviewImage}" MouseEffectType="FallingPetals" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过洒落粉红花瓣，轻轻旋转、摇摆下落并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="彩色雾" PreviewImageSource="{x:Static effects:ColorfulMistCursorEffect.PreviewImage}" MouseEffectType="ColorfulMist" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过留下柔和彩色雾气，缓缓扩散、漂移并渐渐消散"/>
+                    <!--<uc:MouseEffectItemControl Width="300" Height="300" Title="烟花尾迹" PreviewImageSource="{x:Static effects:FireworksTrailCursorEffect.PreviewImage}" MouseEffectType="FireworksTrail" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标移动时彩色粒子向四周爆出，拖着渐隐尾迹受重力下坠"/>-->
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="落叶" PreviewImageSource="{x:Static effects:FallingLeavesCursorEffect.PreviewImage}" MouseEffectType="FallingLeaves" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过留下秋色叶片，轻轻旋转、摇摆下落并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="图标雨" PreviewImageSource="{x:Static effects:IconRainCursorEffect.PreviewImage}" MouseEffectType="IconRain" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标划过冒出星星、爱心和猫爪，轻轻弹起、旋转下落并渐渐消失"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="光晕圈" PreviewImageSource="{x:Static effects:HaloRingCursorEffect.PreviewImage}" MouseEffectType="HaloRing" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="光标外围的中空渐变圆环，大小与亮度轻柔呼吸变化，静止时持续呼吸"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="跟随小动物" PreviewImageSource="{x:Static effects:FollowingAnimalCursorEffect.PreviewImage}" MouseEffectType="FollowingAnimal" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="橘色小猫轻轻追随光标，移动时转向迈步，静止时在光标旁摆尾"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="棉花糖粒子" PreviewImageSource="{x:Static effects:CottonCandyCursorEffect.PreviewImage}" MouseEffectType="CottonCandy" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="鼠标拖出粉白蓬松云团，像棉花糖和奶油泡沫，轻轻上浮、膨胀并消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="烟花（GDI+）" PreviewImageSource="{StaticResource FireworksPreview}" MouseEffectType="FireworksGdiPlus" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="GDI+ 绘制：移动鼠标，彩色烟花绽放并渐渐消散"/>
+                    <uc:MouseEffectItemControl Width="300" Height="300" Title="春日柳絮（GDI+）" PreviewImageSource="{StaticResource WillowCatkinsPreview}" MouseEffectType="WillowCatkinsGdiPlus" Margin="10" OnSet="MouseEffectItemControl_OnSet" OnOpenSetting="MouseEffectItemControl_OnOpenSetting" ToolTip="GDI+ 绘制：移动鼠标，轻盈柳絮随风摇曳、缓缓飘落"/>
                 </WrapPanel>
             </StackPanel>
         </ScrollViewer>

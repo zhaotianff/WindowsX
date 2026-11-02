@@ -23,6 +23,7 @@ namespace WindowsX.Shell.View.Setting
     {
         private ToggleButton toggleButton = null;
         private BackgroundSetting backgroundSetting = new BackgroundSetting();
+        private SystemSetting systemSetting = new SystemSetting();
 
         public SettingPage()
         {
@@ -31,6 +32,7 @@ namespace WindowsX.Shell.View.Setting
 
         public void ShowDefaultPage()
         {
+            btn_BackgroundSetting.IsChecked = true;
             btn_BackgroundSettingClick(null, null);
         }
 
@@ -47,6 +49,12 @@ namespace WindowsX.Shell.View.Setting
         {
             this.frame.Content = backgroundSetting;
             backgroundSetting.Load();
+        }
+
+        private void btn_SystemSettingClick(object sender, RoutedEventArgs e)
+        {
+            this.frame.Content = systemSetting;
+            systemSetting.Load();
         }
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)

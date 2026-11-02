@@ -17,9 +17,11 @@
             </Border>
 
             <StackPanel Name="stack">
-                <DockPanel Height="35" Margin="5,0,0,0" Name="dock">
+                <DockPanel MinHeight="35" Margin="5,0,0,0" Name="dock" LastChildFill="False">
                     <Label VerticalAlignment="Center" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:SystemInfoItemControl},Path=Icon}"></Label>
                     <TextBlock VerticalAlignment="Center" Name="tbk_Title" Margin="5,3,0,0" FontSize="18" FontFamily="Arial" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:SystemInfoItemControl},Path=Title}"></TextBlock>
+                    <ComboBox x:Name="cbx_TypeList" Margin="10,0,5,0" MaxWidth="220" VerticalAlignment="Center"
+                              Visibility="Collapsed" SelectionChanged="cbx_TypeList_SelectionChanged"/>
                 </DockPanel>
 
             </StackPanel>

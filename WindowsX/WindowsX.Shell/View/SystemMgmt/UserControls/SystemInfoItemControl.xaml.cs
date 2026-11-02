@@ -30,24 +30,25 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
 
         public string Title
         {
-            get => GetValue(TitleProperty).ToString();
+            get => GetValue(TitleProperty) as string ?? string.Empty;
             set => SetValue(TitleProperty, value);
         }
 
         public string Icon
         {
-            get => GetValue(IconProperty).ToString();
+            get => GetValue(IconProperty) as string ?? string.Empty;
             set => SetValue(IconProperty, value);
         }
 
         private Model.SystemMgmt.SystemInformation systemInformation = new Model.SystemMgmt.SystemInformation();
+        private bool isUpdating;
 
         public Model.SystemMgmt.SystemInformation SystemInformation
         {
             get => systemInformation;
             set
             {
-                systemInformation = value;
+                systemInformation = value ?? new Model.SystemMgmt.SystemInformation();
                 UpdateSystemInfoToUi();
             }
         }
@@ -65,15 +66,19 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
 
         private void LoadSystemInformationTypeList()
         {
-            if (SystemInformation.SystemInformationTypeList != null && SystemInformation.SystemInformationTypeList.Count > 1)
+            isUpdating = true;
+            try
             {
-                ComboBox comboBox = new ComboBox();
-                comboBox.Margin = new Thickness(10, 0, 30, 0);
-                comboBox.VerticalAlignment = VerticalAlignment.Center;
-                comboBox.ItemsSource = SystemInformation.SystemInformationTypeList;
-                comboBox.SelectedIndex = 0;
-                comboBox.SelectionChanged += cbx_TypeList_SelectionChanged;
-                this.dock.Children.Add(comboBox);
+                var count = SystemInformation.SystemInformationKeyValueList?.Count ?? 0;
+                var names = SystemInformation.SystemInformationTypeList;
+                cbx_TypeList.ItemsSource = Enumerable.Range(0, count)
+                    .Select(index => names != null && index < names.Count && !string.IsNullOrWhiteSpace(names[index]) ? names[index] : $"{Title}{index + 1}").ToList();
+                cbx_TypeList.Visibility = count > 1 ? Visibility.Visible : Visibility.Collapsed;
+                cbx_TypeList.SelectedIndex = count > 0 ? 0 : -1;
+            }
+            finally
+            {
+                isUpdating = false;
             }
         }
 
@@ -84,7 +89,14 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
                 this.stack.Children.RemoveAt(i);
             }
 
-            foreach (var item in SystemInformation.SystemInformationKeyValueList[index])
+            var rows = SystemInformation.SystemInformationKeyValueList;
+            if (rows == null || index < 0 || index >= rows.Count || rows[index] == null || rows[index].Count == 0)
+            {
+                stack.Children.Add(new TextBlock { Text = "暂无信息", Margin = new Thickness(10) });
+                return;
+            }
+
+            foreach (var item in rows[index])
             {
                 Grid grid = new Grid();
                 grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
@@ -93,12 +105,15 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
                 TextBlock textBlock = new TextBlock();
                 textBlock.FontSize = 13;
                 textBlock.Text = item.Key;
+                textBlock.Foreground = Brushes.Black;
                 Grid.SetColumn(textBlock, 0);
                 TextBox textBox = new TextBox();
-                textBox.Text = item.Value;
+                textBox.Text = string.IsNullOrWhiteSpace(item.Value) ? "未提供" : item.Value;
                 textBox.IsReadOnly = true;
+                textBox.SetBinding(TextBox.ForegroundProperty, new Binding("Foreground") { Source = this });
                 textBox.TextWrapping = TextWrapping.WrapWithOverflow;
                 textBox.Background = Brushes.Transparent;
+                textBox.Foreground = Brushes.Black;
                 textBox.BorderThickness = new Thickness(0);
                 Grid.SetColumn(textBox, 1);
                 grid.Children.Add(textBlock);
@@ -109,8 +124,8 @@ namespace WindowsX.Shell.View.SystemMgmt.UserControls
 
         private void cbx_TypeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var combox = sender as ComboBox;
-            RefreshSystemInformation(combox.SelectedIndex);
+            if (!isUpdating && sender is ComboBox comboBox && comboBox.SelectedIndex >= 0)
+                RefreshSystemInformation(comboBox.SelectedIndex);
         }
     }
 }

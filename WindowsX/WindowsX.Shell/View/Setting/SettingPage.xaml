@@ -25,7 +25,8 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-                <ToggleButton Content="软件背景设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_BackgroundSettingClick" IsChecked="True"/>
+                <ToggleButton x:Name="btn_BackgroundSetting" Content="软件背景设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_BackgroundSettingClick" IsChecked="True"/>
+                <ToggleButton Content="系统设置" Style="{StaticResource FlatButtonStyle}" Checked="ToggleButton_Checked" Click="btn_SystemSettingClick"/>
             </StackPanel>
         </Grid>
 

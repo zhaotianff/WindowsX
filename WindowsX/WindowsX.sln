@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsX.Shell", "WindowsX.Shell\WindowsX.Shell.csproj", "{4D9E8826-8968-43D6-BDC4-6726AA66EDB3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0AB7C99C-662E-4703-9A49-72555FB139A3} = {0AB7C99C-662E-4703-9A49-72555FB139A3}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WindowsX.Core", "WindowsX.Core\WindowsX.Core.vcxproj", "{0AB7C99C-662E-4703-9A49-72555FB139A3}"
 EndProject
@@ -64,12 +67,14 @@ Global
 		{4D9E8826-8968-43D6-BDC4-6726AA66EDB3}.Release|x64.Build.0 = Release|Any CPU
 		{4D9E8826-8968-43D6-BDC4-6726AA66EDB3}.Release|x86.ActiveCfg = Release|Any CPU
 		{4D9E8826-8968-43D6-BDC4-6726AA66EDB3}.Release|x86.Build.0 = Release|Any CPU
-		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Debug|Any CPU.Build.0 = Debug|x64
 		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Debug|x64.ActiveCfg = Debug|x64
 		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Debug|x64.Build.0 = Debug|x64
 		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Debug|x86.ActiveCfg = Debug|Win32
 		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Debug|x86.Build.0 = Debug|Win32
-		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Release|Any CPU.ActiveCfg = Release|Win32
+		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Release|Any CPU.ActiveCfg = Release|x64
+		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Release|Any CPU.Build.0 = Release|x64
 		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Release|x64.ActiveCfg = Release|x64
 		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Release|x64.Build.0 = Release|x64
 		{0AB7C99C-662E-4703-9A49-72555FB139A3}.Release|x86.ActiveCfg = Release|Win32
