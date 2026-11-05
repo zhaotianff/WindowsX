@@ -11,6 +11,8 @@
 #include <gdiplus.h>
 #include<iostream>
 #include<vector>
+#include<tchar.h>
+#include<string>
 
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "gdiplus.lib")
@@ -132,6 +134,9 @@ void DetachFromDesktop(HWND hDetachHwnd)
 
     SetWindowPos(hDetachHwnd, nullptr, 0, 0, 800, 600,
         SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);*/
+
+    SendMessage(hDetachHwnd, WM_CLOSE, NULL, NULL);
+    SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, NULL, SPIF_UPDATEINIFILE);
 }
 
 //Not working
@@ -142,6 +147,11 @@ void DetachFromDesktop()
 
 int main()
 {
+    //std::vector<std::wstring> arguements = {L"WindowsX.DynamicDesktop.exe",L"",LR"(C:\Users\xi\Videos\2026-03-10 16-26-42.mkv)"};
+
+    
+    //CreateProcess(NULL,&arguements[0],NULL,NULL,FALSE,)
+
     EmbedWindowToDesktop(L"MainWindow");
 
     DetachFromDesktop();
