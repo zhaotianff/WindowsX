@@ -142,7 +142,13 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EmbedTool2.cpp" />
     <ClCompile Include="EmbedWindowTest.cpp" />
+    <ClCompile Include="EmbedTool.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EmbedTool.h" />
+    <ClInclude Include="EmbedTool2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

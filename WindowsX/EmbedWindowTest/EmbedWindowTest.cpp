@@ -16,6 +16,8 @@
 #include<strsafe.h>
 #include<pathcch.h>
 
+#include"EmbedTool2.h"
+
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "gdiplus.lib")
 #pragma comment(lib,"Pathcch.lib")
@@ -173,6 +175,13 @@ int main()
         CloseHandle(psi.hThread);
 
     EmbedWindowToDesktop(L"MainWindow");
+
+    HWND hMainWindow = FindWindow(NULL, L"MainWindow");
+
+    if (hMainWindow)
+    {
+        EmbedWindowToDesktop(hMainWindow);
+    }
 
     Sleep(10000);
 
