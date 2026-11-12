@@ -26,6 +26,7 @@ namespace WindowsX.ShellTests.Infrastructure
             Assert.AreEqual(17, (int)MouseEffectType.HaloRing);
             Assert.AreEqual(18, (int)MouseEffectType.FollowingAnimal);
             Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.FollowingAnimalOpacity);
+            Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.FollowingAnimalSizeScale);
         }
 
         [DataTestMethod]
@@ -147,7 +148,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     window.UpdateMouseEffectType(MouseEffectType.FollowingAnimal);
                     var effect = new FollowingAnimalCursorEffect();
                     effect.Update(new Point(100, 100), 0.016);
-                    var field = typeof(MouseEffectWindow).GetField("followingAnimalEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                    var field = typeof(MouseEffectWindow).GetField("cursorEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
                     field.SetValue(window, effect);
                     var canvas = (Canvas)window.FindName("canvas");
                     canvas.Children.Add(effect);
@@ -170,21 +171,30 @@ namespace WindowsX.ShellTests.Infrastructure
             {
                 var config = new MainConfig();
                 config.MouseEffectSetting.FollowingAnimalOpacity = 0.6;
+                config.MouseEffectSetting.FollowingAnimalSizeScale = 2;
                 var window = new MouseEffectSettingWindow(MouseEffectType.FollowingAnimal, config);
                 try
                 {
                     Assert.AreEqual("跟随小动物设置", window.Title);
                     var slider = (Slider)window.FindName("slider_Opacity");
                     Assert.AreEqual(60.0, slider.Value);
+                    var size = (Slider)window.FindName("slider_FollowingAnimalSize");
+                    Assert.AreEqual(200.0, size.Value);
+                    Assert.AreEqual(50.0, size.Minimum);
+                    Assert.AreEqual(300.0, size.Maximum);
+                    Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_FollowingAnimalSize")).Visibility);
                     Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_ParticleOpacity")).Visibility);
                     foreach (var name in new[] { "panel_Following", "panel_Trail", "panel_Expansion", "panel_StardustSize", "panel_InkFluid", "panel_NeonRibbon" })
                         Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName(name)).Visibility);
                     ((Button)window.FindName("btn_Reset")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.AreEqual(100.0, slider.Value);
+                    Assert.AreEqual(100.0, size.Value);
+                    size.Value = 300;
                     slider.Value = 20;
                 }
                 finally { window.Close(); }
                 Assert.AreEqual(0.6, config.MouseEffectSetting.FollowingAnimalOpacity);
+                Assert.AreEqual(2.0, config.MouseEffectSetting.FollowingAnimalSizeScale);
             });
         }
 
@@ -212,6 +222,7 @@ namespace WindowsX.ShellTests.Infrastructure
                         try
                         {
                             ((Slider)window.FindName("slider_Opacity")).Value = 25;
+                            ((Slider)window.FindName("slider_FollowingAnimalSize")).Value = 250;
                             ((Button)window.FindName("btn_Save")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         }
                         catch (Exception ex) { failure = ex; }
@@ -221,18 +232,97 @@ namespace WindowsX.ShellTests.Infrastructure
                     if (failure != null) Assert.Fail(failure.ToString());
                     Assert.AreSame(settings, config.MouseEffectSetting);
                     Assert.AreEqual(0.25, settings.FollowingAnimalOpacity);
+                    Assert.AreEqual(2.5, settings.FollowingAnimalSizeScale);
                     var restored = ConfigHelper.LoadMainConfig();
                     Assert.AreEqual(0.25, restored.MouseEffectSetting.FollowingAnimalOpacity);
+                    Assert.AreEqual(2.5, restored.MouseEffectSetting.FollowingAnimalSizeScale);
                     Assert.AreEqual(0.6, restored.MouseEffectSetting.HaloRingOpacity);
                     Assert.AreEqual(60.0, restored.MouseEffectSetting.FollowingSize);
                     Assert.IsTrue(restored.MouseEffectSetting.IsEnabled);
                     Assert.AreEqual(18, restored.MouseEffectSetting.SelectedEffectType);
+                    var reopened = new MouseEffectSettingWindow(MouseEffectType.FollowingAnimal, restored);
+                    try { Assert.AreEqual(250.0, ((Slider)reopened.FindName("slider_FollowingAnimalSize")).Value); }
+                    finally { reopened.Close(); }
                 }
                 finally
                 {
                     Environment.CurrentDirectory = original;
                     System.IO.Directory.Delete(directory, true);
                 }
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(-1.0, 0.5)]
+        [DataRow(10.0, 3.0)]
+        [DataRow(1.75, 1.75)]
+        [DataRow(double.NaN, 1.0)]
+        [DataRow(double.PositiveInfinity, 1.0)]
+        [DataRow(double.NegativeInfinity, 1.0)]
+        public void SizeIsNormalized(double value, double expected)
+        {
+            Assert.AreEqual(expected, new MouseEffectSetting { FollowingAnimalSizeScale = value }.FollowingAnimalSizeScale);
+        }
+
+        [DataTestMethod]
+        [DataRow(0.5)]
+        [DataRow(1.75)]
+        [DataRow(3.0)]
+        public void LiveSizeScalesWholeAnimalWithoutChangingFollowing(double scale)
+        {
+            RunSta(() =>
+            {
+                var settings = new MouseEffectSetting();
+                var effect = new FollowingAnimalCursorEffect(settings);
+                var reference = new FollowingAnimalCursorEffect();
+                var point = new Point(150, 100);
+                effect.Update(point, 0.1);
+                reference.Update(point, 0.1);
+                var visual = VisualTreeHelper.GetChild(effect, 0);
+                settings.FollowingAnimalSizeScale = scale;
+                foreach (var cursor in new[] { point, new Point(250, 100), new Point(50, 100) })
+                {
+                    effect.Update(cursor, 0.2);
+                    reference.Update(cursor, 0.2);
+                    var actual = Transform(effect);
+                    var original = Transform(reference);
+                    Assert.AreEqual(original.OffsetX, actual.OffsetX, 0.000001);
+                    Assert.AreEqual(original.OffsetY, actual.OffsetY, 0.000001);
+                    Assert.AreEqual(original.M11 * scale, actual.M11);
+                    Assert.AreEqual(scale, actual.M22);
+                    var shapes = Shapes(Drawing(effect)).ToArray();
+                    var referenceShapes = Shapes(Drawing(reference)).ToArray();
+                    Assert.AreEqual(referenceShapes.Length, shapes.Length);
+                    for (var i = 0; i < shapes.Length; i++)
+                    {
+                        Assert.AreEqual(referenceShapes[i].Geometry.ToString(), shapes[i].Geometry.ToString());
+                        Assert.AreSame(referenceShapes[i].Brush, shapes[i].Brush);
+                        Assert.AreSame(referenceShapes[i].Pen, shapes[i].Pen);
+                    }
+                }
+                Assert.AreEqual(-scale, Transform(effect).M11);
+                settings.FollowingAnimalSizeScale = 1;
+                effect.Update(point, 0.2);
+                reference.Update(point, 0.2);
+                Assert.AreEqual(Transform(reference), Transform(effect));
+                Assert.AreSame(visual, VisualTreeHelper.GetChild(effect, 0));
+                effect.Clear();
+                settings.FollowingAnimalSizeScale = scale;
+                effect.Update(point, 0.1);
+                Assert.AreEqual(scale, Transform(effect).M11);
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(MouseEffectType.FollowingDot)]
+        [DataRow(MouseEffectType.IconRain)]
+        public void OtherDialogsHideAnimalSize(MouseEffectType type)
+        {
+            RunSta(() =>
+            {
+                var window = new MouseEffectSettingWindow(type, new MainConfig());
+                try { Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName("panel_FollowingAnimalSize")).Visibility); }
+                finally { window.Close(); }
             });
         }
 

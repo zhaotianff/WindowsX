@@ -72,7 +72,7 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             context.PushOpacity(settings.IconRainOpacity);
             foreach (var particle in particles)
             {
-                DrawIcon(context, particle);
+                DrawIcon(context, particle, settings.IconRainSizeScale);
             }
             context.Pop();
         }
@@ -102,11 +102,11 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             nextKind = (nextKind + 1) % IconGeometries.Length;
         }
 
-        private static void DrawIcon(DrawingContext context, IconParticle particle)
+        private static void DrawIcon(DrawingContext context, IconParticle particle, double sizeScale = 1)
         {
             var age = particle.Age;
             var center = particle.Origin + particle.Velocity * age + new Vector(0, 65 * age * age);
-            var scale = particle.Size * (0.65 + 0.35 * Math.Min(1, age / 0.12));
+            var scale = particle.Size * sizeScale * (0.65 + 0.35 * Math.Min(1, age / 0.12));
             var transform = Matrix.Identity;
             transform.Scale(scale, scale);
             transform.Rotate(particle.Angle + particle.Spin * age);

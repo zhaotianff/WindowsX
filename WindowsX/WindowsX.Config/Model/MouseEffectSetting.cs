@@ -24,6 +24,17 @@ namespace WindowsX.Config.Model
         public const string DefaultNeonRibbonColor2 = "#9E44FF";
         public const string DefaultNeonRibbonColor3 = "#FF37B4";
         public const double DefaultStardustSizeScale = 1;
+        public const double DefaultFallingPetalsSizeScale = 1;
+        public const double DefaultFallingLeavesSizeScale = 1;
+        public const double DefaultIconRainSizeScale = 1;
+        public const double DefaultFollowingAnimalSizeScale = 1;
+        public const double DefaultCottonCandySizeScale = 1;
+        public const string DefaultFallingPetalsColor = "#FFB6C1";
+        public static System.Collections.Generic.IReadOnlyList<string> FallingPetalsPresetColors { get; } =
+            Array.AsReadOnly(new[] { DefaultFallingPetalsColor, "#D8C7F0", "#C2DFF5", "#C8E6D4", "#FFF0BD", "#FFD8BF" });
+        public const double DefaultWaterRippleSizeScale = 1;
+        public const double DefaultWaterRippleFrequency = 1.0 / 0.14;
+        public const string DefaultWaterRippleColor = "#69D2FF";
         public const double DefaultSnowflakesSizeScale = 1;
         public const double DefaultFivePointedStarsSizeScale = 1;
         public const string DefaultFivePointedStarsColor = "#FFD700";
@@ -49,12 +60,19 @@ namespace WindowsX.Config.Model
         private double inkFluidOpacity = 1;
         private double neonRibbonOpacity = 1;
         private double waterRippleOpacity = 1;
+        private double waterRippleSizeScale = DefaultWaterRippleSizeScale;
+        private double waterRippleFrequency = DefaultWaterRippleFrequency;
+        private string waterRippleColor = DefaultWaterRippleColor;
         private double stardustOpacity = 1;
         private double fallingPetalsOpacity = 1;
+        private double fallingPetalsSizeScale = DefaultFallingPetalsSizeScale;
+        private string fallingPetalsColor = DefaultFallingPetalsColor;
         private double colorfulMistOpacity = 1;
         private double fireworksTrailOpacity = 1;
         private double fallingLeavesOpacity = 1;
+        private double fallingLeavesSizeScale = DefaultFallingLeavesSizeScale;
         private double iconRainOpacity = 1;
+        private double iconRainSizeScale = DefaultIconRainSizeScale;
         private double haloRingOpacity = 1;
         private double haloRingSizeScale = DefaultHaloRingSizeScale;
         private double haloRingBreathingFrequency = DefaultHaloRingBreathingFrequency;
@@ -62,7 +80,9 @@ namespace WindowsX.Config.Model
         private string haloRingColor2 = DefaultHaloRingColor2;
         private string haloRingColor3 = DefaultHaloRingColor3;
         private double followingAnimalOpacity = 1;
+        private double followingAnimalSizeScale = DefaultFollowingAnimalSizeScale;
         private double cottonCandyOpacity = 1;
+        private double cottonCandySizeScale = DefaultCottonCandySizeScale;
         private double stardustSizeScale = DefaultStardustSizeScale;
         private string neonRibbonColor1 = DefaultNeonRibbonColor1;
         private string neonRibbonColor2 = DefaultNeonRibbonColor2;
@@ -220,10 +240,22 @@ namespace WindowsX.Config.Model
             set => fallingLeavesOpacity = Normalize(value, 0, 1);
         }
 
+        public double FallingLeavesSizeScale
+        {
+            get => fallingLeavesSizeScale;
+            set => fallingLeavesSizeScale = Normalize(value, 0.5, 3, DefaultFallingLeavesSizeScale);
+        }
+
         public double IconRainOpacity
         {
             get => iconRainOpacity;
             set => iconRainOpacity = Normalize(value, 0, 1);
+        }
+
+        public double IconRainSizeScale
+        {
+            get => iconRainSizeScale;
+            set => iconRainSizeScale = Normalize(value, 0.5, 3, DefaultIconRainSizeScale);
         }
 
         public double HaloRingOpacity
@@ -268,10 +300,22 @@ namespace WindowsX.Config.Model
             set => followingAnimalOpacity = Normalize(value, 0, 1);
         }
 
+        public double FollowingAnimalSizeScale
+        {
+            get => followingAnimalSizeScale;
+            set => followingAnimalSizeScale = Normalize(value, 0.5, 3, DefaultFollowingAnimalSizeScale);
+        }
+
         public double CottonCandyOpacity
         {
             get => cottonCandyOpacity;
             set => cottonCandyOpacity = Normalize(value, 0, 1);
+        }
+
+        public double CottonCandySizeScale
+        {
+            get => cottonCandySizeScale;
+            set => cottonCandySizeScale = Normalize(value, 0.5, 3, DefaultCottonCandySizeScale);
         }
 
         public double NeonRibbonOpacity
@@ -286,6 +330,24 @@ namespace WindowsX.Config.Model
             set => waterRippleOpacity = Normalize(value, 0, 1);
         }
 
+        public double WaterRippleSizeScale
+        {
+            get => waterRippleSizeScale;
+            set => waterRippleSizeScale = Normalize(value, 0.5, 3, DefaultWaterRippleSizeScale);
+        }
+
+        public double WaterRippleFrequency
+        {
+            get => waterRippleFrequency;
+            set => waterRippleFrequency = Normalize(value, 1, 20, DefaultWaterRippleFrequency);
+        }
+
+        public string WaterRippleColor
+        {
+            get => waterRippleColor;
+            set => waterRippleColor = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultWaterRippleColor;
+        }
+
         public double StardustOpacity
         {
             get => stardustOpacity;
@@ -296,6 +358,29 @@ namespace WindowsX.Config.Model
         {
             get => fallingPetalsOpacity;
             set => fallingPetalsOpacity = Normalize(value, 0, 1);
+        }
+
+        public double FallingPetalsSizeScale
+        {
+            get => fallingPetalsSizeScale;
+            set => fallingPetalsSizeScale = Normalize(value, 0.5, 3, DefaultFallingPetalsSizeScale);
+        }
+
+        public string FallingPetalsColor
+        {
+            get => fallingPetalsColor;
+            set
+            {
+                fallingPetalsColor = DefaultFallingPetalsColor;
+                foreach (var preset in FallingPetalsPresetColors)
+                {
+                    if (string.Equals(value?.Trim(), preset, StringComparison.OrdinalIgnoreCase))
+                    {
+                        fallingPetalsColor = preset;
+                        break;
+                    }
+                }
+            }
         }
 
         public double StardustSizeScale

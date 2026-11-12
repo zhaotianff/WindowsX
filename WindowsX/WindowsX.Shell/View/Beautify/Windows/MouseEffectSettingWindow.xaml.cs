@@ -69,6 +69,21 @@ namespace WindowsX.Shell.Windows
                 _ => fireworks ? settings.FireworksOpacity : settings.WillowCatkinsOpacity
             }) * 100;
             slider_Expansion.Value = settings.FireworksExpansion * 100;
+            slider_CottonCandySize.Value = settings.CottonCandySizeScale * 100;
+            panel_CottonCandySize.Visibility = effectType == MouseEffectType.CottonCandy ? Visibility.Visible : Visibility.Collapsed;
+            slider_FollowingAnimalSize.Value = settings.FollowingAnimalSizeScale * 100;
+            panel_FollowingAnimalSize.Visibility = effectType == MouseEffectType.FollowingAnimal ? Visibility.Visible : Visibility.Collapsed;
+            slider_IconRainSize.Value = settings.IconRainSizeScale * 100;
+            panel_IconRainSize.Visibility = effectType == MouseEffectType.IconRain ? Visibility.Visible : Visibility.Collapsed;
+            slider_FallingLeavesSize.Value = settings.FallingLeavesSizeScale * 100;
+            panel_FallingLeavesSize.Visibility = effectType == MouseEffectType.FallingLeaves ? Visibility.Visible : Visibility.Collapsed;
+            slider_FallingPetalsSize.Value = settings.FallingPetalsSizeScale * 100;
+            combo_FallingPetalsColor.SelectedValue = settings.FallingPetalsColor;
+            panel_FallingPetals.Visibility = effectType == MouseEffectType.FallingPetals ? Visibility.Visible : Visibility.Collapsed;
+            slider_WaterRippleSize.Value = settings.WaterRippleSizeScale * 100;
+            slider_WaterRippleFrequency.Value = settings.WaterRippleFrequency;
+            text_WaterRippleColor.Text = settings.WaterRippleColor;
+            panel_WaterRipple.Visibility = effectType == MouseEffectType.WaterRipple ? Visibility.Visible : Visibility.Collapsed;
             text_CatkinsColor.Text = settings.WillowCatkinsColor;
             slider_CatkinsSize.Value = settings.WillowCatkinsSizeScale * 100;
             panel_Catkins.Visibility = catkins ? Visibility.Visible : Visibility.Collapsed;
@@ -110,6 +125,7 @@ namespace WindowsX.Shell.Windows
             text_NeonRibbonColor2.Text = settings.NeonRibbonColor2;
             text_NeonRibbonColor3.Text = settings.NeonRibbonColor3;
             isInitialized = true;
+            UpdateWaterRipplePreview();
             UpdateCatkinsPreview();
             UpdateFollowingPreview();
             UpdateTrailPreview();
@@ -117,6 +133,22 @@ namespace WindowsX.Shell.Windows
             UpdateNeonRibbonPreview();
             UpdateHaloRingPreview();
             UpdateFivePointedStarsPreview();
+        }
+
+        private void WaterRippleColor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateWaterRipplePreview();
+        }
+
+        private void UpdateWaterRipplePreview()
+        {
+            if (!isInitialized || effectType != MouseEffectType.WaterRipple)
+                return;
+
+            var valid = MouseEffectSetting.IsValidColor(text_WaterRippleColor.Text);
+            text_WaterRippleColorError.Visibility = valid ? Visibility.Collapsed : Visibility.Visible;
+            btn_Save.IsEnabled = valid;
+            UpdateColorSwatch(preview_WaterRippleColor, text_WaterRippleColor.Text);
         }
 
         private void FivePointedStarsColor_TextChanged(object sender, TextChangedEventArgs e)
@@ -342,6 +374,25 @@ namespace WindowsX.Shell.Windows
 
             slider_Opacity.Value = 100;
             slider_Expansion.Value = 100;
+            if (effectType == MouseEffectType.CottonCandy)
+                slider_CottonCandySize.Value = MouseEffectSetting.DefaultCottonCandySizeScale * 100;
+            if (effectType == MouseEffectType.FollowingAnimal)
+                slider_FollowingAnimalSize.Value = MouseEffectSetting.DefaultFollowingAnimalSizeScale * 100;
+            if (effectType == MouseEffectType.IconRain)
+                slider_IconRainSize.Value = MouseEffectSetting.DefaultIconRainSizeScale * 100;
+            if (effectType == MouseEffectType.FallingLeaves)
+                slider_FallingLeavesSize.Value = MouseEffectSetting.DefaultFallingLeavesSizeScale * 100;
+            if (effectType == MouseEffectType.FallingPetals)
+            {
+                slider_FallingPetalsSize.Value = MouseEffectSetting.DefaultFallingPetalsSizeScale * 100;
+                combo_FallingPetalsColor.SelectedValue = MouseEffectSetting.DefaultFallingPetalsColor;
+            }
+            if (effectType == MouseEffectType.WaterRipple)
+            {
+                slider_WaterRippleSize.Value = MouseEffectSetting.DefaultWaterRippleSizeScale * 100;
+                slider_WaterRippleFrequency.Value = MouseEffectSetting.DefaultWaterRippleFrequency;
+                text_WaterRippleColor.Text = MouseEffectSetting.DefaultWaterRippleColor;
+            }
             if (catkins)
             {
                 text_CatkinsColor.Text = MouseEffectSetting.DefaultWillowCatkinsColor;
@@ -381,6 +432,12 @@ namespace WindowsX.Shell.Windows
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            if (effectType == MouseEffectType.WaterRipple && !MouseEffectSetting.IsValidColor(text_WaterRippleColor.Text))
+            {
+                UpdateWaterRipplePreview();
+                text_WaterRippleColor.Focus();
+                return;
+            }
             if (effectType == MouseEffectType.FivePointedStars && check_FivePointedStarsRandomColors.IsChecked != true
                 && !MouseEffectSetting.IsValidColor(text_FivePointedStarsColor.Text))
             {
@@ -447,12 +504,19 @@ namespace WindowsX.Shell.Windows
             var previousInkFluidOpacity = settings.InkFluidOpacity;
             var previousNeonRibbonOpacity = settings.NeonRibbonOpacity;
             var previousWaterRippleOpacity = settings.WaterRippleOpacity;
+            var previousWaterRippleSize = settings.WaterRippleSizeScale;
+            var previousWaterRippleFrequency = settings.WaterRippleFrequency;
+            var previousWaterRippleColor = settings.WaterRippleColor;
             var previousStardustOpacity = settings.StardustOpacity;
             var previousFallingPetalsOpacity = settings.FallingPetalsOpacity;
+            var previousFallingPetalsSize = settings.FallingPetalsSizeScale;
+            var previousFallingPetalsColor = settings.FallingPetalsColor;
             var previousColorfulMistOpacity = settings.ColorfulMistOpacity;
             var previousFireworksTrailOpacity = settings.FireworksTrailOpacity;
             var previousFallingLeavesOpacity = settings.FallingLeavesOpacity;
+            var previousFallingLeavesSize = settings.FallingLeavesSizeScale;
             var previousIconRainOpacity = settings.IconRainOpacity;
+            var previousIconRainSize = settings.IconRainSizeScale;
             var previousHaloRingOpacity = settings.HaloRingOpacity;
             var previousHaloRingSize = settings.HaloRingSizeScale;
             var previousHaloRingFrequency = settings.HaloRingBreathingFrequency;
@@ -460,7 +524,9 @@ namespace WindowsX.Shell.Windows
             var previousHaloRingColor2 = settings.HaloRingColor2;
             var previousHaloRingColor3 = settings.HaloRingColor3;
             var previousFollowingAnimalOpacity = settings.FollowingAnimalOpacity;
+            var previousFollowingAnimalSize = settings.FollowingAnimalSizeScale;
             var previousCottonCandyOpacity = settings.CottonCandyOpacity;
+            var previousCottonCandySize = settings.CottonCandySizeScale;
             var previousStardustSizeScale = settings.StardustSizeScale;
             var previousNeonRibbonColor1 = settings.NeonRibbonColor1;
             var previousNeonRibbonColor2 = settings.NeonRibbonColor2;
@@ -521,6 +587,9 @@ namespace WindowsX.Shell.Windows
             else if (effectType == MouseEffectType.WaterRipple)
             {
                 settings.WaterRippleOpacity = slider_Opacity.Value / 100;
+                settings.WaterRippleSizeScale = slider_WaterRippleSize.Value / 100;
+                settings.WaterRippleFrequency = slider_WaterRippleFrequency.Value;
+                settings.WaterRippleColor = text_WaterRippleColor.Text;
             }
             else if (effectType == MouseEffectType.Stardust)
             {
@@ -537,6 +606,8 @@ namespace WindowsX.Shell.Windows
             else if (effectType == MouseEffectType.FallingPetals)
             {
                 settings.FallingPetalsOpacity = slider_Opacity.Value / 100;
+                settings.FallingPetalsSizeScale = slider_FallingPetalsSize.Value / 100;
+                settings.FallingPetalsColor = combo_FallingPetalsColor.SelectedValue as string;
             }
             else if (effectType == MouseEffectType.ColorfulMist)
             {
@@ -549,10 +620,12 @@ namespace WindowsX.Shell.Windows
             else if (effectType == MouseEffectType.FallingLeaves)
             {
                 settings.FallingLeavesOpacity = slider_Opacity.Value / 100;
+                settings.FallingLeavesSizeScale = slider_FallingLeavesSize.Value / 100;
             }
             else if (effectType == MouseEffectType.IconRain)
             {
                 settings.IconRainOpacity = slider_Opacity.Value / 100;
+                settings.IconRainSizeScale = slider_IconRainSize.Value / 100;
             }
             else if (effectType == MouseEffectType.HaloRing)
             {
@@ -566,10 +639,12 @@ namespace WindowsX.Shell.Windows
             else if (effectType == MouseEffectType.FollowingAnimal)
             {
                 settings.FollowingAnimalOpacity = slider_Opacity.Value / 100;
+                settings.FollowingAnimalSizeScale = slider_FollowingAnimalSize.Value / 100;
             }
             else if (effectType == MouseEffectType.CottonCandy)
             {
                 settings.CottonCandyOpacity = slider_Opacity.Value / 100;
+                settings.CottonCandySizeScale = slider_CottonCandySize.Value / 100;
             }
             else
             {
@@ -603,12 +678,19 @@ namespace WindowsX.Shell.Windows
                 settings.InkFluidOpacity = previousInkFluidOpacity;
                 settings.NeonRibbonOpacity = previousNeonRibbonOpacity;
                 settings.WaterRippleOpacity = previousWaterRippleOpacity;
+                settings.WaterRippleSizeScale = previousWaterRippleSize;
+                settings.WaterRippleFrequency = previousWaterRippleFrequency;
+                settings.WaterRippleColor = previousWaterRippleColor;
                 settings.StardustOpacity = previousStardustOpacity;
                 settings.FallingPetalsOpacity = previousFallingPetalsOpacity;
+                settings.FallingPetalsSizeScale = previousFallingPetalsSize;
+                settings.FallingPetalsColor = previousFallingPetalsColor;
                 settings.ColorfulMistOpacity = previousColorfulMistOpacity;
                 settings.FireworksTrailOpacity = previousFireworksTrailOpacity;
                 settings.FallingLeavesOpacity = previousFallingLeavesOpacity;
+                settings.FallingLeavesSizeScale = previousFallingLeavesSize;
                 settings.IconRainOpacity = previousIconRainOpacity;
+                settings.IconRainSizeScale = previousIconRainSize;
                 settings.HaloRingOpacity = previousHaloRingOpacity;
                 settings.HaloRingSizeScale = previousHaloRingSize;
                 settings.HaloRingBreathingFrequency = previousHaloRingFrequency;
@@ -616,7 +698,9 @@ namespace WindowsX.Shell.Windows
                 settings.HaloRingColor2 = previousHaloRingColor2;
                 settings.HaloRingColor3 = previousHaloRingColor3;
                 settings.FollowingAnimalOpacity = previousFollowingAnimalOpacity;
+                settings.FollowingAnimalSizeScale = previousFollowingAnimalSize;
                 settings.CottonCandyOpacity = previousCottonCandyOpacity;
+                settings.CottonCandySizeScale = previousCottonCandySize;
                 settings.StardustSizeScale = previousStardustSizeScale;
                 settings.NeonRibbonColor1 = previousNeonRibbonColor1;
                 settings.NeonRibbonColor2 = previousNeonRibbonColor2;

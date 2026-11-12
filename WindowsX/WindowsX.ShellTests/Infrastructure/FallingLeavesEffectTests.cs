@@ -26,6 +26,7 @@ namespace WindowsX.ShellTests.Infrastructure
             Assert.AreEqual(14, (int)MouseEffectType.FireworksTrail);
             Assert.AreEqual(15, (int)MouseEffectType.FallingLeaves);
             Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.FallingLeavesOpacity);
+            Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.FallingLeavesSizeScale);
         }
 
         [DataTestMethod]
@@ -150,7 +151,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     window.UpdateMouseEffectType(MouseEffectType.FallingLeaves);
                     var effect = new FallingLeavesCursorEffect();
                     effect.Update(new Point(200, 200), 0.016);
-                    var field = typeof(MouseEffectWindow).GetField("fallingLeavesEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                    var field = typeof(MouseEffectWindow).GetField("cursorEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
                     field.SetValue(window, effect);
                     var canvas = (Canvas)window.FindName("canvas");
                     canvas.Children.Add(effect);
@@ -173,21 +174,28 @@ namespace WindowsX.ShellTests.Infrastructure
             {
                 var config = new MainConfig();
                 config.MouseEffectSetting.FallingLeavesOpacity = 0.6;
+                config.MouseEffectSetting.FallingLeavesSizeScale = 2;
                 var window = new MouseEffectSettingWindow(MouseEffectType.FallingLeaves, config);
                 try
                 {
                     Assert.AreEqual("落叶设置", window.Title);
                     var slider = (Slider)window.FindName("slider_Opacity");
                     Assert.AreEqual(60.0, slider.Value);
+                    var size = (Slider)window.FindName("slider_FallingLeavesSize");
+                    Assert.AreEqual(200.0, size.Value);
+                    Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_FallingLeavesSize")).Visibility);
                     Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_ParticleOpacity")).Visibility);
                     foreach (var name in new[] { "panel_Expansion", "panel_StardustSize", "panel_InkFluid", "panel_NeonRibbon", "panel_Following", "panel_Trail" })
                         Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName(name)).Visibility);
                     ((Button)window.FindName("btn_Reset")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.AreEqual(100.0, slider.Value);
+                    Assert.AreEqual(100.0, size.Value);
+                    size.Value = 300;
                     slider.Value = 20;
                 }
                 finally { window.Close(); }
                 Assert.AreEqual(0.6, config.MouseEffectSetting.FallingLeavesOpacity);
+                Assert.AreEqual(2.0, config.MouseEffectSetting.FallingLeavesSizeScale);
             });
         }
 
@@ -205,6 +213,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     var config = new MainConfig();
                     var settings = config.MouseEffectSetting;
                     settings.FallingPetalsOpacity = 0.6;
+                    settings.FallingPetalsSizeScale = 1.5;
                     settings.IsEnabled = true;
                     settings.SelectedEffectType = (int)MouseEffectType.FallingLeaves;
                     var window = new MouseEffectSettingWindow(MouseEffectType.FallingLeaves, config);
@@ -214,6 +223,7 @@ namespace WindowsX.ShellTests.Infrastructure
                         try
                         {
                             ((Slider)window.FindName("slider_Opacity")).Value = 25;
+                            ((Slider)window.FindName("slider_FallingLeavesSize")).Value = 250;
                             ((Button)window.FindName("btn_Save")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         }
                         catch (Exception ex) { failure = ex; }
@@ -223,13 +233,20 @@ namespace WindowsX.ShellTests.Infrastructure
                     if (failure != null) Assert.Fail(failure.ToString());
                     Assert.AreSame(settings, config.MouseEffectSetting);
                     Assert.AreEqual(0.25, settings.FallingLeavesOpacity);
+                    Assert.AreEqual(2.5, settings.FallingLeavesSizeScale);
                     var restored = ConfigHelper.LoadMainConfig();
                     Assert.AreEqual(0.25, restored.MouseEffectSetting.FallingLeavesOpacity);
+                    Assert.AreEqual(2.5, restored.MouseEffectSetting.FallingLeavesSizeScale);
+                    Assert.AreEqual(1.5, restored.MouseEffectSetting.FallingPetalsSizeScale);
                     Assert.AreEqual(0.6, restored.MouseEffectSetting.FallingPetalsOpacity);
                     Assert.IsTrue(restored.MouseEffectSetting.IsEnabled);
                     Assert.AreEqual(15, restored.MouseEffectSetting.SelectedEffectType);
                     var reopened = new MouseEffectSettingWindow(MouseEffectType.FallingLeaves, restored);
-                    try { Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value); }
+                    try
+                    {
+                        Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value);
+                        Assert.AreEqual(250.0, ((Slider)reopened.FindName("slider_FallingLeavesSize")).Value);
+                    }
                     finally { reopened.Close(); }
                 }
                 finally
@@ -237,6 +254,74 @@ namespace WindowsX.ShellTests.Infrastructure
                     Environment.CurrentDirectory = original;
                     System.IO.Directory.Delete(directory, true);
                 }
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(-1.0, 0.5)]
+        [DataRow(10.0, 3.0)]
+        [DataRow(1.75, 1.75)]
+        [DataRow(double.NaN, 1.0)]
+        [DataRow(double.PositiveInfinity, 1.0)]
+        [DataRow(double.NegativeInfinity, 1.0)]
+        public void SizeIsNormalized(double value, double expected)
+        {
+            Assert.AreEqual(expected, new MouseEffectSetting { FallingLeavesSizeScale = value }.FallingLeavesSizeScale);
+        }
+
+        [DataTestMethod]
+        [DataRow(0.5)]
+        [DataRow(1.75)]
+        [DataRow(3.0)]
+        public void LiveSizeScalesBodyVeinsAndStemWithoutChangingBaseSizes(double scale)
+        {
+            RunSta(() =>
+            {
+                var settings = new MouseEffectSetting();
+                var effect = new FallingLeavesCursorEffect(settings);
+                var point = new Point(200, 200);
+                effect.Update(point, 0.016);
+                effect.Update(new Point(340, 200), 0.06);
+                point = new Point(340, 200);
+                var before = Groups(Drawing(effect)).Where(g => g.Transform != null && !g.Transform.Value.IsIdentity).ToArray();
+                var field = typeof(FallingLeavesCursorEffect).GetField("particles", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                var particles = (System.Collections.IEnumerable)field.GetValue(effect)!;
+                var sizes = particles.Cast<object>().Select(p => (double)p.GetType().GetField("Size")!.GetValue(p)!).ToArray();
+                Assert.IsTrue(sizes.All(s => s >= 6 && s < 11));
+                Assert.IsTrue(sizes.Distinct().Count() > 1);
+                settings.FallingLeavesSizeScale = scale;
+                effect.Update(point, 0.000001);
+                var after = Groups(Drawing(effect)).Where(g => g.Transform != null && !g.Transform.Value.IsIdentity).ToArray();
+                Assert.AreEqual(before.Length, after.Length);
+                for (var i = 0; i < before.Length; i++)
+                {
+                    var original = before[i].Transform.Value;
+                    var current = after[i].Transform.Value;
+                    Assert.AreEqual(original.OffsetX, current.OffsetX, 0.001);
+                    Assert.AreEqual(original.OffsetY, current.OffsetY, 0.001);
+                    Assert.AreEqual(original.M11 * scale, current.M11, 0.001);
+                    Assert.AreEqual(original.M12 * scale, current.M12, 0.001);
+                    Assert.AreEqual(original.M21 * scale, current.M21, 0.001);
+                    Assert.AreEqual(original.M22 * scale, current.M22, 0.001);
+                    var shapes = Shapes(after[i]).ToArray();
+                    Assert.AreEqual(8, shapes.Length);
+                    Assert.AreEqual(7, shapes.Count(s => s.Geometry is LineGeometry));
+                    Assert.AreSame(Shapes(before[i]).First().Brush, shapes[0].Brush);
+                }
+                CollectionAssert.AreEqual(sizes, particles.Cast<object>().Select(p => (double)p.GetType().GetField("Size")!.GetValue(p)!).ToArray());
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(MouseEffectType.FallingPetals)]
+        [DataRow(MouseEffectType.WaterRipple)]
+        public void OtherDialogsHideLeafSize(MouseEffectType type)
+        {
+            RunSta(() =>
+            {
+                var window = new MouseEffectSettingWindow(type, new MainConfig());
+                try { Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName("panel_FallingLeavesSize")).Visibility); }
+                finally { window.Close(); }
             });
         }
 

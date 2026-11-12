@@ -26,6 +26,7 @@ namespace WindowsX.ShellTests.Infrastructure
             Assert.AreEqual(18, (int)MouseEffectType.FollowingAnimal);
             Assert.AreEqual(19, (int)MouseEffectType.CottonCandy);
             Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.CottonCandyOpacity);
+            Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.CottonCandySizeScale);
         }
 
         [DataTestMethod]
@@ -147,7 +148,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     window.UpdateMouseEffectType(MouseEffectType.CottonCandy);
                     var effect = new CottonCandyCursorEffect();
                     effect.Update(new Point(100, 100), 0.016);
-                    var field = typeof(MouseEffectWindow).GetField("cottonCandyEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                    var field = typeof(MouseEffectWindow).GetField("cursorEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
                     field.SetValue(window, effect);
                     var canvas = (Canvas)window.FindName("canvas");
                     canvas.Children.Add(effect);
@@ -171,21 +172,30 @@ namespace WindowsX.ShellTests.Infrastructure
             {
                 var config = new MainConfig();
                 config.MouseEffectSetting.CottonCandyOpacity = 0.6;
+                config.MouseEffectSetting.CottonCandySizeScale = 2;
                 var window = new MouseEffectSettingWindow(MouseEffectType.CottonCandy, config);
                 try
                 {
                     Assert.AreEqual("棉花糖粒子设置", window.Title);
                     var slider = (Slider)window.FindName("slider_Opacity");
                     Assert.AreEqual(60.0, slider.Value);
+                    var size = (Slider)window.FindName("slider_CottonCandySize");
+                    Assert.AreEqual(200.0, size.Value);
+                    Assert.AreEqual(50.0, size.Minimum);
+                    Assert.AreEqual(300.0, size.Maximum);
+                    Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_CottonCandySize")).Visibility);
                     Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_ParticleOpacity")).Visibility);
                     foreach (var name in new[] { "panel_Following", "panel_Trail", "panel_Expansion", "panel_StardustSize", "panel_InkFluid", "panel_NeonRibbon" })
                         Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName(name)).Visibility);
                     ((Button)window.FindName("btn_Reset")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.AreEqual(100.0, slider.Value);
+                    Assert.AreEqual(100.0, size.Value);
+                    size.Value = 300;
                     slider.Value = 20;
                 }
                 finally { window.Close(); }
                 Assert.AreEqual(0.6, config.MouseEffectSetting.CottonCandyOpacity);
+                Assert.AreEqual(2.0, config.MouseEffectSetting.CottonCandySizeScale);
             });
         }
 
@@ -203,6 +213,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     var config = new MainConfig();
                     var settings = config.MouseEffectSetting;
                     settings.ColorfulMistOpacity = 0.6;
+                    settings.FollowingAnimalSizeScale = 1.5;
                     settings.IsEnabled = true;
                     settings.SelectedEffectType = (int)MouseEffectType.CottonCandy;
                     var window = new MouseEffectSettingWindow(MouseEffectType.CottonCandy, config);
@@ -212,6 +223,7 @@ namespace WindowsX.ShellTests.Infrastructure
                         try
                         {
                             ((Slider)window.FindName("slider_Opacity")).Value = 25;
+                            ((Slider)window.FindName("slider_CottonCandySize")).Value = 250;
                             ((Button)window.FindName("btn_Save")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         }
                         catch (Exception ex) { failure = ex; }
@@ -221,13 +233,20 @@ namespace WindowsX.ShellTests.Infrastructure
                     if (failure != null) Assert.Fail(failure.ToString());
                     Assert.AreSame(settings, config.MouseEffectSetting);
                     Assert.AreEqual(0.25, settings.CottonCandyOpacity);
+                    Assert.AreEqual(2.5, settings.CottonCandySizeScale);
                     var restored = ConfigHelper.LoadMainConfig();
                     Assert.AreEqual(0.25, restored.MouseEffectSetting.CottonCandyOpacity);
+                    Assert.AreEqual(2.5, restored.MouseEffectSetting.CottonCandySizeScale);
+                    Assert.AreEqual(1.5, restored.MouseEffectSetting.FollowingAnimalSizeScale);
                     Assert.AreEqual(0.6, restored.MouseEffectSetting.ColorfulMistOpacity);
                     Assert.IsTrue(restored.MouseEffectSetting.IsEnabled);
                     Assert.AreEqual(19, restored.MouseEffectSetting.SelectedEffectType);
                     var reopened = new MouseEffectSettingWindow(MouseEffectType.CottonCandy, restored);
-                    try { Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value); }
+                    try
+                    {
+                        Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value);
+                        Assert.AreEqual(250.0, ((Slider)reopened.FindName("slider_CottonCandySize")).Value);
+                    }
                     finally { reopened.Close(); }
                 }
                 finally
@@ -235,6 +254,89 @@ namespace WindowsX.ShellTests.Infrastructure
                     Environment.CurrentDirectory = original;
                     System.IO.Directory.Delete(directory, true);
                 }
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(-1.0, 0.5)]
+        [DataRow(10.0, 3.0)]
+        [DataRow(1.75, 1.75)]
+        [DataRow(double.NaN, 1.0)]
+        [DataRow(double.PositiveInfinity, 1.0)]
+        [DataRow(double.NegativeInfinity, 1.0)]
+        public void SizeIsNormalized(double value, double expected)
+        {
+            Assert.AreEqual(expected, new MouseEffectSetting { CottonCandySizeScale = value }.CottonCandySizeScale);
+        }
+
+        [DataTestMethod]
+        [DataRow(0.5)]
+        [DataRow(1.75)]
+        [DataRow(3.0)]
+        public void LiveSizeScalesAllLobesWithoutChangingCentersOrBaseRadii(double scale)
+        {
+            RunSta(() =>
+            {
+                var settings = new MouseEffectSetting();
+                var effect = new CottonCandyCursorEffect(settings);
+                effect.Update(new Point(100, 200), 0.016);
+                var point = new Point(120, 200);
+                effect.Update(point, 0.03);
+                var visual = VisualTreeHelper.GetChild(effect, 0);
+                var before = Groups(Drawing(effect)).Where(g => g.Transform != null && !g.Transform.Value.IsIdentity).ToArray();
+                Assert.AreEqual(3, before.Length);
+                var particles = (System.Collections.IEnumerable)typeof(CottonCandyCursorEffect)
+                    .GetField("particles", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(effect)!;
+                var radii = particles.Cast<object>().Select(p => (double)p.GetType().GetField("Radius")!.GetValue(p)!).ToArray();
+                Assert.IsTrue(radii.All(r => r >= 9 && r < 13));
+                settings.CottonCandySizeScale = scale;
+                effect.Update(point, 0.000001);
+                var after = Groups(Drawing(effect)).Where(g => g.Transform != null && !g.Transform.Value.IsIdentity).ToArray();
+                Assert.AreEqual(before.Length, after.Length);
+                for (var i = 0; i < before.Length; i++)
+                {
+                    var original = before[i].Transform.Value;
+                    var current = after[i].Transform.Value;
+                    Assert.AreEqual(original.OffsetX, current.OffsetX, 0.001);
+                    Assert.AreEqual(original.OffsetY, current.OffsetY, 0.001);
+                    Assert.AreEqual(original.M11 * scale, current.M11, 0.001);
+                    Assert.AreEqual(original.M12 * scale, current.M12, 0.001);
+                    Assert.AreEqual(original.M21 * scale, current.M21, 0.001);
+                    Assert.AreEqual(original.M22 * scale, current.M22, 0.001);
+                    var initialShapes = Shapes(before[i]).ToArray();
+                    var shapes = Shapes(after[i]).ToArray();
+                    Assert.AreEqual(7, shapes.Length);
+                    for (var j = 0; j < shapes.Length; j++)
+                    {
+                        Assert.AreSame(initialShapes[j].Brush, shapes[j].Brush);
+                        var initial = (EllipseGeometry)initialShapes[j].Geometry;
+                        var ellipse = (EllipseGeometry)shapes[j].Geometry;
+                        Assert.AreEqual(initial.RadiusX, ellipse.RadiusX, 0.001);
+                        Assert.AreEqual(initial.RadiusY, ellipse.RadiusY, 0.001);
+                        Assert.AreEqual(initial.Center.X, ellipse.Center.X, 0.001);
+                        Assert.AreEqual(initial.Center.Y, ellipse.Center.Y, 0.001);
+                    }
+                }
+                CollectionAssert.AreEqual(radii, particles.Cast<object>().Select(p => (double)p.GetType().GetField("Radius")!.GetValue(p)!).ToArray());
+                Assert.AreSame(visual, VisualTreeHelper.GetChild(effect, 0));
+                settings.CottonCandySizeScale = 1;
+                effect.Update(point, 0.000001);
+                var restored = Groups(Drawing(effect)).Where(g => g.Transform != null && !g.Transform.Value.IsIdentity).ToArray();
+                for (var i = 0; i < before.Length; i++)
+                    Assert.AreEqual(before[i].Transform.Value.M11, restored[i].Transform.Value.M11, 0.001);
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(MouseEffectType.FollowingAnimal)]
+        [DataRow(MouseEffectType.ColorfulMist)]
+        public void OtherDialogsHideCottonCandySize(MouseEffectType type)
+        {
+            RunSta(() =>
+            {
+                var window = new MouseEffectSettingWindow(type, new MainConfig());
+                try { Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName("panel_CottonCandySize")).Visibility); }
+                finally { window.Close(); }
             });
         }
 

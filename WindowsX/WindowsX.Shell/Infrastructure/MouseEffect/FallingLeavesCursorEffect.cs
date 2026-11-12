@@ -74,7 +74,7 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
 
             using var context = visual.RenderOpen();
             context.PushOpacity(settings.FallingLeavesOpacity);
-            foreach (var leaf in particles) DrawLeaf(context, leaf);
+            foreach (var leaf in particles) DrawLeaf(context, leaf, settings.FallingLeavesSizeScale);
             context.Pop();
         }
 
@@ -106,13 +106,13 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             });
         }
 
-        private static void DrawLeaf(DrawingContext context, Leaf leaf)
+        private static void DrawLeaf(DrawingContext context, Leaf leaf, double sizeScale = 1)
         {
             var age = leaf.Age;
             var center = leaf.Origin + new Vector(leaf.Drift * age + 16 * (Math.Sin(leaf.Phase + age * 1.8) - Math.Sin(leaf.Phase)),
                 leaf.FallSpeed * age + 4 * age * age);
             var transform = Matrix.Identity;
-            transform.Scale(leaf.Size * (0.7 + 0.3 * Math.Cos(leaf.Phase + age * 2.2)), leaf.Size);
+            transform.Scale(leaf.Size * sizeScale * (0.7 + 0.3 * Math.Cos(leaf.Phase + age * 2.2)), leaf.Size * sizeScale);
             transform.Rotate(leaf.Phase * 180 / Math.PI + leaf.Spin * age);
             transform.Translate(center.X, center.Y);
             context.PushOpacity(Math.Pow(Math.Max(0, 1 - age / leaf.Lifetime), 1.2));

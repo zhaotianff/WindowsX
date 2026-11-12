@@ -15,7 +15,9 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
         {
             CreatePetalGeometry(0), CreatePetalGeometry(1), CreatePetalGeometry(2)
         };
-        private static readonly Brush PetalBrush = CreatePetalBrush();
+        private static readonly Brush DefaultPetalBrush = CreatePetalBrush(MouseEffectSetting.DefaultFallingPetalsColor);
+        private Brush petalBrush = DefaultPetalBrush;
+        private string petalColor = MouseEffectSetting.DefaultFallingPetalsColor;
         private readonly MouseEffectSetting settings;
         private readonly DrawingVisual visual = new DrawingVisual();
         private readonly List<Petal> particles = new List<Petal>(MaxParticles);
@@ -73,9 +75,14 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                     elapsedSinceEmission = 0;
                 }
             }
+            if (petalColor != settings.FallingPetalsColor)
+            {
+                petalColor = settings.FallingPetalsColor;
+                petalBrush = petalColor == MouseEffectSetting.DefaultFallingPetalsColor ? DefaultPetalBrush : CreatePetalBrush(petalColor);
+            }
             using var context = visual.RenderOpen();
             context.PushOpacity(settings.FallingPetalsOpacity);
-            foreach (var petal in particles) DrawPetal(context, petal);
+            foreach (var petal in particles) DrawPetal(context, petal, petalBrush, settings.FallingPetalsSizeScale);
             context.Pop();
         }
 
@@ -103,19 +110,19 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             });
         }
 
-        private static void DrawPetal(DrawingContext context, Petal petal)
+        private static void DrawPetal(DrawingContext context, Petal petal, Brush brush, double sizeScale = 1)
         {
             var age = petal.Age;
             var center = petal.Origin + new Vector(petal.Drift * age + 12 * (Math.Sin(petal.Phase + age * 1.8) - Math.Sin(petal.Phase)),
                 petal.FallSpeed * age + 3 * age * age);
             var transform = Matrix.Identity;
             var flutter = 0.65 + 0.35 * Math.Cos(petal.Phase + age * 2.4);
-            transform.Scale(petal.Size * flutter, petal.Size);
+            transform.Scale(petal.Size * flutter * sizeScale, petal.Size * sizeScale);
             transform.Rotate(petal.Phase * 180 / Math.PI + petal.Spin * age);
             transform.Translate(center.X, center.Y);
             context.PushOpacity(Math.Pow(Math.Max(0, 1 - age / petal.Lifetime), 1.3));
             context.PushTransform(new MatrixTransform(transform));
-            context.DrawGeometry(PetalBrush, null, PetalGeometries[petal.Kind]);
+            context.DrawGeometry(brush, null, PetalGeometries[petal.Kind]);
             context.Pop();
             context.Pop();
         }
@@ -148,16 +155,20 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             return geometry;
         }
 
-        private static Brush CreatePetalBrush()
+        private static Brush CreatePetalBrush(string value)
         {
+            var color = (Color)ColorConverter.ConvertFromString(value);
+            var highlight = Color.FromRgb((byte)(color.R + (255 - color.R) * 0.55),
+                (byte)(color.G + (255 - color.G) * 0.55), (byte)(color.B + (255 - color.B) * 0.55));
+            var shadow = Color.FromRgb((byte)(color.R * 0.94), (byte)(color.G * 0.94), (byte)(color.B * 0.94));
             var brush = new LinearGradientBrush
             {
                 StartPoint = new Point(0, 0), EndPoint = new Point(1, 1),
                 GradientStops = new GradientStopCollection
                 {
-                    new GradientStop(Color.FromRgb(255, 222, 235), 0),
-                    new GradientStop(Color.FromRgb(255, 182, 193), 0.45),
-                    new GradientStop(Color.FromRgb(238, 119, 164), 1)
+                    new GradientStop(highlight, 0),
+                    new GradientStop(color, 0.45),
+                    new GradientStop(shadow, 1)
                 }
             };
             brush.Freeze();
@@ -178,7 +189,7 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                             Origin = new Point(35 + i * 23, 35 + i % 3 * 28),
                             Kind = i % 3, Size = 3 + i % 4 * 2, Lifetime = 3.5, Age = (8 - i) * 0.1,
                             FallSpeed = 25, Phase = i * 1.3, Spin = 35
-                        });
+                        }, DefaultPetalBrush);
                 }
                 var image = new DrawingImage(drawing);
                 image.Freeze();

@@ -79,7 +79,7 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             context.PushOpacity(settings.CottonCandyOpacity);
             foreach (var puff in particles)
             {
-                DrawPuff(context, puff);
+                DrawPuff(context, puff, settings.CottonCandySizeScale);
             }
             context.Pop();
         }
@@ -112,12 +112,13 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             nextColor = (nextColor + 1) % PuffBrushes.Length;
         }
 
-        private static void DrawPuff(DrawingContext context, Puff puff)
+        private static void DrawPuff(DrawingContext context, Puff puff, double sizeScale = 1)
         {
             var progress = puff.Age / puff.Lifetime;
             var center = puff.Origin + puff.Velocity * puff.Age;
             var radius = puff.Radius * (1 + progress * 0.45);
             var transform = Matrix.Identity;
+            transform.Scale(sizeScale, sizeScale);
             transform.Rotate(Math.Sin(puff.Phase + puff.Age * 2) * 10);
             transform.Translate(center.X, center.Y);
             context.PushOpacity(0.8 * Math.Pow(Math.Max(0, 1 - progress), 1.5));

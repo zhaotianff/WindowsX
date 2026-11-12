@@ -58,7 +58,7 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             cycleTime = (cycleTime + elapsedSeconds % 2) % 2;
             using var context = visual.RenderOpen();
             context.PushOpacity(settings.FollowingAnimalOpacity);
-            DrawCat(context, position.Value, direction, cycleTime, moving);
+            DrawCat(context, position.Value, direction, cycleTime, moving, settings.FollowingAnimalSizeScale);
             context.Pop();
         }
 
@@ -70,10 +70,10 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             using (visual.RenderOpen()) { }
         }
 
-        private static void DrawCat(DrawingContext context, Point center, int facing, double time, bool moving)
+        private static void DrawCat(DrawingContext context, Point center, int facing, double time, bool moving, double sizeScale = 1)
         {
             var bob = moving ? Math.Sin(time * Math.PI * 8) * 1.2 : 0;
-            context.PushTransform(new MatrixTransform(facing, 0, 0, 1, center.X, center.Y + bob));
+            context.PushTransform(new MatrixTransform(facing * sizeScale, 0, 0, sizeScale, center.X, center.Y + bob));
             var wag = Math.Sin(time * Math.PI) * 4;
             var tail = new StreamGeometry();
             using (var path = tail.Open())

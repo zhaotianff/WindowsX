@@ -13,10 +13,10 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
         public const double RingLifetime = 1.2;
         public const double RingDelay = 0.24;
         public const double Lifetime = RingLifetime + RingDelay * 2;
-        public const double EmissionInterval = 0.14;
-        private static readonly Pen HaloPen = CreatePen(Color.FromArgb(55, 75, 190, 255), 6);
-        private static readonly Pen RingPen = CreatePen(Color.FromRgb(105, 210, 255), 1.8);
-        private static readonly Pen HighlightPen = CreatePen(Color.FromArgb(160, 225, 250, 255), 0.7);
+        public const double EmissionInterval = 1.0 / MouseEffectSetting.DefaultWaterRippleFrequency;
+        private static readonly Pen[] DefaultPens = CreatePens(MouseEffectSetting.DefaultWaterRippleColor);
+        private Pen[] pens = DefaultPens;
+        private string color = MouseEffectSetting.DefaultWaterRippleColor;
         private readonly MouseEffectSetting settings;
         private readonly DrawingVisual visual = new DrawingVisual();
         private readonly List<Ripple> ripples = new List<Ripple>(MaxRipples);
@@ -58,9 +58,10 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                 }
             }
 
-            elapsedSinceEmission = Math.Min(EmissionInterval, elapsedSinceEmission + elapsedSeconds);
+            var emissionInterval = 1.0 / settings.WaterRippleFrequency;
+            elapsedSinceEmission = Math.Min(emissionInterval, elapsedSinceEmission + elapsedSeconds);
             var distance = lastEmissionPoint.HasValue ? (cursor - lastEmissionPoint.Value).Length : 0;
-            if (!lastEmissionPoint.HasValue || (elapsedSinceEmission >= EmissionInterval && double.IsFinite(distance) && distance >= 12))
+            if (!lastEmissionPoint.HasValue || (elapsedSinceEmission >= emissionInterval && double.IsFinite(distance) && distance >= 12))
             {
                 if (ripples.Count == MaxRipples) ripples.RemoveAt(0);
                 ripples.Add(new Ripple { Center = cursor });
@@ -68,9 +69,15 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                 elapsedSinceEmission = 0;
             }
 
+            if (color != settings.WaterRippleColor)
+            {
+                color = settings.WaterRippleColor;
+                pens = color == MouseEffectSetting.DefaultWaterRippleColor ? DefaultPens : CreatePens(color);
+            }
+
             using var context = visual.RenderOpen();
             context.PushOpacity(settings.WaterRippleOpacity);
-            foreach (var ripple in ripples) DrawRipple(context, ripple);
+            foreach (var ripple in ripples) DrawRipple(context, ripple, pens, settings.WaterRippleSizeScale);
             context.Pop();
         }
 
@@ -90,8 +97,8 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                 using (var context = drawing.Open())
                 {
                     context.DrawRoundedRectangle(new SolidColorBrush(Color.FromRgb(19, 47, 66)), null, new Rect(0, 0, 260, 170), 10, 10);
-                    DrawRipple(context, new Ripple { Center = new Point(95, 90), Age = 0.8 });
-                    DrawRipple(context, new Ripple { Center = new Point(192, 65), Age = 0.5 });
+                    DrawRipple(context, new Ripple { Center = new Point(95, 90), Age = 0.8 }, DefaultPens);
+                    DrawRipple(context, new Ripple { Center = new Point(192, 65), Age = 0.5 }, DefaultPens);
                 }
                 var image = new DrawingImage(drawing);
                 image.Freeze();
@@ -99,8 +106,10 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             }
         }
 
-        private static void DrawRipple(DrawingContext context, Ripple ripple)
+        private static void DrawRipple(DrawingContext context, Ripple ripple, Pen[] pens, double sizeScale = 1)
         {
+            if (sizeScale != 1)
+                context.PushTransform(new ScaleTransform(sizeScale, sizeScale, ripple.Center.X, ripple.Center.Y));
             for (var ring = 0; ring < 3; ring++)
             {
                 var age = ripple.Age - ring * RingDelay;
@@ -109,11 +118,24 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
                 var radius = 6 + 54 * (1 - Math.Pow(1 - progress, 2));
                 var opacity = Math.Min(1, age / 0.08) * Math.Pow(1 - progress, 2);
                 context.PushOpacity(opacity);
-                context.DrawEllipse(null, HaloPen, ripple.Center, radius, radius);
-                context.DrawEllipse(null, RingPen, ripple.Center, radius, radius);
-                context.DrawEllipse(null, HighlightPen, ripple.Center, radius - 1.2, radius - 1.2);
+                context.DrawEllipse(null, pens[0], ripple.Center, radius, radius);
+                context.DrawEllipse(null, pens[1], ripple.Center, radius, radius);
+                context.DrawEllipse(null, pens[2], ripple.Center, radius - 1.2, radius - 1.2);
                 context.Pop();
             }
+            if (sizeScale != 1)
+                context.Pop();
+        }
+
+        private static Pen[] CreatePens(string value)
+        {
+            var color = (Color)ColorConverter.ConvertFromString(value);
+            var original = value == MouseEffectSetting.DefaultWaterRippleColor;
+            var halo = original ? Color.FromArgb(55, 75, 190, 255) : Color.FromArgb(55, color.R, color.G, color.B);
+            var highlight = original ? Color.FromArgb(160, 225, 250, 255)
+                : Color.FromArgb(160, (byte)(color.R + (255 - color.R) * 0.8),
+                    (byte)(color.G + (255 - color.G) * 0.8), (byte)(color.B + (255 - color.B) * 0.8));
+            return new[] { CreatePen(halo, 6), CreatePen(color, 1.8), CreatePen(highlight, 0.7) };
         }
 
         private static Pen CreatePen(Color color, double width)

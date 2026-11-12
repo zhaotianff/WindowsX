@@ -26,6 +26,7 @@ namespace WindowsX.ShellTests.Infrastructure
             Assert.AreEqual(15, (int)MouseEffectType.FallingLeaves);
             Assert.AreEqual(16, (int)MouseEffectType.IconRain);
             Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.IconRainOpacity);
+            Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.IconRainSizeScale);
         }
 
         [DataTestMethod]
@@ -169,7 +170,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     window.UpdateMouseEffectType(MouseEffectType.IconRain);
                     var effect = new IconRainCursorEffect();
                     effect.Update(new Point(200, 200), 0.016);
-                    var field = typeof(MouseEffectWindow).GetField("iconRainEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                    var field = typeof(MouseEffectWindow).GetField("cursorEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
                     field.SetValue(window, effect);
                     var canvas = (Canvas)window.FindName("canvas");
                     canvas.Children.Add(effect);
@@ -192,21 +193,30 @@ namespace WindowsX.ShellTests.Infrastructure
             {
                 var config = new MainConfig();
                 config.MouseEffectSetting.IconRainOpacity = 0.6;
+                config.MouseEffectSetting.IconRainSizeScale = 2;
                 var window = new MouseEffectSettingWindow(MouseEffectType.IconRain, config);
                 try
                 {
                     Assert.AreEqual("图标雨设置", window.Title);
                     var slider = (Slider)window.FindName("slider_Opacity");
                     Assert.AreEqual(60.0, slider.Value);
+                    var size = (Slider)window.FindName("slider_IconRainSize");
+                    Assert.AreEqual(200.0, size.Value);
+                    Assert.AreEqual(50.0, size.Minimum);
+                    Assert.AreEqual(300.0, size.Maximum);
+                    Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_IconRainSize")).Visibility);
                     Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_ParticleOpacity")).Visibility);
                     foreach (var name in new[] { "panel_Expansion", "panel_StardustSize", "panel_InkFluid", "panel_NeonRibbon", "panel_Following", "panel_Trail" })
                         Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName(name)).Visibility);
                     ((Button)window.FindName("btn_Reset")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.AreEqual(100.0, slider.Value);
+                    Assert.AreEqual(100.0, size.Value);
+                    size.Value = 300;
                     slider.Value = 20;
                 }
                 finally { window.Close(); }
                 Assert.AreEqual(0.6, config.MouseEffectSetting.IconRainOpacity);
+                Assert.AreEqual(2.0, config.MouseEffectSetting.IconRainSizeScale);
             });
         }
 
@@ -224,6 +234,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     var config = new MainConfig();
                     var settings = config.MouseEffectSetting;
                     settings.FallingLeavesOpacity = 0.6;
+                    settings.FallingLeavesSizeScale = 1.5;
                     settings.IsEnabled = true;
                     settings.SelectedEffectType = (int)MouseEffectType.IconRain;
                     var window = new MouseEffectSettingWindow(MouseEffectType.IconRain, config);
@@ -233,6 +244,7 @@ namespace WindowsX.ShellTests.Infrastructure
                         try
                         {
                             ((Slider)window.FindName("slider_Opacity")).Value = 25;
+                            ((Slider)window.FindName("slider_IconRainSize")).Value = 250;
                             ((Button)window.FindName("btn_Save")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         }
                         catch (Exception ex) { failure = ex; }
@@ -242,17 +254,102 @@ namespace WindowsX.ShellTests.Infrastructure
                     if (failure != null) Assert.Fail(failure.ToString());
                     Assert.AreSame(settings, config.MouseEffectSetting);
                     Assert.AreEqual(0.25, settings.IconRainOpacity);
+                    Assert.AreEqual(2.5, settings.IconRainSizeScale);
                     var restored = ConfigHelper.LoadMainConfig();
                     Assert.AreEqual(0.25, restored.MouseEffectSetting.IconRainOpacity);
+                    Assert.AreEqual(2.5, restored.MouseEffectSetting.IconRainSizeScale);
+                    Assert.AreEqual(1.5, restored.MouseEffectSetting.FallingLeavesSizeScale);
                     Assert.AreEqual(0.6, restored.MouseEffectSetting.FallingLeavesOpacity);
                     Assert.IsTrue(restored.MouseEffectSetting.IsEnabled);
                     Assert.AreEqual(16, restored.MouseEffectSetting.SelectedEffectType);
+                    var reopened = new MouseEffectSettingWindow(MouseEffectType.IconRain, restored);
+                    try
+                    {
+                        Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value);
+                        Assert.AreEqual(250.0, ((Slider)reopened.FindName("slider_IconRainSize")).Value);
+                    }
+                    finally { reopened.Close(); }
                 }
                 finally
                 {
                     Environment.CurrentDirectory = original;
                     System.IO.Directory.Delete(directory, true);
                 }
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(-1.0, 0.5)]
+        [DataRow(10.0, 3.0)]
+        [DataRow(1.75, 1.75)]
+        [DataRow(double.NaN, 1.0)]
+        [DataRow(double.PositiveInfinity, 1.0)]
+        [DataRow(double.NegativeInfinity, 1.0)]
+        public void SizeIsNormalized(double value, double expected)
+        {
+            Assert.AreEqual(expected, new MouseEffectSetting { IconRainSizeScale = value }.IconRainSizeScale);
+        }
+
+        [DataTestMethod]
+        [DataRow(0.5)]
+        [DataRow(1.75)]
+        [DataRow(3.0)]
+        public void LiveSizeScalesAllKindsWithoutChangingCentersOrBaseSizes(double scale)
+        {
+            RunSta(() =>
+            {
+                var settings = new MouseEffectSetting();
+                var effect = new IconRainCursorEffect(settings);
+                effect.Update(new Point(100, 200), 0.016);
+                var point = new Point(148, 200);
+                effect.Update(point, 0.06);
+                var before = Groups(Drawing(effect)).Where(g => g.Transform != null && !g.Transform.Value.IsIdentity).ToArray();
+                Assert.AreEqual(3, before.Length);
+                var field = typeof(IconRainCursorEffect).GetField("particles", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                var particles = (System.Collections.IEnumerable)field.GetValue(effect)!;
+                var sizes = particles.Cast<object>().Select(p => (double)p.GetType().GetField("Size")!.GetValue(p)!).ToArray();
+                Assert.IsTrue(sizes.All(s => s >= 6 && s < 10));
+                settings.IconRainSizeScale = scale;
+                effect.Update(point, 0.000001);
+                var after = Groups(Drawing(effect)).Where(g => g.Transform != null && !g.Transform.Value.IsIdentity).ToArray();
+                Assert.AreEqual(before.Length, after.Length);
+                for (var i = 0; i < before.Length; i++)
+                {
+                    var original = before[i].Transform.Value;
+                    var current = after[i].Transform.Value;
+                    Assert.AreEqual(original.OffsetX, current.OffsetX, 0.001);
+                    Assert.AreEqual(original.OffsetY, current.OffsetY, 0.001);
+                    Assert.AreEqual(original.M11 * scale, current.M11, 0.001);
+                    Assert.AreEqual(original.M12 * scale, current.M12, 0.001);
+                    Assert.AreEqual(original.M21 * scale, current.M21, 0.001);
+                    Assert.AreEqual(original.M22 * scale, current.M22, 0.001);
+                    Assert.AreSame(Shapes(before[i]).Single().Geometry, Shapes(after[i]).Single().Geometry);
+                    Assert.AreSame(Shapes(before[i]).Single().Brush, Shapes(after[i]).Single().Brush);
+                }
+                Assert.AreEqual(3, Shapes(Drawing(effect)).Select(s => s.Geometry).Distinct().Count());
+                CollectionAssert.AreEqual(sizes, particles.Cast<object>().Select(p => (double)p.GetType().GetField("Size")!.GetValue(p)!).ToArray());
+                Assert.AreEqual(3, effect.ParticleCount);
+                settings.IconRainSizeScale = 1;
+                effect.Update(point, 0.000001);
+                var restored = Groups(Drawing(effect)).Where(g => g.Transform != null && !g.Transform.Value.IsIdentity).ToArray();
+                for (var i = 0; i < before.Length; i++)
+                {
+                    Assert.AreEqual(before[i].Transform.Value.M11, restored[i].Transform.Value.M11, 0.001);
+                    Assert.AreEqual(before[i].Transform.Value.M22, restored[i].Transform.Value.M22, 0.001);
+                }
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(MouseEffectType.FallingLeaves)]
+        [DataRow(MouseEffectType.FallingPetals)]
+        public void OtherDialogsHideIconSize(MouseEffectType type)
+        {
+            RunSta(() =>
+            {
+                var window = new MouseEffectSettingWindow(type, new MainConfig());
+                try { Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName("panel_IconRainSize")).Visibility); }
+                finally { window.Close(); }
             });
         }
 

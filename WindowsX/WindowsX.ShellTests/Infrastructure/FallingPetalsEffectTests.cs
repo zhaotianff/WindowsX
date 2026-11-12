@@ -26,6 +26,9 @@ namespace WindowsX.ShellTests.Infrastructure
             Assert.AreEqual(11, (int)MouseEffectType.Stardust);
             Assert.AreEqual(12, (int)MouseEffectType.FallingPetals);
             Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.FallingPetalsOpacity);
+            var settings = JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting;
+            Assert.AreEqual(1.0, settings.FallingPetalsSizeScale);
+            Assert.AreEqual("#FFB6C1", settings.FallingPetalsColor);
         }
 
         [DataTestMethod]
@@ -155,7 +158,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     window.UpdateMouseEffectType(MouseEffectType.FallingPetals);
                     var effect = new FallingPetalsCursorEffect();
                     effect.Update(new Point(200, 200), 0.016);
-                    var field = typeof(MouseEffectWindow).GetField("fallingPetalsEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                    var field = typeof(MouseEffectWindow).GetField("cursorEffect", BindingFlags.NonPublic | BindingFlags.Instance)!;
                     field.SetValue(window, effect);
                     var canvas = (Canvas)window.FindName("canvas");
                     canvas.Children.Add(effect);
@@ -178,21 +181,36 @@ namespace WindowsX.ShellTests.Infrastructure
             {
                 var config = new MainConfig();
                 config.MouseEffectSetting.FallingPetalsOpacity = 0.6;
+                config.MouseEffectSetting.FallingPetalsSizeScale = 2;
+                config.MouseEffectSetting.FallingPetalsColor = "#D8C7F0";
                 var window = new MouseEffectSettingWindow(MouseEffectType.FallingPetals, config);
                 try
                 {
                     Assert.AreEqual("花瓣飘落设置", window.Title);
                     var slider = (Slider)window.FindName("slider_Opacity");
                     Assert.AreEqual(60.0, slider.Value);
+                    var size = (Slider)window.FindName("slider_FallingPetalsSize");
+                    var colors = (ComboBox)window.FindName("combo_FallingPetalsColor");
+                    Assert.AreEqual(200.0, size.Value);
+                    Assert.AreEqual("#D8C7F0", colors.SelectedValue);
+                    Assert.IsFalse(colors.IsEditable);
+                    CollectionAssert.AreEqual(MouseEffectSetting.FallingPetalsPresetColors.ToArray(), colors.Items.Cast<ComboBoxItem>().Select(i => (string)i.Tag).ToArray());
+                    Assert.AreEqual(Visibility.Visible, ((StackPanel)window.FindName("panel_FallingPetals")).Visibility);
                     Assert.AreEqual(Visibility.Visible, ((StackPanel)window.FindName("panel_ParticleOpacity")).Visibility);
                     foreach (var name in new[] { "panel_StardustSize", "panel_Expansion", "panel_NeonRibbon", "panel_InkFluid", "panel_Following", "panel_Trail" })
                         Assert.AreEqual(Visibility.Collapsed, ((StackPanel)window.FindName(name)).Visibility);
                     ((Button)window.FindName("btn_Reset")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.AreEqual(100.0, slider.Value);
+                    Assert.AreEqual(100.0, size.Value);
+                    Assert.AreEqual("#FFB6C1", colors.SelectedValue);
+                    size.Value = 300;
+                    colors.SelectedValue = "#FFF0BD";
                     slider.Value = 20;
                 }
                 finally { window.Close(); }
                 Assert.AreEqual(0.6, config.MouseEffectSetting.FallingPetalsOpacity);
+                Assert.AreEqual(2.0, config.MouseEffectSetting.FallingPetalsSizeScale);
+                Assert.AreEqual("#D8C7F0", config.MouseEffectSetting.FallingPetalsColor);
             });
         }
 
@@ -212,6 +230,7 @@ namespace WindowsX.ShellTests.Infrastructure
                     config.MouseEffectSetting.StardustSizeScale = 2;
                     config.MouseEffectSetting.IsEnabled = true;
                     config.MouseEffectSetting.SelectedEffectType = (int)MouseEffectType.FallingPetals;
+                    var shared = config.MouseEffectSetting;
                     var window = new MouseEffectSettingWindow(MouseEffectType.FallingPetals, config);
                     Exception? failure = null;
                     window.Dispatcher.InvokeAsync(() =>
@@ -219,6 +238,8 @@ namespace WindowsX.ShellTests.Infrastructure
                         try
                         {
                             ((Slider)window.FindName("slider_Opacity")).Value = 25;
+                            ((Slider)window.FindName("slider_FallingPetalsSize")).Value = 250;
+                            ((ComboBox)window.FindName("combo_FallingPetalsColor")).SelectedValue = "#C8E6D4";
                             ((Button)window.FindName("btn_Save")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         }
                         catch (Exception ex) { failure = ex; }
@@ -228,12 +249,22 @@ namespace WindowsX.ShellTests.Infrastructure
                     if (failure != null) Assert.Fail(failure.ToString());
                     var restored = ConfigHelper.LoadMainConfig();
                     Assert.AreEqual(0.25, restored.MouseEffectSetting.FallingPetalsOpacity);
+                    Assert.AreSame(shared, config.MouseEffectSetting);
+                    Assert.AreEqual(2.5, shared.FallingPetalsSizeScale);
+                    Assert.AreEqual("#C8E6D4", shared.FallingPetalsColor);
+                    Assert.AreEqual(2.5, restored.MouseEffectSetting.FallingPetalsSizeScale);
+                    Assert.AreEqual("#C8E6D4", restored.MouseEffectSetting.FallingPetalsColor);
                     Assert.AreEqual(0.6, restored.MouseEffectSetting.StardustOpacity);
                     Assert.AreEqual(2.0, restored.MouseEffectSetting.StardustSizeScale);
                     Assert.IsTrue(restored.MouseEffectSetting.IsEnabled);
                     Assert.AreEqual(12, restored.MouseEffectSetting.SelectedEffectType);
                     var reopened = new MouseEffectSettingWindow(MouseEffectType.FallingPetals, restored);
-                    try { Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value); }
+                    try
+                    {
+                        Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value);
+                        Assert.AreEqual(250.0, ((Slider)reopened.FindName("slider_FallingPetalsSize")).Value);
+                        Assert.AreEqual("#C8E6D4", ((ComboBox)reopened.FindName("combo_FallingPetalsColor")).SelectedValue);
+                    }
                     finally { reopened.Close(); }
                 }
                 finally
@@ -300,6 +331,100 @@ namespace WindowsX.ShellTests.Infrastructure
                     Assert.IsTrue(Math.Sqrt(matrix.M11 * matrix.M11 + matrix.M12 * matrix.M12) <= 9.000001);
                     Assert.IsTrue(Math.Sqrt(matrix.M21 * matrix.M21 + matrix.M22 * matrix.M22) <= 9.000001);
                 }
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(-1.0, 0.5)]
+        [DataRow(10.0, 3.0)]
+        [DataRow(1.75, 1.75)]
+        [DataRow(double.NaN, 1.0)]
+        [DataRow(double.PositiveInfinity, 1.0)]
+        [DataRow(double.NegativeInfinity, 1.0)]
+        public void SizeIsNormalized(double value, double expected)
+        {
+            Assert.AreEqual(expected, new MouseEffectSetting { FallingPetalsSizeScale = value }.FallingPetalsSizeScale);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, "#FFB6C1")]
+        [DataRow("#000000", "#FFB6C1")]
+        [DataRow("#FFFFFF", "#FFB6C1")]
+        [DataRow("invalid", "#FFB6C1")]
+        [DataRow(" #d8c7f0 ", "#D8C7F0")]
+        public void ColorsAreRestrictedToPastelPresets(string? value, string expected)
+        {
+            Assert.AreEqual(expected, new MouseEffectSetting { FallingPetalsColor = value! }.FallingPetalsColor);
+        }
+
+        [TestMethod]
+        public void PresetsApplyLiveWithLightGradientsAndCachedBrushes()
+        {
+            RunSta(() =>
+            {
+                var settings = new MouseEffectSetting();
+                var effect = new FallingPetalsCursorEffect(settings);
+                var point = new Point(200, 200);
+                effect.Update(point, 0.016);
+                var geometry = Shapes(Drawing(effect)).Single().Geometry;
+                Assert.AreEqual(6, MouseEffectSetting.FallingPetalsPresetColors.Distinct().Count());
+                foreach (var preset in MouseEffectSetting.FallingPetalsPresetColors)
+                {
+                    settings.FallingPetalsColor = preset;
+                    effect.Update(point, 0.000001);
+                    var shape = Shapes(Drawing(effect)).Single();
+                    var brush = (LinearGradientBrush)shape.Brush;
+                    Assert.IsTrue(brush.IsFrozen);
+                    Assert.AreSame(geometry, shape.Geometry);
+                    Assert.AreEqual((Color)ColorConverter.ConvertFromString(preset), brush.GradientStops[1].Color);
+                    Assert.IsTrue(brush.GradientStops.All(s => s.Color.R >= 170 && s.Color.G >= 170 && s.Color.B >= 170));
+                    effect.Update(point, 0.000001);
+                    Assert.AreSame(brush, Shapes(Drawing(effect)).Single().Brush);
+                    var restored = JsonConvert.DeserializeObject<MouseEffectSetting>(JsonConvert.SerializeObject(settings))!;
+                    Assert.AreEqual(preset, restored.FallingPetalsColor);
+                }
+                Assert.AreEqual(1, effect.ParticleCount);
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(0.5)]
+        [DataRow(1.75)]
+        [DataRow(3.0)]
+        public void LiveSizeScalesPetalWithoutMovingItsCenter(double scale)
+        {
+            RunSta(() =>
+            {
+                var settings = new MouseEffectSetting();
+                var effect = new FallingPetalsCursorEffect(settings);
+                var point = new Point(200, 200);
+                effect.Update(point, 0.016);
+                var original = Groups(Drawing(effect)).Single(g => g.Transform != null && !g.Transform.Value.IsIdentity).Transform.Value;
+                var geometry = Shapes(Drawing(effect)).Single().Geometry;
+                settings.FallingPetalsSizeScale = scale;
+                effect.Update(point, 0.000001);
+                var current = Groups(Drawing(effect)).Single(g => g.Transform != null && !g.Transform.Value.IsIdentity).Transform.Value;
+                Assert.AreEqual(original.OffsetX, current.OffsetX, 0.001);
+                Assert.AreEqual(original.OffsetY, current.OffsetY, 0.001);
+                Assert.AreEqual(original.M11 * scale, current.M11, 0.001);
+                Assert.AreEqual(original.M12 * scale, current.M12, 0.001);
+                Assert.AreEqual(original.M21 * scale, current.M21, 0.001);
+                Assert.AreEqual(original.M22 * scale, current.M22, 0.001);
+                Assert.AreSame(geometry, Shapes(Drawing(effect)).Single().Geometry);
+                Assert.AreEqual(1, effect.ParticleCount);
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(MouseEffectType.WaterRipple)]
+        [DataRow(MouseEffectType.Stardust)]
+        public void OtherEffectsHidePetalSettings(MouseEffectType type)
+        {
+            RunSta(() =>
+            {
+                var window = new MouseEffectSettingWindow(type, new MainConfig());
+                try { Assert.AreEqual(Visibility.Collapsed, ((StackPanel)window.FindName("panel_FallingPetals")).Visibility); }
+                finally { window.Close(); }
             });
         }
 
