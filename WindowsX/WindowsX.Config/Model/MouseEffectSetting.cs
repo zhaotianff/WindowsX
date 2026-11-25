@@ -29,6 +29,17 @@ namespace WindowsX.Config.Model
         public const double DefaultIconRainSizeScale = 1;
         public const double DefaultFollowingAnimalSizeScale = 1;
         public const double DefaultCottonCandySizeScale = 1;
+        public const double DefaultFirefliesFollowSpeed = 1;
+        public const double DefaultPixelBlocksSizeScale = 1;
+        public const double DefaultBinaryTrailSizeScale = 1;
+        public const string DefaultBinaryTrailColor = "#5CFF8F";
+        public const string DefaultBinaryTrailFontFamily = "Vector";
+        public static System.Collections.Generic.IReadOnlyList<string> BinaryTrailFontFamilies { get; } =
+            Array.AsReadOnly(new[] { DefaultBinaryTrailFontFamily, "Consolas", "Courier New", "Segoe UI", "Arial" });
+        public const double DefaultCloudSizeScale = 1;
+        public const string DefaultCloudPosition = "BottomRight";
+        public const double DefaultCloudHorizontalOffset = 30;
+        public const double DefaultCloudVerticalOffset = 26;
         public const string DefaultFallingPetalsColor = "#FFB6C1";
         public static System.Collections.Generic.IReadOnlyList<string> FallingPetalsPresetColors { get; } =
             Array.AsReadOnly(new[] { DefaultFallingPetalsColor, "#D8C7F0", "#C2DFF5", "#C8E6D4", "#FFF0BD", "#FFD8BF" });
@@ -82,6 +93,21 @@ namespace WindowsX.Config.Model
         private double followingAnimalOpacity = 1;
         private double followingAnimalSizeScale = DefaultFollowingAnimalSizeScale;
         private double cottonCandyOpacity = 1;
+        private double firefliesOpacity = 1;
+        private double firefliesFollowSpeed = DefaultFirefliesFollowSpeed;
+        private double pixelBlocksOpacity = 1;
+        private double butterfliesOpacity = 1;
+        private double cloudOpacity = 1;
+        private double musicNotesOpacity = 1;
+        private double binaryTrailOpacity = 1;
+        private double binaryTrailSizeScale = DefaultBinaryTrailSizeScale;
+        private string binaryTrailColor = DefaultBinaryTrailColor;
+        private string binaryTrailFontFamily = DefaultBinaryTrailFontFamily;
+        private double cloudSizeScale = DefaultCloudSizeScale;
+        private string cloudPosition = DefaultCloudPosition;
+        private double cloudHorizontalOffset = DefaultCloudHorizontalOffset;
+        private double cloudVerticalOffset = DefaultCloudVerticalOffset;
+        private double pixelBlocksSizeScale = DefaultPixelBlocksSizeScale;
         private double cottonCandySizeScale = DefaultCottonCandySizeScale;
         private double stardustSizeScale = DefaultStardustSizeScale;
         private string neonRibbonColor1 = DefaultNeonRibbonColor1;
@@ -304,6 +330,107 @@ namespace WindowsX.Config.Model
         {
             get => followingAnimalSizeScale;
             set => followingAnimalSizeScale = Normalize(value, 0.5, 3, DefaultFollowingAnimalSizeScale);
+        }
+
+        public double FirefliesOpacity
+        {
+            get => firefliesOpacity;
+            set => firefliesOpacity = Normalize(value, 0, 1);
+        }
+
+        public double FirefliesFollowSpeed
+        {
+            get => firefliesFollowSpeed;
+            set => firefliesFollowSpeed = Normalize(value, 0.25, 3, DefaultFirefliesFollowSpeed);
+        }
+
+        public double PixelBlocksOpacity
+        {
+            get => pixelBlocksOpacity;
+            set => pixelBlocksOpacity = Normalize(value, 0, 1);
+        }
+
+        public double ButterfliesOpacity
+        {
+            get => butterfliesOpacity;
+            set => butterfliesOpacity = Normalize(value, 0, 1);
+        }
+
+        public double CloudOpacity
+        {
+            get => cloudOpacity;
+            set => cloudOpacity = Normalize(value, 0, 1);
+        }
+
+        public double MusicNotesOpacity
+        {
+            get => musicNotesOpacity;
+            set => musicNotesOpacity = Normalize(value, 0, 1);
+        }
+
+        public double BinaryTrailOpacity
+        {
+            get => binaryTrailOpacity;
+            set => binaryTrailOpacity = Normalize(value, 0, 1);
+        }
+
+        public bool BinaryTrailUseDefaultColors { get; set; } = true;
+
+        public double BinaryTrailSizeScale
+        {
+            get => binaryTrailSizeScale;
+            set => binaryTrailSizeScale = Normalize(value, 0.5, 3, DefaultBinaryTrailSizeScale);
+        }
+
+        public string BinaryTrailColor
+        {
+            get => binaryTrailColor;
+            set => binaryTrailColor = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultBinaryTrailColor;
+        }
+
+        public string BinaryTrailFontFamily
+        {
+            get => binaryTrailFontFamily;
+            set
+            {
+                binaryTrailFontFamily = DefaultBinaryTrailFontFamily;
+                foreach (var font in BinaryTrailFontFamilies)
+                    if (string.Equals(value?.Trim(), font, StringComparison.OrdinalIgnoreCase))
+                    {
+                        binaryTrailFontFamily = font;
+                        break;
+                    }
+            }
+        }
+
+        public double CloudSizeScale
+        {
+            get => cloudSizeScale;
+            set => cloudSizeScale = Normalize(value, 0.5, 3, DefaultCloudSizeScale);
+        }
+
+        public string CloudPosition
+        {
+            get => cloudPosition;
+            set => cloudPosition = value is "TopLeft" or "BottomLeft" or "TopRight" or "BottomRight" ? value : DefaultCloudPosition;
+        }
+
+        public double CloudHorizontalOffset
+        {
+            get => cloudHorizontalOffset;
+            set => cloudHorizontalOffset = Normalize(value, 0, 300, DefaultCloudHorizontalOffset);
+        }
+
+        public double CloudVerticalOffset
+        {
+            get => cloudVerticalOffset;
+            set => cloudVerticalOffset = Normalize(value, 0, 300, DefaultCloudVerticalOffset);
+        }
+
+        public double PixelBlocksSizeScale
+        {
+            get => pixelBlocksSizeScale;
+            set => pixelBlocksSizeScale = Normalize(value, 0.5, 3, DefaultPixelBlocksSizeScale);
         }
 
         public double CottonCandyOpacity

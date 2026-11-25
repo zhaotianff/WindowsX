@@ -25,6 +25,12 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
         IconRain,
         HaloRing,
         FollowingAnimal,
-        CottonCandy
+        CottonCandy,
+        Fireflies,
+        PixelBlocks,
+        Butterflies,
+        Cloud,
+        MusicNotes,
+        BinaryTrail
     }
 }

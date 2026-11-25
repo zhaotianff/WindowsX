@@ -47,6 +47,12 @@ namespace WindowsX.Shell.Windows
                 MouseEffectType.HaloRing => "光晕圈设置",
                 MouseEffectType.FollowingAnimal => "跟随小动物设置",
                 MouseEffectType.CottonCandy => "棉花糖粒子设置",
+                MouseEffectType.Fireflies => "萤火虫设置",
+                MouseEffectType.PixelBlocks => "像素方块设置",
+                MouseEffectType.Butterflies => "蝴蝶跟随设置",
+                MouseEffectType.Cloud => "云朵设置",
+                MouseEffectType.MusicNotes => "音符轨迹设置",
+                MouseEffectType.BinaryTrail => "二进制字符光轨设置",
                 _ => trail ? "轨迹设置" : following ? "跟随设置" : fireworks ? "烟花设置" : "春日柳絮设置"
             };
             var settings = mainConfig.MouseEffectSetting;
@@ -66,9 +72,29 @@ namespace WindowsX.Shell.Windows
                 MouseEffectType.HaloRing => settings.HaloRingOpacity,
                 MouseEffectType.FollowingAnimal => settings.FollowingAnimalOpacity,
                 MouseEffectType.CottonCandy => settings.CottonCandyOpacity,
+                MouseEffectType.Fireflies => settings.FirefliesOpacity,
+                MouseEffectType.PixelBlocks => settings.PixelBlocksOpacity,
+                MouseEffectType.Butterflies => settings.ButterfliesOpacity,
+                MouseEffectType.Cloud => settings.CloudOpacity,
+                MouseEffectType.MusicNotes => settings.MusicNotesOpacity,
+                MouseEffectType.BinaryTrail => settings.BinaryTrailOpacity,
                 _ => fireworks ? settings.FireworksOpacity : settings.WillowCatkinsOpacity
             }) * 100;
             slider_Expansion.Value = settings.FireworksExpansion * 100;
+            panel_BinaryTrail.Visibility = effectType == MouseEffectType.BinaryTrail ? Visibility.Visible : Visibility.Collapsed;
+            check_BinaryTrailDefaultColors.IsChecked = settings.BinaryTrailUseDefaultColors;
+            text_BinaryTrailColor.Text = settings.BinaryTrailColor;
+            slider_BinaryTrailSize.Value = settings.BinaryTrailSizeScale * 100;
+            combo_BinaryTrailFont.SelectedValue = settings.BinaryTrailFontFamily;
+            panel_Cloud.Visibility = effectType == MouseEffectType.Cloud ? Visibility.Visible : Visibility.Collapsed;
+            slider_CloudSize.Value = settings.CloudSizeScale * 100;
+            combo_CloudPosition.SelectedValue = settings.CloudPosition;
+            slider_CloudHorizontalOffset.Value = settings.CloudHorizontalOffset;
+            slider_CloudVerticalOffset.Value = settings.CloudVerticalOffset;
+            slider_PixelBlocksSize.Value = settings.PixelBlocksSizeScale * 100;
+            panel_PixelBlocksSize.Visibility = effectType == MouseEffectType.PixelBlocks ? Visibility.Visible : Visibility.Collapsed;
+            slider_FirefliesFollowSpeed.Value = settings.FirefliesFollowSpeed * 100;
+            panel_FirefliesFollowSpeed.Visibility = effectType == MouseEffectType.Fireflies ? Visibility.Visible : Visibility.Collapsed;
             slider_CottonCandySize.Value = settings.CottonCandySizeScale * 100;
             panel_CottonCandySize.Visibility = effectType == MouseEffectType.CottonCandy ? Visibility.Visible : Visibility.Collapsed;
             slider_FollowingAnimalSize.Value = settings.FollowingAnimalSizeScale * 100;
@@ -125,6 +151,7 @@ namespace WindowsX.Shell.Windows
             text_NeonRibbonColor2.Text = settings.NeonRibbonColor2;
             text_NeonRibbonColor3.Text = settings.NeonRibbonColor3;
             isInitialized = true;
+            UpdateBinaryTrailColor();
             UpdateWaterRipplePreview();
             UpdateCatkinsPreview();
             UpdateFollowingPreview();
@@ -133,6 +160,28 @@ namespace WindowsX.Shell.Windows
             UpdateNeonRibbonPreview();
             UpdateHaloRingPreview();
             UpdateFivePointedStarsPreview();
+        }
+
+        private void BinaryTrailColor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateBinaryTrailColor();
+        }
+
+        private void BinaryTrailColorMode_Changed(object sender, RoutedEventArgs e)
+        {
+            UpdateBinaryTrailColor();
+        }
+
+        private void UpdateBinaryTrailColor()
+        {
+            if (!isInitialized || effectType != MouseEffectType.BinaryTrail) return;
+            var useDefault = check_BinaryTrailDefaultColors.IsChecked == true;
+            var valid = useDefault || MouseEffectSetting.IsValidColor(text_BinaryTrailColor.Text);
+            text_BinaryTrailColor.IsEnabled = !useDefault;
+            preview_BinaryTrailColor.Opacity = useDefault ? 0.4 : 1;
+            text_BinaryTrailColorError.Visibility = valid ? Visibility.Collapsed : Visibility.Visible;
+            btn_Save.IsEnabled = valid;
+            UpdateColorSwatch(preview_BinaryTrailColor, text_BinaryTrailColor.Text);
         }
 
         private void WaterRippleColor_TextChanged(object sender, TextChangedEventArgs e)
@@ -374,6 +423,24 @@ namespace WindowsX.Shell.Windows
 
             slider_Opacity.Value = 100;
             slider_Expansion.Value = 100;
+            if (effectType == MouseEffectType.BinaryTrail)
+            {
+                check_BinaryTrailDefaultColors.IsChecked = true;
+                text_BinaryTrailColor.Text = MouseEffectSetting.DefaultBinaryTrailColor;
+                slider_BinaryTrailSize.Value = MouseEffectSetting.DefaultBinaryTrailSizeScale * 100;
+                combo_BinaryTrailFont.SelectedValue = MouseEffectSetting.DefaultBinaryTrailFontFamily;
+            }
+            if (effectType == MouseEffectType.Cloud)
+            {
+                slider_CloudSize.Value = MouseEffectSetting.DefaultCloudSizeScale * 100;
+                combo_CloudPosition.SelectedValue = MouseEffectSetting.DefaultCloudPosition;
+                slider_CloudHorizontalOffset.Value = MouseEffectSetting.DefaultCloudHorizontalOffset;
+                slider_CloudVerticalOffset.Value = MouseEffectSetting.DefaultCloudVerticalOffset;
+            }
+            if (effectType == MouseEffectType.PixelBlocks)
+                slider_PixelBlocksSize.Value = MouseEffectSetting.DefaultPixelBlocksSizeScale * 100;
+            if (effectType == MouseEffectType.Fireflies)
+                slider_FirefliesFollowSpeed.Value = MouseEffectSetting.DefaultFirefliesFollowSpeed * 100;
             if (effectType == MouseEffectType.CottonCandy)
                 slider_CottonCandySize.Value = MouseEffectSetting.DefaultCottonCandySizeScale * 100;
             if (effectType == MouseEffectType.FollowingAnimal)
@@ -432,6 +499,13 @@ namespace WindowsX.Shell.Windows
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            if (effectType == MouseEffectType.BinaryTrail && check_BinaryTrailDefaultColors.IsChecked != true
+                && !MouseEffectSetting.IsValidColor(text_BinaryTrailColor.Text))
+            {
+                UpdateBinaryTrailColor();
+                text_BinaryTrailColor.Focus();
+                return;
+            }
             if (effectType == MouseEffectType.WaterRipple && !MouseEffectSetting.IsValidColor(text_WaterRippleColor.Text))
             {
                 UpdateWaterRipplePreview();
@@ -526,6 +600,22 @@ namespace WindowsX.Shell.Windows
             var previousFollowingAnimalOpacity = settings.FollowingAnimalOpacity;
             var previousFollowingAnimalSize = settings.FollowingAnimalSizeScale;
             var previousCottonCandyOpacity = settings.CottonCandyOpacity;
+            var previousFirefliesOpacity = settings.FirefliesOpacity;
+            var previousFirefliesFollowSpeed = settings.FirefliesFollowSpeed;
+            var previousPixelBlocksOpacity = settings.PixelBlocksOpacity;
+            var previousButterfliesOpacity = settings.ButterfliesOpacity;
+            var previousCloudOpacity = settings.CloudOpacity;
+            var previousMusicNotesOpacity = settings.MusicNotesOpacity;
+            var previousBinaryTrailOpacity = settings.BinaryTrailOpacity;
+            var previousBinaryTrailDefaultColors = settings.BinaryTrailUseDefaultColors;
+            var previousBinaryTrailColor = settings.BinaryTrailColor;
+            var previousBinaryTrailSize = settings.BinaryTrailSizeScale;
+            var previousBinaryTrailFont = settings.BinaryTrailFontFamily;
+            var previousCloudSize = settings.CloudSizeScale;
+            var previousCloudPosition = settings.CloudPosition;
+            var previousCloudHorizontalOffset = settings.CloudHorizontalOffset;
+            var previousCloudVerticalOffset = settings.CloudVerticalOffset;
+            var previousPixelBlocksSize = settings.PixelBlocksSizeScale;
             var previousCottonCandySize = settings.CottonCandySizeScale;
             var previousStardustSizeScale = settings.StardustSizeScale;
             var previousNeonRibbonColor1 = settings.NeonRibbonColor1;
@@ -641,6 +731,41 @@ namespace WindowsX.Shell.Windows
                 settings.FollowingAnimalOpacity = slider_Opacity.Value / 100;
                 settings.FollowingAnimalSizeScale = slider_FollowingAnimalSize.Value / 100;
             }
+            else if (effectType == MouseEffectType.Fireflies)
+            {
+                settings.FirefliesOpacity = slider_Opacity.Value / 100;
+                settings.FirefliesFollowSpeed = slider_FirefliesFollowSpeed.Value / 100;
+            }
+            else if (effectType == MouseEffectType.PixelBlocks)
+            {
+                settings.PixelBlocksOpacity = slider_Opacity.Value / 100;
+                settings.PixelBlocksSizeScale = slider_PixelBlocksSize.Value / 100;
+            }
+            else if (effectType == MouseEffectType.Butterflies)
+            {
+                settings.ButterfliesOpacity = slider_Opacity.Value / 100;
+            }
+            else if (effectType == MouseEffectType.MusicNotes)
+            {
+                settings.MusicNotesOpacity = slider_Opacity.Value / 100;
+            }
+            else if (effectType == MouseEffectType.BinaryTrail)
+            {
+                settings.BinaryTrailOpacity = slider_Opacity.Value / 100;
+                settings.BinaryTrailUseDefaultColors = check_BinaryTrailDefaultColors.IsChecked == true;
+                if (MouseEffectSetting.IsValidColor(text_BinaryTrailColor.Text))
+                    settings.BinaryTrailColor = text_BinaryTrailColor.Text;
+                settings.BinaryTrailSizeScale = slider_BinaryTrailSize.Value / 100;
+                settings.BinaryTrailFontFamily = combo_BinaryTrailFont.SelectedValue as string;
+            }
+            else if (effectType == MouseEffectType.Cloud)
+            {
+                settings.CloudOpacity = slider_Opacity.Value / 100;
+                settings.CloudSizeScale = slider_CloudSize.Value / 100;
+                settings.CloudPosition = combo_CloudPosition.SelectedValue as string;
+                settings.CloudHorizontalOffset = slider_CloudHorizontalOffset.Value;
+                settings.CloudVerticalOffset = slider_CloudVerticalOffset.Value;
+            }
             else if (effectType == MouseEffectType.CottonCandy)
             {
                 settings.CottonCandyOpacity = slider_Opacity.Value / 100;
@@ -700,6 +825,22 @@ namespace WindowsX.Shell.Windows
                 settings.FollowingAnimalOpacity = previousFollowingAnimalOpacity;
                 settings.FollowingAnimalSizeScale = previousFollowingAnimalSize;
                 settings.CottonCandyOpacity = previousCottonCandyOpacity;
+                settings.FirefliesOpacity = previousFirefliesOpacity;
+                settings.FirefliesFollowSpeed = previousFirefliesFollowSpeed;
+                settings.PixelBlocksOpacity = previousPixelBlocksOpacity;
+                settings.ButterfliesOpacity = previousButterfliesOpacity;
+                settings.CloudOpacity = previousCloudOpacity;
+                settings.MusicNotesOpacity = previousMusicNotesOpacity;
+                settings.BinaryTrailOpacity = previousBinaryTrailOpacity;
+                settings.BinaryTrailUseDefaultColors = previousBinaryTrailDefaultColors;
+                settings.BinaryTrailColor = previousBinaryTrailColor;
+                settings.BinaryTrailSizeScale = previousBinaryTrailSize;
+                settings.BinaryTrailFontFamily = previousBinaryTrailFont;
+                settings.CloudSizeScale = previousCloudSize;
+                settings.CloudPosition = previousCloudPosition;
+                settings.CloudHorizontalOffset = previousCloudHorizontalOffset;
+                settings.CloudVerticalOffset = previousCloudVerticalOffset;
+                settings.PixelBlocksSizeScale = previousPixelBlocksSize;
                 settings.CottonCandySizeScale = previousCottonCandySize;
                 settings.StardustSizeScale = previousStardustSizeScale;
                 settings.NeonRibbonColor1 = previousNeonRibbonColor1;

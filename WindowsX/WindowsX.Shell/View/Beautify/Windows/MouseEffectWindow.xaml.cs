@@ -75,6 +75,24 @@ namespace WindowsX.Shell.Windows
                 case MouseEffectType.FollowingDot:
                     cursorEffect = new FollowingDotEffect(settings);
                     break;
+                case MouseEffectType.Fireflies:
+                    cursorEffect = new FirefliesCursorEffect(settings);
+                    break;
+                case MouseEffectType.PixelBlocks:
+                    cursorEffect = new PixelBlocksCursorEffect(settings);
+                    break;
+                case MouseEffectType.Butterflies:
+                    cursorEffect = new ButterfliesCursorEffect(settings);
+                    break;
+                case MouseEffectType.Cloud:
+                    cursorEffect = new CloudCursorEffect(settings);
+                    break;
+                case MouseEffectType.MusicNotes:
+                    cursorEffect = new MusicNotesCursorEffect(settings);
+                    break;
+                case MouseEffectType.BinaryTrail:
+                    cursorEffect = new BinaryTrailCursorEffect(settings);
+                    break;
                 case MouseEffectType.NeonRibbon:
                     cursorEffect = new NeonRibbonCursorEffect(settings);
                     break;
@@ -152,6 +170,12 @@ namespace WindowsX.Shell.Windows
 
             switch(currentEffectType)
             {
+                case MouseEffectType.BinaryTrail:
+                case MouseEffectType.MusicNotes:
+                case MouseEffectType.Cloud:
+                case MouseEffectType.Butterflies:
+                case MouseEffectType.PixelBlocks:
+                case MouseEffectType.Fireflies:
                 case MouseEffectType.NeonRibbon:
                 case MouseEffectType.WaterRipple:
                 case MouseEffectType.Stardust:
