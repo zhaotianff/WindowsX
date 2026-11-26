@@ -26,6 +26,7 @@ namespace WindowsX.ShellTests.Infrastructure
             Assert.AreEqual(12, (int)MouseEffectType.FallingPetals);
             Assert.AreEqual(13, (int)MouseEffectType.ColorfulMist);
             Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.ColorfulMistOpacity);
+            Assert.AreEqual(1.0, JsonConvert.DeserializeObject<MainConfig>(json)!.MouseEffectSetting.ColorfulMistSizeScale);
         }
 
         [DataTestMethod]
@@ -177,21 +178,28 @@ namespace WindowsX.ShellTests.Infrastructure
             {
                 var config = new MainConfig();
                 config.MouseEffectSetting.ColorfulMistOpacity = 0.6;
+                config.MouseEffectSetting.ColorfulMistSizeScale = 2;
                 var window = new MouseEffectSettingWindow(MouseEffectType.ColorfulMist, config);
                 try
                 {
                     Assert.AreEqual("彩色雾设置", window.Title);
                     var slider = (Slider)window.FindName("slider_Opacity");
                     Assert.AreEqual(60.0, slider.Value);
+                    var size = (Slider)window.FindName("slider_ColorfulMistSize");
+                    Assert.AreEqual(200.0, size.Value);
+                    Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_ColorfulMistSize")).Visibility);
                     Assert.AreEqual(Visibility.Visible, ((FrameworkElement)window.FindName("panel_ParticleOpacity")).Visibility);
                     foreach (var name in new[] { "panel_StardustSize", "panel_Expansion", "panel_NeonRibbon", "panel_InkFluid", "panel_Following", "panel_Trail" })
                         Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName(name)).Visibility);
                     ((Button)window.FindName("btn_Reset")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.AreEqual(100.0, slider.Value);
+                    Assert.AreEqual(100.0, size.Value);
+                    size.Value = 250;
                     slider.Value = 20;
                 }
                 finally { window.Close(); }
                 Assert.AreEqual(0.6, config.MouseEffectSetting.ColorfulMistOpacity);
+                Assert.AreEqual(2.0, config.MouseEffectSetting.ColorfulMistSizeScale);
             });
         }
 
@@ -219,6 +227,7 @@ namespace WindowsX.ShellTests.Infrastructure
                         try
                         {
                             ((Slider)window.FindName("slider_Opacity")).Value = 25;
+                            ((Slider)window.FindName("slider_ColorfulMistSize")).Value = 175;
                             ((Button)window.FindName("btn_Save")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         }
                         catch (Exception ex) { failure = ex; }
@@ -230,12 +239,18 @@ namespace WindowsX.ShellTests.Infrastructure
                     Assert.AreEqual(0.25, settings.ColorfulMistOpacity);
                     var restored = ConfigHelper.LoadMainConfig();
                     Assert.AreEqual(0.25, restored.MouseEffectSetting.ColorfulMistOpacity);
+                    Assert.AreEqual(1.75, settings.ColorfulMistSizeScale);
+                    Assert.AreEqual(1.75, restored.MouseEffectSetting.ColorfulMistSizeScale);
                     Assert.AreEqual(0.6, restored.MouseEffectSetting.FallingPetalsOpacity);
                     Assert.AreEqual("#123456", restored.MouseEffectSetting.InkFluidColor1);
                     Assert.IsTrue(restored.MouseEffectSetting.IsEnabled);
                     Assert.AreEqual(13, restored.MouseEffectSetting.SelectedEffectType);
                     var reopened = new MouseEffectSettingWindow(MouseEffectType.ColorfulMist, restored);
-                    try { Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value); }
+                    try
+                    {
+                        Assert.AreEqual(25.0, ((Slider)reopened.FindName("slider_Opacity")).Value);
+                        Assert.AreEqual(175.0, ((Slider)reopened.FindName("slider_ColorfulMistSize")).Value);
+                    }
                     finally { reopened.Close(); }
                 }
                 finally
@@ -243,6 +258,69 @@ namespace WindowsX.ShellTests.Infrastructure
                     Environment.CurrentDirectory = original;
                     System.IO.Directory.Delete(directory, true);
                 }
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow(-1.0, 0.5)]
+        [DataRow(10.0, 3.0)]
+        [DataRow(double.NaN, 1.0)]
+        [DataRow(double.PositiveInfinity, 1.0)]
+        [DataRow(double.NegativeInfinity, 1.0)]
+        public void SizeIsNormalized(double value, double expected)
+        {
+            Assert.AreEqual(expected, new MouseEffectSetting { ColorfulMistSizeScale = value }.ColorfulMistSizeScale);
+        }
+
+        [DataTestMethod]
+        [DataRow(0.5)]
+        [DataRow(1.0)]
+        [DataRow(3.0)]
+        public void SizeScalesWholeMistWithoutChangingCenterOrResources(double scale)
+        {
+            RunSta(() =>
+            {
+                var settings = new MouseEffectSetting();
+                var effect = new ColorfulMistCursorEffect(settings);
+                var cursor = new Point(200, 200);
+                effect.Update(cursor, 0.01);
+                effect.Update(cursor, 0.4);
+                var before = Shapes(Drawing(effect)).ToArray();
+                var center = ((EllipseGeometry)before[0].Geometry).Center;
+                var opacity = Groups(Drawing(effect)).Select(g => g.Opacity).ToArray();
+                settings.ColorfulMistSizeScale = scale;
+                effect.Update(cursor, double.Epsilon);
+                var after = Shapes(Drawing(effect)).ToArray();
+                Assert.AreEqual(1, effect.ParticleCount);
+                Assert.AreEqual(2, after.Length);
+                for (var i = 0; i < after.Length; i++)
+                {
+                    var original = (EllipseGeometry)before[i].Geometry;
+                    var resized = (EllipseGeometry)after[i].Geometry;
+                    Assert.AreEqual(original.RadiusX * scale, resized.RadiusX, 0.000001);
+                    Assert.AreEqual(original.RadiusY * scale, resized.RadiusY, 0.000001);
+                    var expected = center + (original.Center - center) * scale;
+                    Assert.AreEqual(expected.X, resized.Center.X, 0.000001);
+                    Assert.AreEqual(expected.Y, resized.Center.Y, 0.000001);
+                    Assert.AreSame(before[i].Brush, after[i].Brush);
+                }
+                CollectionAssert.AreEqual(opacity, Groups(Drawing(effect)).Select(g => g.Opacity).ToArray());
+                settings.ColorfulMistSizeScale = 1;
+                effect.Update(cursor, double.Epsilon);
+                Assert.AreEqual(((EllipseGeometry)before[0].Geometry).RadiusX, ((EllipseGeometry)Shapes(Drawing(effect)).First().Geometry).RadiusX);
+                effect.Update(cursor, 4);
+                Assert.AreEqual(0, effect.ParticleCount);
+            });
+        }
+
+        [TestMethod]
+        public void SizePanelIsHiddenForOtherEffects()
+        {
+            RunSta(() =>
+            {
+                var window = new MouseEffectSettingWindow(MouseEffectType.StarlightArrow, new MainConfig());
+                try { Assert.AreEqual(Visibility.Collapsed, ((FrameworkElement)window.FindName("panel_ColorfulMistSize")).Visibility); }
+                finally { window.Close(); }
             });
         }
 

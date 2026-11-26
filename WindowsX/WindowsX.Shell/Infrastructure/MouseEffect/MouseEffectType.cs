@@ -31,6 +31,9 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
         Butterflies,
         Cloud,
         MusicNotes,
-        BinaryTrail
+        BinaryTrail,
+        OrbitParticles,
+        StarlightArrow,
+        SwordAura
     }
 }

@@ -29,8 +29,16 @@ namespace WindowsX.Config.Model
         public const double DefaultIconRainSizeScale = 1;
         public const double DefaultFollowingAnimalSizeScale = 1;
         public const double DefaultCottonCandySizeScale = 1;
+        public const double DefaultColorfulMistSizeScale = 1;
         public const double DefaultFirefliesFollowSpeed = 1;
         public const double DefaultPixelBlocksSizeScale = 1;
+        public const int DefaultOrbitParticlesLayers = 2;
+        public const int MaxOrbitParticlesLayers = 4;
+        public const double DefaultOrbitParticlesRadius = 28;
+        public const double DefaultOrbitParticlesSpeed = 1;
+        public const string DefaultOrbitParticlesColor1 = "#5CE1FF";
+        public const string DefaultOrbitParticlesColor2 = "#B38BFF";
+        public const string DefaultOrbitParticlesColor3 = "#FF91CD";
         public const double DefaultBinaryTrailSizeScale = 1;
         public const string DefaultBinaryTrailColor = "#5CFF8F";
         public const string DefaultBinaryTrailFontFamily = "Vector";
@@ -79,6 +87,7 @@ namespace WindowsX.Config.Model
         private double fallingPetalsSizeScale = DefaultFallingPetalsSizeScale;
         private string fallingPetalsColor = DefaultFallingPetalsColor;
         private double colorfulMistOpacity = 1;
+        private double colorfulMistSizeScale = DefaultColorfulMistSizeScale;
         private double fireworksTrailOpacity = 1;
         private double fallingLeavesOpacity = 1;
         private double fallingLeavesSizeScale = DefaultFallingLeavesSizeScale;
@@ -100,6 +109,25 @@ namespace WindowsX.Config.Model
         private double cloudOpacity = 1;
         private double musicNotesOpacity = 1;
         private double binaryTrailOpacity = 1;
+        private double orbitParticlesOpacity = 1;
+        private double starlightArrowOpacity = 1;
+        private double swordAuraOpacity = 1;
+        public const double DefaultSwordAuraSizeScale = 1;
+        public const string DefaultSwordAuraColor1 = "#18416E";
+        public const string DefaultSwordAuraColor2 = "#293168";
+        public const string DefaultSwordAuraColor3 = "#187085";
+        private double swordAuraSizeScale = DefaultSwordAuraSizeScale;
+        private string swordAuraColor1 = DefaultSwordAuraColor1;
+        private string swordAuraColor2 = DefaultSwordAuraColor2;
+        private string swordAuraColor3 = DefaultSwordAuraColor3;
+        public const string DefaultStarlightArrowColor = "#FFD570";
+        private string starlightArrowColor = DefaultStarlightArrowColor;
+        private int orbitParticlesLayers = DefaultOrbitParticlesLayers;
+        private double orbitParticlesRadius = DefaultOrbitParticlesRadius;
+        private double orbitParticlesSpeed = DefaultOrbitParticlesSpeed;
+        private string orbitParticlesColor1 = DefaultOrbitParticlesColor1;
+        private string orbitParticlesColor2 = DefaultOrbitParticlesColor2;
+        private string orbitParticlesColor3 = DefaultOrbitParticlesColor3;
         private double binaryTrailSizeScale = DefaultBinaryTrailSizeScale;
         private string binaryTrailColor = DefaultBinaryTrailColor;
         private string binaryTrailFontFamily = DefaultBinaryTrailFontFamily;
@@ -186,6 +214,90 @@ namespace WindowsX.Config.Model
             set => fireworksOpacity = Normalize(value, 0, 1);
         }
 
+        public double OrbitParticlesOpacity
+        {
+            get => orbitParticlesOpacity;
+            set => orbitParticlesOpacity = Normalize(value, 0, 1);
+        }
+
+        public double StarlightArrowOpacity
+        {
+            get => starlightArrowOpacity;
+            set => starlightArrowOpacity = Normalize(value, 0, 1);
+        }
+
+        public double SwordAuraOpacity
+        {
+            get => swordAuraOpacity;
+            set => swordAuraOpacity = Normalize(value, 0, 1);
+        }
+
+        public double SwordAuraSizeScale
+        {
+            get => swordAuraSizeScale;
+            set => swordAuraSizeScale = Normalize(value, 0.5, 3, DefaultSwordAuraSizeScale);
+        }
+
+        public string SwordAuraColor1
+        {
+            get => swordAuraColor1;
+            set => swordAuraColor1 = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultSwordAuraColor1;
+        }
+
+        public string SwordAuraColor2
+        {
+            get => swordAuraColor2;
+            set => swordAuraColor2 = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultSwordAuraColor2;
+        }
+
+        public string SwordAuraColor3
+        {
+            get => swordAuraColor3;
+            set => swordAuraColor3 = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultSwordAuraColor3;
+        }
+
+        public string StarlightArrowColor
+        {
+            get => starlightArrowColor;
+            set => starlightArrowColor = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultStarlightArrowColor;
+        }
+
+        public int OrbitParticlesLayers
+        {
+            get => orbitParticlesLayers;
+            set => orbitParticlesLayers = Math.Clamp(value, 1, MaxOrbitParticlesLayers);
+        }
+
+        public double OrbitParticlesRadius
+        {
+            get => orbitParticlesRadius;
+            set => orbitParticlesRadius = Normalize(value, 10, 120, DefaultOrbitParticlesRadius);
+        }
+
+        public double OrbitParticlesSpeed
+        {
+            get => orbitParticlesSpeed;
+            set => orbitParticlesSpeed = Normalize(value, 0.25, 3, DefaultOrbitParticlesSpeed);
+        }
+
+        public string OrbitParticlesColor1
+        {
+            get => orbitParticlesColor1;
+            set => orbitParticlesColor1 = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultOrbitParticlesColor1;
+        }
+
+        public string OrbitParticlesColor2
+        {
+            get => orbitParticlesColor2;
+            set => orbitParticlesColor2 = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultOrbitParticlesColor2;
+        }
+
+        public string OrbitParticlesColor3
+        {
+            get => orbitParticlesColor3;
+            set => orbitParticlesColor3 = IsValidColor(value) ? value.Trim().ToUpperInvariant() : DefaultOrbitParticlesColor3;
+        }
+
         public double WillowCatkinsOpacity
         {
             get => willowCatkinsOpacity;
@@ -252,6 +364,12 @@ namespace WindowsX.Config.Model
         {
             get => colorfulMistOpacity;
             set => colorfulMistOpacity = Normalize(value, 0, 1);
+        }
+
+        public double ColorfulMistSizeScale
+        {
+            get => colorfulMistSizeScale;
+            set => colorfulMistSizeScale = Normalize(value, 0.5, 3, DefaultColorfulMistSizeScale);
         }
 
         public double FireworksTrailOpacity

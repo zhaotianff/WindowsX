@@ -233,6 +233,81 @@
             </Grid>
             <TextBlock Text="0% 完全透明，100% 完全不透明" Margin="0,8,0,0"/>
         </StackPanel>
+        <StackPanel x:Name="panel_SwordAura" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="剑气大小" FontSize="14" Margin="0,0,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="60"/></Grid.ColumnDefinitions>
+                <Slider x:Name="slider_SwordAuraSize" Minimum="50" Maximum="300" TickFrequency="5"
+                        IsSnapToTickEnabled="True" SmallChange="5" LargeChange="25" VerticalAlignment="Center" AutomationProperties.Name="剑气大小比例"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_SwordAuraSize, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为默认大小，整体缩放扩散墨迹，不改变运动和消散时间。" TextWrapping="Wrap" Margin="0,8,0,0"/>
+            <TextBlock Text="剑气颜色（#RRGGBB）" FontSize="14" Margin="0,16,0,8"/>
+            <DockPanel Margin="0,0,0,8">
+                <Border x:Name="preview_SwordAuraColor1" DockPanel.Dock="Right" Width="32" Margin="8,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+                <TextBox x:Name="text_SwordAuraColor1" TextChanged="SwordAuraColor_TextChanged" AutomationProperties.Name="剑气颜色一"/>
+            </DockPanel>
+            <DockPanel Margin="0,0,0,8">
+                <Border x:Name="preview_SwordAuraColor2" DockPanel.Dock="Right" Width="32" Margin="8,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+                <TextBox x:Name="text_SwordAuraColor2" TextChanged="SwordAuraColor_TextChanged" AutomationProperties.Name="剑气颜色二"/>
+            </DockPanel>
+            <DockPanel>
+                <Border x:Name="preview_SwordAuraColor3" DockPanel.Dock="Right" Width="32" Margin="8,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+                <TextBox x:Name="text_SwordAuraColor3" TextChanged="SwordAuraColor_TextChanged" AutomationProperties.Name="剑气颜色三"/>
+            </DockPanel>
+            <TextBlock x:Name="text_SwordAuraColorError" Text="请输入有效的 #RRGGBB 颜色，例如 #18416E。" Foreground="Crimson" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="三种墨色循环混合，设置为相同颜色可获得单色剑气。保留墨水扩散，不显示实体剑形。保存后生效。" TextWrapping="Wrap" Margin="0,8,0,0"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_StarlightArrowColor" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="星光颜色（#RRGGBB）" FontSize="14" Margin="0,0,0,8"/>
+            <DockPanel>
+                <Border x:Name="preview_StarlightArrowColor" DockPanel.Dock="Right" Width="32" Margin="8,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+                <TextBox x:Name="text_StarlightArrowColor" TextChanged="StarlightArrowColor_TextChanged" AutomationProperties.Name="星光箭头颜色"/>
+            </DockPanel>
+            <TextBlock x:Name="text_StarlightArrowColorError" Text="请输入有效的 #RRGGBB 颜色，例如 #FFD570。" Foreground="Crimson" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="颜色同步用于星光和光晕，保留白色亮芯。保存后生效。" TextWrapping="Wrap" Margin="0,8,0,0"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_OrbitParticles" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="环绕层数" FontSize="14" Margin="0,0,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="70"/></Grid.ColumnDefinitions>
+                <Slider x:Name="slider_OrbitParticlesLayers" Minimum="1" Maximum="4" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="1" VerticalAlignment="Center" AutomationProperties.Name="环绕层数"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_OrbitParticlesLayers, Path=Value, StringFormat={}{0:0} 层}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="每层6个粒子，相邻层反向旋转，最多24个粒子。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+            <TextBlock Text="环绕半径（最内层）" FontSize="14" Margin="0,16,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="70"/></Grid.ColumnDefinitions>
+                <Slider x:Name="slider_OrbitParticlesRadius" Minimum="10" Maximum="120" TickFrequency="1"
+                        IsSnapToTickEnabled="True" SmallChange="1" LargeChange="10" VerticalAlignment="Center" AutomationProperties.Name="最内层环绕半径"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_OrbitParticlesRadius, Path=Value, StringFormat={}{0:0} DIP}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="默认28 DIP，外层半径依次增加15 DIP。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+            <TextBlock Text="环绕速度" FontSize="14" Margin="0,16,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="70"/></Grid.ColumnDefinitions>
+                <Slider x:Name="slider_OrbitParticlesSpeed" Minimum="25" Maximum="300" TickFrequency="5"
+                        IsSnapToTickEnabled="True" SmallChange="5" LargeChange="25" VerticalAlignment="Center" AutomationProperties.Name="环绕速度比例"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_OrbitParticlesSpeed, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为默认速度（约6秒一圈），不影响鼠标跟随速度和光轨消散时间。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+            <TextBlock Text="粒子颜色（#RRGGBB）" FontSize="14" Margin="0,16,0,8"/>
+            <DockPanel Margin="0,0,0,8">
+                <Border x:Name="preview_OrbitParticlesColor1" DockPanel.Dock="Right" Width="32" Margin="8,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+                <TextBox x:Name="text_OrbitParticlesColor1" TextChanged="OrbitParticlesColor_TextChanged" AutomationProperties.Name="环绕粒子颜色一"/>
+            </DockPanel>
+            <DockPanel Margin="0,0,0,8">
+                <Border x:Name="preview_OrbitParticlesColor2" DockPanel.Dock="Right" Width="32" Margin="8,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+                <TextBox x:Name="text_OrbitParticlesColor2" TextChanged="OrbitParticlesColor_TextChanged" AutomationProperties.Name="环绕粒子颜色二"/>
+            </DockPanel>
+            <DockPanel>
+                <Border x:Name="preview_OrbitParticlesColor3" DockPanel.Dock="Right" Width="32" Margin="8,0,0,0" BorderBrush="Gray" BorderThickness="1"/>
+                <TextBox x:Name="text_OrbitParticlesColor3" TextChanged="OrbitParticlesColor_TextChanged" AutomationProperties.Name="环绕粒子颜色三"/>
+            </DockPanel>
+            <TextBlock x:Name="text_OrbitParticlesColorError" Text="请输入有效的 #RRGGBB 颜色，例如 #5CE1FF。" Foreground="Crimson" Visibility="Collapsed" Margin="0,8,0,0"/>
+            <TextBlock Text="三色循环分配给粒子，并同步用于光晕和光轨；设为相同颜色可获得单色效果。保存后生效。" Margin="0,8,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
         <StackPanel x:Name="panel_BinaryTrail" Visibility="Collapsed" Margin="0,24,0,0">
             <TextBlock Text="字符颜色" FontSize="14" Margin="0,0,0,8"/>
             <CheckBox x:Name="check_BinaryTrailDefaultColors" Content="使用默认绿青配色"
@@ -339,6 +414,22 @@
                            HorizontalAlignment="Right" VerticalAlignment="Center"/>
             </Grid>
             <TextBlock Text="100% 为默认大小；保留随机大小差异及缩小渐隐动画，不改变运动轨迹，保存后生效。"
+                       Margin="0,8,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_ColorfulMistSize" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="彩色雾大小" FontSize="14" Margin="0,0,0,12"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="slider_ColorfulMistSize" Minimum="50" Maximum="300" TickFrequency="5"
+                        IsSnapToTickEnabled="True" SmallChange="5" LargeChange="25"
+                        VerticalAlignment="Center" AutomationProperties.Name="彩色雾大小比例"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_ColorfulMistSize, Path=Value, StringFormat={}{0:0}%}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为默认大小；整团彩色雾同步缩放，保留随机大小差异及扩散渐隐动画，保存后生效。"
                        Margin="0,8,0,0" TextWrapping="Wrap"/>
         </StackPanel>
         <StackPanel x:Name="panel_CottonCandySize" Visibility="Collapsed" Margin="0,24,0,0">

@@ -53,6 +53,9 @@ namespace WindowsX.Shell.Windows
                 MouseEffectType.Cloud => "云朵设置",
                 MouseEffectType.MusicNotes => "音符轨迹设置",
                 MouseEffectType.BinaryTrail => "二进制字符光轨设置",
+                MouseEffectType.OrbitParticles => "环绕粒子设置",
+                MouseEffectType.StarlightArrow => "星光箭头设置",
+                MouseEffectType.SwordAura => "剑意设置",
                 _ => trail ? "轨迹设置" : following ? "跟随设置" : fireworks ? "烟花设置" : "春日柳絮设置"
             };
             var settings = mainConfig.MouseEffectSetting;
@@ -78,9 +81,26 @@ namespace WindowsX.Shell.Windows
                 MouseEffectType.Cloud => settings.CloudOpacity,
                 MouseEffectType.MusicNotes => settings.MusicNotesOpacity,
                 MouseEffectType.BinaryTrail => settings.BinaryTrailOpacity,
+                MouseEffectType.OrbitParticles => settings.OrbitParticlesOpacity,
+                MouseEffectType.StarlightArrow => settings.StarlightArrowOpacity,
+                MouseEffectType.SwordAura => settings.SwordAuraOpacity,
                 _ => fireworks ? settings.FireworksOpacity : settings.WillowCatkinsOpacity
             }) * 100;
             slider_Expansion.Value = settings.FireworksExpansion * 100;
+            panel_SwordAura.Visibility = effectType == MouseEffectType.SwordAura ? Visibility.Visible : Visibility.Collapsed;
+            slider_SwordAuraSize.Value = settings.SwordAuraSizeScale * 100;
+            text_SwordAuraColor1.Text = settings.SwordAuraColor1;
+            text_SwordAuraColor2.Text = settings.SwordAuraColor2;
+            text_SwordAuraColor3.Text = settings.SwordAuraColor3;
+            panel_StarlightArrowColor.Visibility = effectType == MouseEffectType.StarlightArrow ? Visibility.Visible : Visibility.Collapsed;
+            text_StarlightArrowColor.Text = settings.StarlightArrowColor;
+            panel_OrbitParticles.Visibility = effectType == MouseEffectType.OrbitParticles ? Visibility.Visible : Visibility.Collapsed;
+            slider_OrbitParticlesLayers.Value = settings.OrbitParticlesLayers;
+            slider_OrbitParticlesRadius.Value = settings.OrbitParticlesRadius;
+            slider_OrbitParticlesSpeed.Value = settings.OrbitParticlesSpeed * 100;
+            text_OrbitParticlesColor1.Text = settings.OrbitParticlesColor1;
+            text_OrbitParticlesColor2.Text = settings.OrbitParticlesColor2;
+            text_OrbitParticlesColor3.Text = settings.OrbitParticlesColor3;
             panel_BinaryTrail.Visibility = effectType == MouseEffectType.BinaryTrail ? Visibility.Visible : Visibility.Collapsed;
             check_BinaryTrailDefaultColors.IsChecked = settings.BinaryTrailUseDefaultColors;
             text_BinaryTrailColor.Text = settings.BinaryTrailColor;
@@ -96,6 +116,8 @@ namespace WindowsX.Shell.Windows
             slider_FirefliesFollowSpeed.Value = settings.FirefliesFollowSpeed * 100;
             panel_FirefliesFollowSpeed.Visibility = effectType == MouseEffectType.Fireflies ? Visibility.Visible : Visibility.Collapsed;
             slider_CottonCandySize.Value = settings.CottonCandySizeScale * 100;
+            slider_ColorfulMistSize.Value = settings.ColorfulMistSizeScale * 100;
+            panel_ColorfulMistSize.Visibility = effectType == MouseEffectType.ColorfulMist ? Visibility.Visible : Visibility.Collapsed;
             panel_CottonCandySize.Visibility = effectType == MouseEffectType.CottonCandy ? Visibility.Visible : Visibility.Collapsed;
             slider_FollowingAnimalSize.Value = settings.FollowingAnimalSizeScale * 100;
             panel_FollowingAnimalSize.Visibility = effectType == MouseEffectType.FollowingAnimal ? Visibility.Visible : Visibility.Collapsed;
@@ -151,6 +173,9 @@ namespace WindowsX.Shell.Windows
             text_NeonRibbonColor2.Text = settings.NeonRibbonColor2;
             text_NeonRibbonColor3.Text = settings.NeonRibbonColor3;
             isInitialized = true;
+            UpdateSwordAuraColors();
+            UpdateStarlightArrowColor();
+            UpdateOrbitParticlesColors();
             UpdateBinaryTrailColor();
             UpdateWaterRipplePreview();
             UpdateCatkinsPreview();
@@ -160,6 +185,66 @@ namespace WindowsX.Shell.Windows
             UpdateNeonRibbonPreview();
             UpdateHaloRingPreview();
             UpdateFivePointedStarsPreview();
+        }
+
+        private bool HasValidSwordAuraColors()
+        {
+            return MouseEffectSetting.IsValidColor(text_SwordAuraColor1.Text)
+                && MouseEffectSetting.IsValidColor(text_SwordAuraColor2.Text)
+                && MouseEffectSetting.IsValidColor(text_SwordAuraColor3.Text);
+        }
+
+        private void SwordAuraColor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateSwordAuraColors();
+        }
+
+        private void UpdateSwordAuraColors()
+        {
+            if (!isInitialized || effectType != MouseEffectType.SwordAura) return;
+            var valid = HasValidSwordAuraColors();
+            text_SwordAuraColorError.Visibility = valid ? Visibility.Collapsed : Visibility.Visible;
+            btn_Save.IsEnabled = valid;
+            UpdateColorSwatch(preview_SwordAuraColor1, text_SwordAuraColor1.Text);
+            UpdateColorSwatch(preview_SwordAuraColor2, text_SwordAuraColor2.Text);
+            UpdateColorSwatch(preview_SwordAuraColor3, text_SwordAuraColor3.Text);
+        }
+
+        private void StarlightArrowColor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateStarlightArrowColor();
+        }
+
+        private void UpdateStarlightArrowColor()
+        {
+            if (!isInitialized || effectType != MouseEffectType.StarlightArrow) return;
+            var valid = MouseEffectSetting.IsValidColor(text_StarlightArrowColor.Text);
+            text_StarlightArrowColorError.Visibility = valid ? Visibility.Collapsed : Visibility.Visible;
+            btn_Save.IsEnabled = valid;
+            UpdateColorSwatch(preview_StarlightArrowColor, text_StarlightArrowColor.Text);
+        }
+
+        private bool HasValidOrbitParticlesColors()
+        {
+            return MouseEffectSetting.IsValidColor(text_OrbitParticlesColor1.Text)
+                && MouseEffectSetting.IsValidColor(text_OrbitParticlesColor2.Text)
+                && MouseEffectSetting.IsValidColor(text_OrbitParticlesColor3.Text);
+        }
+
+        private void OrbitParticlesColor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateOrbitParticlesColors();
+        }
+
+        private void UpdateOrbitParticlesColors()
+        {
+            if (!isInitialized || effectType != MouseEffectType.OrbitParticles) return;
+            var valid = HasValidOrbitParticlesColors();
+            text_OrbitParticlesColorError.Visibility = valid ? Visibility.Collapsed : Visibility.Visible;
+            btn_Save.IsEnabled = valid;
+            UpdateColorSwatch(preview_OrbitParticlesColor1, text_OrbitParticlesColor1.Text);
+            UpdateColorSwatch(preview_OrbitParticlesColor2, text_OrbitParticlesColor2.Text);
+            UpdateColorSwatch(preview_OrbitParticlesColor3, text_OrbitParticlesColor3.Text);
         }
 
         private void BinaryTrailColor_TextChanged(object sender, TextChangedEventArgs e)
@@ -423,6 +508,26 @@ namespace WindowsX.Shell.Windows
 
             slider_Opacity.Value = 100;
             slider_Expansion.Value = 100;
+            if (effectType == MouseEffectType.SwordAura)
+            {
+                slider_SwordAuraSize.Value = MouseEffectSetting.DefaultSwordAuraSizeScale * 100;
+                text_SwordAuraColor1.Text = MouseEffectSetting.DefaultSwordAuraColor1;
+                text_SwordAuraColor2.Text = MouseEffectSetting.DefaultSwordAuraColor2;
+                text_SwordAuraColor3.Text = MouseEffectSetting.DefaultSwordAuraColor3;
+            }
+            if (effectType == MouseEffectType.ColorfulMist)
+                slider_ColorfulMistSize.Value = MouseEffectSetting.DefaultColorfulMistSizeScale * 100;
+            if (effectType == MouseEffectType.StarlightArrow)
+                text_StarlightArrowColor.Text = MouseEffectSetting.DefaultStarlightArrowColor;
+            if (effectType == MouseEffectType.OrbitParticles)
+            {
+                slider_OrbitParticlesLayers.Value = MouseEffectSetting.DefaultOrbitParticlesLayers;
+                slider_OrbitParticlesRadius.Value = MouseEffectSetting.DefaultOrbitParticlesRadius;
+                slider_OrbitParticlesSpeed.Value = MouseEffectSetting.DefaultOrbitParticlesSpeed * 100;
+                text_OrbitParticlesColor1.Text = MouseEffectSetting.DefaultOrbitParticlesColor1;
+                text_OrbitParticlesColor2.Text = MouseEffectSetting.DefaultOrbitParticlesColor2;
+                text_OrbitParticlesColor3.Text = MouseEffectSetting.DefaultOrbitParticlesColor3;
+            }
             if (effectType == MouseEffectType.BinaryTrail)
             {
                 check_BinaryTrailDefaultColors.IsChecked = true;
@@ -499,6 +604,28 @@ namespace WindowsX.Shell.Windows
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            if (effectType == MouseEffectType.SwordAura && !HasValidSwordAuraColors())
+            {
+                UpdateSwordAuraColors();
+                if (!MouseEffectSetting.IsValidColor(text_SwordAuraColor1.Text)) text_SwordAuraColor1.Focus();
+                else if (!MouseEffectSetting.IsValidColor(text_SwordAuraColor2.Text)) text_SwordAuraColor2.Focus();
+                else text_SwordAuraColor3.Focus();
+                return;
+            }
+            if (effectType == MouseEffectType.StarlightArrow && !MouseEffectSetting.IsValidColor(text_StarlightArrowColor.Text))
+            {
+                UpdateStarlightArrowColor();
+                text_StarlightArrowColor.Focus();
+                return;
+            }
+            if (effectType == MouseEffectType.OrbitParticles && !HasValidOrbitParticlesColors())
+            {
+                UpdateOrbitParticlesColors();
+                if (!MouseEffectSetting.IsValidColor(text_OrbitParticlesColor1.Text)) text_OrbitParticlesColor1.Focus();
+                else if (!MouseEffectSetting.IsValidColor(text_OrbitParticlesColor2.Text)) text_OrbitParticlesColor2.Focus();
+                else text_OrbitParticlesColor3.Focus();
+                return;
+            }
             if (effectType == MouseEffectType.BinaryTrail && check_BinaryTrailDefaultColors.IsChecked != true
                 && !MouseEffectSetting.IsValidColor(text_BinaryTrailColor.Text))
             {
@@ -586,6 +713,7 @@ namespace WindowsX.Shell.Windows
             var previousFallingPetalsSize = settings.FallingPetalsSizeScale;
             var previousFallingPetalsColor = settings.FallingPetalsColor;
             var previousColorfulMistOpacity = settings.ColorfulMistOpacity;
+            var previousColorfulMistSize = settings.ColorfulMistSizeScale;
             var previousFireworksTrailOpacity = settings.FireworksTrailOpacity;
             var previousFallingLeavesOpacity = settings.FallingLeavesOpacity;
             var previousFallingLeavesSize = settings.FallingLeavesSizeScale;
@@ -607,6 +735,20 @@ namespace WindowsX.Shell.Windows
             var previousCloudOpacity = settings.CloudOpacity;
             var previousMusicNotesOpacity = settings.MusicNotesOpacity;
             var previousBinaryTrailOpacity = settings.BinaryTrailOpacity;
+            var previousOrbitParticlesOpacity = settings.OrbitParticlesOpacity;
+            var previousStarlightArrowOpacity = settings.StarlightArrowOpacity;
+            var previousSwordAuraOpacity = settings.SwordAuraOpacity;
+            var previousSwordAuraSize = settings.SwordAuraSizeScale;
+            var previousSwordAuraColor1 = settings.SwordAuraColor1;
+            var previousSwordAuraColor2 = settings.SwordAuraColor2;
+            var previousSwordAuraColor3 = settings.SwordAuraColor3;
+            var previousStarlightArrowColor = settings.StarlightArrowColor;
+            var previousOrbitParticlesLayers = settings.OrbitParticlesLayers;
+            var previousOrbitParticlesRadius = settings.OrbitParticlesRadius;
+            var previousOrbitParticlesSpeed = settings.OrbitParticlesSpeed;
+            var previousOrbitParticlesColor1 = settings.OrbitParticlesColor1;
+            var previousOrbitParticlesColor2 = settings.OrbitParticlesColor2;
+            var previousOrbitParticlesColor3 = settings.OrbitParticlesColor3;
             var previousBinaryTrailDefaultColors = settings.BinaryTrailUseDefaultColors;
             var previousBinaryTrailColor = settings.BinaryTrailColor;
             var previousBinaryTrailSize = settings.BinaryTrailSizeScale;
@@ -702,6 +844,7 @@ namespace WindowsX.Shell.Windows
             else if (effectType == MouseEffectType.ColorfulMist)
             {
                 settings.ColorfulMistOpacity = slider_Opacity.Value / 100;
+                settings.ColorfulMistSizeScale = slider_ColorfulMistSize.Value / 100;
             }
             else if (effectType == MouseEffectType.FireworksTrail)
             {
@@ -748,6 +891,29 @@ namespace WindowsX.Shell.Windows
             else if (effectType == MouseEffectType.MusicNotes)
             {
                 settings.MusicNotesOpacity = slider_Opacity.Value / 100;
+            }
+            else if (effectType == MouseEffectType.SwordAura)
+            {
+                settings.SwordAuraOpacity = slider_Opacity.Value / 100;
+                settings.SwordAuraSizeScale = slider_SwordAuraSize.Value / 100;
+                settings.SwordAuraColor1 = text_SwordAuraColor1.Text;
+                settings.SwordAuraColor2 = text_SwordAuraColor2.Text;
+                settings.SwordAuraColor3 = text_SwordAuraColor3.Text;
+            }
+            else if (effectType == MouseEffectType.StarlightArrow)
+            {
+                settings.StarlightArrowOpacity = slider_Opacity.Value / 100;
+                settings.StarlightArrowColor = text_StarlightArrowColor.Text;
+            }
+            else if (effectType == MouseEffectType.OrbitParticles)
+            {
+                settings.OrbitParticlesOpacity = slider_Opacity.Value / 100;
+                settings.OrbitParticlesLayers = (int)slider_OrbitParticlesLayers.Value;
+                settings.OrbitParticlesRadius = slider_OrbitParticlesRadius.Value;
+                settings.OrbitParticlesSpeed = slider_OrbitParticlesSpeed.Value / 100;
+                settings.OrbitParticlesColor1 = text_OrbitParticlesColor1.Text;
+                settings.OrbitParticlesColor2 = text_OrbitParticlesColor2.Text;
+                settings.OrbitParticlesColor3 = text_OrbitParticlesColor3.Text;
             }
             else if (effectType == MouseEffectType.BinaryTrail)
             {
@@ -811,6 +977,7 @@ namespace WindowsX.Shell.Windows
                 settings.FallingPetalsSizeScale = previousFallingPetalsSize;
                 settings.FallingPetalsColor = previousFallingPetalsColor;
                 settings.ColorfulMistOpacity = previousColorfulMistOpacity;
+                settings.ColorfulMistSizeScale = previousColorfulMistSize;
                 settings.FireworksTrailOpacity = previousFireworksTrailOpacity;
                 settings.FallingLeavesOpacity = previousFallingLeavesOpacity;
                 settings.FallingLeavesSizeScale = previousFallingLeavesSize;
@@ -832,6 +999,20 @@ namespace WindowsX.Shell.Windows
                 settings.CloudOpacity = previousCloudOpacity;
                 settings.MusicNotesOpacity = previousMusicNotesOpacity;
                 settings.BinaryTrailOpacity = previousBinaryTrailOpacity;
+                settings.OrbitParticlesOpacity = previousOrbitParticlesOpacity;
+                settings.StarlightArrowOpacity = previousStarlightArrowOpacity;
+                settings.SwordAuraOpacity = previousSwordAuraOpacity;
+                settings.SwordAuraSizeScale = previousSwordAuraSize;
+                settings.SwordAuraColor1 = previousSwordAuraColor1;
+                settings.SwordAuraColor2 = previousSwordAuraColor2;
+                settings.SwordAuraColor3 = previousSwordAuraColor3;
+                settings.StarlightArrowColor = previousStarlightArrowColor;
+                settings.OrbitParticlesLayers = previousOrbitParticlesLayers;
+                settings.OrbitParticlesRadius = previousOrbitParticlesRadius;
+                settings.OrbitParticlesSpeed = previousOrbitParticlesSpeed;
+                settings.OrbitParticlesColor1 = previousOrbitParticlesColor1;
+                settings.OrbitParticlesColor2 = previousOrbitParticlesColor2;
+                settings.OrbitParticlesColor3 = previousOrbitParticlesColor3;
                 settings.BinaryTrailUseDefaultColors = previousBinaryTrailDefaultColors;
                 settings.BinaryTrailColor = previousBinaryTrailColor;
                 settings.BinaryTrailSizeScale = previousBinaryTrailSize;

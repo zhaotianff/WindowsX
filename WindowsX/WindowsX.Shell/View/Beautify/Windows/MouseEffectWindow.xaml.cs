@@ -93,6 +93,15 @@ namespace WindowsX.Shell.Windows
                 case MouseEffectType.BinaryTrail:
                     cursorEffect = new BinaryTrailCursorEffect(settings);
                     break;
+                case MouseEffectType.OrbitParticles:
+                    cursorEffect = new OrbitParticlesCursorEffect(settings);
+                    break;
+                case MouseEffectType.StarlightArrow:
+                    cursorEffect = new StarlightArrowCursorEffect(settings);
+                    break;
+                case MouseEffectType.SwordAura:
+                    cursorEffect = new SwordAuraCursorEffect(settings);
+                    break;
                 case MouseEffectType.NeonRibbon:
                     cursorEffect = new NeonRibbonCursorEffect(settings);
                     break;
@@ -170,6 +179,9 @@ namespace WindowsX.Shell.Windows
 
             switch(currentEffectType)
             {
+                case MouseEffectType.StarlightArrow:
+                case MouseEffectType.OrbitParticles:
+                case MouseEffectType.SwordAura:
                 case MouseEffectType.BinaryTrail:
                 case MouseEffectType.MusicNotes:
                 case MouseEffectType.Cloud:

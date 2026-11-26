@@ -71,7 +71,7 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             }
             using var context = visual.RenderOpen();
             context.PushOpacity(settings.ColorfulMistOpacity);
-            foreach (var particle in particles) DrawMist(context, particle);
+            foreach (var particle in particles) DrawMist(context, particle, settings.ColorfulMistSizeScale);
             context.Pop();
         }
 
@@ -99,13 +99,13 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
             nextColor = (nextColor + 1) % MistBrushes.Length;
         }
 
-        private static void DrawMist(DrawingContext context, MistParticle particle)
+        private static void DrawMist(DrawingContext context, MistParticle particle, double sizeScale = 1)
         {
             var age = particle.Age;
             var progress = age / particle.Lifetime;
             var center = particle.Origin + particle.Velocity * age + new Vector(
                 6 * (Math.Sin(particle.Phase + age * 1.5) - Math.Sin(particle.Phase)), 0);
-            var radius = particle.Radius * (1 + progress * 1.4);
+            var radius = particle.Radius * (1 + progress * 1.4) * sizeScale;
             var offset = new Vector(Math.Cos(particle.Phase + age) * radius * 0.3, Math.Sin(particle.Phase + age) * radius * 0.2);
             context.PushOpacity(Math.Pow(Math.Max(0, 1 - progress), 1.6));
             context.DrawEllipse(MistBrushes[particle.ColorIndex], null, center, radius, radius * 0.8);
