@@ -42,6 +42,7 @@
                 <ResourceDictionary Source="Styles/TabControlStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TreeViewStyle.xaml"/>
                 <ResourceDictionary Source="Styles/MenuStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ToolTipStyle.xaml"/>
 
                 <!--Resources-->
                 <ResourceDictionary Source="Resources/ContextMenu/NotifyIconContextMenu.xaml"/>
