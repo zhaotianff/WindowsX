@@ -112,6 +112,7 @@ namespace WindowsX.Config.Model
         private double orbitParticlesOpacity = 1;
         private double starlightArrowOpacity = 1;
         private double swordAuraOpacity = 1;
+        private double drizzleOpacity = 1;
         public const double DefaultSwordAuraSizeScale = 1;
         public const string DefaultSwordAuraColor1 = "#18416E";
         public const string DefaultSwordAuraColor2 = "#293168";
@@ -224,6 +225,12 @@ namespace WindowsX.Config.Model
         {
             get => starlightArrowOpacity;
             set => starlightArrowOpacity = Normalize(value, 0, 1);
+        }
+
+        public double DrizzleOpacity
+        {
+            get => drizzleOpacity;
+            set => drizzleOpacity = Normalize(value, 0, 1);
         }
 
         public double SwordAuraOpacity

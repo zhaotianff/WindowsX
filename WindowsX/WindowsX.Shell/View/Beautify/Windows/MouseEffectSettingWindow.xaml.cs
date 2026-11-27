@@ -56,6 +56,7 @@ namespace WindowsX.Shell.Windows
                 MouseEffectType.OrbitParticles => "环绕粒子设置",
                 MouseEffectType.StarlightArrow => "星光箭头设置",
                 MouseEffectType.SwordAura => "剑意设置",
+                MouseEffectType.Drizzle => "斜风细雨设置",
                 _ => trail ? "轨迹设置" : following ? "跟随设置" : fireworks ? "烟花设置" : "春日柳絮设置"
             };
             var settings = mainConfig.MouseEffectSetting;
@@ -84,6 +85,7 @@ namespace WindowsX.Shell.Windows
                 MouseEffectType.OrbitParticles => settings.OrbitParticlesOpacity,
                 MouseEffectType.StarlightArrow => settings.StarlightArrowOpacity,
                 MouseEffectType.SwordAura => settings.SwordAuraOpacity,
+                MouseEffectType.Drizzle => settings.DrizzleOpacity,
                 _ => fireworks ? settings.FireworksOpacity : settings.WillowCatkinsOpacity
             }) * 100;
             slider_Expansion.Value = settings.FireworksExpansion * 100;
@@ -738,6 +740,7 @@ namespace WindowsX.Shell.Windows
             var previousOrbitParticlesOpacity = settings.OrbitParticlesOpacity;
             var previousStarlightArrowOpacity = settings.StarlightArrowOpacity;
             var previousSwordAuraOpacity = settings.SwordAuraOpacity;
+            var previousDrizzleOpacity = settings.DrizzleOpacity;
             var previousSwordAuraSize = settings.SwordAuraSizeScale;
             var previousSwordAuraColor1 = settings.SwordAuraColor1;
             var previousSwordAuraColor2 = settings.SwordAuraColor2;
@@ -892,6 +895,10 @@ namespace WindowsX.Shell.Windows
             {
                 settings.MusicNotesOpacity = slider_Opacity.Value / 100;
             }
+            else if (effectType == MouseEffectType.Drizzle)
+            {
+                settings.DrizzleOpacity = slider_Opacity.Value / 100;
+            }
             else if (effectType == MouseEffectType.SwordAura)
             {
                 settings.SwordAuraOpacity = slider_Opacity.Value / 100;
@@ -1002,6 +1009,7 @@ namespace WindowsX.Shell.Windows
                 settings.OrbitParticlesOpacity = previousOrbitParticlesOpacity;
                 settings.StarlightArrowOpacity = previousStarlightArrowOpacity;
                 settings.SwordAuraOpacity = previousSwordAuraOpacity;
+                settings.DrizzleOpacity = previousDrizzleOpacity;
                 settings.SwordAuraSizeScale = previousSwordAuraSize;
                 settings.SwordAuraColor1 = previousSwordAuraColor1;
                 settings.SwordAuraColor2 = previousSwordAuraColor2;

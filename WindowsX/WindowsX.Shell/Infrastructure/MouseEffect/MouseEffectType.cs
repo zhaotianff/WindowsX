@@ -34,6 +34,7 @@ namespace WindowsX.Shell.Infrastructure.MouseEffect
         BinaryTrail,
         OrbitParticles,
         StarlightArrow,
-        SwordAura
+        SwordAura,
+        Drizzle
     }
 }
