@@ -113,6 +113,13 @@ namespace WindowsX.Config.Model
         private double starlightArrowOpacity = 1;
         private double swordAuraOpacity = 1;
         private double drizzleOpacity = 1;
+        private double flameOpacity = 1;
+        public const double DefaultFlameSizeScale = 1;
+        public const double DefaultFlameSpeed = 1;
+        public const double DefaultFlameRadius = 34;
+        private double flameRadius = DefaultFlameRadius;
+        private double flameSizeScale = DefaultFlameSizeScale;
+        private double flameSpeed = DefaultFlameSpeed;
         public const double DefaultSwordAuraSizeScale = 1;
         public const string DefaultSwordAuraColor1 = "#18416E";
         public const string DefaultSwordAuraColor2 = "#293168";
@@ -225,6 +232,30 @@ namespace WindowsX.Config.Model
         {
             get => starlightArrowOpacity;
             set => starlightArrowOpacity = Normalize(value, 0, 1);
+        }
+
+        public double FlameSizeScale
+        {
+            get => flameSizeScale;
+            set => flameSizeScale = Normalize(value, 0.5, 3, DefaultFlameSizeScale);
+        }
+
+        public double FlameRadius
+        {
+            get => flameRadius;
+            set => flameRadius = Normalize(value, 10, 120, DefaultFlameRadius);
+        }
+
+        public double FlameSpeed
+        {
+            get => flameSpeed;
+            set => flameSpeed = Normalize(value, 0.25, 3, DefaultFlameSpeed);
+        }
+
+        public double FlameOpacity
+        {
+            get => flameOpacity;
+            set => flameOpacity = Normalize(value, 0, 1);
         }
 
         public double DrizzleOpacity

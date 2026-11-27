@@ -233,6 +233,32 @@
             </Grid>
             <TextBlock Text="0% 完全透明，100% 完全不透明" Margin="0,8,0,0"/>
         </StackPanel>
+        <StackPanel x:Name="panel_Flame" Visibility="Collapsed" Margin="0,24,0,0">
+            <TextBlock Text="火苗大小" FontSize="14" Margin="0,0,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="60"/></Grid.ColumnDefinitions>
+                <Slider x:Name="slider_FlameSize" Minimum="50" Maximum="300" TickFrequency="5" IsSnapToTickEnabled="True"
+                        SmallChange="5" LargeChange="25" VerticalAlignment="Center" AutomationProperties.Name="火苗大小比例"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_FlameSize, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="同步缩放火苗、焰芯、焰尾和光晕，不改变环绕半径。" TextWrapping="Wrap" Margin="0,8,0,0"/>
+            <TextBlock Text="环绕半径（逻辑像素）" FontSize="14" Margin="0,16,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="60"/></Grid.ColumnDefinitions>
+                <Slider x:Name="slider_FlameRadius" Minimum="10" Maximum="120" TickFrequency="1" IsSnapToTickEnabled="True"
+                        SmallChange="1" LargeChange="10" VerticalAlignment="Center" AutomationProperties.Name="火焰环绕半径"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_FlameRadius, Path=Value, StringFormat={}{0:0}}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="默认34，调整火苗与鼠标的距离，不改变火苗大小和旋转速度。" TextWrapping="Wrap" Margin="0,8,0,0"/>
+            <TextBlock Text="旋转速度" FontSize="14" Margin="0,16,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="60"/></Grid.ColumnDefinitions>
+                <Slider x:Name="slider_FlameSpeed" Minimum="25" Maximum="300" TickFrequency="5" IsSnapToTickEnabled="True"
+                        SmallChange="5" LargeChange="25" VerticalAlignment="Center" AutomationProperties.Name="火焰旋转速度"/>
+                <TextBlock Grid.Column="1" Text="{Binding ElementName=slider_FlameSpeed, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="100% 为默认速度，不改变火苗跳动与光晕呼吸节奏。保存后生效。" TextWrapping="Wrap" Margin="0,8,0,0"/>
+        </StackPanel>
         <StackPanel x:Name="panel_SwordAura" Visibility="Collapsed" Margin="0,24,0,0">
             <TextBlock Text="剑气大小" FontSize="14" Margin="0,0,0,8"/>
             <Grid>

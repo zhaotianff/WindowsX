@@ -57,6 +57,7 @@ namespace WindowsX.Shell.Windows
                 MouseEffectType.StarlightArrow => "星光箭头设置",
                 MouseEffectType.SwordAura => "剑意设置",
                 MouseEffectType.Drizzle => "斜风细雨设置",
+                MouseEffectType.Flame => "火焰设置",
                 _ => trail ? "轨迹设置" : following ? "跟随设置" : fireworks ? "烟花设置" : "春日柳絮设置"
             };
             var settings = mainConfig.MouseEffectSetting;
@@ -86,9 +87,14 @@ namespace WindowsX.Shell.Windows
                 MouseEffectType.StarlightArrow => settings.StarlightArrowOpacity,
                 MouseEffectType.SwordAura => settings.SwordAuraOpacity,
                 MouseEffectType.Drizzle => settings.DrizzleOpacity,
+                MouseEffectType.Flame => settings.FlameOpacity,
                 _ => fireworks ? settings.FireworksOpacity : settings.WillowCatkinsOpacity
             }) * 100;
             slider_Expansion.Value = settings.FireworksExpansion * 100;
+            panel_Flame.Visibility = effectType == MouseEffectType.Flame ? Visibility.Visible : Visibility.Collapsed;
+            slider_FlameSize.Value = settings.FlameSizeScale * 100;
+            slider_FlameSpeed.Value = settings.FlameSpeed * 100;
+            slider_FlameRadius.Value = settings.FlameRadius;
             panel_SwordAura.Visibility = effectType == MouseEffectType.SwordAura ? Visibility.Visible : Visibility.Collapsed;
             slider_SwordAuraSize.Value = settings.SwordAuraSizeScale * 100;
             text_SwordAuraColor1.Text = settings.SwordAuraColor1;
@@ -510,6 +516,12 @@ namespace WindowsX.Shell.Windows
 
             slider_Opacity.Value = 100;
             slider_Expansion.Value = 100;
+            if (effectType == MouseEffectType.Flame)
+            {
+                slider_FlameSize.Value = MouseEffectSetting.DefaultFlameSizeScale * 100;
+                slider_FlameSpeed.Value = MouseEffectSetting.DefaultFlameSpeed * 100;
+                slider_FlameRadius.Value = MouseEffectSetting.DefaultFlameRadius;
+            }
             if (effectType == MouseEffectType.SwordAura)
             {
                 slider_SwordAuraSize.Value = MouseEffectSetting.DefaultSwordAuraSizeScale * 100;
@@ -741,6 +753,10 @@ namespace WindowsX.Shell.Windows
             var previousStarlightArrowOpacity = settings.StarlightArrowOpacity;
             var previousSwordAuraOpacity = settings.SwordAuraOpacity;
             var previousDrizzleOpacity = settings.DrizzleOpacity;
+            var previousFlameOpacity = settings.FlameOpacity;
+            var previousFlameSize = settings.FlameSizeScale;
+            var previousFlameSpeed = settings.FlameSpeed;
+            var previousFlameRadius = settings.FlameRadius;
             var previousSwordAuraSize = settings.SwordAuraSizeScale;
             var previousSwordAuraColor1 = settings.SwordAuraColor1;
             var previousSwordAuraColor2 = settings.SwordAuraColor2;
@@ -899,6 +915,13 @@ namespace WindowsX.Shell.Windows
             {
                 settings.DrizzleOpacity = slider_Opacity.Value / 100;
             }
+            else if (effectType == MouseEffectType.Flame)
+            {
+                settings.FlameOpacity = slider_Opacity.Value / 100;
+                settings.FlameSizeScale = slider_FlameSize.Value / 100;
+                settings.FlameSpeed = slider_FlameSpeed.Value / 100;
+                settings.FlameRadius = slider_FlameRadius.Value;
+            }
             else if (effectType == MouseEffectType.SwordAura)
             {
                 settings.SwordAuraOpacity = slider_Opacity.Value / 100;
@@ -1010,6 +1033,10 @@ namespace WindowsX.Shell.Windows
                 settings.StarlightArrowOpacity = previousStarlightArrowOpacity;
                 settings.SwordAuraOpacity = previousSwordAuraOpacity;
                 settings.DrizzleOpacity = previousDrizzleOpacity;
+                settings.FlameOpacity = previousFlameOpacity;
+                settings.FlameSizeScale = previousFlameSize;
+                settings.FlameSpeed = previousFlameSpeed;
+                settings.FlameRadius = previousFlameRadius;
                 settings.SwordAuraSizeScale = previousSwordAuraSize;
                 settings.SwordAuraColor1 = previousSwordAuraColor1;
                 settings.SwordAuraColor2 = previousSwordAuraColor2;

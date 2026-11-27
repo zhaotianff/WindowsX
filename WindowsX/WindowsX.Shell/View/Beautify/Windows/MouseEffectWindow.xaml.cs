@@ -105,6 +105,9 @@ namespace WindowsX.Shell.Windows
                 case MouseEffectType.Drizzle:
                     cursorEffect = new DrizzleCursorEffect(settings);
                     break;
+                case MouseEffectType.Flame:
+                    cursorEffect = new FlameCursorEffect(settings);
+                    break;
                 case MouseEffectType.NeonRibbon:
                     cursorEffect = new NeonRibbonCursorEffect(settings);
                     break;
@@ -186,6 +189,7 @@ namespace WindowsX.Shell.Windows
                 case MouseEffectType.OrbitParticles:
                 case MouseEffectType.SwordAura:
                 case MouseEffectType.Drizzle:
+                case MouseEffectType.Flame:
                 case MouseEffectType.BinaryTrail:
                 case MouseEffectType.MusicNotes:
                 case MouseEffectType.Cloud:
